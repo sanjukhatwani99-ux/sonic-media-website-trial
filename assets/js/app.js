@@ -2766,8 +2766,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     function measure() {
       var first = cardEls[0];
       cardSpacing = first.offsetWidth;       /* unaffected by the scale() transform */
-      /* Add headroom for the active card's 1.05 scale so top/bottom aren't clipped */
-      outer.style.height = Math.ceil(first.offsetHeight * 1.05 + 48) + 'px';
+      outer.style.height = first.offsetHeight + 'px';
     }
 
     function shortestDelta(i, idxFloat) {
