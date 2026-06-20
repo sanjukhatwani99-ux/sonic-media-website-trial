@@ -230,16 +230,20 @@ function reinitHomeAnimations() {
     const zoomWrapper   = document.querySelector('.cta-zoom-wrapper');
     if (!zoomContainer || !zoomWrapper) return;
 
+    // Kill any stale ScrollTrigger pinning this container regardless of
+    // viewport, in case the user resized since the last build
+    ScrollTrigger.getAll().forEach(st => {
+      if (st.pin === zoomContainer || st.trigger === zoomWrapper) st.kill();
+    });
+
+    // .cta-zoom-wrapper is display:none on mobile — don't rebuild the pin there
+    if (window.innerWidth <= 768) return;
+
     // Reset all GSAP inline styles so the animation starts from the CSS baseline
     gsap.set('.czoom-item[data-layer="3"]', { opacity: 0.65, z: 0, clearProps: 'z' });
     gsap.set('.czoom-item[data-layer="2"]', { opacity: 0.45, z: 0, clearProps: 'z' });
     gsap.set('.czoom-item[data-layer="1"]', { opacity: 0.22, z: 0, clearProps: 'z' });
     gsap.set('.cta-zoom-heading',           { opacity: 0.07, z: 0, clearProps: 'z' });
-
-    // Kill any stale ScrollTrigger pinning this container
-    ScrollTrigger.getAll().forEach(st => {
-      if (st.pin === zoomContainer || st.trigger === zoomWrapper) st.kill();
-    });
 
     gsap.timeline({
       scrollTrigger: {
@@ -258,14 +262,6 @@ function reinitHomeAnimations() {
   })();
 
   ScrollTrigger.refresh();
-
-  // Pinning/unpinning the sections above (cta-zoom, coverflow, TSM) inserts
-  // spacer elements and changes total document height *after* the page first
-  // painted at scroll 0. If that happens on initial load, the browser/Lenis
-  // can end up visually settled on a mid-page section instead of the top.
-  // Re-correct here, once layout has fully settled, not just on the earlier
-  // DOMContentLoaded/load events.
-  if (typeof forceScrollTop === 'function') forceScrollTop();
 }
 
 
@@ -2165,6 +2161,12 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(tryZoomInit, 100);
       return;
     }
+    // .cta-zoom-wrapper is display:none on mobile (max-width: 768px) — see
+    // styles.css. Pinning a hidden element still inserts a real pin-spacer
+    // into the page at its DOM position, which is the same mechanism that
+    // caused the home coverflow to glitch the scroll position on mobile
+    // loads. Skip entirely on mobile.
+    if (window.innerWidth <= 768) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const zoomContainer = document.querySelector('.cta-zoom-container');
@@ -2263,6 +2265,14 @@ function buildCoverflowInstance({ listId, galleryId, wrapperId, cardsData, showH
       setTimeout(tryInit, 100);
       return;
     }
+    // CSS hides #homeSvcScrollWrapper / #pageSvcScrollWrapper entirely on
+    // mobile (max-width: 768px) and shows a touch carousel instead. GSAP
+    // doesn't know to skip pinning a display:none element though — it still
+    // measures the wrapper's DOM position and inserts a real pin-spacer div
+    // at that spot. That phantom spacer is what made mobile loads visually
+    // land mid-page before the scroll-to-top correction kicked in. So: never
+    // build this pinned ScrollTrigger on mobile in the first place.
+    if (window.innerWidth <= 768) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const cards     = Array.from(list.querySelectorAll('.hcf-card'));
