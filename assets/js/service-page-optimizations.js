@@ -213,13 +213,6 @@
       infinite: false,
     });
 
-    // Lenis reads window.scrollY the instant it's constructed. If a pinned
-    // ScrollTrigger section or a lazy-loaded video has already shifted the
-    // layout by this point, Lenis "locks in" that mid-page position instead
-    // of the top — this is what causes the page to flash a middle section
-    // on load before snapping back. Force it back to 0 on attach.
-    window.lenis.scrollTo(0, { immediate: true });
-
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);

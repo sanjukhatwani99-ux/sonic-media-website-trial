@@ -5,26 +5,6 @@
    FV Modal, Video Loop Fix
 ═══════════════════════════════════════════════════ */
 
-/* ── Always start at the top of the screen ──
-   Overrides the browser's native scroll-position restoration, which is
-   the usual reason a page opens mid-scroll instead of at the top —
-   most noticeable on mobile after a reload or a back/forward navigation. */
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-function forceScrollTop() {
-  window.scrollTo(0, 0);
-  if (window.lenis) window.lenis.scrollTo(0, { immediate: true });
-}
-forceScrollTop();
-document.addEventListener('DOMContentLoaded', forceScrollTop);
-window.addEventListener('load', forceScrollTop);
-window.addEventListener('pageshow', function(e) {
-  // Fires on every visit, including back/forward restores from bfcache —
-  // exactly when the browser is most likely to restore an old scroll spot.
-  forceScrollTop();
-});
-
 /* ─ PAGE ROUTER ─ */
 const PAGES = ['home','about','services','studio','casestudies','journal','future','faq','contact','svc-web','svc-app','svc-seo','svc-smm','svc-perf','svc-inf','svc-ecom','svc-content','svc-brand','svc-ai'];
 
@@ -230,20 +210,16 @@ function reinitHomeAnimations() {
     const zoomWrapper   = document.querySelector('.cta-zoom-wrapper');
     if (!zoomContainer || !zoomWrapper) return;
 
-    // Kill any stale ScrollTrigger pinning this container regardless of
-    // viewport, in case the user resized since the last build
-    ScrollTrigger.getAll().forEach(st => {
-      if (st.pin === zoomContainer || st.trigger === zoomWrapper) st.kill();
-    });
-
-    // .cta-zoom-wrapper is display:none on mobile — don't rebuild the pin there
-    if (window.innerWidth <= 768) return;
-
     // Reset all GSAP inline styles so the animation starts from the CSS baseline
     gsap.set('.czoom-item[data-layer="3"]', { opacity: 0.65, z: 0, clearProps: 'z' });
     gsap.set('.czoom-item[data-layer="2"]', { opacity: 0.45, z: 0, clearProps: 'z' });
     gsap.set('.czoom-item[data-layer="1"]', { opacity: 0.22, z: 0, clearProps: 'z' });
     gsap.set('.cta-zoom-heading',           { opacity: 0.07, z: 0, clearProps: 'z' });
+
+    // Kill any stale ScrollTrigger pinning this container
+    ScrollTrigger.getAll().forEach(st => {
+      if (st.pin === zoomContainer || st.trigger === zoomWrapper) st.kill();
+    });
 
     gsap.timeline({
       scrollTrigger: {
@@ -2161,12 +2137,6 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(tryZoomInit, 100);
       return;
     }
-    // .cta-zoom-wrapper is display:none on mobile (max-width: 768px) — see
-    // styles.css. Pinning a hidden element still inserts a real pin-spacer
-    // into the page at its DOM position, which is the same mechanism that
-    // caused the home coverflow to glitch the scroll position on mobile
-    // loads. Skip entirely on mobile.
-    if (window.innerWidth <= 768) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const zoomContainer = document.querySelector('.cta-zoom-container');
@@ -2265,14 +2235,6 @@ function buildCoverflowInstance({ listId, galleryId, wrapperId, cardsData, showH
       setTimeout(tryInit, 100);
       return;
     }
-    // CSS hides #homeSvcScrollWrapper / #pageSvcScrollWrapper entirely on
-    // mobile (max-width: 768px) and shows a touch carousel instead. GSAP
-    // doesn't know to skip pinning a display:none element though — it still
-    // measures the wrapper's DOM position and inserts a real pin-spacer div
-    // at that spot. That phantom spacer is what made mobile loads visually
-    // land mid-page before the scroll-to-top correction kicked in. So: never
-    // build this pinned ScrollTrigger on mobile in the first place.
-    if (window.innerWidth <= 768) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const cards     = Array.from(list.querySelectorAll('.hcf-card'));
@@ -2756,28 +2718,29 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
 
 /* ═══════════════════════════════════════════════════
    MOBILE SWIPE CAROUSEL — SERVICES
-   Infinite loop: the real cards are padded with cloned
-   cards at each end. Once a swipe lands on a clone, the
-   scroller is silently (no animation) snapped back to the
-   matching real card so the motion always reads as
-   continuous — you can swipe forever in either direction.
 ═══════════════════════════════════════════════════ */
 (function initMobSvcCarousel() {
-  var CLONE_COUNT = 2; // clones on each side — covers fast flicks
-
   function buildCarousel() {
     if (typeof SVC_CARDS_DATA === 'undefined') { setTimeout(buildCarousel, 150); return; }
     var track   = document.getElementById('mobSvcTrack');
     var outer   = document.getElementById('mobSvcTrackOuter');
     var dotsEl  = document.getElementById('mobSvcDots');
+    var prevBtn = document.getElementById('mobSvcPrev');
+    var nextBtn = document.getElementById('mobSvcNext');
     if (!track || !outer || !dotsEl) return;
-    var cards = SVC_CARDS_DATA;
-    var total = cards.length;
-    var current = 0;
 
-    function cardHTML(c, idx, isClone) {
-      return '<div class="mob-svc-card' + (idx === 0 && !isClone ? ' active' : '') + '" data-idx="' + idx + '"' +
-        (isClone ? ' aria-hidden="true" tabindex="-1"' : '') + '>' +
+    var realCards = SVC_CARDS_DATA;
+    var n = realCards.length;
+    /* Clone a few cards from each end and splice them onto the opposite
+       side so the strip reads: [...clones of last] [real cards] [...clones of first].
+       Swiping off either edge lands on a real-looking clone, then we
+       silently snap (no animation) back to the matching real card —
+       giving the illusion of an endless loop. */
+    var CLONE = Math.min(3, n);
+    var loopCards = realCards.slice(n - CLONE).concat(realCards, realCards.slice(0, CLONE));
+
+    function cardHTML(c, realIdx) {
+      return '<div class="mob-svc-card" data-real-idx="' + realIdx + '">' +
         '<div class="mob-svc-card-inner-wrap">' +
           '<div class="mob-svc-card-img"><img src="' + (c.img || 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80') + '" alt="' + c.title + '" loading="lazy"></div>' +
           '<div class="mob-svc-card-grad"></div>' +
@@ -2788,52 +2751,35 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
       '</div>';
     }
 
-    var beforeClones = cards.slice(total - CLONE_COUNT).map(function(c, i) { return cardHTML(c, total - CLONE_COUNT + i, true); });
-    var realCards     = cards.map(function(c, i) { return cardHTML(c, i, false); });
-    var afterClones   = cards.slice(0, CLONE_COUNT).map(function(c, i) { return cardHTML(c, i, true); });
-    track.innerHTML = beforeClones.concat(realCards, afterClones).join('');
+    track.innerHTML = loopCards.map(function(c, i) {
+      var realIdx = ((i - CLONE) % n + n) % n;
+      return cardHTML(c, realIdx);
+    }).join('');
 
-    dotsEl.innerHTML = cards.map(function(_, i) {
-      return '<div class="mob-svc-dot' + (i === 0 ? ' active' : '') + '" data-idx="' + i + '"></div>';
+    dotsEl.innerHTML = realCards.map(function(_, i) {
+      return '<div class="mob-svc-dot' + (i===0?' active':'') + '" data-idx="' + i + '"></div>';
     }).join('');
 
     var cardEls = Array.prototype.slice.call(track.querySelectorAll('.mob-svc-card'));
-    var realStartPos = CLONE_COUNT;
-    var realEndPos   = CLONE_COUNT + total - 1;
+    var current = 0;      /* real index (0..n-1) of the active card */
     var ticking = false;
     var settleTimer = null;
-    var supportsScrollend = 'onscrollend' in window;
+    var jumping = false;
+    var lastBestIdx = CLONE;
+
+    function setActiveClasses(displayIdx) {
+      cardEls.forEach(function(el, i){ el.classList.toggle('active', i === displayIdx); });
+    }
 
     /* Scale/opacity parallax: each card's transform is driven by its
        distance from the scroller's horizontal center. Center card = 105%
        scale, full opacity; neighbors ease down to 85-90% / reduced opacity. */
-    function setActiveByPos(pos) {
-      var idx = parseInt(cardEls[pos].dataset.idx, 10);
-      if (idx !== current) {
-        current = idx;
-        dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el, i) { el.classList.toggle('active', i === current); });
-      }
-      cardEls.forEach(function(el, i) { el.classList.toggle('active', i === pos); });
-    }
-
-    function centeredPos() {
-      var outerRect = outer.getBoundingClientRect();
-      var centerX = outerRect.left + outerRect.width / 2;
-      var bestPos = realStartPos, bestDist = Infinity;
-      cardEls.forEach(function(el, i) {
-        var r = el.getBoundingClientRect();
-        var dist = Math.abs((r.left + r.width / 2) - centerX);
-        if (dist < bestDist) { bestDist = dist; bestPos = i; }
-      });
-      return bestPos;
-    }
-
     function updateTransforms() {
       ticking = false;
       var outerRect = outer.getBoundingClientRect();
       if (outerRect.width === 0) return; /* not laid out yet */
       var centerX = outerRect.left + outerRect.width / 2;
-      var bestPos = realStartPos, bestDist = Infinity;
+      var bestIdx = 0, bestDist = Infinity;
 
       cardEls.forEach(function(el, i) {
         var r = el.getBoundingClientRect();
@@ -2844,80 +2790,108 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
         var opacity = 1 - norm * 0.55;     /* 100% center -> ~45% at edge */
         el.style.transform = 'scale(' + scale.toFixed(3) + ')';
         el.style.opacity = opacity.toFixed(3);
-        if (dist < bestDist) { bestDist = dist; bestPos = i; }
+        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
       });
 
-      setActiveByPos(bestPos);
-    }
-
-    /* Jump the scroller to a position with zero animation — used to snap
-       a clone back to its matching real card without the user noticing. */
-    function silentScrollTo(pos) {
-      var prevBehavior = outer.style.scrollBehavior;
-      outer.style.scrollBehavior = 'auto';
-      cardEls[pos].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
-      requestAnimationFrame(function() { outer.style.scrollBehavior = prevBehavior || ''; });
-    }
-
-    function jumpIfNeeded() {
-      var pos = centeredPos();
-      if (pos < realStartPos || pos > realEndPos) {
-        var targetPos = pos < realStartPos ? pos + total : pos - total;
-        silentScrollTo(targetPos);
-        requestAnimationFrame(function() { requestAnimationFrame(updateTransforms); });
+      var realIdx = parseInt(cardEls[bestIdx].dataset.realIdx, 10);
+      if (realIdx !== current) {
+        current = realIdx;
+        setActiveClasses(bestIdx);
+        dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active', i===current); });
       }
+
+      lastBestIdx = bestIdx;
+      /* Fallback debounce for browsers without scrollend support (see below) */
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(function(){ checkLoopJump(lastBestIdx); }, 140);
+    }
+
+    function checkLoopJump(displayIdx) {
+      if (jumping) return;
+      var total = cardEls.length;
+      var onClone = displayIdx < CLONE || displayIdx >= total - CLONE;
+      if (!onClone) return;
+
+      var realIdx = parseInt(cardEls[displayIdx].dataset.realIdx, 10);
+      var targetDisplayIdx = realIdx + CLONE;
+      if (targetDisplayIdx === displayIdx) return;
+
+      /* getBoundingClientRect is more reliable than offsetLeft here since
+         the snap container can still be mid-reflow right after a swipe. */
+      var fromRect = cardEls[displayIdx].getBoundingClientRect();
+      var toRect   = cardEls[targetDisplayIdx].getBoundingClientRect();
+      var delta = toRect.left - fromRect.left;
+      if (Math.abs(delta) < 1) return; /* already aligned, nothing to do */
+
+      jumping = true;
+      /* Scroll-snap can fight a programmatic scrollLeft change mid-settle
+         (especially on iOS Safari), causing it to snap back to the old
+         card. Briefly disabling snap during the jump avoids that. */
+      var prevSnap = outer.style.scrollSnapType;
+      outer.style.scrollSnapType = 'none';
+      outer.scrollLeft += delta;
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          outer.style.scrollSnapType = prevSnap || '';
+          current = realIdx;
+          setActiveClasses(targetDisplayIdx);
+          dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active', i===current); });
+          jumping = false;
+        });
+      });
     }
 
     function onScroll() {
+      if (jumping) return; /* ignore feedback from our own programmatic jump */
       if (!ticking) { ticking = true; requestAnimationFrame(updateTransforms); }
-      if (!supportsScrollend) {
-        if (settleTimer) clearTimeout(settleTimer);
-        settleTimer = setTimeout(jumpIfNeeded, 130);
-      }
     }
 
-    function goToPos(pos) {
-      if (pos < 0 || pos >= cardEls.length) return;
-      cardEls[pos].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-    }
-
-    /* Go to a logical card index via whichever occurrence (real or
-       clone) is nearest — keeps swipes/taps/dots/arrows all moving the
-       shortest visual distance instead of always rewinding to index 0. */
-    function goToIdx(idx) {
-      var positions = [];
-      cardEls.forEach(function(el, i) { if (parseInt(el.dataset.idx, 10) === idx) positions.push(i); });
-      var curPos = realStartPos + current;
-      var best = positions[0], bestDist = Infinity;
-      positions.forEach(function(p) {
-        var d = Math.abs(p - curPos);
-        if (d < bestDist) { bestDist = d; best = p; }
+    /* Always animate toward whichever copy (real or clone) of the target
+       card is nearest the current scroll position, so prev/next and dot
+       taps wrap seamlessly instead of yanking all the way across the strip. */
+    function goTo(realIdx) {
+      realIdx = ((realIdx % n) + n) % n;
+      var displayIdx = realIdx + CLONE;
+      var candidates = [displayIdx, displayIdx - n, displayIdx + n].filter(function(i){
+        return i >= 0 && i < cardEls.length;
       });
-      goToPos(best);
+      var outerRect = outer.getBoundingClientRect();
+      var centerX = outerRect.left + outerRect.width / 2;
+      var best = candidates[0], bestDist = Infinity;
+      candidates.forEach(function(i){
+        var r = cardEls[i].getBoundingClientRect();
+        var d = Math.abs((r.left + r.width / 2) - centerX);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      cardEls[best].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
 
-    dotsEl.addEventListener('click', function(e) {
+    dotsEl.addEventListener('click', function(e){
       var dot = e.target.closest('.mob-svc-dot');
-      if (dot) goToIdx(parseInt(dot.dataset.idx, 10));
+      if (dot) goTo(parseInt(dot.dataset.idx, 10));
     });
 
-    var prevBtn = document.getElementById('mobSvcPrev');
-    var nextBtn = document.getElementById('mobSvcNext');
-    if (prevBtn) prevBtn.addEventListener('click', function() { goToPos(realStartPos + current - 1); });
-    if (nextBtn) nextBtn.addEventListener('click', function() { goToPos(realStartPos + current + 1); });
+    if (prevBtn) prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function(){ goTo(current + 1); });
 
     outer.addEventListener('scroll', onScroll, { passive: true });
-    if (supportsScrollend) outer.addEventListener('scrollend', jumpIfNeeded, { passive: true });
-    window.addEventListener('resize', function() { requestAnimationFrame(updateTransforms); }, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    /* Modern browsers fire 'scrollend' once momentum/snap settling is
+       truly finished — far more reliable than guessing with a debounce
+       timer, which can fire while CSS scroll-snap is still mid-settle. */
+    outer.addEventListener('scrollend', function(){ checkLoopJump(lastBestIdx); });
 
-    /* Land on the first real card immediately (no animation) so a cloned
-       last card already peeks on the left — the loop reads as infinite
-       from the very first frame. */
+    /* Land on the first real card (skipping the leading clones) before
+       the user ever sees the strip. */
     requestAnimationFrame(function() {
-      silentScrollTo(realStartPos);
-      setTimeout(updateTransforms, 50);
-      setTimeout(updateTransforms, 300);
+      var startEl = cardEls[CLONE];
+      outer.scrollLeft = startEl.offsetLeft - (outer.clientWidth - startEl.offsetWidth) / 2;
+      updateTransforms();
     });
+    /* Outer may still be display:none (ancestor toggled by media-query JS)
+       on first build — re-measure once layout has settled. */
+    setTimeout(updateTransforms, 50);
+    setTimeout(updateTransforms, 300);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', buildCarousel);
   else buildCarousel();
@@ -2925,12 +2899,10 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
 
 /* ═══════════════════════════════════════════════════
    SERVICES PAGE — MOBILE SWIPE CAROUSEL
-   Mirrors the home-page carousel's clone-based infinite
-   loop, but uses separate IDs so both can coexist in
-   the DOM.
+   Mirrors the home-page carousel but uses separate
+   IDs so both can coexist in the DOM.
 ═══════════════════════════════════════════════════ */
 (function initPageMobSvcCarousel() {
-  var CLONE_COUNT = 2;
   var inited = false;
   var remeasure = null;
 
@@ -2942,13 +2914,11 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     if (!track || !outer || !dotsEl) return;
 
     var cards = SVC_CARDS_DATA;
-    var total = cards.length;
     var current = 0;
     var pointerMoved = false, downX = 0;
 
-    function cardHTML(c, idx, isClone) {
-      return '<div class="mob-svc-card' + (idx === 0 && !isClone ? ' active' : '') + '" data-idx="' + idx + '" style="cursor:pointer;"' +
-        (isClone ? ' aria-hidden="true" tabindex="-1"' : '') + '>' +
+    track.innerHTML = cards.map(function(c, i) {
+      return '<div class="mob-svc-card' + (i===0?' active':'') + '" data-idx="' + i + '" style="cursor:pointer;">' +
         '<div class="mob-svc-card-inner-wrap">' +
           '<div class="mob-svc-card-img"><img src="' + (c.img || 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80') + '" alt="' + c.title + '" loading="lazy"></div>' +
           '<div class="mob-svc-card-grad"></div>' +
@@ -2957,51 +2927,21 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
           '</div>' +
         '</div>' +
       '</div>';
-    }
-
-    var beforeClones = cards.slice(total - CLONE_COUNT).map(function(c, i) { return cardHTML(c, total - CLONE_COUNT + i, true); });
-    var realCards     = cards.map(function(c, i) { return cardHTML(c, i, false); });
-    var afterClones   = cards.slice(0, CLONE_COUNT).map(function(c, i) { return cardHTML(c, i, true); });
-    track.innerHTML = beforeClones.concat(realCards, afterClones).join('');
+    }).join('');
 
     dotsEl.innerHTML = cards.map(function(_, i) {
-      return '<div class="mob-svc-dot' + (i === 0 ? ' active' : '') + '" data-idx="' + i + '"></div>';
+      return '<div class="mob-svc-dot' + (i===0?' active':'') + '" data-idx="' + i + '"></div>';
     }).join('');
 
     var cardEls = Array.prototype.slice.call(track.querySelectorAll('.mob-svc-card'));
-    var realStartPos = CLONE_COUNT;
-    var realEndPos   = CLONE_COUNT + total - 1;
     var ticking = false;
-    var settleTimer = null;
-    var supportsScrollend = 'onscrollend' in window;
-
-    function setActiveByPos(pos) {
-      var idx = parseInt(cardEls[pos].dataset.idx, 10);
-      if (idx !== current) {
-        current = idx;
-        dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el, i) { el.classList.toggle('active', i === current); });
-      }
-      cardEls.forEach(function(el, i) { el.classList.toggle('active', i === pos); });
-    }
-
-    function centeredPos() {
-      var outerRect = outer.getBoundingClientRect();
-      var centerX = outerRect.left + outerRect.width / 2;
-      var bestPos = realStartPos, bestDist = Infinity;
-      cardEls.forEach(function(el, i) {
-        var r = el.getBoundingClientRect();
-        var dist = Math.abs((r.left + r.width / 2) - centerX);
-        if (dist < bestDist) { bestDist = dist; bestPos = i; }
-      });
-      return bestPos;
-    }
 
     function updateTransforms() {
       ticking = false;
       var outerRect = outer.getBoundingClientRect();
-      if (outerRect.width === 0) return;
+      if (outerRect.width === 0) return; /* not laid out yet */
       var centerX = outerRect.left + outerRect.width / 2;
-      var bestPos = realStartPos, bestDist = Infinity;
+      var bestIdx = 0, bestDist = Infinity;
 
       cardEls.forEach(function(el, i) {
         var r = el.getBoundingClientRect();
@@ -3012,64 +2952,28 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
         var opacity = 1 - norm * 0.55;
         el.style.transform = 'scale(' + scale.toFixed(3) + ')';
         el.style.opacity = opacity.toFixed(3);
-        if (dist < bestDist) { bestDist = dist; bestPos = i; }
+        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
       });
 
-      setActiveByPos(bestPos);
-    }
-
-    function silentScrollTo(pos) {
-      var prevBehavior = outer.style.scrollBehavior;
-      outer.style.scrollBehavior = 'auto';
-      cardEls[pos].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
-      requestAnimationFrame(function() { outer.style.scrollBehavior = prevBehavior || ''; });
-    }
-
-    function jumpIfNeeded() {
-      var pos = centeredPos();
-      if (pos < realStartPos || pos > realEndPos) {
-        var targetPos = pos < realStartPos ? pos + total : pos - total;
-        silentScrollTo(targetPos);
-        requestAnimationFrame(function() { requestAnimationFrame(updateTransforms); });
+      if (bestIdx !== current) {
+        current = bestIdx;
+        cardEls.forEach(function(el, i){ el.classList.toggle('active', i===current); });
+        dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active', i===current); });
       }
     }
-
     function onScroll() {
       if (!ticking) { ticking = true; requestAnimationFrame(updateTransforms); }
-      if (!supportsScrollend) {
-        if (settleTimer) clearTimeout(settleTimer);
-        settleTimer = setTimeout(jumpIfNeeded, 130);
-      }
     }
 
-    function goToPos(pos) {
-      if (pos < 0 || pos >= cardEls.length) return;
-      cardEls[pos].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    function goTo(idx) {
+      if (idx < 0 || idx >= cardEls.length) return;
+      cardEls[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
 
-    function goToIdx(idx) {
-      var positions = [];
-      cardEls.forEach(function(el, i) { if (parseInt(el.dataset.idx, 10) === idx) positions.push(i); });
-      var curPos = realStartPos + current;
-      var best = positions[0], bestDist = Infinity;
-      positions.forEach(function(p) {
-        var d = Math.abs(p - curPos);
-        if (d < bestDist) { bestDist = d; best = p; }
-      });
-      goToPos(best);
-    }
-
-    dotsEl.addEventListener('click', function(e) {
+    dotsEl.addEventListener('click', function(e){
       var dot = e.target.closest('.mob-svc-dot');
-      if (dot) goToIdx(parseInt(dot.dataset.idx, 10));
+      if (dot) goTo(parseInt(dot.dataset.idx));
     });
-
-    /* Optional arrow buttons — wired up automatically if present in the
-       services-page markup (ids: pageMobSvcPrev / pageMobSvcNext). */
-    var prevBtn = document.getElementById('pageMobSvcPrev');
-    var nextBtn = document.getElementById('pageMobSvcNext');
-    if (prevBtn) prevBtn.addEventListener('click', function() { goToPos(realStartPos + current - 1); });
-    if (nextBtn) nextBtn.addEventListener('click', function() { goToPos(realStartPos + current + 1); });
 
     /* Tap on the already-active card navigates to its detail page;
        tapping a peeking neighbor just brings it to center. */
@@ -3081,24 +2985,19 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
       if (pointerMoved) return; /* was a swipe, not a tap */
       var card = e.target.closest('.mob-svc-card');
       if (!card) return;
-      var idx = parseInt(card.dataset.idx, 10);
-      if (card.classList.contains('active') && cards[idx] && cards[idx].page) {
+      var idx = parseInt(card.dataset.idx);
+      if (idx === current && cards[idx] && cards[idx].page) {
         navigate(cards[idx].page);
       } else {
-        goToPos(cardEls.indexOf(card));
+        goTo(idx);
       }
     });
 
     outer.addEventListener('scroll', onScroll, { passive: true });
-    if (supportsScrollend) outer.addEventListener('scrollend', jumpIfNeeded, { passive: true });
-    window.addEventListener('resize', function() { requestAnimationFrame(updateTransforms); }, { passive: true });
-
-    requestAnimationFrame(function() {
-      silentScrollTo(realStartPos);
-      setTimeout(updateTransforms, 50);
-      setTimeout(updateTransforms, 300);
-    });
-
+    window.addEventListener('resize', onScroll, { passive: true });
+    updateTransforms();
+    setTimeout(updateTransforms, 50);
+    setTimeout(updateTransforms, 300);
     inited = true;
     remeasure = updateTransforms;
   }
