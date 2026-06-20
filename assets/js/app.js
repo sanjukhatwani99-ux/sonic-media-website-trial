@@ -2382,6 +2382,33 @@ buildCoverflowInstance({
 /* ═══════════════════════════════════════════════════
    THOUGHT VESSEL — SCROLL REVEAL ANIMATION
 ═══════════════════════════════════════════════════ */
+
+// Swaps a <video>'s <source> to a device-specific URL (data-mobile-src /
+// data-desktop-src) if present, reloading and resuming playback as needed.
+function setResponsiveVideoSrc(vid, isMobile) {
+  if (!vid) return;
+  const source = vid.querySelector('source[data-mobile-src]');
+  if (!source) return;
+
+  const target = isMobile
+    ? source.dataset.mobileSrc
+    : (source.dataset.desktopSrc || source.getAttribute('src'));
+
+  if (!target || source.getAttribute('src') === target) return;
+
+  const wasPlaying = !vid.paused;
+  const t = vid.currentTime;
+  source.setAttribute('src', target);
+  vid.load();
+  if (wasPlaying) {
+    vid.addEventListener('loadedmetadata', function resume() {
+      vid.removeEventListener('loadedmetadata', resume);
+      try { vid.currentTime = t; } catch (e) {}
+      vid.play().catch(() => {});
+    });
+  }
+}
+
 (function initThoughtVessel() {
   function tryTVInit() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
@@ -2403,6 +2430,8 @@ buildCoverflowInstance({
     const expandW  = '100vw';
     const expandH  = isMobile ? '92svh' : '88vh';
 
+    setResponsiveVideoSrc(vid, isMobile);
+
     gsap.set(vc,        { width: initSize, height: initSize, borderRadius: '16px', borderColor: 'rgba(255,92,0,0.18)' });
     gsap.set(vid,       { scale: 1 });
     gsap.set(darkOv,    { backgroundColor: 'rgba(0,0,0,0)' });
@@ -2411,6 +2440,7 @@ buildCoverflowInstance({
     if (ovContent) gsap.set(ovContent, { filter: 'blur(10px)', transform: 'scale(1.1)' });
 
     vid.play().catch(() => {});
+
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -2501,6 +2531,9 @@ buildCoverflowInstance({
     // Set initial state — small square
     const _abIsMob = window.innerWidth <= 768;
     const _abInitSize = _abIsMob ? '72vw' : '320px';
+
+    setResponsiveVideoSrc(vid, _abIsMob);
+
     gsap.set(vc,        { width: _abInitSize, height: _abInitSize, borderRadius: '16px', borderColor: 'rgba(255,92,0,0.18)' });
     gsap.set(vid,       { scale: 1 });
     gsap.set(darkOv,    { backgroundColor: 'rgba(0,0,0,0)' });
