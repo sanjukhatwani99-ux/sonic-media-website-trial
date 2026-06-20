@@ -4762,7 +4762,7 @@ function buildPreview(brand, tagline, industry) {
   @media (max-width: 900px) {
     .app-process-tl-section { padding: 56px 0 0; }
     .wsv-ptl-inner { padding: 0 16px 56px; }
-    .wsv-ptl-header { padding: 0 0 40px; }
+    .wsv-ptl-header { padding: 0 16px 40px; }
     .wsv-ptl-title { font-size: clamp(32px, 8vw, 52px); }
     .wsv-ptl-sub { font-size: 13px; line-height: 1.65; }
     .wsv-ptl-track {
@@ -6345,8 +6345,8 @@ function wsvScrollToAnchor(id) {
 
     <div class="footer-bottom-row">
       <div class="enquiry-form">
-        <input type="text" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID">
-        <button class="enquiry-btn" onclick="navigate('contact')" aria-label="Submit enquiry and go to contact page">Enquiry</button>
+        <input type="text" id="footer-enquiry-input" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID" autocomplete="off">
+        <button class="enquiry-btn" id="footer-enquiry-btn" onclick="tsmFooterEnquiry(event)" aria-label="Submit enquiry">Enquiry</button>
       </div>
       <div class="legal-links">
         <span class="legal-title">Legal Links</span>

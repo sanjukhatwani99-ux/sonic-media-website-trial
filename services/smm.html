@@ -2020,14 +2020,64 @@
     background: rgba(255,255,255,.7); flex-shrink: 0;
   }
 
-  @media (max-width: 1100px) {
-    .smm-deliv-grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) {
+    .smm-deliverables-section { padding: 60px 0; }
+    .smm-deliv-inner { padding: 0 16px; }
+    .smm-deliv-header { margin-bottom: 32px; }
+    .smm-deliv-eyebrow { font-size: 10px; padding: 5px 12px; margin-bottom: 14px; }
+    .smm-deliv-title { font-size: clamp(30px, 8vw, 48px); margin-bottom: 10px; }
+    .smm-deliv-subtitle { font-size: 13px; }
+    .smm-deliv-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .smm-deliv-card {
+      padding: 14px 12px;
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 10px;
+      row-gap: 4px;
+    }
+    .smm-deliv-card-icon {
+      font-size: 20px;
+      margin-bottom: 0;
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+    }
+    .smm-deliv-card-title {
+      font-size: 11px;
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+      margin-bottom: 0;
+    }
+    .smm-deliv-card-desc {
+      font-size: 11px;
+      line-height: 1.5;
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .smm-deliv-card-check {
+      top: 10px; right: 10px;
+      width: 18px; height: 18px;
+      font-size: 9px;
+    }
+    .smm-deliv-strip {
+      padding: 22px 18px;
+      border-radius: 14px;
+      gap: 18px;
+    }
+    .smm-deliv-strip-heading { font-size: clamp(22px, 6vw, 32px); }
+    .smm-deliv-strip-right { gap: 8px; }
+    .smm-deliv-strip-pill { padding: 6px 12px; font-size: 10px; }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 380px) {
     .smm-deliv-grid { grid-template-columns: 1fr; }
-    .smm-deliv-inner { padding: 0 20px; }
-    .smm-deliv-strip { padding: 28px 24px; }
-    .smm-tl-track { grid-template-columns: repeat(4, 1fr); }
+    .smm-deliv-card { grid-template-columns: auto 1fr; }
   }
   </style>
 
@@ -3077,8 +3127,8 @@
 
     <div class="footer-bottom-row">
       <div class="enquiry-form">
-        <input type="text" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID">
-        <button class="enquiry-btn" onclick="navigate('contact')" aria-label="Submit enquiry and go to contact page">Enquiry</button>
+        <input type="text" id="footer-enquiry-input" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID" autocomplete="off">
+        <button class="enquiry-btn" id="footer-enquiry-btn" onclick="tsmFooterEnquiry(event)" aria-label="Submit enquiry">Enquiry</button>
       </div>
       <div class="legal-links">
         <span class="legal-title">Legal Links</span>

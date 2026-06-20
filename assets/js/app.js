@@ -3484,6 +3484,96 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
 })();
 
 /* ═══════════════════════════════════════════════════
+   FOOTER ENQUIRY — WEB3FORMS SUBMISSION
+   Validates mobile/email input, submits to Web3Forms,
+   gives inline feedback on the button.
+═══════════════════════════════════════════════════ */
+window.tsmFooterEnquiry = function(e) {
+  if (e) e.preventDefault();
+
+  var input = document.getElementById('footer-enquiry-input');
+  var btn   = document.getElementById('footer-enquiry-btn');
+  if (!input || !btn) return;
+
+  var val = (input.value || '').trim();
+  if (!val) {
+    input.focus();
+    input.style.borderColor = '#ff5c00';
+    setTimeout(function() { input.style.borderColor = ''; }, 1500);
+    return;
+  }
+
+  // Detect email vs phone
+  var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  var isPhone = /^[0-9+\-\s()]{7,15}$/.test(val);
+
+  if (!isEmail && !isPhone) {
+    input.style.borderColor = '#ff5c00';
+    input.placeholder = 'ENTER A VALID EMAIL OR MOBILE NUMBER';
+    setTimeout(function() {
+      input.style.borderColor = '';
+      input.placeholder = 'ENTER YOUR MOBILE NUMBER OR MAIL ID';
+    }, 2500);
+    return;
+  }
+
+  // Build submission payload
+  var subject  = isEmail
+    ? 'Footer Enquiry — ' + val
+    : 'Footer Enquiry — Mobile: ' + val;
+  var message  = isEmail
+    ? 'New footer enquiry.\n\nEmail: ' + val + '\n\nSource page: ' + window.location.href
+    : 'New footer enquiry.\n\nMobile: ' + val + '\n\nSource page: ' + window.location.href;
+  var fromName = 'Footer Enquiry';
+  var emailField = isEmail ? val : 'noreply@thesonicmedia.com';
+
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      access_key: '66f90d59-83e7-4136-8823-1bfeb38deb41',
+      subject:    subject,
+      from_name:  fromName,
+      email:      emailField,
+      message:    message
+    })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(result) {
+    if (result.success) {
+      btn.textContent = '✓ Sent!';
+      btn.style.background = '#16a34a';
+      btn.style.color = '#fff';
+      input.value = '';
+      input.placeholder = 'ENTER YOUR MOBILE NUMBER OR MAIL ID';
+      setTimeout(function() {
+        btn.textContent = 'Enquiry';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 4000);
+    } else {
+      throw new Error(result.message || 'Submission failed');
+    }
+  })
+  .catch(function() {
+    btn.textContent = 'Enquiry';
+    btn.disabled = false;
+    alert('Submission failed. Please email us at info@thesonicmedia.com');
+  });
+};
+
+// Also trigger on Enter key in the footer input (event delegation — works after footer injection)
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.target && e.target.id === 'footer-enquiry-input') {
+    window.tsmFooterEnquiry(e);
+  }
+});
+
+/* ═══════════════════════════════════════════════════
    FUTURE VISION DETAIL MODAL
 ═══════════════════════════════════════════════════ */
 (function(){
