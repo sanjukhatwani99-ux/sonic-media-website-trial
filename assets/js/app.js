@@ -158,6 +158,9 @@ function reinitHomeAnimations() {
     // Reset elements to initial state before re-animating
     const _isMob = window.innerWidth <= 768;
     const _tsmInitSize = _isMob ? '72vw' : '320px';
+
+    setResponsiveVideoSrc(vid, _isMob);
+
     gsap.set(vc,        { width: _tsmInitSize, height: _tsmInitSize, borderRadius: '16px', borderColor: 'rgba(255,92,0,0.18)' });
     gsap.set(vid,       { scale: 1 });
     gsap.set(darkOv,    { backgroundColor: 'rgba(0,0,0,0)' });
@@ -177,7 +180,7 @@ function reinitHomeAnimations() {
         onEnter: () => vid.play()
       }
     })
-    .to(vc,        { width: '100vw', height: _isMob ? '56vw' : '88vh', borderRadius: '0px', borderColor: 'transparent', ease: 'expo.out', duration: 0.5 }, 0)
+    .to(vc,        { width: '100vw', height: _isMob ? '92svh' : '88vh', borderRadius: '0px', borderColor: 'transparent', ease: 'expo.out', duration: 0.5 }, 0)
     .to(vid,       { scale: 1.08, ease: 'expo.out', duration: 0.5 }, 0)
     .to(darkOv,    { backgroundColor: 'rgba(0,0,0,0.45)', ease: 'power3.inOut', duration: 0.5 }, 0)
     .to(overlay,   { clipPath: 'inset(0% 0 0 0)', ease: 'expo.out', duration: 0.3 }, 0.4)
