@@ -259,41 +259,70 @@ const cursor = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursor-follower');
 const mouseGlow = document.getElementById('mouse-glow');
 let mx = 0, my = 0, fx = 0, fy = 0;
+let cursorRAF = null;
 
+// Throttle mousemove for better performance
+let lastUpdate = 0;
 document.addEventListener('mousemove', e => {
+  const now = performance.now();
+  if (now - lastUpdate < 10) return; // Max 100fps
+  lastUpdate = now;
+  
   mx = e.clientX; my = e.clientY;
   cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
   if (mouseGlow) { mouseGlow.style.left = mx + 'px'; mouseGlow.style.top = my + 'px'; }
-});
+}, { passive: true });
+
 (function animCursor() {
-  fx += (mx - fx) * 0.12; fy += (my - fy) * 0.12;
+  fx += (mx - fx) * 0.15; fy += (my - fy) * 0.15;
   cursorFollower.style.left = fx + 'px'; cursorFollower.style.top = fy + 'px';
-  requestAnimationFrame(animCursor);
+  cursorRAF = requestAnimationFrame(animCursor);
 })();
+
 document.addEventListener('mouseover', e => {
   if (e.target.closest('a,button,.svc-card,.cs-item,.tcard,.jcard,.fv-card,.studio-card,.team-card,.val-card,.equip-card,.price-card'))
     document.body.classList.add('cursor-hover');
   else document.body.classList.remove('cursor-hover');
-});
+}, { passive: true });
 
 /* ─ Cursor Trail ─ */
 (function() {
   const canvas = document.getElementById('cursor-trail');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+  
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      canvas.width = window.innerWidth; 
+      canvas.height = window.innerHeight;
+    }, 200);
+  }, { passive: true });
+  
   const trail = [];
-  document.addEventListener('mousemove', e => trail.push({ x: e.clientX, y: e.clientY, alpha: 1 }));
+  const maxTrailLength = 15; // Limit trail points
+  
+  let lastTrailUpdate = 0;
+  document.addEventListener('mousemove', e => {
+    const now = performance.now();
+    if (now - lastTrailUpdate < 40) return; // Throttle trail updates
+    lastTrailUpdate = now;
+    
+    trail.push({ x: e.clientX, y: e.clientY, alpha: 1 });
+    if (trail.length > maxTrailLength) trail.shift();
+  }, { passive: true });
+  
   (function drawTrail() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = trail.length - 1; i >= 0; i--) {
       const p = trail[i];
       ctx.beginPath();
-      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,92,0,${p.alpha * 0.25})`;
+      ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,92,0,${p.alpha * 0.2})`;
       ctx.fill();
-      p.alpha -= 0.04;
+      p.alpha -= 0.06;
       if (p.alpha <= 0) trail.splice(i, 1);
     }
     requestAnimationFrame(drawTrail);
@@ -302,11 +331,19 @@ document.addEventListener('mouseover', e => {
 
 /* ─ Scroll Progress ─ */
 const sp=document.getElementById('sp');
-window.addEventListener('scroll',()=>{
-  const pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
-  sp.style.width=pct+'%';
-  document.getElementById('navbar').classList.toggle('stuck',window.scrollY>60);
-});
+let scrollTicking = false;
+
+window.addEventListener('scroll', () => {
+  if (!scrollTicking) {
+    requestAnimationFrame(() => {
+      const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+      sp.style.width = pct + '%';
+      document.getElementById('navbar').classList.toggle('stuck', window.scrollY > 60);
+      scrollTicking = false;
+    });
+    scrollTicking = true;
+  }
+}, { passive: true });
 
 /* ─ Mobile Nav ─ */
 const mobNav=document.getElementById('mobNav');
@@ -389,27 +426,41 @@ initReveal();
 
 /* ─ CTA Matrix Canvas ─ */
 function initCanvas() {
-  const canvas=document.getElementById('ctaCanvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;}
-  resize();window.addEventListener('resize',resize);
-  const chars='SONICMEDIA01アイウエオ∆∇★✦'.split('');
-  const fs=13;let cols=Math.floor(canvas.width/fs);
-  const drops=Array(cols).fill(1);
-  if(canvas._interval)clearInterval(canvas._interval);
-  canvas._interval=setInterval(()=>{
-    ctx.fillStyle='rgba(20,10,0,0.08)';ctx.fillRect(0,0,canvas.width,canvas.height);
-    cols=Math.floor(canvas.width/fs);
-    while(drops.length<cols)drops.push(Math.random()*canvas.height);
-    ctx.font=fs+'px monospace';
-    for(let i=0;i<cols;i++){
-      ctx.fillStyle=`rgba(255,92,0,${Math.random()*.5+.2})`;
-      ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*fs,drops[i]*fs);
-      if(drops[i]*fs>canvas.height&&Math.random()>.97)drops[i]=0;
+  const canvas = document.getElementById('ctaCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha: false });
+  
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(resize, 200);
+  }, { passive: true });
+  
+  const chars = 'SONICMEDIA01アイウエオ∆∇★✦'.split('');
+  const fs = 13;
+  let cols = Math.floor(canvas.width / fs);
+  const drops = Array(cols).fill(1);
+  
+  if (canvas._interval) clearInterval(canvas._interval);
+  canvas._interval = setInterval(() => {
+    ctx.fillStyle = 'rgba(20,10,0,0.08)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    cols = Math.floor(canvas.width / fs);
+    while (drops.length < cols) drops.push(Math.random() * canvas.height);
+    ctx.font = fs + 'px monospace';
+    for (let i = 0; i < cols; i++) {
+      ctx.fillStyle = `rgba(255,92,0,${Math.random() * 0.4 + 0.2})`;
+      ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fs, drops[i] * fs);
+      if (drops[i] * fs > canvas.height && Math.random() > 0.97) drops[i] = 0;
       drops[i]++;
     }
-  },70);
+  }, 80);
 }
 initCanvas();
 
@@ -439,19 +490,30 @@ rStyle.textContent='@keyframes ripA{to{transform:scale(4);opacity:0;}}';
 document.head.appendChild(rStyle);
 
 /* ─ Parallax on Hero ─ */
-window.addEventListener('scroll',()=>{
-  const hero=document.querySelector('.page.active .hero-left');
-  if(hero&&window.scrollY<window.innerHeight){
-    // Only apply parallax translate to non-button elements
-    const fadeEls=hero.querySelectorAll('.hero-eyebrow,.hero-h1,.hero-sub,.hero-stats,.hero-scroll');
-    const opacity=Math.max(0,1-window.scrollY/(window.innerHeight*.8));
-    const ty=window.scrollY*.22;
-    fadeEls.forEach(el=>{el.style.opacity=opacity;el.style.transform=`translateY(${ty}px)`;});
-    // Buttons: keep fully visible, no transform
-    const btns=hero.querySelector('.hero-btns');
-    if(btns){btns.style.opacity='1';btns.style.transform='none';}
+let parallaxTicking = false;
+
+window.addEventListener('scroll', () => {
+  if (!parallaxTicking) {
+    requestAnimationFrame(() => {
+      const hero = document.querySelector('.page.active .hero-left');
+      if (hero && window.scrollY < window.innerHeight) {
+        // Only apply parallax translate to non-button elements
+        const fadeEls = hero.querySelectorAll('.hero-eyebrow,.hero-h1,.hero-sub,.hero-stats,.hero-scroll');
+        const opacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.8));
+        const ty = window.scrollY * 0.18;
+        fadeEls.forEach(el => {
+          el.style.opacity = opacity;
+          el.style.transform = `translate3d(0, ${ty}px, 0)`;
+        });
+        // Buttons: keep fully visible, no transform
+        const btns = hero.querySelector('.hero-btns');
+        if (btns) { btns.style.opacity = '1'; btns.style.transform = 'none'; }
+      }
+      parallaxTicking = false;
+    });
+    parallaxTicking = true;
   }
-});
+}, { passive: true });
 
 /* ─ Portfolio Filter ─ */
 function filterPort(btn, cat) {
@@ -2656,6 +2718,14 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
 
 /* ═══════════════════════════════════════════════════
    MOBILE SWIPE CAROUSEL — SERVICES
+   True infinite loop (10 real cards): 2 clones of the
+   tail are prepended, 2 clones of the head are appended.
+   The strip starts scrolled to the first REAL card. The
+   realign-to-real-card jump fires exactly on the native
+   `scrollend` event (the instant momentum/snap settling
+   actually finishes) — not a guessed timeout — so there
+   is zero visible pause or jiggle: swipe past card 10 and
+   it is already card 1 by the time you let go, every time.
 ═══════════════════════════════════════════════════ */
 (function initMobSvcCarousel() {
   function buildCarousel() {
@@ -2667,65 +2737,159 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     var nextBtn = document.getElementById('mobSvcNext');
     if (!track || !outer || !dotsEl) return;
     var cards = SVC_CARDS_DATA;
-    var current = 0, startX = 0, isDragging = false, dragDelta = 0;
+    var realCount = cards.length;
+    var BUF = 2; /* clones on each side */
+    var current = 0; /* index into the real cards array (0..realCount-1) */
+    var supportsScrollend = 'onscrollend' in window;
 
-    track.innerHTML = cards.map(function(c, i) {
-      return '<div class="mob-svc-card' + (i===0?' active':'') + '" data-idx="' + i + '">' +
+    function cardHTML(c, realIdx, isClone) {
+      return '<div class="mob-svc-card' + (isClone ? ' mob-svc-card--clone' : '') + '" data-real-idx="' + realIdx + '">' +
         '<div class="mob-svc-card-inner-wrap">' +
           '<div class="mob-svc-card-img"><img src="' + (c.img || 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80') + '" alt="' + c.title + '" loading="lazy"></div>' +
           '<div class="mob-svc-card-grad"></div>' +
-          '<div class="mob-svc-card-num">' + String(i+1).padStart(2,'0') + '</div>' +
           '<div class="mob-svc-card-body">' +
-            '<div class="mob-svc-card-icon">' + (c.icon || '\u{1F680}') + '</div>' +
             '<div class="mob-svc-card-title">' + c.title + '</div>' +
-            '<div class="mob-svc-card-desc">' + (c.desc || '') + '</div>' +
-            '<div class="mob-svc-card-tag">' + (c.tag || c.title) + '</div>' +
           '</div>' +
         '</div>' +
       '</div>';
-    }).join('');
+    }
+
+    /* Strip layout: [tail clones][real cards][head clones]
+       e.g. BUF=2, realCount=10 -> indices 0,1 = clones of cards 9,10 (zero-based 8,9)
+            2..11 = real cards 1..10, 12,13 = clones of cards 1,2 */
+    var html = '';
+    for (var t = realCount - BUF; t < realCount; t++) html += cardHTML(cards[t], t, true);
+    for (var i = 0; i < realCount; i++) html += cardHTML(cards[i], i, false);
+    for (var h = 0; h < BUF; h++) html += cardHTML(cards[h], h, true);
+    track.innerHTML = html;
 
     dotsEl.innerHTML = cards.map(function(_, i) {
       return '<div class="mob-svc-dot' + (i===0?' active':'') + '" data-idx="' + i + '"></div>';
     }).join('');
 
-    function getCardWidth() {
-      /* Each card is exactly 100vw wide — one card per screen */
-      return window.innerWidth;
+    var cardEls = Array.prototype.slice.call(track.querySelectorAll('.mob-svc-card'));
+    var ticking = false;
+    var realigning = false; /* true only for the single frame we're jumping the scroll position */
+
+    function realPos(stripIdx) { return stripIdx - BUF; } /* strip index -> real card index (can be <0 or >=realCount for clones) */
+    function stripPosFor(realIdx) { return realIdx + BUF; } /* real card index -> its strip index among the real block */
+    function wrapReal(realIdx) { return ((realIdx % realCount) + realCount) % realCount; }
+
+    function centeredStripIdx() {
+      var outerRect = outer.getBoundingClientRect();
+      if (outerRect.width === 0) return -1; /* not laid out yet */
+      var centerX = outerRect.left + outerRect.width / 2;
+      var bestIdx = 0, bestDist = Infinity;
+      cardEls.forEach(function(el, i) {
+        var r = el.getBoundingClientRect();
+        var dist = Math.abs((r.left + r.width / 2) - centerX);
+        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+      });
+      return bestIdx;
     }
 
-    function goTo(idx, animated) {
-      if (idx < 0 || idx >= cards.length) return;
-      current = idx;
-      var cw = getCardWidth();
-      track.style.transition = animated === false ? 'none' : 'transform 0.42s cubic-bezier(0.22,1,0.36,1)';
-      track.style.transform = 'translateX(' + -(current * cw) + 'px)';
-      track.querySelectorAll('.mob-svc-card').forEach(function(el,i){ el.classList.toggle('active',i===current); });
-      dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active',i===current); });
-      prevBtn.classList.toggle('disabled', current===0);
-      nextBtn.classList.toggle('disabled', current===cards.length-1);
+    function setActive(stripIdx) {
+      cardEls.forEach(function(el, i){ el.classList.toggle('active', i===stripIdx); });
+      var dotIdx = wrapReal(realPos(stripIdx));
+      current = dotIdx;
+      dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active', i===current); });
+      if (prevBtn) prevBtn.classList.toggle('disabled', false);
+      if (nextBtn) nextBtn.classList.toggle('disabled', false);
     }
 
-    prevBtn.addEventListener('click', function(){ goTo(current-1, true); });
-    nextBtn.addEventListener('click', function(){ goTo(current+1, true); });
+    /* Instantly (no transition/animation) re-point the scroller at the real
+       card matching whatever clone is currently centered. Called exactly
+       on scrollend, so the jump lands in the same frame the swipe settles
+       — perceived as a perfect, seamless loop rather than a snap-back. */
+    function realignIfOnClone() {
+      var stripIdx = centeredStripIdx();
+      if (stripIdx < 0) return;
+      var realIdx = realPos(stripIdx);
+      if (realIdx >= 0 && realIdx < realCount) { setActive(stripIdx); return; }
+
+      var targetStripIdx = stripPosFor(wrapReal(realIdx));
+      realigning = true;
+      var prevSnap = outer.style.scrollSnapType;
+      var prevBehavior = outer.style.scrollBehavior;
+      outer.style.scrollSnapType = 'none';
+      outer.style.scrollBehavior = 'auto';
+      cardEls[targetStripIdx].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+      outer.style.scrollSnapType = prevSnap;
+      outer.style.scrollBehavior = prevBehavior;
+      setActive(targetStripIdx);
+      /* Let the forced scroll's own scroll/scrollend events drain before
+         resuming normal handling, so they don't re-trigger this. */
+      requestAnimationFrame(function() { realigning = false; });
+    }
+
+    /* Live parallax (scale/opacity) while the strip is actively moving. */
+    function updateTransforms() {
+      ticking = false;
+      if (realigning) return;
+      var outerRect = outer.getBoundingClientRect();
+      if (outerRect.width === 0) return;
+      var centerX = outerRect.left + outerRect.width / 2;
+      cardEls.forEach(function(el) {
+        var r = el.getBoundingClientRect();
+        var dist = Math.abs((r.left + r.width / 2) - centerX);
+        var norm = Math.min(dist / (outerRect.width * 0.62), 1); /* 0 = centered, 1 = fully off */
+        var scale = 1.05 - norm * 0.20;   /* 105% center -> ~85% at edge */
+        var opacity = 1 - norm * 0.55;     /* 100% center -> ~45% at edge */
+        el.style.transform = 'scale(' + scale.toFixed(3) + ')';
+        el.style.opacity = opacity.toFixed(3);
+      });
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateTransforms); }
+    }
+
+    /* Fallback scrollend detection for browsers without native support
+       (older Safari): fire once scroll position has been stable for one
+       short idle gap. Still event-driven, not a fixed "wait and hope". */
+    var idleTimer = null;
+    function onScrollFallback() {
+      onScroll();
+      if (realigning) return;
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(realignIfOnClone, 80);
+    }
+
+    if (supportsScrollend) {
+      outer.addEventListener('scroll', onScroll, { passive: true });
+      outer.addEventListener('scrollend', function() {
+        if (!realigning) realignIfOnClone();
+      }, { passive: true });
+    } else {
+      outer.addEventListener('scroll', onScrollFallback, { passive: true });
+    }
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    function goTo(realIdx) {
+      cardEls[stripPosFor(wrapReal(realIdx))].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+
+    prevBtn && prevBtn.addEventListener('click', function(){ goTo(current-1); });
+    nextBtn && nextBtn.addEventListener('click', function(){ goTo(current+1); });
     dotsEl.addEventListener('click', function(e){
       var dot = e.target.closest('.mob-svc-dot');
-      if (dot) goTo(parseInt(dot.dataset.idx), true);
+      if (dot) goTo(parseInt(dot.dataset.idx));
     });
-    outer.addEventListener('touchstart', function(e){ startX=e.touches[0].clientX; isDragging=true; dragDelta=0; },{passive:true});
-    outer.addEventListener('touchmove', function(e){
-      if (!isDragging) return;
-      dragDelta = e.touches[0].clientX - startX;
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(' + (-(current*getCardWidth()) + dragDelta*0.6) + 'px)';
-    },{passive:true});
-    outer.addEventListener('touchend', function(){
-      isDragging = false;
-      if (dragDelta < -50 && current < cards.length-1) goTo(current+1, true);
-      else if (dragDelta > 50 && current > 0)          goTo(current-1, true);
-      else                                              goTo(current, true);
-    });
-    goTo(0, false);
+
+    /* Jump to the first REAL card (skipping the prepended tail clones)
+       before the first paint, with no smooth animation. */
+    function positionAtStart() {
+      var prevBehavior = outer.style.scrollBehavior;
+      outer.style.scrollBehavior = 'auto';
+      cardEls[stripPosFor(0)].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+      outer.style.scrollBehavior = prevBehavior;
+      updateTransforms();
+      setActive(stripPosFor(0));
+    }
+    positionAtStart();
+    /* Outer may still be display:none (ancestor toggled by media-query JS)
+       on first build — re-measure/reposition once layout has settled. */
+    setTimeout(positionAtStart, 50);
+    setTimeout(positionAtStart, 300);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', buildCarousel);
   else buildCarousel();
@@ -2738,6 +2902,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
 ═══════════════════════════════════════════════════ */
 (function initPageMobSvcCarousel() {
   var inited = false;
+  var remeasure = null;
 
   function buildCarousel() {
     if (typeof SVC_CARDS_DATA === 'undefined') { setTimeout(buildCarousel, 150); return; }
@@ -2749,19 +2914,16 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     if (!track || !outer || !dotsEl) return;
 
     var cards = SVC_CARDS_DATA;
-    var current = 0, startX = 0, isDragging = false, dragDelta = 0;
+    var current = 0;
+    var pointerMoved = false, downX = 0;
 
     track.innerHTML = cards.map(function(c, i) {
       return '<div class="mob-svc-card' + (i===0?' active':'') + '" data-idx="' + i + '" style="cursor:pointer;">' +
         '<div class="mob-svc-card-inner-wrap">' +
           '<div class="mob-svc-card-img"><img src="' + (c.img || 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80') + '" alt="' + c.title + '" loading="lazy"></div>' +
           '<div class="mob-svc-card-grad"></div>' +
-          '<div class="mob-svc-card-num">' + String(i+1).padStart(2,'0') + '</div>' +
           '<div class="mob-svc-card-body">' +
-            '<div class="mob-svc-card-icon">' + (c.icon || (c.cat ? c.cat.split('·')[0].trim() : '')) + '</div>' +
             '<div class="mob-svc-card-title">' + c.title + '</div>' +
-            '<div class="mob-svc-card-desc">' + (c.desc || c.cat || '') + '</div>' +
-            '<div class="mob-svc-card-tag">' + (c.tag || c.cat || c.title) + '</div>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -2771,56 +2933,77 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
       return '<div class="mob-svc-dot' + (i===0?' active':'') + '" data-idx="' + i + '"></div>';
     }).join('');
 
-    function getCardWidth() { return window.innerWidth; }
+    var cardEls = Array.prototype.slice.call(track.querySelectorAll('.mob-svc-card'));
+    var ticking = false;
 
-    function goTo(idx, animated) {
-      if (idx < 0 || idx >= cards.length) return;
-      current = idx;
-      var cw = getCardWidth();
-      track.style.transition = animated === false ? 'none' : 'transform 0.42s cubic-bezier(0.22,1,0.36,1)';
-      track.style.transform = 'translateX(' + -(current * cw) + 'px)';
-      track.querySelectorAll('.mob-svc-card').forEach(function(el,i){ el.classList.toggle('active',i===current); });
-      dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active',i===current); });
-      prevBtn.classList.toggle('disabled', current===0);
-      nextBtn.classList.toggle('disabled', current===cards.length-1);
+    function updateTransforms() {
+      ticking = false;
+      var outerRect = outer.getBoundingClientRect();
+      if (outerRect.width === 0) return; /* not laid out yet */
+      var centerX = outerRect.left + outerRect.width / 2;
+      var bestIdx = 0, bestDist = Infinity;
+
+      cardEls.forEach(function(el, i) {
+        var r = el.getBoundingClientRect();
+        var cardCenter = r.left + r.width / 2;
+        var dist = Math.abs(cardCenter - centerX);
+        var norm = Math.min(dist / (outerRect.width * 0.62), 1);
+        var scale = 1.05 - norm * 0.20;
+        var opacity = 1 - norm * 0.55;
+        el.style.transform = 'scale(' + scale.toFixed(3) + ')';
+        el.style.opacity = opacity.toFixed(3);
+        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+      });
+
+      if (bestIdx !== current) {
+        current = bestIdx;
+        cardEls.forEach(function(el, i){ el.classList.toggle('active', i===current); });
+        dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active', i===current); });
+        if (prevBtn) prevBtn.classList.toggle('disabled', current===0);
+        if (nextBtn) nextBtn.classList.toggle('disabled', current===cards.length-1);
+      }
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateTransforms); }
     }
 
-    prevBtn.addEventListener('click', function(){ goTo(current-1, true); });
-    nextBtn.addEventListener('click', function(){ goTo(current+1, true); });
+    function goTo(idx) {
+      if (idx < 0 || idx >= cardEls.length) return;
+      cardEls[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+
+    prevBtn && prevBtn.addEventListener('click', function(){ goTo(current-1); });
+    nextBtn && nextBtn.addEventListener('click', function(){ goTo(current+1); });
     dotsEl.addEventListener('click', function(e){
       var dot = e.target.closest('.mob-svc-dot');
-      if (dot) goTo(parseInt(dot.dataset.idx), true);
+      if (dot) goTo(parseInt(dot.dataset.idx));
     });
 
-    /* Tap on card navigates to its detail page */
+    /* Tap on the already-active card navigates to its detail page;
+       tapping a peeking neighbor just brings it to center. */
+    track.addEventListener('pointerdown', function(e){ downX = e.clientX; pointerMoved = false; });
+    track.addEventListener('pointermove', function(e){
+      if (Math.abs(e.clientX - downX) > 8) pointerMoved = true;
+    });
     track.addEventListener('click', function(e) {
-      if (Math.abs(dragDelta) > 10) return; /* was a swipe, not a tap */
+      if (pointerMoved) return; /* was a swipe, not a tap */
       var card = e.target.closest('.mob-svc-card');
       if (!card) return;
       var idx = parseInt(card.dataset.idx);
       if (idx === current && cards[idx] && cards[idx].page) {
         navigate(cards[idx].page);
       } else {
-        goTo(idx, true);
+        goTo(idx);
       }
     });
 
-    outer.addEventListener('touchstart', function(e){ startX=e.touches[0].clientX; isDragging=true; dragDelta=0; },{passive:true});
-    outer.addEventListener('touchmove', function(e){
-      if (!isDragging) return;
-      dragDelta = e.touches[0].clientX - startX;
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(' + (-(current*getCardWidth()) + dragDelta*0.6) + 'px)';
-    },{passive:true});
-    outer.addEventListener('touchend', function(){
-      isDragging = false;
-      if (dragDelta < -50 && current < cards.length-1) goTo(current+1, true);
-      else if (dragDelta > 50 && current > 0)          goTo(current-1, true);
-      else                                              goTo(current, true);
-    });
-
-    goTo(0, false);
+    outer.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    updateTransforms();
+    setTimeout(updateTransforms, 50);
+    setTimeout(updateTransforms, 300);
     inited = true;
+    remeasure = updateTransforms;
   }
 
   /* Show carousel and hide coverflow when services page activates on mobile */
@@ -2831,6 +3014,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     if (carousel) carousel.style.display = 'flex';
     if (coverflow) coverflow.style.display = 'none';
     if (!inited) buildCarousel();
+    else if (remeasure) setTimeout(remeasure, 50);
   }
 
   /* Hook into navigate */

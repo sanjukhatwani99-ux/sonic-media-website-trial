@@ -6,9 +6,8 @@
 <title>The Sonic Media — Premium Digital Marketing Agency</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;8000&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
-<link rel="stylesheet" href="assets/css/responsive-new.css">
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -257,28 +256,13 @@
     <div class="hero-scroll"><div class="scroll-line"></div><div class="scroll-txt">Scroll to Explore</div></div>
   </section>
 
-  <!-- FULL-WIDTH VIDEO SECTION -->
-  <section class="home-video-section">
-    <div class="home-video-overlay"></div>
-    <video
-      id="homeShowreel"
-      autoplay
-      loop
-      muted
-      playsinline
-      preload="auto"
-    >
-      <source src="https://res.cloudinary.com/dq2nrpky0/video/upload/v1781273380/Index_Video_gpnvoa.mp4" type="video/mp4">
-    </video>
-  </section>
-
 <!-- ABOUT PREVIEW — rendered from PAGE_DATA.about -->
   <!-- THOUGHT VESSEL — SCROLL REVEAL ANIMATION -->
   <div class="tsm-scroll-section" id="tsmScrollSection">
     <div class="tsm-video-wrapper">
       <div id="tsm-vc">
         <video id="tsm-vid" loop muted playsinline>
-          <source src="https://res.cloudinary.com/dq2nrpky0/video/upload/v1781273490/6562012-uhd_3840_2160_25fps_1_vasydj.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dq2nrpky0/video/upload/v1781796640/Indexvid_nuukhd.mp4" type="video/mp4" />
         </video>
         <div id="tsm-dark-overlay"></div>
         <div class="tsm-vid-overlay" id="tsmVidOverlay">
@@ -313,21 +297,19 @@
 
 
   <!-- MOBILE SWIPE CAROUSEL — Services (shown only on mobile, hidden on desktop via CSS) -->
-  <div class="mob-svc-carousel-wrap" id="mobSvcCarousel" style="background:var(--black);padding-top:24px;">
-    <div style="padding:0 20px 20px;">
-      <div class="section-tag" style="color:var(--orange);margin-bottom:8px;">All 10 Services</div>
-      <h2 class="section-title" style="font-size:clamp(28px,8vw,48px);text-align:left;line-height:1;color:var(--white);">Swipe Through <span style="color:var(--orange);">What We Do</span></h2>
-      <p style="font-size:14px;color:rgba(245,240,235,.45);margin-top:8px;font-weight:300;">Every discipline. One agency.</p>
+  <div class="mob-svc-carousel-wrap" id="mobSvcCarousel" style="background:var(--black);padding-top:8px;">
+    <div style="padding:0 20px 16px;">
+      <div class="section-tag" style="color:var(--orange);margin-bottom:6px;">All 10 Services</div>
+      <h2 class="section-title" style="font-size:clamp(26px,7.5vw,44px);text-align:left;line-height:1;color:var(--white);">Swipe Through <span style="color:var(--orange);">What We Do</span></h2>
+      <p style="font-size:13px;color:rgba(245,240,235,.45);margin-top:6px;font-weight:300;">Every discipline. One agency.</p>
     </div>
     <div class="mob-svc-track-outer" id="mobSvcTrackOuter">
       <div class="mob-svc-track" id="mobSvcTrack"></div>
     </div>
     <div class="mob-svc-arrows">
-      <button class="mob-svc-arrow" id="mobSvcPrev" aria-label="Previous service">&#8592;</button>
       <div class="mob-svc-dots" id="mobSvcDots"></div>
-      <button class="mob-svc-arrow" id="mobSvcNext" aria-label="Next service">&#8594;</button>
     </div>
-    <div style="text-align:center;margin-top:28px;padding:0 20px 8px;">
+    <div style="text-align:center;margin-top:20px;padding:0 20px 4px;">
       <a href="#" onclick="navigate('services');return false;" class="btn-p" style="width:100%;justify-content:center;">Explore All Services &#8594;</a>
     </div>
   </div>
@@ -735,7 +717,16 @@
     transform: translateY(-2px);
   }
   @media (max-width: 600px) {
-    .cta-proposal-form { padding: 24px 18px; }
+    .cta-proposal-form-wrap { margin-top: 28px; }
+    .cta-proposal-form { padding: 20px 16px 18px; border-radius: 16px; }
+    .cta-pf-row { gap: 10px; }
+    .cta-pf-field { margin-bottom: 10px; gap: 4px; }
+    .cta-pf-label { font-size: 9px; }
+    .cta-pf-input, .cta-ms-trigger { padding: 10px 12px; font-size: 12.5px; border-radius: 8px; }
+    .cta-pf-btn { padding: 13px; font-size: 14px; margin-top: 2px; }
+    .cta-ms-item { padding: 8px 12px; font-size: 12.5px; }
+  }
+  @media (max-width: 380px) {
     .cta-pf-row { grid-template-columns: 1fr; }
   }
   </style>
