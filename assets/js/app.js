@@ -5,6 +5,26 @@
    FV Modal, Video Loop Fix
 ═══════════════════════════════════════════════════ */
 
+/* ── Always start at the top of the screen ──
+   Overrides the browser's native scroll-position restoration, which is
+   the usual reason a page opens mid-scroll instead of at the top —
+   most noticeable on mobile after a reload or a back/forward navigation. */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+function forceScrollTop() {
+  window.scrollTo(0, 0);
+  if (window.lenis) window.lenis.scrollTo(0, { immediate: true });
+}
+forceScrollTop();
+document.addEventListener('DOMContentLoaded', forceScrollTop);
+window.addEventListener('load', forceScrollTop);
+window.addEventListener('pageshow', function(e) {
+  // Fires on every visit, including back/forward restores from bfcache —
+  // exactly when the browser is most likely to restore an old scroll spot.
+  forceScrollTop();
+});
+
 /* ─ PAGE ROUTER ─ */
 const PAGES = ['home','about','services','studio','casestudies','journal','future','faq','contact','svc-web','svc-app','svc-seo','svc-smm','svc-perf','svc-inf','svc-ecom','svc-content','svc-brand','svc-ai'];
 
