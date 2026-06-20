@@ -598,6 +598,7 @@ section{position:relative;z-index:2;}
 .hero-right .side-fade{position:absolute;left:0;top:0;bottom:0;width:60px;background:linear-gradient(to right,var(--black),transparent);z-index:5;pointer-events:none;}
 .hero-noise{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;}
 .hero-orb{position:absolute;bottom:-10%;left:30%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,92,0,.1) 0%,transparent 70%);pointer-events:none;z-index:1;}
+.hero-mobile-bg{display:none;}
 .hero-scroll{position:absolute;bottom:36px;left:60px;z-index:10;display:flex;align-items:center;gap:14px;opacity:0;animation:fadeUp .8s 1.4s forwards;}
 .scroll-line{width:48px;height:1px;background:rgba(245,240,235,.3);position:relative;overflow:hidden;}
 .scroll-line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--orange);animation:scrollPx 2s ease-in-out infinite;}
@@ -1907,7 +1908,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   position: sticky;
   top: 0;
   width: 100%;
-  height: 100vh;
+  height: 100vh;   /* fallback for browsers without dvh support */
+  height: 100dvh;  /* true visible viewport — adapts to mobile browser chrome show/hide */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2031,7 +2033,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   /* Mobile: show the about page video section with optimised height */
   #abTsmScrollSection { display: block !important; }
   #abTsmScrollSection .tsm-scroll-section { height: 220vh; }
-  #abTsmScrollSection .tsm-video-wrapper { height: 100svh; }
 }
 
 /* ═══════════════════════════════════════════════════
@@ -2420,7 +2421,6 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   /* Scroll reveal TSM — show on mobile with optimised sizing */
   #tsmScrollSection { display: block !important; }
   #tsmScrollSection .tsm-scroll-section { height: 220vh; }
-  #tsmScrollSection .tsm-video-wrapper { height: 100svh; }
   #tsm-vc, #ab-tsm-vc { width: 72vw; height: 72vw; }
 
   /* Home coverflow */
@@ -2854,18 +2854,8 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   /* Show the touch carousel instead */
   .mob-svc-carousel-wrap { display: flex !important; }
 
-  /* ── HERO MOBILE FIX ── */
-  .hero { min-height: 100svh; flex-direction: column; }
-  .hero-left { padding: 88px 20px 48px !important; }
-  .hero-h1 { font-size: clamp(46px, 12vw, 72px) !important; line-height: 0.95 !important; }
-  .hero-sub { font-size: 15px !important; line-height: 1.65 !important; }
-  .hero-btns { flex-direction: column; gap: 12px; }
-  .hero-btns .btn-p, .hero-btns .btn-s { width: 100%; justify-content: center; text-align: center; padding: 12px 24px; font-size: 13px; }
-  .hero-stats { flex-wrap: wrap; gap: 18px 28px; margin-top: 32px; }
-  .hero-stat .num { font-size: 34px !important; }
-  .hero-stat .lbl { font-size: 11px; }
+  /* ── HERO: see "EDITORIAL MOBILE HERO" block below for full styling ── */
   .hero-right { display: none; } /* hide hero right strips on mobile */
-  .hero-scroll { left: 20px; bottom: 24px; }
   .mstrip-wrap { display: none; }
 
   /* ── SECTION TITLE FIX ── */
@@ -3188,7 +3178,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 
 /* ── Small phones (480px and below) — extra touch ── */
 @media(max-width:480px){
-  .hero-h1 { font-size: clamp(40px, 11vw, 62px) !important; }
+  .hero-h1 { font-size: clamp(34px, 9.5vw, 50px) !important; }
   /* mob-svc-card scales with vw automatically — no overrides needed at 480px */
   .section-title { font-size: clamp(30px, 9vw, 52px) !important; }
   #tsm-vc, #ab-tsm-vc { width: 72vw; height: 72vw; }
@@ -3264,60 +3254,198 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
     font-size: 16px !important;
   }
 
-  /* ── HERO: cinematic full-screen treatment ── */
+  /* ── HERO: EDITORIAL MOBILE HERO — full-screen image, centered serif, minimalist CTAs ── */
   .hero {
     min-height: 100svh !important;
     padding: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
-    position: relative !important;
-  }
-  .hero-left {
-    padding: 92px 22px 52px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0 !important;
-  }
-  .hero-eyebrow {
-    font-size: 10px !important;
-    letter-spacing: 0.2em !important;
-    padding: 7px 16px !important;
-    margin-bottom: 24px !important;
-    background: rgba(255,92,0,0.08) !important;
-    border: 1px solid rgba(255,92,0,0.2) !important;
-  }
-  .hero-h1 {
-    font-size: clamp(48px, 13vw, 74px) !important;
-    line-height: 0.93 !important;
-    letter-spacing: 0.01em !important;
-    margin-bottom: 20px !important;
-  }
-  .hero-sub {
-    font-size: 15px !important;
-    line-height: 1.7 !important;
-    color: rgba(245,240,235,0.7) !important;
-    max-width: 100% !important;
-    margin-bottom: 32px !important;
-  }
-  .hero-btns {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-    margin-bottom: 0 !important;
-  }
-  .btn-p, .btn-s {
-    width: 100% !important;
+    align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
-    padding: 15px 24px !important;
-    font-size: 14px !important;
-    border-radius: 14px !important;
-    min-height: 52px !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* Full-bleed background image with Ken Burns zoom */
+  .hero-mobile-bg {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    overflow: hidden !important;
+  }
+  .hero-mobile-bg img,
+  .hero-mobile-bg video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: scale(1.08) !important;
+    animation: heroKenBurns 14s ease-out forwards !important;
+  }
+  .hero-mobile-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: transparent !important;
+  }
+  @keyframes heroKenBurns {
+    0% { transform: scale(1.08); }
+    100% { transform: scale(1.18); }
+  }
+
+  /* Hide desktop visual chrome behind the new full-screen photo treatment */
+  .hero-noise, .hero-orb { display: none !important; }
+
+  .hero-left {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2 !important;
+    padding: 0 28px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0 !important;
+    max-width: 560px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Eyebrow badge — same glass-pill + blinking dot treatment as desktop */
+  .hero-eyebrow {
+    position: absolute !important;
+    top: 15% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: max-content !important;
+    max-width: calc(100% - 56px) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: var(--glass) !important;
+    border: 1px solid var(--glass-b) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    padding: 7px 16px !important;
+    border-radius: 50px !important;
+    font-family: var(--font-heading) !important;
+    font-size: 9.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: var(--orange) !important;
+    margin-bottom: 0 !important;
+    opacity: 0;
+    animation: heroFadeUp .9s .3s forwards, heroEyebrowPos .9s .3s forwards !important;
+  }
+  .hero-eyebrow::before {
+    display: block !important;
+    content: '' !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background: var(--orange) !important;
+    animation: blink 2s infinite !important;
+    flex-shrink: 0 !important;
+  }
+  @keyframes heroEyebrowPos {
+    from { transform: translate(-50%, calc(-50% + 18px)); }
+    to   { transform: translate(-50%, -50%); }
+  }
+
+  /* Subtitle removed from mobile hero layout */
+  .hero-sub {
+    display: none !important;
+  }
+
+  /* Bottom panel: occupies the bottom 25% of the hero, holds heading + CTAs */
+  .hero-bottom-panel {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: 25% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 18px !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Same display font as desktop, single line, bigger than the button row width */
+  .hero-h1 {
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: clamp(17px, 6vw, 26px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    margin-bottom: 0 !important;
+    color: var(--orange) !important;
+    white-space: nowrap !important;
+    opacity: 0;
+    animation: heroFadeUp 1s .5s forwards !important;
+  }
+  .hero-h1 .line { display: inline; }
+  .hero-h1 .line + .line::before { content: ' '; }
+  .hero-h1 .or { color: var(--orange) !important; font-style: normal !important; text-shadow: none !important; }
+
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Small block CTA buttons, in a row */
+  .hero-btns {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 260px !important;
+    margin: 0 auto !important;
+    opacity: 0;
+    animation: heroFadeUp .9s .9s forwards !important;
+  }
+  .hero-btns .btn-arrow { display: none !important; }
+  .btn-p, .btn-s {
+    display: block !important;
+    flex: 1 1 0 !important;
+    width: auto !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 7px 6px !important;
+    font-size: 8px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase !important;
+    border-radius: 2px !important;
+    min-height: 30px !important;
+    white-space: nowrap !important;
   }
   .btn-p {
-    box-shadow: 0 8px 28px rgba(255,92,0,0.38) !important;
+    background: var(--orange) !important;
+    box-shadow: none !important;
   }
+  .btn-s {
+    background: transparent !important;
+    border: 1px solid rgba(245,240,235,.4) !important;
+    backdrop-filter: none !important;
+  }
+  .hero-btns .btn-s {
+    background: var(--orange) !important;
+    border: none !important;
+    color: #fff !important;
+  }
+
+  /* Hide stats + scroll-marquee chrome to keep the editorial layout uncluttered */
+  .hero-stats { display: none !important; }
+  .hero-scroll { display: none !important; }
+  .hero-right { display: none !important; } /* hide hero right strips on mobile */
+  .mstrip-wrap { display: none !important; }
 
   /* ── TICKER: tighter on mobile ── */
   .ticker-item {
@@ -3662,11 +3790,11 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 @media(max-width:390px){
   nav { height: 56px !important; padding: 0 16px !important; }
   .nav-brand { font-size: 12px !important; }
-  .hero-left { padding: 82px 18px 44px !important; }
-  .hero-h1 { font-size: clamp(42px, 12.5vw, 60px) !important; }
-  .hero-eyebrow { font-size: 9px !important; padding: 6px 13px !important; }
-  .hero-sub { font-size: 14px !important; }
-  .btn-p, .btn-s { font-size: 13px !important; padding: 14px 20px !important; min-height: 48px !important; }
+  .hero-left { padding: 0 18px !important; }
+  .hero-h1 { font-size: clamp(32px, 10vw, 44px) !important; }
+  .hero-eyebrow { font-size: 9px !important; }
+  .hero-sub { font-size: 13.5px !important; }
+  .btn-p, .btn-s { font-size: 7.5px !important; padding: 6px 5px !important; min-height: 28px !important; }
   .section-title { font-size: clamp(28px, 9.5vw, 48px) !important; }
   .about-h2 { font-size: clamp(30px, 10vw, 46px) !important; }
   .fw-title { font-size: clamp(22px, 6.5vw, 30px) !important; }

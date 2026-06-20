@@ -1,0 +1,3128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Media Management — The Sonic Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="../assets/js/service-page-optimizations.js"></script>
+<style>
+/* ══════════════════════
+   SMM HERO SECTION
+══════════════════════ */
+#wsv-hero-new {
+  --orange: #ff5c00;
+  --glow: #4fc3f7;
+}
+#wsv-hero-new .hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 56px 80px 72px;
+  position: relative;
+  z-index: 20;
+}
+#wsv-hero-new .hero-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,92,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,92,0,0.025) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+}
+#wsv-hero-new .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 22px;
+}
+#wsv-hero-new .hero-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 7vw, 116px);
+  line-height: .87;
+  letter-spacing: -.01em;
+  color: #fff;
+  margin-bottom: 28px;
+}
+#wsv-hero-new .line-wrap {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+#wsv-hero-new .line {
+  display: block;
+}
+#wsv-hero-new .or { color: var(--orange); }
+#wsv-hero-new .hero-sub {
+  font-size: 14px;
+  line-height: 1.82;
+  color: rgba(255,255,255,.44);
+  max-width: 420px;
+  margin-bottom: 38px;
+  font-weight: 300;
+}
+#wsv-hero-new .hero-btns {
+  display: flex;
+  gap: 14px;
+}
+#wsv-hero-new .btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px;
+  background: var(--orange);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase;
+  border: none; cursor: pointer; text-decoration: none;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
+  transition: all .25s;
+}
+#wsv-hero-new .btn-primary:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(255,92,0,.38); }
+#wsv-hero-new .btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px;
+  background: transparent;
+  color: rgba(255,255,255,.55);
+  font-family: 'Syne', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.1);
+  cursor: pointer; text-decoration: none;
+  transition: all .25s;
+}
+#wsv-hero-new .btn-ghost:hover { border-color: rgba(255,255,255,.28); color: #fff; transform: translateY(-2px); }
+/* New hero layout — true 50/50 grid like app.html */
+#wsv-hero-new .hero-inner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 100vh;
+}
+/* ── SOCIAL CARDS SCENE: right column ── */
+#wsv-hero-new .hero-right {
+  position: relative;
+  background: #080a0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 100vh;
+}
+@media (max-width: 900px) {
+  #wsv-hero-new .hero-inner-grid { grid-template-columns: 1fr; }
+  #wsv-hero-new .hero-right { min-height: 55vh; }
+  #wsv-hero-new .hero-left { padding: 80px 32px 60px; }
+}
+#wsv-hero-new .hero-right::before { display: none; }
+
+/* Ambient background grid */
+#wsv-hero-new .smm-bg-grid {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,92,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,92,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Ambient orbs */
+#wsv-hero-new .smm-orb {
+  position: absolute; border-radius: 50%; pointer-events: none; filter: blur(90px);
+}
+#wsv-hero-new .smm-orb-1 { width: 420px; height: 420px; top: -80px; right: 10%; background: rgba(228,64,95,0.12); }
+#wsv-hero-new .smm-orb-2 { width: 380px; height: 380px; bottom: -60px; left: 5%; background: rgba(29,161,242,0.1); }
+#wsv-hero-new .smm-orb-3 { width: 300px; height: 300px; top: 35%; right: -60px; background: rgba(255,92,0,0.09); }
+
+/* Scene container */
+#wsv-hero-new .smm-cards-scene {
+  position: relative; width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+
+/* Individual platform card */
+#wsv-hero-new .smm-pcard {
+  position: absolute;
+  border-radius: 20px;
+  padding: 22px 20px 18px;
+  display: flex; flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s;
+  will-change: transform;
+}
+#wsv-hero-new .smm-pcard::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: 20px;
+  border: 1px solid transparent;
+  background: var(--card-border) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out; mask-composite: exclude;
+  pointer-events: none;
+}
+#wsv-hero-new .smm-pcard::after {
+  content: '';
+  position: absolute; inset: 0; border-radius: 20px;
+  opacity: 0; transition: opacity 0.4s;
+  box-shadow: var(--card-glow);
+  pointer-events: none;
+}
+#wsv-hero-new .smm-pcard:hover::after { opacity: 1; }
+#wsv-hero-new .smm-pcard:hover { z-index: 50; }
+
+/* Card icon row */
+#wsv-hero-new .smm-pcard-icon-row {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+}
+#wsv-hero-new .smm-pcard-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--icon-bg);
+}
+#wsv-hero-new .smm-pcard-live {
+  font-family: 'Syne', sans-serif; font-size: 8px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #fff; padding: 4px 10px; border-radius: 999px;
+  background: var(--platform-color);
+  animation: smm-pulse-badge 2s ease-in-out infinite;
+}
+@keyframes smm-pulse-badge {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.65; }
+}
+
+/* Card platform name */
+#wsv-hero-new .smm-pcard-name {
+  font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); margin-bottom: 6px;
+}
+/* Big metric */
+#wsv-hero-new .smm-pcard-metric {
+  font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1;
+  color: #fff; margin-bottom: 2px;
+  text-shadow: 0 0 30px var(--platform-color);
+}
+#wsv-hero-new .smm-pcard-sub {
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 300;
+  color: rgba(255,255,255,0.38); letter-spacing: 0.04em;
+}
+
+/* Sparkline */
+#wsv-hero-new .smm-pcard-sparkline {
+  margin-top: 14px; height: 32px; position: relative; overflow: visible;
+}
+#wsv-hero-new .smm-pcard-sparkline svg { width: 100%; height: 100%; overflow: visible; }
+
+/* Trend pill */
+#wsv-hero-new .smm-pcard-trend {
+  display: inline-flex; align-items: center; gap: 4px; margin-top: 10px;
+  font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; color: #22c55e;
+  background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+  padding: 3px 10px; border-radius: 999px; width: fit-content;
+}
+
+/* Floating label badge */
+#wsv-hero-new .smm-pcard-badge {
+  position: absolute; top: -10px; right: 16px;
+  font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 999px;
+  background: var(--platform-color); color: #fff;
+  box-shadow: 0 4px 16px var(--platform-color);
+}
+
+/* Notification dot */
+#wsv-hero-new .smm-notif {
+  position: absolute;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--platform-color);
+  border: 2px solid #080a0f;
+  animation: smm-notif-pulse 1.8s ease-in-out infinite;
+}
+@keyframes smm-notif-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* Flowing connection lines between cards */
+#wsv-hero-new .smm-lines-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 1;
+}
+#wsv-hero-new .smm-conn-line {
+  stroke: rgba(255,255,255,0.04); stroke-width: 1; fill: none;
+  stroke-dasharray: 6 8;
+  animation: smm-dash-flow 4s linear infinite;
+}
+@keyframes smm-dash-flow { to { stroke-dashoffset: -56; } }
+
+/* Floating particles */
+#wsv-hero-new .smm-particle {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: var(--p-color);
+  animation: smm-float-particle var(--p-dur) ease-in-out infinite alternate;
+}
+@keyframes smm-float-particle {
+  from { transform: translate(0, 0) scale(1); opacity: var(--p-opA); }
+  to   { transform: translate(var(--p-tx), var(--p-ty)) scale(var(--p-sc)); opacity: var(--p-opB); }
+}
+
+/* Central hub ring */
+#wsv-hero-new .smm-hub {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  border: 1px solid rgba(255,92,0,0.15);
+  animation: smm-hub-rotate var(--hub-dur) linear infinite;
+}
+@keyframes smm-hub-rotate { to { transform: rotate(360deg); } }
+#wsv-hero-new .smm-hub-dot {
+  position: absolute; border-radius: 50%; background: #ff5c00;
+  width: 5px; height: 5px; top: -2.5px; left: calc(50% - 2.5px);
+}
+
+/* Stats ticker at bottom */
+#wsv-hero-new .smm-ticker {
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 24px; z-index: 20; pointer-events: none;
+}
+#wsv-hero-new .smm-ticker-item {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(8,10,15,0.7); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.07); border-radius: 100px;
+  padding: 6px 14px 6px 10px;
+  font-family: 'Syne', sans-serif;
+}
+#wsv-hero-new .smm-ticker-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--t-color); flex-shrink: 0; }
+#wsv-hero-new .smm-ticker-label { font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+#wsv-hero-new .smm-ticker-val { font-size: 11px; font-weight: 700; color: #fff; margin-left: 2px; }
+
+/* Card float animations */
+@keyframes smm-float-A { 0%,100%{transform:var(--base-t) translateY(0px) rotate(var(--rot))} 50%{transform:var(--base-t) translateY(-16px) rotate(var(--rot))} }
+@keyframes smm-float-B { 0%,100%{transform:var(--base-t) translateY(-8px) rotate(var(--rot))} 50%{transform:var(--base-t) translateY(8px) rotate(var(--rot))} }
+@keyframes smm-float-C { 0%,100%{transform:var(--base-t) translateY(4px) rotate(var(--rot))} 50%{transform:var(--base-t) translateY(-12px) rotate(var(--rot))} }
+@keyframes smm-float-D { 0%,100%{transform:var(--base-t) translateY(-6px) rotate(var(--rot))} 50%{transform:var(--base-t) translateY(10px) rotate(var(--rot))} }
+
+/* Scan line overlay */
+#wsv-hero-new .smm-scan {
+  position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 4px);
+}
+
+/* Vignette */
+#wsv-hero-new .smm-vignette {
+  position: absolute; inset: 0; pointer-events: none; z-index: 4;
+  background: radial-gradient(ellipse at 55% 50%, transparent 30%, rgba(8,10,15,0.65) 100%);
+}
+
+/* Hover tooltip */
+#wsv-hero-new .smm-tooltip {
+  position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+  background: rgba(8,10,15,0.9); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+  padding: 6px 12px; white-space: nowrap;
+  font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.55);
+  opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 60;
+}
+#wsv-hero-new .smm-pcard:hover .smm-tooltip { opacity: 1; }
+
+/* Search animation — pinned to right half */
+#wsv-hero-new .globe-search-stage {
+  position: absolute;
+  top: 50%; left: 75%;
+  transform: translate(-50%, -50%);
+  z-index: 30; display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+#wsv-hero-new .globe-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #fff;
+  box-shadow: 0 0 6px 2px rgba(255,255,255,0.9), 0 0 20px 6px rgba(201,169,110,0.6), 0 0 50px 16px rgba(201,169,110,0.25);
+  position: absolute;
+  animation: gbDotPulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes gbDotPulse {
+  from { box-shadow: 0 0 6px 2px rgba(255,255,255,0.9), 0 0 20px 6px rgba(201,169,110,0.6), 0 0 50px 16px rgba(201,169,110,0.25); }
+  to   { box-shadow: 0 0 10px 4px rgba(255,255,255,1), 0 0 30px 10px rgba(201,169,110,0.8), 0 0 70px 24px rgba(201,169,110,0.35); }
+}
+#wsv-hero-new .globe-ring-anim {
+  position: absolute; border-radius: 50%;
+  border: 1.5px solid rgba(201,169,110,0.85);
+  box-shadow: 0 0 12px 2px rgba(201,169,110,0.4), inset 0 0 8px 1px rgba(201,169,110,0.15);
+  width: 0; height: 0; opacity: 0; pointer-events: none;
+}
+#wsv-hero-new .globe-search-bar {
+  position: absolute; height: 52px; width: 0; border-radius: 999px;
+  background: rgba(8,10,15,0.72);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid rgba(201,169,110,0.45);
+  box-shadow: 0 0 0 1px rgba(201,169,110,0.12), 0 0 30px 4px rgba(201,169,110,0.18), 0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07);
+  opacity: 0; display: flex; align-items: center; overflow: hidden; white-space: nowrap; pointer-events: none;
+}
+#wsv-hero-new .globe-search-inner {
+  display: flex; align-items: center; padding: 0 22px; gap: 12px; opacity: 0; width: 100%;
+}
+#wsv-hero-new .globe-search-icon { flex-shrink: 0; opacity: 0.5; }
+#wsv-hero-new .globe-search-text {
+  font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 400;
+  letter-spacing: 0.06em; color: rgba(240,235,224,0.92); flex: 1;
+}
+#wsv-hero-new .globe-search-cursor {
+  display: inline-block; width: 1.5px; height: 16px; background: #c9a96e;
+  margin-left: 1px; vertical-align: middle; border-radius: 1px;
+  box-shadow: 0 0 6px rgba(201,169,110,0.8);
+  animation: gbBlink 1s step-end infinite;
+}
+@keyframes gbBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+#wsv-hero-new .globe-search-pill {
+  flex-shrink: 0; background: #c9a96e; color: #080a0f;
+  font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 999px; opacity: 0.9;
+}
+
+/* ── CUSTOM MULTI-SELECT PLATFORM DROPDOWN ── */
+.smm-multiselect-wrap { position: relative; }
+.smm-multiselect-trigger {
+  width: 100%; box-sizing: border-box; padding: 11px 36px 11px 16px;
+  font-size: 13px; font-family: 'DM Sans', sans-serif;
+  background: #ffffff; border: 1px solid rgba(255,255,255,0.3);
+  color: #1a1a1a; border-radius: 10px; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  min-height: 42px; position: relative; user-select: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.smm-multiselect-trigger:focus-within,
+.smm-multiselect-trigger.open {
+  border-color: rgba(255,255,255,0.9); outline: none;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.25);
+}
+.smm-multiselect-trigger .smm-ms-arrow {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; transition: transform 0.2s; color: #888;
+  font-size: 10px;
+}
+.smm-multiselect-trigger.open .smm-ms-arrow { transform: translateY(-50%) rotate(180deg); }
+.smm-ms-placeholder { color: #bbb; font-size: 13px; }
+.smm-ms-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #ff5c00; color: #fff; border-radius: 6px;
+  padding: 2px 8px; font-size: 11px; font-weight: 600;
+  font-family: 'Syne', sans-serif; letter-spacing: 0.04em;
+  animation: smm-chip-pop 0.18s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes smm-chip-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.smm-ms-chip-x { cursor: pointer; opacity: 0.7; font-size: 10px; line-height: 1; padding: 0 1px; }
+.smm-ms-chip-x:hover { opacity: 1; }
+
+.smm-ms-dropdown {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+  background: #fff; border-radius: 12px; z-index: 999;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.08); overflow: hidden;
+  display: none; animation: smm-dd-reveal 0.18s ease;
+}
+.smm-ms-dropdown.open { display: block; }
+@keyframes smm-dd-reveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.smm-ms-option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 16px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; color: #1a1a1a;
+  transition: background 0.15s;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  user-select: none;
+}
+.smm-ms-option:last-child { border-bottom: none; }
+.smm-ms-option:hover { background: rgba(255,92,0,0.05); }
+.smm-ms-option.selected { background: rgba(255,92,0,0.06); }
+.smm-ms-checkbox {
+  width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0;
+  border: 2px solid #ddd; display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; background: #fff;
+}
+.smm-ms-option.selected .smm-ms-checkbox {
+  background: #ff5c00; border-color: #ff5c00;
+}
+.smm-ms-checkmark {
+  opacity: 0; transform: scale(0); transition: all 0.15s;
+  color: #fff; font-size: 11px; font-weight: 700; line-height: 1;
+}
+.smm-ms-option.selected .smm-ms-checkmark { opacity: 1; transform: scale(1); }
+.smm-ms-opt-icon { width: 22px; text-align: center; font-size: 15px; }
+.smm-ms-opt-label { flex: 1; }
+/* ── PROPOSAL FORM ── */
+.smm-final-cta {
+  position: relative; padding: 80px 60px; background: #0a0a0a; overflow: hidden;
+}
+.smm-cta-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.smm-final-inner {
+  position: relative; z-index: 2;
+  max-width: 1380px; margin: 0 auto;
+  display: grid; grid-template-columns: 420px 1fr; gap: 56px; align-items: center;
+}
+.smm-final-left { text-align: left; display: flex; flex-direction: column; justify-content: center; }
+.smm-final-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 500;
+  color: #ff5c00; background: rgba(255,92,0,.08);
+  border: 1px solid rgba(255,92,0,.2); padding: 6px 14px;
+  border-radius: 100px; margin-bottom: 18px; letter-spacing: .01em; width: fit-content;
+}
+.smm-final-h {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 6vw, 90px);
+  color: #fff; line-height: .95; margin-bottom: 14px; letter-spacing: -.01em;
+}
+.smm-final-h span { color: #ff5c00; }
+.smm-final-p { font-size: 13px; color: rgba(255,255,255,.42); line-height: 1.65; margin: 0; max-width: 320px; }
+.smm-proposal-form-wrap { display: flex; align-items: stretch; }
+.smm-proposal-form {
+  width: 100%; background: #ff5c00; border: none; border-radius: 20px;
+  padding: 36px 36px 32px;
+  box-shadow: 0 24px 60px rgba(255,92,0,.35), 0 40px 80px rgba(0,0,0,.4);
+  text-align: left;
+}
+.smm-pf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.smm-pf-field { margin-bottom: 14px; display: flex; flex-direction: column; gap: 5px; }
+.smm-pf-label {
+  font-family: 'Bebas Neue', sans-serif; font-size: 10px;
+  letter-spacing: .14em; color: rgba(255,255,255,.75); text-transform: uppercase;
+}
+.smm-pf-input {
+  width: 100%; box-sizing: border-box; padding: 11px 16px; font-size: 13px;
+  background: #ffffff !important; border: 1px solid rgba(255,255,255,.3) !important;
+  color: #1a1a1a !important; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+}
+.smm-pf-input::placeholder { color: #bbb !important; }
+.smm-pf-input:focus {
+  border-color: rgba(255,255,255,.9) !important; background: #ffffff !important;
+  outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,.25);
+}
+.smm-pf-input option { background: #fff; color: #1a1a1a; }
+.smm-pf-btn {
+  width: 100%; margin-top: 6px; padding: 14px; background: #1a1a1a;
+  border: none; border-radius: 10px; font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; letter-spacing: .1em; color: #ffffff;
+  cursor: pointer; transition: background .25s, transform .2s, box-shadow .25s;
+}
+.smm-pf-btn:hover { background: #000; box-shadow: 0 8px 32px rgba(0,0,0,.5); transform: translateY(-2px); }
+@media (max-width: 1024px) {
+  .smm-final-inner { grid-template-columns: 1fr; gap: 48px; }
+  .smm-final-left { text-align: center; }
+  .smm-final-p { margin: 0 auto; }
+}
+@media (max-width: 600px) {
+  .smm-final-cta { padding: 40px 16px; }
+  .smm-final-h { font-size: clamp(38px, 11vw, 58px); margin-bottom: 10px; }
+  .smm-final-p { font-size: 12px; line-height: 1.6; }
+  .smm-final-tag { font-size: 11px; padding: 5px 12px; margin-bottom: 14px; }
+  .smm-proposal-form {
+    padding: 20px 16px 18px;
+    border-radius: 16px;
+  }
+  .smm-pf-row { grid-template-columns: 1fr; gap: 0; }
+  .smm-pf-field { margin-bottom: 10px; gap: 4px; }
+  .smm-pf-label { font-size: 9px; letter-spacing: .12em; }
+  .smm-pf-input {
+    padding: 11px 13px;
+    font-size: 14px;
+    border-radius: 9px;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+  .smm-pf-btn {
+    margin-top: 4px;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 9px;
+    min-height: 48px;
+  }
+}
+</style>
+  <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-follower"></div>
+<!-- Scroll progress -->
+<div id="sp"></div>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav id="navbar">
+  <div class="nav-left" onclick="navigate('home')">
+    <img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:36px;height:36px;object-fit:contain;flex-shrink:0;" />
+    <div class="nav-brand">
+      THE SONIC MEDIA
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="navigate('home');return false;" data-page="home" class="active-link">Home</a></li>
+    <li><a href="#" onclick="navigate('about');return false;" data-page="about">About</a></li>
+    <li class="has-drop">
+      <button onclick="return false;">Services <span class="drop-arrow">▾</span></button>
+      <div class="dropdown">
+        <a href="#" onclick="navigate('services');return false;" style="border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:6px;padding-bottom:14px;color:var(--orange);font-weight:700;"><span class="drop-icon">📋</span>All Services</a>
+        <a href="#" onclick="navigate('svc-web');return false;"><span class="drop-icon">🌐</span>Website Development</a>
+        <a href="#" onclick="navigate('svc-app');return false;"><span class="drop-icon">📱</span>Mobile App Development</a>
+        <a href="#" onclick="navigate('svc-seo');return false;"><span class="drop-icon">🔍</span>Search Engine Optimization</a>
+        <a href="#" onclick="navigate('svc-smm');return false;"><span class="drop-icon">📣</span>Social Media Management</a>
+        <a href="#" onclick="navigate('svc-perf');return false;"><span class="drop-icon">🚀</span>Performance Marketing & Paid Ads</a>
+        <a href="#" onclick="navigate('svc-inf');return false;"><span class="drop-icon">🤝</span>Influencer Marketing</a>
+        <a href="#" onclick="navigate('svc-ecom');return false;"><span class="drop-icon">🛒</span>E-Commerce Marketing</a>
+        <a href="#" onclick="navigate('svc-content');return false;"><span class="drop-icon">🎬</span>Content Production & Photo/Videography</a>
+        <a href="#" onclick="navigate('svc-brand');return false;"><span class="drop-icon">🎨</span>Branding & Creative Design</a>
+        <a href="#" onclick="navigate('svc-ai');return false;"><span class="drop-icon">🤖</span>AI Doodling/Editing</a>
+      </div>
+    </li>
+    <li><a href="#" onclick="navigate('studio');return false;" data-page="studio">Portfolio</a></li>
+    <li><a href="#" onclick="navigate('casestudies');return false;" data-page="casestudies">Case Studies</a></li>
+    <li><a href="#" onclick="navigate('journal');return false;" data-page="journal">Journal</a></li>
+    <li><a href="#" onclick="navigate('future');return false;" data-page="future">Future Vision</a></li>
+    <li><a href="#" onclick="navigate('faq');return false;" data-page="faq">FAQ</a></li>
+    <li><a href="#" onclick="navigate('contact');return false;" data-page="contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="ham" id="ham" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Nav Drawer -->
+<div class="mob-nav" id="mobNav">
+  <!-- Backdrop -->
+  <div class="mob-nav-backdrop" id="mobBackdrop" onclick="closeMob()"></div>
+
+  <!-- Drawer -->
+  <div class="mob-nav-drawer">
+
+    <!-- Header -->
+    <div class="mob-nav-header">
+      <div class="mob-nav-brand">
+        <img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media" />
+        THE SONIC MEDIA
+      </div>
+      <button class="mob-close" id="mobClose" aria-label="Close menu">✕</button>
+    </div>
+
+    <!-- Body -->
+    <div class="mob-nav-body">
+
+      <!-- Main nav -->
+      <div class="mob-nav-section-label">Navigation</div>
+
+      <button class="mob-nav-link" onclick="navigate('home');closeMob()" data-mob-page="home">
+        Home <span class="mob-nav-link-arrow">→</span>
+      </button>
+      <button class="mob-nav-link" onclick="navigate('about');closeMob()" data-mob-page="about">
+        About <span class="mob-nav-link-arrow">→</span>
+      </button>
+
+      <!-- Services accordion -->
+      <button class="mob-services-toggle" id="mobSvcToggle" onclick="toggleMobServices()" aria-expanded="false">
+        Services
+        <span class="mob-acc-icon">▾</span>
+      </button>
+      <div class="mob-services-submenu" id="mobSvcSubmenu">
+        <button class="mob-svc-all" onclick="navigate('services');closeMob()">
+          <span class="mob-svc-item-icon">📋</span> All Services
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-web');closeMob()">
+          <span class="mob-svc-item-icon">🌐</span> Website Development
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-app');closeMob()">
+          <span class="mob-svc-item-icon">📱</span> Mobile App Development
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-seo');closeMob()">
+          <span class="mob-svc-item-icon">🔍</span> Search Engine Optimization
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-smm');closeMob()">
+          <span class="mob-svc-item-icon">📣</span> Social Media Management
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-perf');closeMob()">
+          <span class="mob-svc-item-icon">🚀</span> Performance Marketing
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-inf');closeMob()">
+          <span class="mob-svc-item-icon">🤝</span> Influencer Marketing
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-ecom');closeMob()">
+          <span class="mob-svc-item-icon">🛒</span> E-Commerce Marketing
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-content');closeMob()">
+          <span class="mob-svc-item-icon">🎬</span> Content Production
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-brand');closeMob()">
+          <span class="mob-svc-item-icon">🎨</span> Branding & Creative Design
+        </button>
+        <button class="mob-svc-item" onclick="navigate('svc-ai');closeMob()">
+          <span class="mob-svc-item-icon">🤖</span> AI Doodling / Editing
+        </button>
+      </div>
+
+      <button class="mob-nav-link" onclick="navigate('studio');closeMob()" data-mob-page="studio">
+        Portfolio <span class="mob-nav-link-arrow">→</span>
+      </button>
+      <button class="mob-nav-link" onclick="navigate('casestudies');closeMob()" data-mob-page="casestudies">
+        Case Studies <span class="mob-nav-link-arrow">→</span>
+      </button>
+
+      <div class="mob-nav-divider"></div>
+      <div class="mob-nav-section-label">Explore</div>
+
+      <button class="mob-nav-link" onclick="navigate('journal');closeMob()" data-mob-page="journal">
+        Journal <span class="mob-nav-link-arrow">→</span>
+      </button>
+      <button class="mob-nav-link" onclick="navigate('future');closeMob()" data-mob-page="future">
+        Future Vision <span class="mob-nav-link-arrow">→</span>
+      </button>
+      <button class="mob-nav-link" onclick="navigate('faq');closeMob()" data-mob-page="faq">
+        FAQ <span class="mob-nav-link-arrow">→</span>
+      </button>
+
+      <!-- CTA -->
+      <div class="mob-nav-divider" style="margin-top:16px;"></div>
+      <button class="mob-nav-cta" onclick="navigate('contact');closeMob()">
+        Start Your Project →
+      </button>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="mob-nav-footer">
+      <div class="mob-nav-footer-copy">© 2026 <span>The Sonic Media</span></div>
+      <div class="mob-nav-socials">
+        <a href="https://wa.me/918733087249" class="mob-nav-social" target="_blank" title="WhatsApp">💬</a>
+        <a href="mailto:info@thesonicmedia.com" class="mob-nav-social" title="Email">✉️</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════════ -->
+
+<!-- ═══════ ALL PAGE SECTIONS ═══════ -->
+
+<!-- ═══════ PAGE CONTENT ═══════ -->
+<div id="page-svc-smm" class="page active">
+
+  <!-- ═══ HERO ═══ -->
+  <section id="wsv-hero-new" style="min-height:100vh;overflow:hidden;background:#080a0f;">
+    <div class="hero-inner-grid">
+
+      <!-- LEFT: CONTENT -->
+      <div class="hero-left">
+        <div class="eyebrow" id="smmEyebrow">SOCIAL MEDIA MANAGEMENT · AHMEDABAD</div>
+        <h1 class="hero-h1">
+          <span class="line-wrap"><span class="line">WE GROW</span></span>
+          <span class="line-wrap"><span class="line">YOUR</span></span>
+          <span class="line-wrap"><span class="line"><span class="or">BRAND.</span></span></span>
+        </h1>
+        <p class="hero-sub" id="smmSub">
+          Strategic content, community building, and platform growth across Instagram, Facebook, LinkedIn, and beyond — all managed for you.
+        </p>
+        <div class="hero-btns" id="smmBtns">
+          <a href="#smm-final-cta" onclick="document.getElementById('smm-final-cta').scrollIntoView({behavior:'smooth'});return false;" class="btn-primary">
+            Start Growing Today
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#" onclick="navigate('studio');return false;" class="btn-ghost">View Our Work</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: SOCIAL MEDIA CARDS SCENE -->
+      <div class="hero-right">
+        <div class="smm-bg-grid"></div>
+        <div class="smm-orb smm-orb-1"></div>
+        <div class="smm-orb smm-orb-2"></div>
+        <div class="smm-orb smm-orb-3"></div>
+        <div class="smm-scan"></div>
+
+        <!-- Connection lines SVG -->
+        <svg class="smm-lines-svg" id="smmLinesSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+
+        <!-- Cards Scene -->
+        <div class="smm-cards-scene" id="smmCardsScene">
+          <!-- Hub rings (central decoration) -->
+          <div class="smm-hub" style="width:180px;height:180px;margin:-90px 0 0 -90px;--hub-dur:18s;">
+            <div class="smm-hub-dot"></div>
+          </div>
+          <div class="smm-hub" style="width:280px;height:280px;margin:-140px 0 0 -140px;--hub-dur:28s;border-color:rgba(255,255,255,0.04);animation-direction:reverse;">
+          </div>
+
+          <!-- INSTAGRAM CARD -->
+          <div class="smm-pcard" id="smmCard-ig"
+            style="
+              width:190px;
+              --platform-color:#e4405f;
+              --icon-bg:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+              --card-border:linear-gradient(135deg,rgba(228,64,95,0.5),rgba(228,64,95,0.1),rgba(228,64,95,0.3));
+              --card-glow:0 0 40px rgba(228,64,95,0.35),0 20px 60px rgba(228,64,95,0.2);
+              --base-t:translate(-185px,-115px);
+              --rot:-6deg;
+              background:linear-gradient(135deg,rgba(30,12,20,0.92) 0%,rgba(18,8,14,0.96) 100%);
+              backdrop-filter:blur(20px);
+              animation:smm-float-A 6s ease-in-out infinite;
+              animation-delay:0s;
+            ">
+            <div class="smm-pcard-badge" style="--platform-color:#e4405f;">Instagram</div>
+            <div class="smm-pcard-icon-row">
+              <div class="smm-pcard-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </div>
+              <div class="smm-notif" style="--platform-color:#e4405f;top:0;right:0;"></div>
+            </div>
+            <div class="smm-pcard-name">Followers</div>
+            <div class="smm-pcard-metric" id="igCounter">0</div>
+            <div class="smm-pcard-sub">+2.4K this week</div>
+            <div class="smm-pcard-sparkline">
+              <svg viewBox="0 0 160 32" preserveAspectRatio="none">
+                <defs><linearGradient id="igGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e4405f" stop-opacity="0.4"/><stop offset="100%" stop-color="#e4405f" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0,28 C20,24 30,8 50,10 C70,12 80,20 100,14 C120,8 140,4 160,2 L160,32 L0,32 Z" fill="url(#igGrad)"/>
+                <path d="M0,28 C20,24 30,8 50,10 C70,12 80,20 100,14 C120,8 140,4 160,2" fill="none" stroke="#e4405f" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="160" cy="2" r="3" fill="#e4405f" opacity="0.9"/>
+              </svg>
+            </div>
+            <div class="smm-pcard-trend">↑ 18.4% MoM</div>
+            <div class="smm-tooltip">Instagram Growth</div>
+          </div>
+
+          <!-- LINKEDIN CARD -->
+          <div class="smm-pcard" id="smmCard-li"
+            style="
+              width:180px;
+              --platform-color:#0077b5;
+              --icon-bg:#0077b5;
+              --card-border:linear-gradient(135deg,rgba(0,119,181,0.5),rgba(0,119,181,0.1),rgba(0,119,181,0.3));
+              --card-glow:0 0 40px rgba(0,119,181,0.35),0 20px 60px rgba(0,119,181,0.2);
+              --base-t:translate(155px,-140px);
+              --rot:7deg;
+              background:linear-gradient(135deg,rgba(0,15,28,0.93) 0%,rgba(0,8,18,0.97) 100%);
+              backdrop-filter:blur(20px);
+              animation:smm-float-B 7s ease-in-out infinite;
+              animation-delay:-2s;
+            ">
+            <div class="smm-pcard-icon-row">
+              <div class="smm-pcard-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </div>
+              <div class="smm-pcard-live" style="--platform-color:#0077b5;">Live</div>
+            </div>
+            <div class="smm-pcard-name">Impressions</div>
+            <div class="smm-pcard-metric" style="font-size:30px;">84.2K</div>
+            <div class="smm-pcard-sub">B2B reach this month</div>
+            <div class="smm-pcard-sparkline">
+              <svg viewBox="0 0 160 32" preserveAspectRatio="none">
+                <defs><linearGradient id="liGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0077b5" stop-opacity="0.4"/><stop offset="100%" stop-color="#0077b5" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0,26 C20,26 30,18 50,15 C70,12 80,16 100,10 C120,4 140,6 160,4 L160,32 L0,32 Z" fill="url(#liGrad)"/>
+                <path d="M0,26 C20,26 30,18 50,15 C70,12 80,16 100,10 C120,4 140,6 160,4" fill="none" stroke="#0077b5" stroke-width="1.5"/>
+                <circle cx="160" cy="4" r="3" fill="#0077b5"/>
+              </svg>
+            </div>
+            <div class="smm-pcard-trend">↑ 31.2% MoM</div>
+            <div class="smm-tooltip">LinkedIn B2B Reach</div>
+          </div>
+
+          <!-- FACEBOOK CARD -->
+          <div class="smm-pcard" id="smmCard-fb"
+            style="
+              width:170px;
+              --platform-color:#1877f2;
+              --icon-bg:linear-gradient(135deg,#1877f2,#0c5ce5);
+              --card-border:linear-gradient(135deg,rgba(24,119,242,0.5),rgba(24,119,242,0.1),rgba(24,119,242,0.3));
+              --card-glow:0 0 40px rgba(24,119,242,0.35),0 20px 60px rgba(24,119,242,0.2);
+              --base-t:translate(-220px,100px);
+              --rot:-4deg;
+              background:linear-gradient(135deg,rgba(5,12,28,0.93) 0%,rgba(3,7,18,0.97) 100%);
+              backdrop-filter:blur(20px);
+              animation:smm-float-C 5.5s ease-in-out infinite;
+              animation-delay:-1s;
+            ">
+            <div class="smm-pcard-icon-row">
+              <div class="smm-pcard-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </div>
+              <div class="smm-notif" style="--platform-color:#1877f2;top:0;right:0;"></div>
+            </div>
+            <div class="smm-pcard-name">Page Reach</div>
+            <div class="smm-pcard-metric" style="font-size:30px;">1.2M</div>
+            <div class="smm-pcard-sub">Organic + Paid</div>
+            <div class="smm-pcard-sparkline">
+              <svg viewBox="0 0 160 32" preserveAspectRatio="none">
+                <defs><linearGradient id="fbGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1877f2" stop-opacity="0.4"/><stop offset="100%" stop-color="#1877f2" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0,22 C20,22 35,28 55,20 C75,12 90,8 110,10 C130,12 145,6 160,3 L160,32 L0,32 Z" fill="url(#fbGrad)"/>
+                <path d="M0,22 C20,22 35,28 55,20 C75,12 90,8 110,10 C130,12 145,6 160,3" fill="none" stroke="#1877f2" stroke-width="1.5"/>
+                <circle cx="160" cy="3" r="3" fill="#1877f2"/>
+              </svg>
+            </div>
+            <div class="smm-pcard-trend">↑ 22.7% MoM</div>
+            <div class="smm-tooltip">Facebook Reach</div>
+          </div>
+
+          <!-- YOUTUBE CARD (small stat pill) -->
+          <div class="smm-pcard" id="smmCard-yt"
+            style="
+              width:165px;
+              --platform-color:#ff0000;
+              --icon-bg:#ff0000;
+              --card-border:linear-gradient(135deg,rgba(255,0,0,0.5),rgba(255,0,0,0.1),rgba(255,0,0,0.3));
+              --card-glow:0 0 40px rgba(255,0,0,0.3),0 20px 60px rgba(255,0,0,0.15);
+              --base-t:translate(175px,95px);
+              --rot:5deg;
+              background:linear-gradient(135deg,rgba(22,3,3,0.93) 0%,rgba(12,2,2,0.97) 100%);
+              backdrop-filter:blur(20px);
+              animation:smm-float-D 7.5s ease-in-out infinite;
+              animation-delay:-3.5s;
+            ">
+            <div class="smm-pcard-icon-row">
+              <div class="smm-pcard-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+              </div>
+              <div class="smm-pcard-live" style="--platform-color:#ff0000;">Live</div>
+            </div>
+            <div class="smm-pcard-name">Watch Hours</div>
+            <div class="smm-pcard-metric" style="font-size:28px;">14.8K</div>
+            <div class="smm-pcard-sub">Avg 4.2 min/view</div>
+            <div class="smm-pcard-sparkline">
+              <svg viewBox="0 0 160 32" preserveAspectRatio="none">
+                <defs><linearGradient id="ytGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff0000" stop-opacity="0.4"/><stop offset="100%" stop-color="#ff0000" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0,24 C30,24 40,14 60,12 C80,10 95,18 115,12 C135,6 148,4 160,2 L160,32 L0,32 Z" fill="url(#ytGrad)"/>
+                <path d="M0,24 C30,24 40,14 60,12 C80,10 95,18 115,12 C135,6 148,4 160,2" fill="none" stroke="#ff0000" stroke-width="1.5"/>
+                <circle cx="160" cy="2" r="3" fill="#ff0000"/>
+              </svg>
+            </div>
+            <div class="smm-pcard-trend">↑ 44.1% MoM</div>
+            <div class="smm-tooltip">YouTube Analytics</div>
+          </div>
+
+          <!-- X / TWITTER mini card -->
+          <div class="smm-pcard" id="smmCard-tw"
+            style="
+              width:155px;
+              --platform-color:#ffffff;
+              --icon-bg:rgba(255,255,255,0.1);
+              --card-border:linear-gradient(135deg,rgba(255,255,255,0.18),rgba(255,255,255,0.04),rgba(255,255,255,0.1));
+              --card-glow:0 0 40px rgba(255,255,255,0.12),0 20px 50px rgba(255,255,255,0.06);
+              --base-t:translate(-60px,185px);
+              --rot:2deg;
+              background:linear-gradient(135deg,rgba(10,10,12,0.94) 0%,rgba(6,6,8,0.98) 100%);
+              backdrop-filter:blur(20px);
+              animation:smm-float-A 8s ease-in-out infinite;
+              animation-delay:-4s;
+            ">
+            <div class="smm-pcard-icon-row">
+              <div class="smm-pcard-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </div>
+              <div class="smm-notif" style="--platform-color:#fff;top:0;right:0;"></div>
+            </div>
+            <div class="smm-pcard-name">Engagements</div>
+            <div class="smm-pcard-metric" style="font-size:28px;text-shadow:0 0 20px rgba(255,255,255,0.4);">38.5K</div>
+            <div class="smm-pcard-sub">Replies, likes, RTs</div>
+            <div class="smm-pcard-trend" style="color:#fff;background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">↑ 12.9% MoM</div>
+            <div class="smm-tooltip">X / Twitter Stats</div>
+          </div>
+        </div>
+
+        <!-- Particles -->
+        <div class="smm-particle" style="width:4px;height:4px;top:18%;left:60%;--p-color:rgba(228,64,95,0.6);--p-dur:4.2s;--p-tx:-12px;--p-ty:18px;--p-sc:1.4;--p-opA:0.7;--p-opB:0.2;"></div>
+        <div class="smm-particle" style="width:3px;height:3px;top:72%;left:55%;--p-color:rgba(0,119,181,0.5);--p-dur:5.8s;--p-tx:16px;--p-ty:-20px;--p-sc:0.6;--p-opA:0.5;--p-opB:0.1;"></div>
+        <div class="smm-particle" style="width:5px;height:5px;top:40%;left:75%;--p-color:rgba(255,0,0,0.4);--p-dur:3.6s;--p-tx:-8px;--p-ty:-14px;--p-sc:1.6;--p-opA:0.6;--p-opB:0.15;"></div>
+        <div class="smm-particle" style="width:3px;height:3px;top:85%;left:68%;--p-color:rgba(255,92,0,0.6);--p-dur:6.1s;--p-tx:10px;--p-ty:-18px;--p-sc:0.8;--p-opA:0.5;--p-opB:0.2;"></div>
+        <div class="smm-particle" style="width:4px;height:4px;top:25%;left:80%;--p-color:rgba(24,119,242,0.5);--p-dur:4.9s;--p-tx:-14px;--p-ty:12px;--p-sc:1.3;--p-opA:0.4;--p-opB:0.1;"></div>
+
+        <!-- Stats ticker -->
+        <div class="smm-ticker">
+          <div class="smm-ticker-item"><div class="smm-ticker-dot" style="--t-color:#e4405f;"></div><span class="smm-ticker-label">Accounts</span><span class="smm-ticker-val">500+</span></div>
+          <div class="smm-ticker-item"><div class="smm-ticker-dot" style="--t-color:#22c55e;"></div><span class="smm-ticker-label">Avg Growth</span><span class="smm-ticker-val">+34%</span></div>
+          <div class="smm-ticker-item"><div class="smm-ticker-dot" style="--t-color:#0077b5;"></div><span class="smm-ticker-label">Platforms</span><span class="smm-ticker-val">6</span></div>
+        </div>
+
+        <div class="smm-vignette"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+  (function() {
+  'use strict';
+
+  /* ── INSTAGRAM FOLLOWER COUNTER ANIMATION ── */
+  (function() {
+    const el = document.getElementById('igCounter');
+    if (!el) return;
+    const target = 124800;
+    const duration = 2200;
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(eased * target);
+      el.textContent = val >= 1000 ? (val / 1000).toFixed(1) + 'K' : val;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    setTimeout(() => requestAnimationFrame(tick), 600);
+  })();
+
+  // Drag to rotate
+  let isDragging = false, lastX = 0, lastY = 0, velX = 0, velY = 0, rotX = -8, rotY = 0;
+  globe.parentElement.parentElement.addEventListener('mousedown', e => { isDragging = true; lastX = e.clientX; lastY = e.clientY; velX = 0; velY = 0; globe.style.animationPlayState = 'paused'; });
+  document.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    velX = e.clientX - lastX; velY = e.clientY - lastY;
+    rotY += velX * 0.3; rotX += velY * 0.15;
+    rotX = Math.max(-30, Math.min(30, rotX));
+    globe.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+    lastX = e.clientX; lastY = e.clientY;
+  });
+  document.addEventListener('mouseup', () => { if (isDragging) { isDragging = false; inertia(); } });
+  function inertia() {
+    if (Math.abs(velX) < 0.1 && Math.abs(velY) < 0.1) { globe.style.animationPlayState = ''; return; }
+    velX *= 0.93; velY *= 0.93;
+    rotY += velX * 0.3; rotX += velY * 0.15;
+    rotX = Math.max(-30, Math.min(30, rotX));
+    globe.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+    requestAnimationFrame(inertia);
+  }
+  globe.parentElement.parentElement.addEventListener('touchstart', e => { isDragging = true; lastX = e.touches[0].clientX; lastY = e.touches[0].clientY; globe.style.animationPlayState = 'paused'; }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!isDragging) return;
+    velX = e.touches[0].clientX - lastX; velY = e.touches[0].clientY - lastY;
+    rotY += velX * 0.3; rotX += velY * 0.15;
+    rotX = Math.max(-30, Math.min(30, rotX));
+    globe.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+    lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', () => { if (isDragging) { isDragging = false; inertia(); } });
+
+  // ── SEARCH ANIMATION ──
+  (function() {
+    const dot     = document.getElementById('smmGbDot');
+    const ring    = document.getElementById('smmGbRingAnim');
+    const bar     = document.getElementById('smmGbSearchBar');
+    const inner   = document.getElementById('smmGbSearchInner');
+    const typedEl = document.getElementById('smmGbTypedText');
+    const cursor  = document.getElementById('smmGbCursor');
+
+    const FINAL_W = 520;
+    const RING_SIZE = FINAL_W;
+
+    function easeOutExpo(t)    { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+    function easeOutBack(t)    { const c1=1.70158,c3=c1+1; return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2); }
+    function easeInOutQuart(t) { return t<0.5 ? 8*t*t*t*t : 1-Math.pow(-2*t+2,4)/2; }
+    function easeInBack(t)     { const c1=1.70158,c3=c1+1; return c3*t*t*t - c1*t*t; }
+    function easeInExpo(t)     { return t === 0 ? 0 : Math.pow(2, 10*t - 10); }
+    function easeOutQuart(t)   { return 1 - Math.pow(1-t, 4); }
+
+    function animate(duration, easing, onTick, onDone) {
+      const start = performance.now();
+      function frame(now) {
+        let t = Math.min((now - start) / duration, 1);
+        onTick(easing(t));
+        if (t < 1) requestAnimationFrame(frame);
+        else if (onDone) onDone();
+      }
+      requestAnimationFrame(frame);
+    }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function resetState() {
+      dot.style.display = ''; dot.style.opacity = '1'; dot.style.transform = 'scale(1)';
+      ring.style.display = 'none'; ring.style.opacity = '0'; ring.style.transform = 'scale(1)';
+      ring.style.width = '0px'; ring.style.height = '0px';
+      bar.style.opacity = '0'; bar.style.width = '0px'; bar.style.height = '0px';
+      bar.style.transform = 'scale(1)'; bar.style.boxShadow = '';
+      inner.style.opacity = '0'; typedEl.textContent = '';
+      cursor.style.animation = 'none'; cursor.style.opacity = '1';
+    }
+
+    function runLoop() {
+      resetState();
+      setTimeout(() => {
+        dot.style.animation = 'none';
+        animate(600, easeOutExpo, t => {
+          dot.style.opacity = lerp(1, 0, t);
+          dot.style.transform = `scale(${lerp(1, 0.2, t)})`;
+          const size = lerp(8, RING_SIZE, t);
+          ring.style.width = size + 'px'; ring.style.height = size + 'px';
+          ring.style.opacity = lerp(0, 1, Math.min(t * 2, 1));
+          const glow = lerp(0, 18, t);
+          ring.style.boxShadow = `0 0 ${glow}px 2px rgba(201,169,110,${lerp(0,0.55,t)}), inset 0 0 ${glow*0.5}px 1px rgba(201,169,110,${lerp(0,0.2,t)})`;
+        }, () => {
+          dot.style.display = 'none';
+          bar.style.width = RING_SIZE + 'px'; bar.style.opacity = '1';
+          bar.style.borderRadius = '999px'; bar.style.transform = 'scale(1)';
+          animate(700, easeOutBack, t => {
+            ring.style.opacity = lerp(1, 0, Math.min(t * 1.5, 1));
+            ring.style.transform = `scale(${lerp(1, 1.04, t)})`;
+            bar.style.width = lerp(RING_SIZE, FINAL_W, t) + 'px';
+            bar.style.height = lerp(RING_SIZE, 52, t) + 'px';
+            const gl = lerp(4, 30, t);
+            bar.style.boxShadow = `0 0 0 1px rgba(201,169,110,${lerp(0.12,0.22,t)}), 0 0 ${gl}px 4px rgba(201,169,110,${lerp(0.18,0.28,t)}), 0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07)`;
+          }, () => {
+            ring.style.display = 'none';
+            animate(300, easeInOutQuart, t => { inner.style.opacity = t; }, () => {
+              const text = 'Social Media Management';
+              let i = 0;
+              cursor.style.animation = 'gbBlink 1s step-end infinite';
+              function typeNext() {
+                if (i <= text.length) {
+                  typedEl.textContent = text.slice(0, i++);
+                  setTimeout(typeNext, i === 1 ? 300 : 68 + Math.random() * 45);
+                } else { setTimeout(startClose, 1000); }
+              }
+              setTimeout(typeNext, 200);
+            });
+          });
+        });
+      }, 1400);
+    }
+
+    function startClose() {
+      cursor.style.animation = 'none'; cursor.style.opacity = '1';
+      const fullText = typedEl.textContent;
+      let len = fullText.length;
+      function deleteNext() {
+        if (len >= 0) {
+          typedEl.textContent = fullText.slice(0, len--);
+          setTimeout(deleteNext, 22 + Math.random() * 12);
+        } else {
+          animate(280, easeInBack, t => {
+            inner.style.opacity = lerp(1, 0, Math.min(t * 4, 1));
+            const w = lerp(FINAL_W, RING_SIZE, t);
+            const h = lerp(52, RING_SIZE, t);
+            bar.style.width = w + 'px'; bar.style.height = h + 'px';
+            const squish = 1 + Math.sin(t * Math.PI) * 0.07;
+            bar.style.transform = `scaleX(${1/squish}) scaleY(${squish})`;
+            const gl = lerp(30, 10, t);
+            bar.style.boxShadow = `0 0 0 1px rgba(201,169,110,${lerp(0.22,0.65,t)}), 0 0 ${gl}px 4px rgba(201,169,110,${lerp(0.28,0.55,t)}), inset 0 1px 0 rgba(255,255,255,0.07)`;
+          }, () => {
+            ring.style.display = ''; ring.style.opacity = '1';
+            ring.style.width = RING_SIZE + 'px'; ring.style.height = RING_SIZE + 'px';
+            ring.style.transform = 'scale(1)';
+            ring.style.border = '1.5px solid rgba(201,169,110,0.9)';
+            ring.style.boxShadow = `0 0 18px 2px rgba(201,169,110,0.55), inset 0 0 9px 1px rgba(201,169,110,0.2)`;
+            bar.style.opacity = '0'; bar.style.transform = 'scale(1)';
+            animate(380, easeInExpo, t => {
+              const size = lerp(RING_SIZE, 8, t);
+              ring.style.width = size + 'px'; ring.style.height = size + 'px';
+              ring.style.border = `${lerp(1.5, 3.5, t)}px solid rgba(201,169,110,${lerp(0.9, 1, t)})`;
+              ring.style.opacity = t > 0.75 ? lerp(1, 0, (t - 0.75) / 0.25) : '1';
+              const glow = lerp(18, 0, t);
+              ring.style.boxShadow = `0 0 ${glow}px 2px rgba(201,169,110,${lerp(0.55,0,t)}), inset 0 0 ${glow*0.5}px 1px rgba(201,169,110,${lerp(0.2,0,t)})`;
+            }, () => {
+              ring.style.display = 'none';
+              dot.style.display = ''; dot.style.opacity = '0'; dot.style.transform = 'scale(2.4)';
+              dot.style.animation = 'none';
+              animate(220, easeOutQuart, t => {
+                dot.style.opacity = lerp(0, 1, t);
+                dot.style.transform = `scale(${lerp(2.4, 1, t)})`;
+              }, () => {
+                dot.style.animation = 'gbDotPulse 1.2s ease-in-out infinite alternate';
+                setTimeout(runLoop, 900);
+              });
+            });
+          });
+        }
+      }
+      deleteNext();
+    }
+    runLoop();
+  })();
+
+  // ── GSAP entrance (progressive enhancement only) ──
+  if (typeof gsap !== 'undefined') {
+    var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.from('#wsv-hero-new .eyebrow', { opacity:0, y:12, duration:0.7, delay:0.15 })
+      .from('#wsv-hero-new .line', { y:'110%', duration:0.9, stagger:0.12, ease:'power4.out' }, '-=0.3')
+      .from('#wsv-hero-new .hero-sub', { opacity:0, y:18, duration:0.7 }, '-=0.4')
+      .from('#wsv-hero-new .hero-btns', { opacity:0, y:18, duration:0.6 }, '-=0.45');
+  }
+
+  })();
+  </script>
+  <!-- ═══ ORBIT + VIDEO SECTION ═══ -->
+  <style>
+    .wsv-page-layout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: #ffffff;
+      gap: 60px;
+      padding: 80px 60px;
+    }
+    .wsv-orbit-section {
+      flex: 0 0 auto;
+      background: #ffffff;
+      text-align: center;
+      position: relative;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wsv-video-panel {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .wsv-video-inner {
+      width: 360px;
+      height: 640px;
+      background: #ffffff;
+      overflow: hidden;
+      position: relative;
+      box-shadow: none;
+      border: none;
+      outline: none;
+    }
+    .wsv-video-inner video,
+    .wsv-video-inner video:hover {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      display: block !important;
+      border: none;
+      outline: none;
+      background: #ffffff;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: none;
+    }
+    .wsv-orbit-wrap {
+      position: relative;
+      width: 640px;
+      height: 640px;
+      margin: 0 auto;
+    }
+    .wsv-orbit-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      pointer-events: none;
+    }
+    .wsv-orbit-brand-ring {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #fff 0%, #f0f0f0 100%);
+      border: 1.5px solid rgba(255,92,0,.35);
+      box-shadow: 0 0 0 8px rgba(255,92,0,.05), 0 0 40px rgba(255,92,0,.10), 0 4px 24px rgba(0,0,0,.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      position: relative;
+    }
+    .wsv-orbit-brand-ring::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,92,0,.22);
+      animation: wsv-ring-spin 20s linear infinite;
+    }
+    @keyframes wsv-ring-spin { to { transform: rotate(360deg); } }
+    .wsv-orbit-brand-abbr {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: .06em;
+      color: #0a0a0a;
+      line-height: 1;
+    }
+    .wsv-orbit-brand-abbr span { color: #ff5c00; }
+    .wsv-orbit-brand-sub {
+      font-size: 8px;
+      color: #ff5c00;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .wsv-social-node {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,.15);
+      z-index: 4;
+    }
+    .wsv-social-node.inner { width: 52px; height: 52px; }
+    .wsv-social-node.inner svg { width: 24px; height: 24px; }
+    .wsv-social-node.outer { width: 48px; height: 48px; }
+    .wsv-social-node.outer svg { width: 22px; height: 22px; }
+    .node-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+    .node-facebook  { background: #1877f2; }
+    .node-linkedin  { background: #0a66c2; }
+    .node-twitter   { background: #000; }
+    .node-youtube   { background: #ff0000; }
+    .node-pinterest { background: #e60023; }
+    .node-snapchat  { background: #fffc00; }
+    .node-snapchat svg { filter: drop-shadow(0 1px 1px rgba(0,0,0,.25)); }
+    .node-tiktok    { background: #010101; }
+    .node-whatsapp  { background: #25d366; }
+    .node-telegram  { background: #2ca5e0; }
+    .node-reddit    { background: #ff4500; }
+    .node-threads   { background: #000; }
+    @media (max-width: 1100px) {
+      .wsv-page-layout { flex-direction: column; padding: 60px 30px; gap: 40px; }
+      .wsv-orbit-wrap { width: 420px; height: 420px; }
+    }
+    @media (max-width: 600px) {
+      .wsv-page-layout { padding: 40px 20px; gap: 24px; }
+      .wsv-orbit-wrap { width: 320px; height: 320px; }
+      .wsv-orbit-brand-ring { width: 100px; height: 100px; }
+      .wsv-orbit-brand-abbr { font-size: 22px; }
+      .wsv-social-node.inner { width: 36px; height: 36px; }
+      .wsv-social-node.inner svg { width: 16px; height: 16px; }
+      .wsv-social-node.outer { width: 32px; height: 32px; }
+      .wsv-social-node.outer svg { width: 14px; height: 14px; }
+      .wsv-video-inner { width: 200px; height: 355px; }
+    }
+  </style>
+
+  <div class="wsv-page-layout">
+    <section class="wsv-orbit-section">
+      <div class="wsv-orbit-wrap" id="wsvOrbitWrap">
+        <canvas id="wsvOrbitCanvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+        <div class="wsv-orbit-center">
+          <div class="wsv-orbit-brand-ring">
+            <div class="wsv-orbit-brand-abbr" id="wsvOrbitAbbr">S<span>MM</span></div>
+          </div>
+        </div>
+        <div class="wsv-social-node inner node-instagram" id="node-0"><svg viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+        <div class="wsv-social-node inner node-facebook" id="node-1"><svg viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+        <div class="wsv-social-node inner node-linkedin" id="node-3"><svg viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+        <div class="wsv-social-node inner node-twitter" id="node-2"><svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+        <div class="wsv-social-node inner node-youtube" id="node-4"><svg viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div>
+        <div class="wsv-social-node inner node-tiktok" id="node-5"><svg viewBox="0 0 24 24" fill="white"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></div>
+        <div class="wsv-social-node outer node-whatsapp" id="node-7"><svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+        <div class="wsv-social-node outer node-reddit" id="node-6"><svg viewBox="0 0 24 24" fill="white"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg></div>
+        <div class="wsv-social-node outer node-instagram" id="node-9"><svg viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+        <div class="wsv-social-node outer node-facebook" id="node-8"><svg viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+        <div class="wsv-social-node outer node-linkedin" id="node-10"><svg viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+        <div class="wsv-social-node outer node-whatsapp" id="node-11"><svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+      </div>
+    </section>
+
+    <div class="wsv-video-panel">
+      <div class="wsv-video-inner">
+        <video src="https://res.cloudinary.com/dq2nrpky0/video/upload/v1780633793/SMM_vhosis.mp4" autoplay loop muted playsinline crossorigin="anonymous" style="opacity:1!important;visibility:visible!important;pointer-events:none;"></video>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const canvas = document.getElementById('wsvOrbitCanvas');
+    const ctx    = canvas.getContext('2d');
+    const WRAP   = document.getElementById('wsvOrbitWrap');
+    let W, H, CX, CY;
+    const rings = [
+      { r: 175, speed:  0.005, nodeIds: [0,1,2,3,4,5],   offset: 0 },
+      { r: 275, speed: -0.003, nodeIds: [6,7,8,9,10,11], offset: Math.PI / 6 }
+    ];
+    function resize() {
+      const r = WRAP.getBoundingClientRect();
+      W = canvas.width  = r.width;
+      H = canvas.height = r.height;
+      CX = W / 2; CY = H / 2;
+      rings[0].r = W * 0.27;
+      rings[1].r = W * 0.43;
+    }
+    function drawRing(r) {
+      ctx.save();
+      ctx.globalAlpha = 0.2;
+      ctx.beginPath();
+      ctx.arc(CX, CY, r, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,92,0,0.6)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 8]);
+      ctx.stroke();
+      ctx.restore();
+    }
+    function drawLine(x, y) {
+      ctx.save();
+      ctx.globalAlpha = 0.35;
+      ctx.beginPath();
+      ctx.moveTo(CX, CY);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = '#ff5c00';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.restore();
+    }
+    const nodePos = {};
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      rings.forEach(ring => {
+        ring.offset += ring.speed;
+        drawRing(ring.r);
+        ring.nodeIds.forEach((id, i) => {
+          const a = (i / ring.nodeIds.length) * Math.PI * 2 + ring.offset;
+          const x = CX + Math.cos(a) * ring.r;
+          const y = CY + Math.sin(a) * ring.r;
+          drawLine(x, y);
+          nodePos[id] = { x, y };
+        });
+      });
+      Object.entries(nodePos).forEach(([id, {x, y}]) => {
+        const el = document.getElementById('node-' + id);
+        if (!el) return;
+        el.style.left      = (x - el.offsetWidth  / 2) + 'px';
+        el.style.top       = (y - el.offsetHeight / 2) + 'px';
+        el.style.opacity   = '1';
+        el.style.transform = 'scale(1)';
+      });
+      requestAnimationFrame(tick);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    tick();
+  })();
+  </script>
+  <!-- ═══ HOW WE MANAGE YOUR SOCIAL MEDIA ═══ -->
+  <style>
+  /* ══════════════════════════════════════
+     SMM ENGINE SECTION
+  ══════════════════════════════════════ */
+  .smm-engine-section {
+    background: #07080c;
+    padding: 100px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .smm-engine-section::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 900px; height: 600px;
+    background: radial-gradient(ellipse, rgba(255,92,0,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── Section Header ── */
+  .smm-eng-header {
+    text-align: left;
+    padding: 0 60px 64px;
+    max-width: 1380px;
+    margin: 0 auto;
+  }
+  .smm-eng-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: #ff5c00; background: rgba(255,92,0,.08);
+    border: 1px solid rgba(255,92,0,.2); padding: 7px 16px;
+    border-radius: 100px; margin-bottom: 24px;
+  }
+  .smm-eng-eyebrow-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: #ff5c00;
+    animation: smm-eng-pulse 2s infinite;
+  }
+  @keyframes smm-eng-pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(255,92,0,.6); }
+    50% { box-shadow: 0 0 0 7px rgba(255,92,0,0); }
+  }
+  .smm-eng-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: .92; letter-spacing: -.01em;
+    color: #fff; margin-bottom: 18px;
+  }
+  .smm-eng-title span { color: #ff5c00; }
+  .smm-eng-subtitle {
+    font-size: 15px; line-height: 1.75;
+    color: rgba(255,255,255,.42);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ══════════════════════════════════════
+     PLATFORM TABS + DASHBOARD PANEL
+  ══════════════════════════════════════ */
+  .smm-platform-engine {
+    max-width: 1380px; margin: 0 auto;
+    padding: 0 40px 100px;
+  }
+
+  /* Tab selector row */
+  .smm-plat-tabs {
+    display: flex; gap: 0; flex-wrap: nowrap;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px; padding: 6px;
+    margin-bottom: 40px; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .smm-plat-tabs::-webkit-scrollbar { display: none; }
+  .smm-plat-tab {
+    flex: 1; min-width: 80px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 12px 10px; border-radius: 10px; cursor: pointer;
+    border: none; background: transparent;
+    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(255,255,255,.35);
+    transition: all .25s; white-space: nowrap;
+  }
+  .smm-plat-tab:hover { color: rgba(255,255,255,.7); background: rgba(255,255,255,.04); }
+  .smm-plat-tab.active {
+    background: var(--tab-color, #ff5c00);
+    color: #fff;
+    box-shadow: 0 4px 20px var(--tab-glow, rgba(255,92,0,.4));
+  }
+  .smm-plat-tab-icon { font-size: 20px; line-height: 1; }
+
+  /* Dashboard Panel */
+  .smm-plat-panel {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    animation: smm-panel-in .35s ease;
+  }
+  .smm-plat-panel.active { display: grid; }
+  @keyframes smm-panel-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Left: Mock Dashboard */
+  .smm-dash-card {
+    background: linear-gradient(135deg, #0f1117 0%, #0a0c12 100%);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 20px; overflow: hidden;
+    position: relative;
+  }
+  .smm-dash-topbar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,.03);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .smm-dash-dots { display: flex; gap: 5px; }
+  .smm-dash-dots span { width: 9px; height: 9px; border-radius: 50%; }
+  .smm-dash-dots span:nth-child(1) { background: #ff5f57; }
+  .smm-dash-dots span:nth-child(2) { background: #febc2e; }
+  .smm-dash-dots span:nth-child(3) { background: #28c840; }
+  .smm-dash-title {
+    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+  }
+  .smm-dash-plat-badge {
+    margin-left: auto; display: flex; align-items: center; gap: 6px;
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: #fff; background: var(--plat-color); padding: 3px 10px; border-radius: 999px;
+  }
+  .smm-dash-body { padding: 20px; }
+
+  /* Metric row */
+  .smm-dash-metrics {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-bottom: 20px;
+  }
+  .smm-dash-metric {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px; padding: 14px 12px;
+  }
+  .smm-dash-metric-label {
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.3); margin-bottom: 6px;
+  }
+  .smm-dash-metric-val {
+    font-family: 'Bebas Neue', sans-serif; font-size: 28px; line-height: 1;
+    color: #fff;
+  }
+  .smm-dash-metric-val.hi { color: var(--plat-color); }
+  .smm-dash-metric-trend {
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    color: #22c55e; margin-top: 2px;
+  }
+
+  /* Sparkline chart */
+  .smm-dash-chart-wrap {
+    background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.05);
+    border-radius: 12px; padding: 16px; margin-bottom: 16px;
+  }
+  .smm-dash-chart-label {
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.3); margin-bottom: 12px;
+  }
+  .smm-dash-chart-svg { width: 100%; height: 64px; }
+
+  /* Calendar preview */
+  .smm-dash-cal {
+    background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.05);
+    border-radius: 12px; padding: 14px;
+  }
+  .smm-dash-cal-label {
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.3); margin-bottom: 10px;
+  }
+  .smm-dash-cal-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px;
+  }
+  .smm-dash-cal-day {
+    aspect-ratio: 1; border-radius: 5px;
+    background: rgba(255,255,255,.03);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; color: rgba(255,255,255,.6);
+    min-height: 28px; /* fallback when aspect-ratio can't resolve inside display:none */
+  }
+  .smm-dash-cal-day.has-post {
+    position: relative;
+    overflow: hidden;
+    color: #fff; font-weight: 700;
+    border: 1px solid rgba(255,255,255,.15);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .smm-dash-cal-day.has-post:hover {
+    transform: scale(1.18);
+    border-color: rgba(255,255,255,.55);
+    box-shadow: 0 6px 20px rgba(0,0,0,.5);
+    z-index: 10;
+  }
+  .smm-dash-cal-day.has-post .cal-thumb {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    filter: blur(3px) brightness(0.55) saturate(1.4);
+    transform: scale(1.12);
+    z-index: 0;
+    transition: filter 0.3s ease, transform 0.3s ease;
+  }
+  .smm-dash-cal-day.has-post:hover .cal-thumb {
+    filter: blur(0px) brightness(1.15) saturate(1.6);
+    transform: scale(1.08);
+  }
+  .smm-dash-cal-day.has-post .cal-day-num {
+    position: relative; z-index: 1;
+    text-shadow: 0 1px 4px rgba(0,0,0,.7);
+    transition: opacity 0.3s ease;
+  }
+  .smm-dash-cal-day.has-post:hover .cal-day-num {
+    opacity: 0;
+  }
+  .smm-dash-cal-day.has-post::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.32) 100%);
+    transition: opacity 0.3s ease;
+  }
+  .smm-dash-cal-day.has-post:hover::after {
+    opacity: 0;
+  }
+  .smm-dash-cal-day.today {
+    border: 1px solid var(--plat-color);
+    color: rgba(255,255,255,.7);
+  }
+
+  /* Right: Strategy Panel */
+  .smm-strat-card {
+    background: linear-gradient(135deg, #0f1117 0%, #0a0c12 100%);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 20px; padding: 32px;
+    display: flex; flex-direction: column; gap: 28px;
+  }
+  .smm-strat-plat-name {
+    font-family: 'Bebas Neue', sans-serif; font-size: 42px; line-height: 1;
+    color: var(--plat-color); letter-spacing: .02em;
+  }
+
+  /* Services checklist */
+  .smm-strat-services { display: flex; flex-direction: column; gap: 10px; }
+  .smm-strat-service {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,.025);
+    border: 1px solid rgba(255,255,255,.05);
+    border-radius: 10px;
+    transition: all .2s;
+  }
+  .smm-strat-service:hover {
+    background: rgba(255,255,255,.05);
+    border-color: var(--plat-color);
+    transform: translateX(4px);
+  }
+  .smm-strat-svc-icon {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(255,255,255,.05);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .smm-strat-svc-text {
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    color: rgba(255,255,255,.7); font-weight: 400;
+  }
+  .smm-strat-svc-check {
+    margin-left: auto; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--plat-color); display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; font-size: 10px; color: #fff;
+  }
+
+  /* Expected outcome pill */
+  .smm-strat-outcome {
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px; padding: 16px 18px;
+  }
+  .smm-strat-outcome-label {
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: #ff5c00; margin-bottom: 8px;
+  }
+  .smm-strat-outcome-text {
+    font-family: 'DM Sans', sans-serif; font-size: 13px; line-height: 1.65;
+    color: rgba(255,255,255,.5);
+  }
+
+  /* Mobile panel */
+  @media (max-width: 900px) {
+    .smm-plat-panel { grid-template-columns: 1fr; }
+    .smm-platform-engine { padding: 0 20px 80px; }
+    .smm-eng-header { padding: 0 20px 48px; }
+  }
+
+  /* ══════════════════════════════════════
+     MONTHLY TIMELINE SECTION
+  ══════════════════════════════════════ */
+  .smm-timeline-section {
+    background: #0a0a0a;
+    padding: 100px 0;
+    position: relative; overflow: hidden;
+  }
+  .smm-timeline-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,92,0,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,92,0,0.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+  }
+  .smm-tl-inner {
+    max-width: 1380px; margin: 0 auto; padding: 0 60px;
+  }
+  .smm-tl-header {
+    text-align: left; margin-bottom: 72px;
+  }
+  .smm-tl-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: #ff5c00; background: rgba(255,92,0,.08);
+    border: 1px solid rgba(255,92,0,.2); padding: 7px 16px;
+    border-radius: 100px; margin-bottom: 22px;
+  }
+  .smm-tl-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px, 5.5vw, 80px);
+    color: #fff; line-height: .93; letter-spacing: -.01em;
+    margin-bottom: 14px;
+  }
+  .smm-tl-title span { color: #ff5c00; }
+  .smm-tl-sub {
+    font-size: 14px; color: rgba(255,255,255,.38);
+    font-family: 'DM Sans', sans-serif; line-height: 1.7;
+  }
+
+  /* Timeline track */
+  .smm-tl-track {
+    position: relative;
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 0;
+  }
+  .smm-tl-track::before {
+    content: '';
+    position: absolute;
+    top: 36px; left: calc(100% / 14); right: calc(100% / 14);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,92,0,.4) 15%, rgba(255,92,0,.4) 85%, transparent);
+    z-index: 0;
+  }
+  .smm-tl-step {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; padding: 0 8px;
+    position: relative; z-index: 1;
+    cursor: pointer;
+  }
+  .smm-tl-node {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: #111; border: 2px solid rgba(255,255,255,.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 20px;
+    transition: all .3s; flex-shrink: 0;
+    position: relative;
+  }
+  .smm-tl-node::before {
+    content: '';
+    position: absolute; inset: -5px; border-radius: 50%;
+    border: 1px solid transparent;
+    transition: border-color .3s;
+  }
+  .smm-tl-step.active .smm-tl-node,
+  .smm-tl-step:hover .smm-tl-node {
+    background: #ff5c00;
+    border-color: #ff5c00;
+    box-shadow: 0 0 30px rgba(255,92,0,.5);
+    transform: scale(1.1);
+  }
+  .smm-tl-step.active .smm-tl-node::before,
+  .smm-tl-step:hover .smm-tl-node::before {
+    border-color: rgba(255,92,0,.3);
+  }
+  .smm-tl-step-num {
+    position: absolute; top: -8px; right: -4px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #ff5c00; border: 2px solid #0a0a0a;
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    color: #fff; display: flex; align-items: center; justify-content: center;
+  }
+  .smm-tl-step.active .smm-tl-step-num { background: #fff; color: #ff5c00; }
+  .smm-tl-step-label {
+    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: rgba(255,255,255,.35); line-height: 1.4; transition: color .3s;
+  }
+  .smm-tl-step.active .smm-tl-step-label,
+  .smm-tl-step:hover .smm-tl-step-label { color: #fff; }
+
+  /* Detail card */
+  .smm-tl-detail {
+    margin-top: 48px;
+    background: linear-gradient(135deg, #111316 0%, #0d0f14 100%);
+    border: 1px solid rgba(255,92,0,.2);
+    border-radius: 20px; padding: 36px 40px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    animation: smm-panel-in .3s ease;
+  }
+  .smm-tl-detail-left {}
+  .smm-tl-detail-step-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,92,0,.1); border: 1px solid rgba(255,92,0,.25);
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 16px;
+    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; color: #ff5c00;
+  }
+  .smm-tl-detail-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 40px; line-height: 1;
+    color: #fff; margin-bottom: 14px;
+  }
+  .smm-tl-detail-desc {
+    font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.75;
+    color: rgba(255,255,255,.45); margin-bottom: 24px;
+  }
+  .smm-tl-detail-tasks { display: flex; flex-direction: column; gap: 8px; }
+  .smm-tl-detail-task {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    color: rgba(255,255,255,.6);
+  }
+  .smm-tl-detail-task::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: #ff5c00; flex-shrink: 0;
+  }
+  .smm-tl-detail-right {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .smm-tl-mock-card {
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px; padding: 16px 18px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .smm-tl-mock-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    background: rgba(255,92,0,.12); border: 1px solid rgba(255,92,0,.2);
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .smm-tl-mock-text {}
+  .smm-tl-mock-label {
+    font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.3); margin-bottom: 3px;
+  }
+  .smm-tl-mock-val {
+    font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,.7);
+  }
+  .smm-tl-mock-bar {
+    height: 4px; border-radius: 2px; background: rgba(255,255,255,.06);
+    margin-top: 8px; overflow: hidden;
+  }
+  .smm-tl-mock-bar-fill {
+    height: 100%; border-radius: 2px; background: #ff5c00;
+    transition: width .6s ease;
+  }
+
+  @media (max-width: 900px) {
+    .smm-tl-track {
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .smm-tl-track::-webkit-scrollbar { display: none; }
+    .smm-tl-track::before { display: none; }
+    .smm-tl-inner { padding: 0 16px 56px; }
+    .smm-tl-node { width: 48px; height: 48px; font-size: 18px; overflow: visible; }
+    .smm-tl-step-num { width: 18px; height: 18px; font-size: 8px; top: -6px; right: -3px; }
+    .smm-tl-step-label { font-size: 8px; line-height: 1.3; }
+    .smm-tl-detail { grid-template-columns: 1fr; gap: 20px; padding: 20px 16px; border-radius: 14px; }
+  }
+  @media (max-width: 480px) {
+    .smm-tl-track { grid-template-columns: repeat(7, minmax(46px, 1fr)); }
+  }
+
+  /* ══════════════════════════════════════
+     WHAT YOU RECEIVE SECTION
+  ══════════════════════════════════════ */
+  .smm-deliverables-section {
+    background: #07080c;
+    padding: 100px 0;
+    position: relative; overflow: hidden;
+  }
+  .smm-deliv-inner {
+    max-width: 1380px; margin: 0 auto; padding: 0 60px;
+  }
+  .smm-deliv-header {
+    text-align: left; margin-bottom: 64px;
+  }
+  .smm-deliv-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: #ff5c00; background: rgba(255,92,0,.08);
+    border: 1px solid rgba(255,92,0,.2); padding: 7px 16px;
+    border-radius: 100px; margin-bottom: 22px;
+  }
+  .smm-deliv-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px, 5.5vw, 82px);
+    color: #fff; line-height: .93; letter-spacing: -.01em;
+    margin-bottom: 14px;
+  }
+  .smm-deliv-title span { color: #ff5c00; }
+  .smm-deliv-subtitle {
+    font-size: 14px; color: rgba(255,255,255,.38);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Deliverable cards grid */
+  .smm-deliv-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+  .smm-deliv-card {
+    background: linear-gradient(135deg, #111418 0%, #0c0e13 100%);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 16px; padding: 24px 22px;
+    position: relative; overflow: hidden;
+    transition: all .3s; cursor: default;
+  }
+  .smm-deliv-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, #ff5c00, transparent);
+    opacity: 0; transition: opacity .3s;
+  }
+  .smm-deliv-card:hover {
+    border-color: rgba(255,92,0,.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(255,92,0,.1);
+  }
+  .smm-deliv-card:hover::before { opacity: 1; }
+  .smm-deliv-card-icon {
+    font-size: 28px; margin-bottom: 14px; display: block;
+  }
+  .smm-deliv-card-title {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    letter-spacing: .04em; color: #fff; margin-bottom: 6px;
+  }
+  .smm-deliv-card-desc {
+    font-family: 'DM Sans', sans-serif; font-size: 12px; line-height: 1.6;
+    color: rgba(255,255,255,.38);
+  }
+  .smm-deliv-card-check {
+    position: absolute; top: 18px; right: 18px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: #22c55e;
+  }
+
+  /* Bottom highlight strip */
+  .smm-deliv-strip {
+    background: linear-gradient(135deg, #ff5c00 0%, #e04e00 100%);
+    border-radius: 20px; padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .smm-deliv-strip-left {}
+  .smm-deliv-strip-tag {
+    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(255,255,255,.65); margin-bottom: 8px;
+  }
+  .smm-deliv-strip-heading {
+    font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4vw, 52px);
+    color: #fff; line-height: 1; letter-spacing: .01em;
+  }
+  .smm-deliv-strip-right {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .smm-deliv-strip-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.2);
+    color: #fff; padding: 8px 16px; border-radius: 100px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: .04em;
+  }
+  .smm-deliv-strip-pill-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(255,255,255,.7); flex-shrink: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .smm-deliv-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .smm-deliv-grid { grid-template-columns: 1fr; }
+    .smm-deliv-inner { padding: 0 20px; }
+    .smm-deliv-strip { padding: 28px 24px; }
+    .smm-tl-track { grid-template-columns: repeat(4, 1fr); }
+  }
+  </style>
+
+  <!-- ── Section 1: Platform Engine ── -->
+  <section class="smm-engine-section">
+    <div class="smm-eng-header">
+      <div class="smm-eng-eyebrow"><span class="smm-eng-eyebrow-dot"></span>Inside Our Process</div>
+      <h2 class="smm-eng-title">HOW WE MANAGE YOUR<br><span>SOCIAL MEDIA</span></h2>
+      <p class="smm-eng-subtitle">Click any platform to explore the exact strategy, content system, and growth engine we run for your brand every single month.</p>
+    </div>
+
+    <div class="smm-platform-engine">
+      <!-- Tab Selector -->
+      <div class="smm-plat-tabs" id="smmPlatTabs">
+        <button class="smm-plat-tab active" data-plat="instagram" style="--tab-color:#e4405f;--tab-glow:rgba(228,64,95,.4);">
+          <span class="smm-plat-tab-icon">📸</span>Instagram
+        </button>
+        <button class="smm-plat-tab" data-plat="facebook" style="--tab-color:#1877f2;--tab-glow:rgba(24,119,242,.4);">
+          <span class="smm-plat-tab-icon">👥</span>Facebook
+        </button>
+        <button class="smm-plat-tab" data-plat="linkedin" style="--tab-color:#0a66c2;--tab-glow:rgba(10,102,194,.4);">
+          <span class="smm-plat-tab-icon">💼</span>LinkedIn
+        </button>
+        <button class="smm-plat-tab" data-plat="twitter" style="--tab-color:#fff;--tab-glow:rgba(255,255,255,.2);">
+          <span class="smm-plat-tab-icon">𝕏</span>X
+        </button>
+        <button class="smm-plat-tab" data-plat="youtube" style="--tab-color:#ff0000;--tab-glow:rgba(255,0,0,.4);">
+          <span class="smm-plat-tab-icon">▶️</span>YouTube
+        </button>
+        <button class="smm-plat-tab" data-plat="tiktok" style="--tab-color:#69c9d0;--tab-glow:rgba(105,201,208,.4);">
+          <span class="smm-plat-tab-icon">🎵</span>TikTok
+        </button>
+        <button class="smm-plat-tab" data-plat="whatsapp" style="--tab-color:#25d366;--tab-glow:rgba(37,211,102,.4);">
+          <span class="smm-plat-tab-icon">💬</span>WhatsApp
+        </button>
+        <button class="smm-plat-tab" data-plat="reddit" style="--tab-color:#ff4500;--tab-glow:rgba(255,69,0,.4);">
+          <span class="smm-plat-tab-icon">🔴</span>Reddit
+        </button>
+      </div>
+
+      <!-- Panels -->
+      <div id="smmPlatPanels">
+
+        <!-- INSTAGRAM -->
+        <div class="smm-plat-panel active" data-panel="instagram" style="--plat-color:#e4405f;">
+          <div class="smm-dash-card">
+            <div class="smm-dash-topbar">
+              <div class="smm-dash-dots"><span></span><span></span><span></span></div>
+              <div class="smm-dash-title">Instagram Analytics</div>
+              <div class="smm-dash-plat-badge" style="--plat-color:#e4405f;">● Live</div>
+            </div>
+            <div class="smm-dash-body">
+              <div class="smm-dash-metrics">
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Followers</div><div class="smm-dash-metric-val hi">124.8K</div><div class="smm-dash-metric-trend">↑ 18.4%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Reach</div><div class="smm-dash-metric-val">2.1M</div><div class="smm-dash-metric-trend">↑ 23.1%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Engagement</div><div class="smm-dash-metric-val hi">6.8%</div><div class="smm-dash-metric-trend">↑ 4.2%</div></div>
+              </div>
+              <div class="smm-dash-chart-wrap">
+                <div class="smm-dash-chart-label">Follower Growth — Last 30 Days</div>
+                <svg class="smm-dash-chart-svg" viewBox="0 0 400 64" preserveAspectRatio="none">
+                  <defs><linearGradient id="igEngGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e4405f" stop-opacity="0.35"/><stop offset="100%" stop-color="#e4405f" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0,52 C30,50 50,40 80,36 C110,32 130,44 160,34 C190,24 210,18 240,14 C270,10 300,16 330,8 C355,4 380,2 400,2 L400,64 L0,64 Z" fill="url(#igEngGrad)"/>
+                  <path d="M0,52 C30,50 50,40 80,36 C110,32 130,44 160,34 C190,24 210,18 240,14 C270,10 300,16 330,8 C355,4 380,2 400,2" fill="none" stroke="#e4405f" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="smm-dash-cal">
+                <div class="smm-dash-cal-label">Content Calendar — June</div>
+                <div class="smm-dash-cal-grid" id="igCalGrid"></div>
+              </div>
+            </div>
+          </div>
+          <div class="smm-strat-card">
+            <div class="smm-strat-plat-name">INSTAGRAM</div>
+            <div class="smm-strat-services">
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🎬</div><div class="smm-strat-svc-text">Reels Creation & Editing</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🗂️</div><div class="smm-strat-svc-text">Content Strategy & Planning</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">💬</div><div class="smm-strat-svc-text">Story Management</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🤝</div><div class="smm-strat-svc-text">Community Engagement</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📈</div><div class="smm-strat-svc-text">Growth Optimization</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📊</div><div class="smm-strat-svc-text">Monthly Analytics Report</div><div class="smm-strat-svc-check">✓</div></div>
+            </div>
+            <div class="smm-strat-outcome">
+              <div class="smm-strat-outcome-label">⚡ Expected Outcome</div>
+              <div class="smm-strat-outcome-text">Consistent follower growth, higher Reel reach, stronger community engagement, and a polished brand identity that drives profile visits and DM conversions.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FACEBOOK -->
+        <div class="smm-plat-panel" data-panel="facebook" style="--plat-color:#1877f2;">
+          <div class="smm-dash-card">
+            <div class="smm-dash-topbar">
+              <div class="smm-dash-dots"><span></span><span></span><span></span></div>
+              <div class="smm-dash-title">Facebook Analytics</div>
+              <div class="smm-dash-plat-badge" style="--plat-color:#1877f2;">● Live</div>
+            </div>
+            <div class="smm-dash-body">
+              <div class="smm-dash-metrics">
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Page Likes</div><div class="smm-dash-metric-val hi">48.3K</div><div class="smm-dash-metric-trend">↑ 11.2%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Reach</div><div class="smm-dash-metric-val">890K</div><div class="smm-dash-metric-trend">↑ 16.8%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Leads</div><div class="smm-dash-metric-val hi">342</div><div class="smm-dash-metric-trend">↑ 28.4%</div></div>
+              </div>
+              <div class="smm-dash-chart-wrap">
+                <div class="smm-dash-chart-label">Page Reach — Last 30 Days</div>
+                <svg class="smm-dash-chart-svg" viewBox="0 0 400 64" preserveAspectRatio="none">
+                  <defs><linearGradient id="fbEngGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1877f2" stop-opacity="0.35"/><stop offset="100%" stop-color="#1877f2" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0,55 C40,52 70,38 110,30 C140,24 160,32 190,22 C220,12 250,8 280,6 C310,4 350,10 400,4 L400,64 L0,64 Z" fill="url(#fbEngGrad)"/>
+                  <path d="M0,55 C40,52 70,38 110,30 C140,24 160,32 190,22 C220,12 250,8 280,6 C310,4 350,10 400,4" fill="none" stroke="#1877f2" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="smm-dash-cal"><div class="smm-dash-cal-label">Content Calendar — June</div><div class="smm-dash-cal-grid" id="fbCalGrid"></div></div>
+            </div>
+          </div>
+          <div class="smm-strat-card">
+            <div class="smm-strat-plat-name">FACEBOOK</div>
+            <div class="smm-strat-services">
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📝</div><div class="smm-strat-svc-text">Brand Posts & Visual Content</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">👥</div><div class="smm-strat-svc-text">Community Building & Groups</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🎯</div><div class="smm-strat-svc-text">Lead Generation Campaigns</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">💬</div><div class="smm-strat-svc-text">Messenger Management</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📍</div><div class="smm-strat-svc-text">Local Business Promotion</div><div class="smm-strat-svc-check">✓</div></div>
+            </div>
+            <div class="smm-strat-outcome"><div class="smm-strat-outcome-label">⚡ Expected Outcome</div><div class="smm-strat-outcome-text">Increased page visibility, qualified lead pipeline from campaigns, and a loyal community that actively engages with and shares your content.</div></div>
+          </div>
+        </div>
+
+        <!-- LINKEDIN -->
+        <div class="smm-plat-panel" data-panel="linkedin" style="--plat-color:#0a66c2;">
+          <div class="smm-dash-card">
+            <div class="smm-dash-topbar">
+              <div class="smm-dash-dots"><span></span><span></span><span></span></div>
+              <div class="smm-dash-title">LinkedIn Analytics</div>
+              <div class="smm-dash-plat-badge" style="--plat-color:#0a66c2;">● Live</div>
+            </div>
+            <div class="smm-dash-body">
+              <div class="smm-dash-metrics">
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Impressions</div><div class="smm-dash-metric-val hi">84.2K</div><div class="smm-dash-metric-trend">↑ 31.2%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Connections</div><div class="smm-dash-metric-val">2.8K</div><div class="smm-dash-metric-trend">↑ 14.6%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">B2B Leads</div><div class="smm-dash-metric-val hi">67</div><div class="smm-dash-metric-trend">↑ 42.1%</div></div>
+              </div>
+              <div class="smm-dash-chart-wrap">
+                <div class="smm-dash-chart-label">Profile Views — Last 30 Days</div>
+                <svg class="smm-dash-chart-svg" viewBox="0 0 400 64" preserveAspectRatio="none">
+                  <defs><linearGradient id="liEngGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a66c2" stop-opacity="0.35"/><stop offset="100%" stop-color="#0a66c2" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0,58 C30,56 60,48 100,40 C130,34 150,38 180,28 C210,18 240,12 270,8 C300,4 340,8 400,4 L400,64 L0,64 Z" fill="url(#liEngGrad)"/>
+                  <path d="M0,58 C30,56 60,48 100,40 C130,34 150,38 180,28 C210,18 240,12 270,8 C300,4 340,8 400,4" fill="none" stroke="#0a66c2" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="smm-dash-cal"><div class="smm-dash-cal-label">Content Calendar — June</div><div class="smm-dash-cal-grid" id="liCalGrid"></div></div>
+            </div>
+          </div>
+          <div class="smm-strat-card">
+            <div class="smm-strat-plat-name">LINKEDIN</div>
+            <div class="smm-strat-services">
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">👤</div><div class="smm-strat-svc-text">Personal Branding</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">✍️</div><div class="smm-strat-svc-text">Thought Leadership Content</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🏢</div><div class="smm-strat-svc-text">Company Page Management</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🤝</div><div class="smm-strat-svc-text">B2B Lead Generation</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🌐</div><div class="smm-strat-svc-text">Professional Network Growth</div><div class="smm-strat-svc-check">✓</div></div>
+            </div>
+            <div class="smm-strat-outcome"><div class="smm-strat-outcome-label">⚡ Expected Outcome</div><div class="smm-strat-outcome-text">Established authority in your industry, consistent B2B lead inflow, and a professional network that opens partnerships, clients, and speaking opportunities.</div></div>
+          </div>
+        </div>
+
+        <!-- X / TWITTER -->
+        <div class="smm-plat-panel" data-panel="twitter" style="--plat-color:#fff;">
+          <div class="smm-dash-card">
+            <div class="smm-dash-topbar">
+              <div class="smm-dash-dots"><span></span><span></span><span></span></div>
+              <div class="smm-dash-title">X Analytics</div>
+              <div class="smm-dash-plat-badge" style="--plat-color:#333;color:#fff;">● Live</div>
+            </div>
+            <div class="smm-dash-body">
+              <div class="smm-dash-metrics">
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Impressions</div><div class="smm-dash-metric-val" style="color:#fff;">1.2M</div><div class="smm-dash-metric-trend">↑ 22.7%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Engagements</div><div class="smm-dash-metric-val" style="color:#fff;">38.5K</div><div class="smm-dash-metric-trend">↑ 12.9%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Followers</div><div class="smm-dash-metric-val" style="color:#fff;">14.2K</div><div class="smm-dash-metric-trend">↑ 9.3%</div></div>
+              </div>
+              <div class="smm-dash-chart-wrap">
+                <div class="smm-dash-chart-label">Impressions — Last 30 Days</div>
+                <svg class="smm-dash-chart-svg" viewBox="0 0 400 64" preserveAspectRatio="none">
+                  <defs><linearGradient id="twEngGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#aaa" stop-opacity="0.25"/><stop offset="100%" stop-color="#aaa" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0,50 C40,46 70,34 110,28 C150,22 180,36 210,24 C240,12 270,8 310,6 C345,4 370,10 400,2 L400,64 L0,64 Z" fill="url(#twEngGrad)"/>
+                  <path d="M0,50 C40,46 70,34 110,28 C150,22 180,36 210,24 C240,12 270,8 310,6 C345,4 370,10 400,2" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="smm-dash-cal"><div class="smm-dash-cal-label">Content Calendar — June</div><div class="smm-dash-cal-grid" id="twCalGrid"></div></div>
+            </div>
+          </div>
+          <div class="smm-strat-card">
+            <div class="smm-strat-plat-name">X (TWITTER)</div>
+            <div class="smm-strat-services">
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">💬</div><div class="smm-strat-svc-text">Industry Conversations</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📡</div><div class="smm-strat-svc-text">Trend Monitoring</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🔥</div><div class="smm-strat-svc-text">Engagement Strategy</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">👑</div><div class="smm-strat-svc-text">Brand Authority Building</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">⚡</div><div class="smm-strat-svc-text">Real-Time Content</div><div class="smm-strat-svc-check">✓</div></div>
+            </div>
+            <div class="smm-strat-outcome"><div class="smm-strat-outcome-label">⚡ Expected Outcome</div><div class="smm-strat-outcome-text">Increased brand visibility in industry conversations, growing follower count of engaged professionals, and real-time content that keeps you culturally relevant.</div></div>
+          </div>
+        </div>
+
+        <!-- YOUTUBE -->
+        <div class="smm-plat-panel" data-panel="youtube" style="--plat-color:#ff0000;">
+          <div class="smm-dash-card">
+            <div class="smm-dash-topbar">
+              <div class="smm-dash-dots"><span></span><span></span><span></span></div>
+              <div class="smm-dash-title">YouTube Analytics</div>
+              <div class="smm-dash-plat-badge" style="--plat-color:#ff0000;">● Live</div>
+            </div>
+            <div class="smm-dash-body">
+              <div class="smm-dash-metrics">
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Subscribers</div><div class="smm-dash-metric-val hi">22.4K</div><div class="smm-dash-metric-trend">↑ 19.3%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Watch Time</div><div class="smm-dash-metric-val">48.2K hrs</div><div class="smm-dash-metric-trend">↑ 34.1%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">CTR</div><div class="smm-dash-metric-val hi">7.4%</div><div class="smm-dash-metric-trend">↑ 2.8%</div></div>
+              </div>
+              <div class="smm-dash-chart-wrap">
+                <div class="smm-dash-chart-label">Watch Hours — Last 30 Days</div>
+                <svg class="smm-dash-chart-svg" viewBox="0 0 400 64" preserveAspectRatio="none">
+                  <defs><linearGradient id="ytEngGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff0000" stop-opacity="0.35"/><stop offset="100%" stop-color="#ff0000" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0,56 C30,54 60,44 100,36 C130,30 160,40 190,28 C220,16 250,10 280,6 C310,2 355,8 400,2 L400,64 L0,64 Z" fill="url(#ytEngGrad)"/>
+                  <path d="M0,56 C30,54 60,44 100,36 C130,30 160,40 190,28 C220,16 250,10 280,6 C310,2 355,8 400,2" fill="none" stroke="#ff0000" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="smm-dash-cal"><div class="smm-dash-cal-label">Upload Schedule — June</div><div class="smm-dash-cal-grid" id="ytCalGrid"></div></div>
+            </div>
+          </div>
+          <div class="smm-strat-card">
+            <div class="smm-strat-plat-name">YOUTUBE</div>
+            <div class="smm-strat-services">
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📱</div><div class="smm-strat-svc-text">Shorts Strategy</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🖼️</div><div class="smm-strat-svc-text">Thumbnail Direction</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🔍</div><div class="smm-strat-svc-text">SEO Optimization</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📈</div><div class="smm-strat-svc-text">Channel Growth</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📊</div><div class="smm-strat-svc-text">Performance Analysis</div><div class="smm-strat-svc-check">✓</div></div>
+            </div>
+            <div class="smm-strat-outcome"><div class="smm-strat-outcome-label">⚡ Expected Outcome</div><div class="smm-strat-outcome-text">Higher subscriber growth, improved watch time, better search rankings, and a content system that turns viewers into loyal brand advocates.</div></div>
+          </div>
+        </div>
+
+        <!-- TIKTOK -->
+        <div class="smm-plat-panel" data-panel="tiktok" style="--plat-color:#69c9d0;">
+          <div class="smm-dash-card">
+            <div class="smm-dash-topbar">
+              <div class="smm-dash-dots"><span></span><span></span><span></span></div>
+              <div class="smm-dash-title">TikTok Analytics</div>
+              <div class="smm-dash-plat-badge" style="--plat-color:#69c9d0;color:#000;">● Live</div>
+            </div>
+            <div class="smm-dash-body">
+              <div class="smm-dash-metrics">
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Followers</div><div class="smm-dash-metric-val hi">68.1K</div><div class="smm-dash-metric-trend">↑ 44.2%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Video Views</div><div class="smm-dash-metric-val">4.8M</div><div class="smm-dash-metric-trend">↑ 61.4%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Eng. Rate</div><div class="smm-dash-metric-val hi">9.2%</div><div class="smm-dash-metric-trend">↑ 7.1%</div></div>
+              </div>
+              <div class="smm-dash-chart-wrap">
+                <div class="smm-dash-chart-label">Video Views — Last 30 Days</div>
+                <svg class="smm-dash-chart-svg" viewBox="0 0 400 64" preserveAspectRatio="none">
+                  <defs><linearGradient id="ttEngGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#69c9d0" stop-opacity="0.35"/><stop offset="100%" stop-color="#69c9d0" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0,60 C20,58 40,52 70,42 C100,30 110,48 140,32 C170,14 200,8 240,6 C275,4 320,16 360,8 C380,4 395,2 400,2 L400,64 L0,64 Z" fill="url(#ttEngGrad)"/>
+                  <path d="M0,60 C20,58 40,52 70,42 C100,30 110,48 140,32 C170,14 200,8 240,6 C275,4 320,16 360,8 C380,4 395,2 400,2" fill="none" stroke="#69c9d0" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="smm-dash-cal"><div class="smm-dash-cal-label">Posting Schedule — June</div><div class="smm-dash-cal-grid" id="ttCalGrid"></div></div>
+            </div>
+          </div>
+          <div class="smm-strat-card">
+            <div class="smm-strat-plat-name">TIKTOK</div>
+            <div class="smm-strat-services">
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🔍</div><div class="smm-strat-svc-text">Trend Research</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🚀</div><div class="smm-strat-svc-text">Viral Content Strategy</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🎬</div><div class="smm-strat-svc-text">Short-Form Video Planning</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">💬</div><div class="smm-strat-svc-text">Community Engagement</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🤝</div><div class="smm-strat-svc-text">Creator Collaboration</div><div class="smm-strat-svc-check">✓</div></div>
+            </div>
+            <div class="smm-strat-outcome"><div class="smm-strat-outcome-label">⚡ Expected Outcome</div><div class="smm-strat-outcome-text">Viral content reach, rapid follower growth, and a TikTok presence that drives brand awareness to audiences you can't reach anywhere else.</div></div>
+          </div>
+        </div>
+
+        <!-- WHATSAPP -->
+        <div class="smm-plat-panel" data-panel="whatsapp" style="--plat-color:#25d366;">
+          <div class="smm-dash-card">
+            <div class="smm-dash-topbar">
+              <div class="smm-dash-dots"><span></span><span></span><span></span></div>
+              <div class="smm-dash-title">WhatsApp Dashboard</div>
+              <div class="smm-dash-plat-badge" style="--plat-color:#25d366;color:#000;">● Live</div>
+            </div>
+            <div class="smm-dash-body">
+              <div class="smm-dash-metrics">
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Contacts</div><div class="smm-dash-metric-val hi">8.4K</div><div class="smm-dash-metric-trend">↑ 22.1%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Open Rate</div><div class="smm-dash-metric-val">94.2%</div><div class="smm-dash-metric-trend">↑ 3.4%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Conversions</div><div class="smm-dash-metric-val hi">18.7%</div><div class="smm-dash-metric-trend">↑ 5.9%</div></div>
+              </div>
+              <div class="smm-dash-chart-wrap">
+                <div class="smm-dash-chart-label">Message Delivery — Last 30 Days</div>
+                <svg class="smm-dash-chart-svg" viewBox="0 0 400 64" preserveAspectRatio="none">
+                  <defs><linearGradient id="waEngGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#25d366" stop-opacity="0.35"/><stop offset="100%" stop-color="#25d366" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0,50 C40,48 70,38 100,30 C130,22 160,34 190,24 C220,14 250,10 280,8 C310,6 350,12 400,4 L400,64 L0,64 Z" fill="url(#waEngGrad)"/>
+                  <path d="M0,50 C40,48 70,38 100,30 C130,22 160,34 190,24 C220,14 250,10 280,8 C310,6 350,12 400,4" fill="none" stroke="#25d366" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="smm-dash-cal"><div class="smm-dash-cal-label">Broadcast Schedule — June</div><div class="smm-dash-cal-grid" id="waCalGrid"></div></div>
+            </div>
+          </div>
+          <div class="smm-strat-card">
+            <div class="smm-strat-plat-name">WHATSAPP</div>
+            <div class="smm-strat-services">
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">💬</div><div class="smm-strat-svc-text">Customer Communication</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📢</div><div class="smm-strat-svc-text">Broadcast Campaigns</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🌱</div><div class="smm-strat-svc-text">Lead Nurturing</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🛠️</div><div class="smm-strat-svc-text">Customer Support Workflows</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">📊</div><div class="smm-strat-svc-text">Conversion Tracking</div><div class="smm-strat-svc-check">✓</div></div>
+            </div>
+            <div class="smm-strat-outcome"><div class="smm-strat-outcome-label">⚡ Expected Outcome</div><div class="smm-strat-outcome-text">94%+ message open rates, higher conversion from leads to customers, and a direct communication channel that builds lasting customer relationships.</div></div>
+          </div>
+        </div>
+
+        <!-- REDDIT -->
+        <div class="smm-plat-panel" data-panel="reddit" style="--plat-color:#ff4500;">
+          <div class="smm-dash-card">
+            <div class="smm-dash-topbar">
+              <div class="smm-dash-dots"><span></span><span></span><span></span></div>
+              <div class="smm-dash-title">Reddit Analytics</div>
+              <div class="smm-dash-plat-badge" style="--plat-color:#ff4500;">● Live</div>
+            </div>
+            <div class="smm-dash-body">
+              <div class="smm-dash-metrics">
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Post Karma</div><div class="smm-dash-metric-val hi">12.4K</div><div class="smm-dash-metric-trend">↑ 38.2%</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Communities</div><div class="smm-dash-metric-val">24</div><div class="smm-dash-metric-trend">↑ Active</div></div>
+                <div class="smm-dash-metric"><div class="smm-dash-metric-label">Brand Mentions</div><div class="smm-dash-metric-val hi">186</div><div class="smm-dash-metric-trend">↑ 27.4%</div></div>
+              </div>
+              <div class="smm-dash-chart-wrap">
+                <div class="smm-dash-chart-label">Upvotes & Engagement — Last 30 Days</div>
+                <svg class="smm-dash-chart-svg" viewBox="0 0 400 64" preserveAspectRatio="none">
+                  <defs><linearGradient id="rdEngGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff4500" stop-opacity="0.35"/><stop offset="100%" stop-color="#ff4500" stop-opacity="0"/></linearGradient></defs>
+                  <path d="M0,54 C30,52 50,42 80,34 C110,26 130,40 160,28 C190,16 220,12 260,8 C295,4 340,14 400,4 L400,64 L0,64 Z" fill="url(#rdEngGrad)"/>
+                  <path d="M0,54 C30,52 50,42 80,34 C110,26 130,40 160,28 C190,16 220,12 260,8 C295,4 340,14 400,4" fill="none" stroke="#ff4500" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="smm-dash-cal"><div class="smm-dash-cal-label">Participation Schedule — June</div><div class="smm-dash-cal-grid" id="rdCalGrid"></div></div>
+            </div>
+          </div>
+          <div class="smm-strat-card">
+            <div class="smm-strat-plat-name">REDDIT</div>
+            <div class="smm-strat-services">
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🔍</div><div class="smm-strat-svc-text">Community Research</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">👁️</div><div class="smm-strat-svc-text">Brand Monitoring</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🛡️</div><div class="smm-strat-svc-text">Reputation Management</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">💡</div><div class="smm-strat-svc-text">Strategic Participation</div><div class="smm-strat-svc-check">✓</div></div>
+              <div class="smm-strat-service"><div class="smm-strat-svc-icon">🎯</div><div class="smm-strat-svc-text">Audience Insights</div><div class="smm-strat-svc-check">✓</div></div>
+            </div>
+            <div class="smm-strat-outcome"><div class="smm-strat-outcome-label">⚡ Expected Outcome</div><div class="smm-strat-outcome-text">Deep audience understanding, proactive reputation management, and trusted community presence that organically drives traffic and brand credibility.</div></div>
+          </div>
+        </div>
+
+      </div><!-- /smmPlatPanels -->
+    </div><!-- /smm-platform-engine -->
+  </section>
+
+  <!-- ── Section 2: Monthly Timeline ── -->
+  <section class="smm-timeline-section">
+    <div class="smm-tl-inner">
+      <div class="smm-tl-header">
+        <div class="smm-tl-eyebrow">📅 Every Month We Execute</div>
+        <h2 class="smm-tl-title">OUR SOCIAL MEDIA<br><span>ENGINE IN ACTION</span></h2>
+        <p class="smm-tl-sub">Seven precision steps — every single month — to grow, engage, and scale your brand across every platform.</p>
+      </div>
+      <div class="smm-tl-track" id="smmTlTrack">
+        <div class="smm-tl-step active" data-step="0">
+          <div class="smm-tl-node">🔬<span class="smm-tl-step-num">1</span></div>
+          <div class="smm-tl-step-label">Research &<br>Strategy</div>
+        </div>
+        <div class="smm-tl-step" data-step="1">
+          <div class="smm-tl-node">🗓️<span class="smm-tl-step-num">2</span></div>
+          <div class="smm-tl-step-label">Content<br>Planning</div>
+        </div>
+        <div class="smm-tl-step" data-step="2">
+          <div class="smm-tl-node">🎨<span class="smm-tl-step-num">3</span></div>
+          <div class="smm-tl-step-label">Design &<br>Video</div>
+        </div>
+        <div class="smm-tl-step" data-step="3">
+          <div class="smm-tl-node">📤<span class="smm-tl-step-num">4</span></div>
+          <div class="smm-tl-step-label">Scheduling &<br>Publishing</div>
+        </div>
+        <div class="smm-tl-step" data-step="4">
+          <div class="smm-tl-node">🤝<span class="smm-tl-step-num">5</span></div>
+          <div class="smm-tl-step-label">Community<br>Management</div>
+        </div>
+        <div class="smm-tl-step" data-step="5">
+          <div class="smm-tl-node">📊<span class="smm-tl-step-num">6</span></div>
+          <div class="smm-tl-step-label">Performance<br>Analysis</div>
+        </div>
+        <div class="smm-tl-step" data-step="6">
+          <div class="smm-tl-node">🚀<span class="smm-tl-step-num">7</span></div>
+          <div class="smm-tl-step-label">Optimization<br>& Scaling</div>
+        </div>
+      </div>
+      <div class="smm-tl-detail" id="smmTlDetail"></div>
+    </div>
+  </section>
+
+  <!-- ── Section 3: Deliverables ── -->
+  <section class="smm-deliverables-section">
+    <div class="smm-deliv-inner">
+      <div class="smm-deliv-header">
+        <div class="smm-deliv-eyebrow">📦 What You Get</div>
+        <h2 class="smm-deliv-title">WHAT YOU RECEIVE<br><span>EVERY MONTH</span></h2>
+        <p class="smm-deliv-subtitle">No guesswork. No vague promises. Here's the exact deliverables you get with every SMM plan.</p>
+      </div>
+      <div class="smm-deliv-grid">
+        <div class="smm-deliv-card"><div class="smm-deliv-card-check">✓</div><span class="smm-deliv-card-icon">🗓️</span><div class="smm-deliv-card-title">Content Calendar</div><div class="smm-deliv-card-desc">A full monthly content calendar planned, approved, and ready to execute before the month begins.</div></div>
+        <div class="smm-deliv-card"><div class="smm-deliv-card-check">✓</div><span class="smm-deliv-card-icon">🎬</span><div class="smm-deliv-card-title">Reels & Creatives</div><div class="smm-deliv-card-desc">Platform-optimised Reels, Shorts, and graphic creatives designed by our in-house creative team.</div></div>
+        <div class="smm-deliv-card"><div class="smm-deliv-card-check">✓</div><span class="smm-deliv-card-icon">📱</span><div class="smm-deliv-card-title">Platform Management</div><div class="smm-deliv-card-desc">Daily hands-on management of your selected platforms — posting, monitoring, and responding.</div></div>
+        <div class="smm-deliv-card"><div class="smm-deliv-card-check">✓</div><span class="smm-deliv-card-icon">💬</span><div class="smm-deliv-card-title">Community Engagement</div><div class="smm-deliv-card-desc">Active comment management, DM responses, and audience relationship building every single day.</div></div>
+        <div class="smm-deliv-card"><div class="smm-deliv-card-check">✓</div><span class="smm-deliv-card-icon">📊</span><div class="smm-deliv-card-title">Monthly Reporting</div><div class="smm-deliv-card-desc">Detailed performance reports with growth metrics, top content analysis, and clear ROI data.</div></div>
+        <div class="smm-deliv-card"><div class="smm-deliv-card-check">✓</div><span class="smm-deliv-card-icon">📈</span><div class="smm-deliv-card-title">Growth Recommendations</div><div class="smm-deliv-card-desc">Monthly strategy refinements based on what's working — we iterate and scale what performs best.</div></div>
+        <div class="smm-deliv-card"><div class="smm-deliv-card-check">✓</div><span class="smm-deliv-card-icon">🔍</span><div class="smm-deliv-card-title">Competitor Insights</div><div class="smm-deliv-card-desc">Regular competitor analysis to spot opportunities and ensure your brand always stays one step ahead.</div></div>
+        <div class="smm-deliv-card"><div class="smm-deliv-card-check">✓</div><span class="smm-deliv-card-icon">📞</span><div class="smm-deliv-card-title">Strategy Calls</div><div class="smm-deliv-card-desc">Monthly strategy sessions with your dedicated account manager to align, review, and plan forward.</div></div>
+      </div>
+      <div class="smm-deliv-strip">
+        <div class="smm-deliv-strip-left">
+          <div class="smm-deliv-strip-tag">Ready to start?</div>
+          <div class="smm-deliv-strip-heading">ALL OF THIS — EVERY MONTH.</div>
+        </div>
+        <div class="smm-deliv-strip-right">
+          <span class="smm-deliv-strip-pill"><span class="smm-deliv-strip-pill-dot"></span>No Lock-in Contracts</span>
+          <span class="smm-deliv-strip-pill"><span class="smm-deliv-strip-pill-dot"></span>Dedicated Account Manager</span>
+          <span class="smm-deliv-strip-pill"><span class="smm-deliv-strip-pill-dot"></span>Results in 30 Days</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  /* ══════════════════════════════════════
+     PLATFORM TABS
+  ══════════════════════════════════════ */
+  (function() {
+    var tabs   = document.querySelectorAll('.smm-plat-tab');
+    var panels = document.querySelectorAll('.smm-plat-panel');
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var plat = tab.getAttribute('data-plat');
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        var panel = document.querySelector('.smm-plat-panel[data-panel="' + plat + '"]');
+        if (panel) {
+          panel.classList.add('active');
+          /* Force repaint of cal-thumb divs so background-size/position resolves
+             correctly after the panel transitions from display:none */
+          requestAnimationFrame(function() {
+            panel.querySelectorAll('.cal-thumb').forEach(function(el) {
+              var bg = el.style.backgroundImage;
+              el.style.backgroundImage = 'none';
+              el.style.backgroundImage = bg;
+            });
+          });
+        }
+      });
+    });
+
+    /* Build content calendars */
+    var calIds = {
+      instagram: 'igCalGrid', facebook: 'fbCalGrid', linkedin: 'liCalGrid',
+      twitter: 'twCalGrid', youtube: 'ytCalGrid', tiktok: 'ttCalGrid',
+      whatsapp: 'waCalGrid', reddit: 'rdCalGrid'
+    };
+    var colors = {
+      instagram:'#e4405f', facebook:'#1877f2', linkedin:'#0a66c2',
+      twitter:'rgba(255,255,255,0.5)', youtube:'#ff0000', tiktok:'#69c9d0',
+      whatsapp:'#25d366', reddit:'#ff4500'
+    };
+    var postDays = {
+      instagram:[1,3,5,8,10,12,15,17,19,22,24,26,29],
+      facebook:[2,5,9,12,16,19,23,26,30],
+      linkedin:[1,4,8,11,15,18,22,25,29],
+      twitter:[1,2,3,5,6,7,8,10,11,12,14,15,16,17,19,20,21,22,24,25,26,28,29,30],
+      youtube:[3,10,17,24],
+      tiktok:[1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29],
+      whatsapp:[1,7,14,21,28],
+      reddit:[2,5,8,11,14,17,20,23,26,29]
+    };
+
+    /* Curated Unsplash thumbnail pools per platform (landscape social content) */
+    var thumbs = {
+      instagram: ['ig1','ig2','ig3','ig4','ig5','ig6'],
+      facebook:  ['fb1','fb2','fb3','fb4','fb5'],
+      linkedin:  ['li1','li2','li3','li4','li5'],
+      twitter:   ['tw1','tw2','tw3','tw4','tw5'],
+      youtube:   ['yt1','yt2','yt3','yt4'],
+      tiktok:    ['tt1','tt2','tt3','tt4','tt5'],
+      whatsapp:  ['wa1','wa2','wa3','wa4','wa5'],
+      reddit:    ['rd1','rd2','rd3','rd4','rd5']
+    };
+    function thumbUrl(seed) {
+      return 'https://picsum.photos/seed/' + seed + '/80/80';
+    }
+
+    Object.keys(calIds).forEach(function(plat) {
+      var grid = document.getElementById(calIds[plat]);
+      if (!grid) return;
+      var color = colors[plat];
+      var posts = postDays[plat];
+      var platThumbs = thumbs[plat] || thumbs.instagram;
+      var thumbIdx = 0;
+      for (var d = 1; d <= 30; d++) {
+        var day = document.createElement('div');
+        day.className = 'smm-dash-cal-day';
+        if (d === 6) {
+          day.classList.add('today');
+          day.textContent = d;
+        } else if (posts.indexOf(d) !== -1) {
+          day.classList.add('has-post');
+          /* Blurred image thumbnail layer */
+          var thumb = document.createElement('div');
+          thumb.className = 'cal-thumb';
+          thumb.style.backgroundImage = 'url(' + thumbUrl(platThumbs[thumbIdx % platThumbs.length]) + ')';
+          thumbIdx++;
+          day.appendChild(thumb);
+          /* Day number on top */
+          var num = document.createElement('span');
+          num.className = 'cal-day-num';
+          num.textContent = d;
+          day.appendChild(num);
+        } else {
+          day.textContent = d;
+        }
+        grid.appendChild(day);
+      }
+    });
+  })();
+
+  /* ══════════════════════════════════════
+     TIMELINE
+  ══════════════════════════════════════ */
+  (function() {
+    var steps = [
+      {
+        label: 'Research & Strategy',
+        desc: 'We deep-dive into your brand, audience, competitors, and platform trends to craft a data-backed social strategy built for your specific goals.',
+        tasks: ['Audience persona research', 'Competitor content audit', 'Platform algorithm analysis', 'Monthly goal setting', 'Brand voice documentation'],
+        mocks: [
+          { icon: '🔬', label: 'Audience Segments', val: '4 personas defined', bar: 85 },
+          { icon: '📋', label: 'Competitor Accounts', val: '12 brands analysed', bar: 70 },
+          { icon: '🎯', label: 'Monthly Goal', val: '+18% follower growth', bar: 60 }
+        ]
+      },
+      {
+        label: 'Content Planning',
+        desc: 'Every post, Reel, story, and campaign is planned in advance. You review and approve the full calendar before a single piece goes live.',
+        tasks: ['30-day content calendar', 'Post type mix planning', 'Campaign theme selection', 'Hashtag & SEO research', 'Client approval round'],
+        mocks: [
+          { icon: '🗓️', label: 'Posts Planned', val: '28 content pieces', bar: 93 },
+          { icon: '🎬', label: 'Reels Scheduled', val: '8 short-form videos', bar: 80 },
+          { icon: '✅', label: 'Client Approval', val: 'Pending review', bar: 45 }
+        ]
+      },
+      {
+        label: 'Design & Video Creation',
+        desc: 'Our creative team produces every visual — graphics, Reels, carousels, thumbnails — to your brand guidelines, optimised for each platform.',
+        tasks: ['On-brand graphic design', 'Reel & Short editing', 'Carousel post creation', 'Story templates', 'Thumbnail design'],
+        mocks: [
+          { icon: '🎨', label: 'Graphics Created', val: '20 brand visuals', bar: 88 },
+          { icon: '🎬', label: 'Videos Edited', val: '8 Reels / Shorts', bar: 75 },
+          { icon: '🖼️', label: 'Brand Consistency', val: '100% on-guideline', bar: 100 }
+        ]
+      },
+      {
+        label: 'Scheduling & Publishing',
+        desc: 'Content is scheduled and published at peak engagement windows using platform data — so every post reaches the maximum audience.',
+        tasks: ['Peak-time scheduling', 'Cross-platform publishing', 'Caption & hashtag optimisation', 'First-comment strategy', 'Story & reel sequencing'],
+        mocks: [
+          { icon: '⏰', label: 'Posts Scheduled', val: '28 pieces queued', bar: 100 },
+          { icon: '📡', label: 'Platforms Active', val: '5 platforms live', bar: 90 },
+          { icon: '📌', label: 'Best Post Time', val: 'Tue–Thu 7–9 PM', bar: 78 }
+        ]
+      },
+      {
+        label: 'Community Management',
+        desc: 'We reply to comments, manage DMs, handle feedback, and build genuine relationships with your audience — every single day.',
+        tasks: ['Comment moderation & replies', 'DM & message management', 'Community relationship building', 'Negative feedback handling', 'Brand ambassador identification'],
+        mocks: [
+          { icon: '💬', label: 'Comments Replied', val: '248 this month', bar: 82 },
+          { icon: '📨', label: 'DMs Handled', val: '94 conversations', bar: 70 },
+          { icon: '⭐', label: 'Avg. Response Time', val: 'Under 2 hours', bar: 91 }
+        ]
+      },
+      {
+        label: 'Performance Analysis',
+        desc: 'At month-end, we deliver a full performance report — growth, reach, engagement, best content, and what the data tells us about next month.',
+        tasks: ['Growth & reach metrics', 'Top performing content', 'Engagement rate analysis', 'Audience demographic review', 'ROI & conversion tracking'],
+        mocks: [
+          { icon: '📈', label: 'Follower Growth', val: '+1,840 this month', bar: 87 },
+          { icon: '👁️', label: 'Total Reach', val: '2.1M impressions', bar: 93 },
+          { icon: '💰', label: 'Lead Conversions', val: '42 qualified leads', bar: 68 }
+        ]
+      },
+      {
+        label: 'Optimization & Scaling',
+        desc: 'We use last month\'s data to refine strategy — doubling down on what worked and eliminating what didn\'t, so results compound over time.',
+        tasks: ['Content performance optimisation', 'Budget reallocation', 'New format testing', 'Strategy iteration', 'Scaling winning content'],
+        mocks: [
+          { icon: '🚀', label: 'Strategy Score', val: 'Improved +22%', bar: 90 },
+          { icon: '🧪', label: 'New Formats Tested', val: '3 experiments live', bar: 60 },
+          { icon: '📊', label: 'Month-on-Month', val: 'Trending upward', bar: 95 }
+        ]
+      }
+    ];
+
+    var track  = document.getElementById('smmTlTrack');
+    var detail = document.getElementById('smmTlDetail');
+    if (!track || !detail) return;
+
+    function renderDetail(i) {
+      var s = steps[i];
+      var tasksHtml = s.tasks.map(function(t) {
+        return '<div class="smm-tl-detail-task">' + t + '</div>';
+      }).join('');
+      var mocksHtml = s.mocks.map(function(m) {
+        return '<div class="smm-tl-mock-card">'
+          + '<div class="smm-tl-mock-icon">' + m.icon + '</div>'
+          + '<div class="smm-tl-mock-text">'
+          + '<div class="smm-tl-mock-label">' + m.label + '</div>'
+          + '<div class="smm-tl-mock-val">' + m.val + '</div>'
+          + '<div class="smm-tl-mock-bar"><div class="smm-tl-mock-bar-fill" style="width:0%" data-w="' + m.bar + '%"></div></div>'
+          + '</div></div>';
+      }).join('');
+
+      detail.innerHTML =
+        '<div class="smm-tl-detail-left">'
+        + '<div class="smm-tl-detail-step-badge">Step ' + (i + 1) + ' of 7</div>'
+        + '<div class="smm-tl-detail-title">' + s.label.toUpperCase() + '</div>'
+        + '<div class="smm-tl-detail-desc">' + s.desc + '</div>'
+        + '<div class="smm-tl-detail-tasks">' + tasksHtml + '</div>'
+        + '</div>'
+        + '<div class="smm-tl-detail-right">' + mocksHtml + '</div>';
+
+      /* Animate bars */
+      setTimeout(function() {
+        detail.querySelectorAll('.smm-tl-mock-bar-fill').forEach(function(bar) {
+          bar.style.width = bar.getAttribute('data-w');
+        });
+      }, 50);
+    }
+
+    track.querySelectorAll('.smm-tl-step').forEach(function(step) {
+      step.addEventListener('click', function() {
+        track.querySelectorAll('.smm-tl-step').forEach(function(s) { s.classList.remove('active'); });
+        step.classList.add('active');
+        renderDetail(parseInt(step.getAttribute('data-step')));
+      });
+    });
+
+    renderDetail(0);
+  })();
+  </script>
+
+  <!-- ═══ PROPOSAL FORM SECTION ═══ -->
+  <section class="smm-final-cta" id="smm-final-cta">
+    <canvas class="smm-cta-canvas" id="smmCtaCanvas"></canvas>
+    <div class="smm-final-inner">
+      <div class="smm-final-left">
+        <div class="smm-final-tag">📣 Let's Scale Your Social Presence</div>
+        <h2 class="smm-final-h">YOUR AUDIENCE IS <span>WAITING.</span></h2>
+        <p class="smm-final-p">From content creation to full-scale social management, we build brands people remember and follow online.</p>
+      </div>
+      <div class="smm-proposal-form-wrap">
+        <div class="smm-proposal-form">
+          <div class="smm-pf-field">
+            <label class="smm-pf-label">Select Platforms</label>
+            <div class="smm-multiselect-wrap" id="smmPlatformWrap">
+              <div class="smm-multiselect-trigger" id="smmPlatformTrigger" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
+                <span class="smm-ms-placeholder" id="smmPlatformPlaceholder">Select Platform(s) ▼</span>
+                <span class="smm-ms-arrow">▼</span>
+              </div>
+              <div class="smm-ms-dropdown" id="smmPlatformDropdown" role="listbox" aria-multiselectable="true">
+                <div class="smm-ms-option smm-ms-select-all" data-value="all" role="option" style="border-bottom:2px solid rgba(255,92,0,0.15);margin-bottom:2px;">
+                <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                <span class="smm-ms-opt-icon">✅</span>
+                <span class="smm-ms-opt-label" style="font-weight:700;color:#ff5c00;">Select All</span>
+              </div>
+              <div class="smm-ms-option" data-value="instagram" role="option">
+                  <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                  <span class="smm-ms-opt-icon">📸</span>
+                  <span class="smm-ms-opt-label">Instagram</span>
+                </div>
+                <div class="smm-ms-option" data-value="facebook" role="option">
+                  <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                  <span class="smm-ms-opt-icon">👥</span>
+                  <span class="smm-ms-opt-label">Facebook</span>
+                </div>
+                <div class="smm-ms-option" data-value="linkedin" role="option">
+                  <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                  <span class="smm-ms-opt-icon">💼</span>
+                  <span class="smm-ms-opt-label">LinkedIn</span>
+                </div>
+                <div class="smm-ms-option" data-value="twitter" role="option">
+                  <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                  <span class="smm-ms-opt-icon">𝕏</span>
+                  <span class="smm-ms-opt-label">X (Twitter)</span>
+                </div>
+                <div class="smm-ms-option" data-value="youtube" role="option">
+                  <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                  <span class="smm-ms-opt-icon">▶️</span>
+                  <span class="smm-ms-opt-label">YouTube</span>
+                </div>
+                <div class="smm-ms-option" data-value="tiktok" role="option">
+                  <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                  <span class="smm-ms-opt-icon">🎵</span>
+                  <span class="smm-ms-opt-label">TikTok</span>
+                </div>
+                <div class="smm-ms-option" data-value="whatsapp" role="option">
+                  <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                  <span class="smm-ms-opt-icon">💬</span>
+                  <span class="smm-ms-opt-label">WhatsApp</span>
+                </div>
+                <div class="smm-ms-option" data-value="reddit" role="option">
+                  <div class="smm-ms-checkbox"><span class="smm-ms-checkmark">✓</span></div>
+                  <span class="smm-ms-opt-icon">🔴</span>
+                  <span class="smm-ms-opt-label">Reddit</span>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="smmPlatform" name="platform" value="">
+          </div>
+          <div class="smm-pf-row">
+            <div class="smm-pf-field">
+              <label class="smm-pf-label" for="smmCompany">Company Name</label>
+              <input class="smm-pf-input" type="text" id="smmCompany" name="company_name" placeholder="Enter Company Name">
+            </div>
+            <div class="smm-pf-field">
+              <label class="smm-pf-label" for="smmIndustry">Industry</label>
+              <select class="smm-pf-input" id="smmIndustry" name="industry">
+                <option value="" disabled selected>Select Industry ▼</option>
+                <option value="food">Food &amp; Beverage</option>
+                <option value="fashion">Fashion &amp; Lifestyle</option>
+                <option value="health">Health &amp; Wellness</option>
+                <option value="finance">Finance</option>
+                <option value="real-estate">Real Estate</option>
+                <option value="ecommerce">E-Commerce / Retail</option>
+                <option value="hospitality">Hospitality &amp; Travel</option>
+                <option value="tech">Technology &amp; SaaS</option>
+                <option value="education">Education</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="smm-pf-row">
+            <div class="smm-pf-field">
+              <label class="smm-pf-label" for="smmName">Your Name</label>
+              <input class="smm-pf-input" type="text" id="smmName" name="name" placeholder="Enter Name">
+            </div>
+            <div class="smm-pf-field">
+              <label class="smm-pf-label" for="smmMobile">Mobile Number</label>
+              <input class="smm-pf-input" type="tel" id="smmMobile" name="mobile" placeholder="Enter Mobile Number">
+            </div>
+          </div>
+          <div class="smm-pf-row">
+            <div class="smm-pf-field">
+              <label class="smm-pf-label" for="smmEmail">Email Address</label>
+              <input class="smm-pf-input" type="email" id="smmEmail" name="email" placeholder="Enter Email">
+            </div>
+            <div class="smm-pf-field">
+              <label class="smm-pf-label" for="smmBudget">Monthly Budget</label>
+              <select class="smm-pf-input" id="smmBudget" name="budget">
+                <option value="" disabled selected>Select Budget ▼</option>
+                <option value="under-10k">Under ₹10,000/mo</option>
+                <option value="10k-20k">₹10,000 – ₹20,000/mo</option>
+                <option value="20k-50k">₹20,000 – ₹50,000/mo</option>
+                <option value="50k-1l">₹50,000 – ₹1,00,000/mo</option>
+                <option value="1l+">₹1,00,000+/mo</option>
+              </select>
+            </div>
+          </div>
+          <input type="hidden" name="service" value="Social Media Management">
+          <button class="smm-pf-btn" type="button" onclick="smmSubmitProposal()">
+            Get My SMM Proposal →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  (function() {
+    var canvas = document.getElementById('smmCtaCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W, H;
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    var pts = Array.from({ length: 60 }, function() { return {
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - .5) * .3, vy: -Math.random() * .5 - .1,
+      life: Math.random(), maxLife: Math.random() * .5 + .5, size: Math.random() * 2 + .5
+    }; });
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      pts.forEach(function(p) {
+        p.x += p.vx; p.y += p.vy; p.life -= .002;
+        if (p.life <= 0) { p.x = Math.random() * W; p.y = H + 10; p.life = p.maxLife; }
+        var a = (p.life / p.maxLife) * .5;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,92,0,' + a + ')'; ctx.fill();
+      });
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+  async function smmSubmitProposal() {
+    var selectedPlatforms = [];
+    document.querySelectorAll('#smmPlatformDropdown .smm-ms-option.selected:not(.smm-ms-select-all)').forEach(function(opt) {
+      selectedPlatforms.push(opt.querySelector('.smm-ms-opt-label').textContent.trim());
+    });
+    var platformText = selectedPlatforms.join(', ');
+    var company  = document.getElementById('smmCompany').value.trim();
+    var industry = document.getElementById('smmIndustry').value;
+    var name     = document.getElementById('smmName').value.trim();
+    var mobile   = document.getElementById('smmMobile').value.trim();
+    var email    = document.getElementById('smmEmail').value.trim();
+    var budget   = document.getElementById('smmBudget').value;
+    if (!platformText || !company || !industry || !name || !mobile || !email || !budget) {
+      alert('Please fill in all fields before submitting.');
+      return;
+    }
+    var budgetText   = document.getElementById('smmBudget').options[document.getElementById('smmBudget').selectedIndex].text;
+    var industryText = document.getElementById('smmIndustry').options[document.getElementById('smmIndustry').selectedIndex].text;
+
+    var btn = document.querySelector('#smm-final-cta .smm-pf-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    var body = '📣 New SMM Proposal Request\n\n'
+      + 'Service: Social Media Management\n'
+      + 'Platform(s): ' + platformText + '\n'
+      + 'Company Name: ' + company + '\n'
+      + 'Industry: ' + industryText + '\n'
+      + 'Name: ' + name + '\n'
+      + 'Mobile: ' + mobile + '\n'
+      + 'Email: ' + email + '\n'
+      + 'Budget: ' + budgetText;
+
+    try {
+      var response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '66f90d59-83e7-4136-8823-1bfeb38deb41',
+          subject: 'New SMM Proposal Request – ' + company,
+          from_name: name,
+          email: email,
+          message: body
+        })
+      });
+      var result = await response.json();
+      if (result.success) {
+        btn.textContent = '✓ Proposal Sent!';
+        btn.style.background = '#1a5c1a';
+        setTimeout(function() { btn.textContent = 'Get My SMM Proposal →'; btn.style.background = ''; btn.disabled = false; }, 4000);
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch(e) {
+      btn.textContent = 'Get My SMM Proposal →';
+      btn.disabled = false;
+      alert('Submission failed. Please try again or email us directly at info@thesonicmedia.com');
+    }
+  }
+
+  /* ── MULTI-SELECT PLATFORM DROPDOWN LOGIC ── */
+  (function() {
+    var trigger      = document.getElementById('smmPlatformTrigger');
+    var dropdown     = document.getElementById('smmPlatformDropdown');
+    var placeholder  = document.getElementById('smmPlatformPlaceholder');
+    var hiddenInput  = document.getElementById('smmPlatform');
+    if (!trigger || !dropdown) return;
+
+    var selectAllOpt = dropdown.querySelector('.smm-ms-select-all');
+    var regularOpts  = Array.from(dropdown.querySelectorAll('.smm-ms-option:not(.smm-ms-select-all)'));
+
+    /* ── rebuild chips & hidden value from current selection ── */
+    function updateTrigger() {
+      trigger.querySelectorAll('.smm-ms-chip').forEach(function(c) { c.remove(); });
+      var selected = regularOpts.filter(function(o) { return o.classList.contains('selected'); });
+
+      if (selected.length === 0) {
+        placeholder.style.display = '';
+        hiddenInput.value = '';
+      } else {
+        placeholder.style.display = 'none';
+        var values = [];
+        selected.forEach(function(opt) {
+          var label = opt.querySelector('.smm-ms-opt-label').textContent.trim();
+          values.push(opt.dataset.value);
+          var chip = document.createElement('span');
+          chip.className = 'smm-ms-chip';
+          chip.innerHTML = label + '<span class="smm-ms-chip-x" data-val="' + opt.dataset.value + '">✕</span>';
+          trigger.insertBefore(chip, trigger.querySelector('.smm-ms-arrow'));
+        });
+        hiddenInput.value = values.join(',');
+      }
+
+      /* sync Select All checkbox state */
+      var allSelected = selected.length === regularOpts.length;
+      if (selectAllOpt) {
+        selectAllOpt.classList.toggle('selected', allSelected);
+      }
+    }
+
+    /* ── toggle open/close ── */
+    trigger.addEventListener('click', function(e) {
+      /* chip remove button */
+      if (e.target.classList.contains('smm-ms-chip-x')) {
+        var val = e.target.getAttribute('data-val');
+        var opt = dropdown.querySelector('.smm-ms-option[data-value="' + val + '"]');
+        if (opt) opt.classList.remove('selected');
+        updateTrigger();
+        e.stopPropagation();
+        return;
+      }
+      var isOpen = dropdown.classList.contains('open');
+      dropdown.classList.toggle('open', !isOpen);
+      trigger.classList.toggle('open', !isOpen);
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    /* ── option click ── */
+    dropdown.querySelectorAll('.smm-ms-option').forEach(function(opt) {
+      opt.addEventListener('click', function(e) {
+        e.stopPropagation();
+
+        if (opt.classList.contains('smm-ms-select-all')) {
+          /* Select All: if all already selected → deselect all; otherwise select all */
+          var allCurrentlySelected = regularOpts.every(function(o) { return o.classList.contains('selected'); });
+          regularOpts.forEach(function(o) {
+            o.classList.toggle('selected', !allCurrentlySelected);
+          });
+        } else {
+          opt.classList.toggle('selected');
+        }
+        updateTrigger();
+      });
+    });
+
+    /* ── close on outside click ── */
+    document.addEventListener('click', function(e) {
+      if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        trigger.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    /* ── Escape key closes ── */
+    trigger.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        dropdown.classList.remove('open');
+        trigger.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+  </script>
+
+  <div class="page-footer-slot"></div>
+</div><!-- /page-svc-smm -->
+
+<!-- ═══════ SHARED FLOATERS (email + whatsapp) ═══════ -->
+<!-- Email Floater -->
+<a href="mailto:info@thesonicmedia.com" class="email-float" title="Email Us">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="#fff" style="display:block;"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+</a>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/918733087249" class="wa-float" target="_blank" title="Chat on WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="32" height="32" fill="#fff" style="display:block;">
+    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-23.1-115-65.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+  </svg>
+</a>
+
+<!-- ═══════ FUTURE VISION DETAIL MODAL ═══════ -->
+<!-- ═══════ FUTURE VISION DETAIL MODAL ═══════ -->
+<div id="fv-modal-overlay" onclick="if(event.target===this)closeFvDetail()">
+  <div id="fv-modal">
+    <button id="fv-modal-close" onclick="closeFvDetail()">✕</button>
+    <img id="fv-modal-img" src="" alt="" />
+    <div id="fv-modal-body">
+      <div id="fv-modal-tag"></div>
+      <h2 id="fv-modal-title"></h2>
+      <div id="fv-modal-subtitle"></div>
+      <p id="fv-modal-text"></p>
+      <div id="fv-modal-bullets"></div>
+      <a href="#" id="fv-modal-cta" onclick="closeFvDetail();navigate('contact');return false;"
+        style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:50px;background:var(--orange);color:#fff;font-family:var(--font-heading);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 28px rgba(255,92,0,0.4);transition:all .3s;"
+        onmouseover="this.style.boxShadow='0 0 40px rgba(255,92,0,0.65)';this.style.transform='translateY(-2px)'"
+        onmouseout="this.style.boxShadow='0 0 28px rgba(255,92,0,0.4)';this.style.transform=''">
+        Get In Touch →
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Tell app.js which page to activate on load */
+(function() {
+  window.__INITIAL_PAGE__ = 'svc-smm';
+})();
+</script>
+<script src="../assets/js/app.js"></script>
+
+<!-- ═══════ SHARED FOOTER TEMPLATE ═══════ -->
+<template id="shared-footer-tpl">
+<footer>
+  <div class="footer-card">
+
+    <div class="footer-top">
+      <div class="footer-nav">
+        <a href="#" onclick="navigate('about');return false;" aria-label="About page"><span class="txt-default">ABOUT</span><span class="txt-hover">ABOUT</span></a>
+        <a href="#" onclick="navigate('services');return false;" aria-label="All services page"><span class="txt-default">SERVICES</span><span class="txt-hover">SERVICES</span></a>
+        <a href="#" onclick="navigate('contact');return false;" aria-label="Contact page"><span class="txt-default">CONTACT</span><span class="txt-hover">CONTACT</span></a>
+      </div>
+      <div class="social-icons">
+        <!-- Instagram -->
+        <a class="social-icon" href="https://www.instagram.com/thesonicmedia/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram">
+          <span class="ico-default"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
+          <span class="ico-hover"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
+        </a>
+        <!-- Facebook -->
+        <a class="social-icon" href="https://www.facebook.com/people/The-Sonic-Media/61588527764890/?mibextid=wwXIfr&rdid=IFEcTVxzaiIAchzT&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1B78d65Kuv%2F%3Fmibextid%3DwwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook">
+          <span class="ico-default"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>
+          <span class="ico-hover"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span>
+        </a>
+        <!-- LinkedIn -->
+        <a class="social-icon" href="https://www.linkedin.com/company/the-sonic-media/?lipi=urn%3Ali%3Apage%3Amessaging_thread%3Bee6641e9-a42c-4ad9-8915-b2a24a0163d4" target="_blank" rel="noopener noreferrer" aria-label="Follow us on LinkedIn">
+          <span class="ico-default"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+          <span class="ico-hover"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+        </a>
+        <!-- X / Twitter -->
+        <a class="social-icon" href="https://x.com/thesonicmedia?s=21" target="_blank" rel="noopener noreferrer" aria-label="Follow us on X (Twitter)">
+          <span class="ico-default"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>
+          <span class="ico-hover"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom-row">
+      <div class="enquiry-form">
+        <input type="text" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID">
+        <button class="enquiry-btn" onclick="navigate('contact')" aria-label="Submit enquiry and go to contact page">Enquiry</button>
+      </div>
+      <div class="legal-links">
+        <span class="legal-title">Legal Links</span>
+        <a href="#" onclick="openLegalPage('privacy');return false;"><span class="txt-default">Privacy Policy</span><span class="txt-hover">Privacy Policy</span></a>
+        <a href="#" onclick="openLegalPage('terms');return false;"><span class="txt-default">Terms of Service</span><span class="txt-hover">Terms of Service</span></a>
+        <a href="#" onclick="openLegalPage('cookie');return false;"><span class="txt-default">Cookie Policy</span><span class="txt-hover">Cookie Policy</span></a>
+      </div>
+    </div>
+
+    <div class="brand-name-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9743 968" width="100%" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0"    stop-color="#3a3a3a"/>
+            <stop offset="0.20" stop-color="#666"/>
+            <stop offset="0.45" stop-color="#999"/>
+            <stop offset="0.65" stop-color="#bebebe"/>
+            <stop offset="0.82" stop-color="#dedede"/>
+            <stop offset="1.0"  stop-color="#ffffff"/>
+          </linearGradient>
+          <mask id="tm">
+            <rect width="9743" height="968" fill="black"/>
+            <path fill="white" transform="translate(0,968) scale(1,-1)" d="M445 0V517H650V700H4V517H209V0Z"/>
+            <path fill="white" transform="translate(654,968) scale(1,-1)" d="M511 452H293V700H57V0H293V258H511V0H747V700H511Z"/>
+            <path fill="white" transform="translate(1458,968) scale(1,-1)" d="M289 270H585V440H289V522H626V700H57V0H639V178H289Z"/>
+            <path fill="white" transform="translate(2431,968) scale(1,-1)" d="M318 -16C535 -16 644 92 644 220C644 478 257 408 257 492C257 516 279 536 348 536C409 536 474 519 543 484L614 655C541 696 444 716 350 716C133 716 24 610 24 480C24 219 411 290 411 202C411 178 387 164 320 164C243 164 155 189 89 228L13 56C83 13 201 -16 318 -16Z"/>
+            <path fill="white" transform="translate(3088,968) scale(1,-1)" d="M424 -16C652 -16 819 138 819 350C819 562 652 716 424 716C196 716 29 562 29 350C29 138 196 -16 424 -16ZM424 175C337 175 267 241 267 350C267 459 337 525 424 525C511 525 581 459 581 350C581 241 511 175 424 175Z"/>
+            <path fill="white" transform="translate(3936,968) scale(1,-1)" d="M517 382 251 700H57V0H287V318L553 0H747V700H517Z"/>
+            <path fill="white" transform="translate(4740,968) scale(1,-1)" d="M293 0V700H57V0Z"/>
+            <path fill="white" transform="translate(5090,968) scale(1,-1)" d="M419 -16C556 -16 664 34 733 124L584 257C543 205 494 175 431 175C333 175 267 243 267 350C267 457 333 525 431 525C494 525 543 495 584 443L733 576C664 666 556 716 419 716C194 716 29 565 29 350C29 135 194 -16 419 -16Z"/>
+            <path fill="white" transform="translate(6134,968) scale(1,-1)" d="M895 700H701L479 327L251 700H57V0H272V308L424 63H528L680 319L682 0H897Z"/>
+            <path fill="white" transform="translate(7088,968) scale(1,-1)" d="M289 270H585V440H289V522H626V700H57V0H639V178H289Z"/>
+            <path fill="white" transform="translate(7761,968) scale(1,-1)" d="M402 0C636 0 797 133 797 350C797 567 636 700 402 700H57V0ZM293 516H392C491 516 559 457 559 350C559 243 491 184 392 184H293Z"/>
+            <path fill="white" transform="translate(8587,968) scale(1,-1)" d="M293 0V700H57V0Z"/>
+            <path fill="white" transform="translate(8937,968) scale(1,-1)" d="M825 0 519 700H287L-19 0H221L268 122H534L581 0ZM401 468 469 292H333Z"/>
+          </mask>
+        </defs>
+        <rect width="9743" height="968" fill="url(#wg)" mask="url(#tm)"/>
+      </svg>
+    </div>
+
+  </div>
+</footer>
+</template>
+
+</body>
+</html>

@@ -180,7 +180,7 @@ function reinitHomeAnimations() {
         onEnter: () => vid.play()
       }
     })
-    .to(vc,        { width: '100vw', height: _isMob ? '92svh' : '88vh', borderRadius: '0px', borderColor: 'transparent', ease: 'expo.out', duration: 0.5 }, 0)
+    .to(vc,        { width: '100%', height: '100%', borderRadius: '0px', borderColor: 'transparent', ease: 'expo.out', duration: 0.5 }, 0)
     .to(vid,       { scale: 1.08, ease: 'expo.out', duration: 0.5 }, 0)
     .to(darkOv,    { backgroundColor: 'rgba(0,0,0,0.45)', ease: 'power3.inOut', duration: 0.5 }, 0)
     .to(overlay,   { clipPath: 'inset(0% 0 0 0)', ease: 'expo.out', duration: 0.3 }, 0.4)
@@ -2430,8 +2430,8 @@ function setResponsiveVideoSrc(vid, isMobile) {
 
     const isMobile = window.innerWidth <= 768;
     const initSize = isMobile ? '72vw' : '320px';
-    const expandW  = '100vw';
-    const expandH  = isMobile ? '92svh' : '88vh';
+    const expandW  = '100%';
+    const expandH  = '100%';
 
     setResponsiveVideoSrc(vid, isMobile);
 
@@ -2556,8 +2556,8 @@ function setResponsiveVideoSrc(vid, isMobile) {
       }
     })
     .to(vc, {
-      width: '100vw',
-      height: _abIsMob ? '92svh' : '88vh',
+      width: '100%',
+      height: '100%',
       borderRadius: '0px',
       borderColor: 'transparent',
       ease: 'expo.out',
