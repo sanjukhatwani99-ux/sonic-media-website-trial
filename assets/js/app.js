@@ -2736,7 +2736,11 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
        Swiping off either edge lands on a real-looking clone, then we
        silently snap (no animation) back to the matching real card —
        giving the illusion of an endless loop. */
-    var CLONE = Math.min(3, n);
+    /* Clone the FULL set on each side, giving [real][real][real]. You can
+       swipe an entire lap in either direction before a silent re-anchor
+       is ever needed — that's what makes the loop feel truly endless
+       instead of "snapping back" every time you cross the 10th card. */
+    var CLONE = n;
     var loopCards = realCards.slice(n - CLONE).concat(realCards, realCards.slice(0, CLONE));
 
     function cardHTML(c, realIdx) {
