@@ -258,6 +258,14 @@ function reinitHomeAnimations() {
   })();
 
   ScrollTrigger.refresh();
+
+  // Pinning/unpinning the sections above (cta-zoom, coverflow, TSM) inserts
+  // spacer elements and changes total document height *after* the page first
+  // painted at scroll 0. If that happens on initial load, the browser/Lenis
+  // can end up visually settled on a mid-page section instead of the top.
+  // Re-correct here, once layout has fully settled, not just on the earlier
+  // DOMContentLoaded/load events.
+  if (typeof forceScrollTop === 'function') forceScrollTop();
 }
 
 
