@@ -2729,22 +2729,18 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     var nextBtn = document.getElementById('mobSvcNext');
     if (!track || !outer || !dotsEl) return;
 
-    var realCards = SVC_CARDS_DATA;
-    var n = realCards.length;
-    /* Clone a few cards from each end and splice them onto the opposite
-       side so the strip reads: [...clones of last] [real cards] [...clones of first].
-       Swiping off either edge lands on a real-looking clone, then we
-       silently snap (no animation) back to the matching real card —
-       giving the illusion of an endless loop. */
-    /* Clone the FULL set on each side, giving [real][real][real]. You can
-       swipe an entire lap in either direction before a silent re-anchor
-       is ever needed — that's what makes the loop feel truly endless
-       instead of "snapping back" every time you cross the 10th card. */
-    var CLONE = n;
-    var loopCards = realCards.slice(n - CLONE).concat(realCards, realCards.slice(0, CLONE));
+    var cards = SVC_CARDS_DATA;
+    var n = cards.length;
+    if (!n) return;
 
-    function cardHTML(c, realIdx) {
-      return '<div class="mob-svc-card" data-real-idx="' + realIdx + '">' +
+    /* Only the n real cards ever exist in the DOM — no clones. Each
+       card's screen position is the shortest signed distance (mod n)
+       between its own index and a single floating "virtualIndex". That
+       distance is inherently circular, so card 10 and card 1 are always
+       exactly one spacing apart in both directions — there is no seam,
+       no clone, and therefore nothing to silently jump or snap back to. */
+    track.innerHTML = cards.map(function(c, i) {
+      return '<div class="mob-svc-card" data-idx="' + i + '">' +
         '<div class="mob-svc-card-inner-wrap">' +
           '<div class="mob-svc-card-img"><img src="' + (c.img || 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80') + '" alt="' + c.title + '" loading="lazy"></div>' +
           '<div class="mob-svc-card-grad"></div>' +
@@ -2753,149 +2749,131 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
           '</div>' +
         '</div>' +
       '</div>';
-    }
-
-    track.innerHTML = loopCards.map(function(c, i) {
-      var realIdx = ((i - CLONE) % n + n) % n;
-      return cardHTML(c, realIdx);
     }).join('');
 
-    dotsEl.innerHTML = realCards.map(function(_, i) {
+    dotsEl.innerHTML = cards.map(function(_, i) {
       return '<div class="mob-svc-dot' + (i===0?' active':'') + '" data-idx="' + i + '"></div>';
     }).join('');
 
     var cardEls = Array.prototype.slice.call(track.querySelectorAll('.mob-svc-card'));
-    var current = 0;      /* real index (0..n-1) of the active card */
-    var ticking = false;
-    var settleTimer = null;
-    var jumping = false;
-    var lastBestIdx = CLONE;
+    var dotEls  = Array.prototype.slice.call(dotsEl.querySelectorAll('.mob-svc-dot'));
 
-    function setActiveClasses(displayIdx) {
-      cardEls.forEach(function(el, i){ el.classList.toggle('active', i === displayIdx); });
+    var virtualIndex = 0;     /* continuous "position" — never bounded */
+    var cardSpacing  = 0;     /* px between card centers */
+    var dragging = false, axisLock = null, startX = 0, startY = 0, startVirtual = 0;
+    var rafScheduled = false;
+
+    function measure() {
+      var first = cardEls[0];
+      cardSpacing = first.offsetWidth;       /* unaffected by the scale() transform */
+      outer.style.height = first.offsetHeight + 'px';
     }
 
-    /* Scale/opacity parallax: each card's transform is driven by its
-       distance from the scroller's horizontal center. Center card = 105%
-       scale, full opacity; neighbors ease down to 85-90% / reduced opacity. */
-    function updateTransforms() {
-      ticking = false;
-      var outerRect = outer.getBoundingClientRect();
-      if (outerRect.width === 0) return; /* not laid out yet */
-      var centerX = outerRect.left + outerRect.width / 2;
-      var bestIdx = 0, bestDist = Infinity;
+    function shortestDelta(i, idxFloat) {
+      var d = i - idxFloat;
+      d = ((d % n) + n) % n;
+      if (d > n / 2) d -= n;
+      return d;
+    }
 
+    function render() {
+      rafScheduled = false;
       cardEls.forEach(function(el, i) {
-        var r = el.getBoundingClientRect();
-        var cardCenter = r.left + r.width / 2;
-        var dist = Math.abs(cardCenter - centerX);
-        var norm = Math.min(dist / (outerRect.width * 0.62), 1); /* 0 = centered, 1 = fully off */
-        var scale = 1.05 - norm * 0.20;   /* 105% center -> ~85% at edge */
-        var opacity = 1 - norm * 0.55;     /* 100% center -> ~45% at edge */
-        el.style.transform = 'scale(' + scale.toFixed(3) + ')';
+        var d = shortestDelta(i, virtualIndex);
+        var absD = Math.abs(d);
+        var scale = Math.max(0.78, 1.05 - absD * 0.20);
+        var opacity = Math.max(0.3, 1 - absD * 0.55);
+        el.style.transform = 'translate(-50%, -50%) translateX(' + (d * cardSpacing).toFixed(2) + 'px) scale(' + scale.toFixed(3) + ')';
         el.style.opacity = opacity.toFixed(3);
-        if (dist < bestDist) { bestDist = dist; bestIdx = i; }
-      });
-
-      var realIdx = parseInt(cardEls[bestIdx].dataset.realIdx, 10);
-      if (realIdx !== current) {
-        current = realIdx;
-        setActiveClasses(bestIdx);
-        dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active', i===current); });
-      }
-
-      lastBestIdx = bestIdx;
-      /* Fallback debounce for browsers without scrollend support (see below) */
-      clearTimeout(settleTimer);
-      settleTimer = setTimeout(function(){ checkLoopJump(lastBestIdx); }, 140);
-    }
-
-    function checkLoopJump(displayIdx) {
-      if (jumping) return;
-      var total = cardEls.length;
-      var onClone = displayIdx < CLONE || displayIdx >= total - CLONE;
-      if (!onClone) return;
-
-      var realIdx = parseInt(cardEls[displayIdx].dataset.realIdx, 10);
-      var targetDisplayIdx = realIdx + CLONE;
-      if (targetDisplayIdx === displayIdx) return;
-
-      /* getBoundingClientRect is more reliable than offsetLeft here since
-         the snap container can still be mid-reflow right after a swipe. */
-      var fromRect = cardEls[displayIdx].getBoundingClientRect();
-      var toRect   = cardEls[targetDisplayIdx].getBoundingClientRect();
-      var delta = toRect.left - fromRect.left;
-      if (Math.abs(delta) < 1) return; /* already aligned, nothing to do */
-
-      jumping = true;
-      /* Scroll-snap can fight a programmatic scrollLeft change mid-settle
-         (especially on iOS Safari), causing it to snap back to the old
-         card. Briefly disabling snap during the jump avoids that. */
-      var prevSnap = outer.style.scrollSnapType;
-      outer.style.scrollSnapType = 'none';
-      outer.scrollLeft += delta;
-      requestAnimationFrame(function(){
-        requestAnimationFrame(function(){
-          outer.style.scrollSnapType = prevSnap || '';
-          current = realIdx;
-          setActiveClasses(targetDisplayIdx);
-          dotsEl.querySelectorAll('.mob-svc-dot').forEach(function(el,i){ el.classList.toggle('active', i===current); });
-          jumping = false;
-        });
+        el.style.zIndex = String(100 - Math.round(absD * 10));
+        el.classList.toggle('active', absD < 0.001);
       });
     }
 
-    function onScroll() {
-      if (jumping) return; /* ignore feedback from our own programmatic jump */
-      if (!ticking) { ticking = true; requestAnimationFrame(updateTransforms); }
+    function scheduleRender() {
+      if (!rafScheduled) { rafScheduled = true; requestAnimationFrame(render); }
     }
 
-    /* Always animate toward whichever copy (real or clone) of the target
-       card is nearest the current scroll position, so prev/next and dot
-       taps wrap seamlessly instead of yanking all the way across the strip. */
+    function setActiveDot() {
+      var real = ((Math.round(virtualIndex) % n) + n) % n;
+      dotEls.forEach(function(el, i){ el.classList.toggle('active', i === real); });
+    }
+
+    function setTransition(on) {
+      cardEls.forEach(function(el) {
+        el.style.transition = on ? 'transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.45s' : 'none';
+      });
+    }
+
+    function animateTo(target) {
+      setTransition(true);
+      virtualIndex = target;
+      scheduleRender();
+      setActiveDot();
+      setTimeout(function() {
+        /* Folding the index by a multiple of n once it's settled is
+           mathematically invisible (shortestDelta is unaffected by it)
+           — it just keeps the number from growing forever. */
+        virtualIndex = ((virtualIndex % n) + n) % n;
+        setTransition(false);
+      }, 460);
+    }
+
     function goTo(realIdx) {
-      realIdx = ((realIdx % n) + n) % n;
-      var displayIdx = realIdx + CLONE;
-      var candidates = [displayIdx, displayIdx - n, displayIdx + n].filter(function(i){
-        return i >= 0 && i < cardEls.length;
-      });
-      var outerRect = outer.getBoundingClientRect();
-      var centerX = outerRect.left + outerRect.width / 2;
-      var best = candidates[0], bestDist = Infinity;
-      candidates.forEach(function(i){
-        var r = cardEls[i].getBoundingClientRect();
-        var d = Math.abs((r.left + r.width / 2) - centerX);
-        if (d < bestDist) { bestDist = d; best = i; }
-      });
-      cardEls[best].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      var current = Math.round(virtualIndex);
+      var currentReal = ((current % n) + n) % n;
+      var diff = ((realIdx - currentReal + n / 2) % n + n) % n - n / 2;
+      animateTo(current + diff);
     }
+
+    function onPointerDown(e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      dragging = true;
+      axisLock = null;
+      startX = e.clientX; startY = e.clientY;
+      startVirtual = virtualIndex;
+      setTransition(false);
+      try { outer.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+    function onPointerMove(e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      if (axisLock === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+        axisLock = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      }
+      if (axisLock === 'y') return; /* let the page scroll vertically as normal */
+      if (axisLock === 'x') e.preventDefault();
+      virtualIndex = startVirtual - dx / cardSpacing;
+      scheduleRender();
+      setActiveDot();
+    }
+    function onPointerUp() {
+      if (!dragging) return;
+      dragging = false;
+      animateTo(axisLock === 'x' ? Math.round(virtualIndex) : Math.round(startVirtual));
+      axisLock = null;
+    }
+
+    outer.style.touchAction = 'pan-y';
+    outer.addEventListener('pointerdown', onPointerDown);
+    outer.addEventListener('pointermove', onPointerMove, { passive: false });
+    outer.addEventListener('pointerup', onPointerUp);
+    outer.addEventListener('pointercancel', onPointerUp);
 
     dotsEl.addEventListener('click', function(e){
       var dot = e.target.closest('.mob-svc-dot');
       if (dot) goTo(parseInt(dot.dataset.idx, 10));
     });
+    if (prevBtn) prevBtn.addEventListener('click', function(){ animateTo(Math.round(virtualIndex) - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function(){ animateTo(Math.round(virtualIndex) + 1); });
 
-    if (prevBtn) prevBtn.addEventListener('click', function(){ goTo(current - 1); });
-    if (nextBtn) nextBtn.addEventListener('click', function(){ goTo(current + 1); });
+    window.addEventListener('resize', function(){ measure(); scheduleRender(); }, { passive: true });
 
-    outer.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    /* Modern browsers fire 'scrollend' once momentum/snap settling is
-       truly finished — far more reliable than guessing with a debounce
-       timer, which can fire while CSS scroll-snap is still mid-settle. */
-    outer.addEventListener('scrollend', function(){ checkLoopJump(lastBestIdx); });
-
-    /* Land on the first real card (skipping the leading clones) before
-       the user ever sees the strip. */
-    requestAnimationFrame(function() {
-      var startEl = cardEls[CLONE];
-      outer.scrollLeft = startEl.offsetLeft - (outer.clientWidth - startEl.offsetWidth) / 2;
-      updateTransforms();
-    });
+    requestAnimationFrame(function() { measure(); render(); });
     /* Outer may still be display:none (ancestor toggled by media-query JS)
        on first build — re-measure once layout has settled. */
-    setTimeout(updateTransforms, 50);
-    setTimeout(updateTransforms, 300);
+    setTimeout(function(){ measure(); render(); }, 300);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', buildCarousel);
   else buildCarousel();
