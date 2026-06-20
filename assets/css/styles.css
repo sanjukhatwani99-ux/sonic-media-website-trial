@@ -2782,6 +2782,34 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   border-radius: 3px;
   box-shadow: 0 0 8px rgba(255,92,0,0.5);
 }
+/* RING CAROUSEL — home page only (#mobSvcCarousel).
+   Cards are positioned purely by JS transforms (translateX based on
+   circular distance from the active index), not native scroll, so there
+   is no edge, no clone, and nothing to snap or jump — it's a true loop. */
+#mobSvcCarousel .mob-svc-track-outer {
+  overflow: hidden;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  padding: 14px 0;
+  cursor: grab;
+  user-select: none;
+}
+#mobSvcCarousel .mob-svc-track-outer:active { cursor: grabbing; }
+#mobSvcCarousel .mob-svc-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#mobSvcCarousel .mob-svc-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  /* transform is set inline by JS every frame — scroll-snap-align no
+     longer applies since this card isn't in document scroll flow */
+  scroll-snap-align: none;
+}
 /* Nav arrows */
 .mob-svc-arrows {
   display: flex;
