@@ -2743,7 +2743,8 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     var supportsScrollend = 'onscrollend' in window;
 
     function cardHTML(c, realIdx, isClone) {
-      return '<div class="mob-svc-card' + (isClone ? ' mob-svc-card--clone' : '') + '" data-real-idx="' + realIdx + '">' +
+      var isStartCard = !isClone && realIdx === 0;
+      return '<div class="mob-svc-card' + (isClone ? ' mob-svc-card--clone' : '') + (isStartCard ? ' active' : '') + '" data-real-idx="' + realIdx + '">' +
         '<div class="mob-svc-card-inner-wrap">' +
           '<div class="mob-svc-card-img"><img src="' + (c.img || 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80') + '" alt="' + c.title + '" loading="lazy"></div>' +
           '<div class="mob-svc-card-grad"></div>' +
@@ -2797,6 +2798,37 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
       if (nextBtn) nextBtn.classList.toggle('disabled', false);
     }
 
+    /* Scroll the carousel horizontally only — never touches page scroll.
+       scrollIntoView's block:'nearest' can still nudge the *vertical*
+       page position during initial layout (images/fonts still settling,
+       wrapper still display:none->flex), which is what was yanking the
+       whole page down to this section on load. Computing scrollLeft
+       directly and setting it sidesteps that entirely.
+       For the instant (non-smooth) jump, scroll-snap is switched off for
+       the assignment: some mobile browsers will otherwise "correct" a
+       directly-set scrollLeft back toward whatever the snap container
+       thinks is nearest, which is what was landing the carousel on the
+       wrong starting card instead of card 1. */
+    function scrollCardTo(stripIdx, smooth) {
+      var el = cardEls[stripIdx];
+      var target = el.offsetLeft + el.offsetWidth / 2 - outer.clientWidth / 2;
+      if (smooth) {
+        outer.scrollTo({ left: target, behavior: 'smooth' });
+      } else {
+        var prevSnap = outer.style.scrollSnapType;
+        var prevBehavior = outer.style.scrollBehavior;
+        outer.style.scrollSnapType = 'none';
+        outer.style.scrollBehavior = 'auto';
+        outer.scrollLeft = target;
+        /* Force layout to flush so the browser commits this position
+           before snap is re-enabled, instead of batching it with the
+           style restore and re-evaluating snap against a stale value. */
+        void outer.offsetHeight;
+        outer.style.scrollSnapType = prevSnap;
+        outer.style.scrollBehavior = prevBehavior;
+      }
+    }
+
     /* Instantly (no transition/animation) re-point the scroller at the real
        card matching whatever clone is currently centered. Called exactly
        on scrollend, so the jump lands in the same frame the swipe settles
@@ -2809,13 +2841,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
 
       var targetStripIdx = stripPosFor(wrapReal(realIdx));
       realigning = true;
-      var prevSnap = outer.style.scrollSnapType;
-      var prevBehavior = outer.style.scrollBehavior;
-      outer.style.scrollSnapType = 'none';
-      outer.style.scrollBehavior = 'auto';
-      cardEls[targetStripIdx].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
-      outer.style.scrollSnapType = prevSnap;
-      outer.style.scrollBehavior = prevBehavior;
+      scrollCardTo(targetStripIdx, false);
       setActive(targetStripIdx);
       /* Let the forced scroll's own scroll/scrollend events drain before
          resuming normal handling, so they don't re-trigger this. */
@@ -2865,7 +2891,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     window.addEventListener('resize', onScroll, { passive: true });
 
     function goTo(realIdx) {
-      cardEls[stripPosFor(wrapReal(realIdx))].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      scrollCardTo(stripPosFor(wrapReal(realIdx)), true);
     }
 
     prevBtn && prevBtn.addEventListener('click', function(){ goTo(current-1); });
@@ -2878,10 +2904,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     /* Jump to the first REAL card (skipping the prepended tail clones)
        before the first paint, with no smooth animation. */
     function positionAtStart() {
-      var prevBehavior = outer.style.scrollBehavior;
-      outer.style.scrollBehavior = 'auto';
-      cardEls[stripPosFor(0)].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
-      outer.style.scrollBehavior = prevBehavior;
+      scrollCardTo(stripPosFor(0), false);
       updateTransforms();
       setActive(stripPosFor(0));
     }
