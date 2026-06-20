@@ -2401,7 +2401,7 @@ buildCoverflowInstance({
     const isMobile = window.innerWidth <= 768;
     const initSize = isMobile ? '72vw' : '320px';
     const expandW  = '100vw';
-    const expandH  = isMobile ? '56vw' : '88vh';
+    const expandH  = isMobile ? '92svh' : '88vh';
 
     gsap.set(vc,        { width: initSize, height: initSize, borderRadius: '16px', borderColor: 'rgba(255,92,0,0.18)' });
     gsap.set(vid,       { scale: 1 });
@@ -2521,7 +2521,7 @@ buildCoverflowInstance({
     })
     .to(vc, {
       width: '100vw',
-      height: _abIsMob ? '56vw' : '88vh',
+      height: _abIsMob ? '92svh' : '88vh',
       borderRadius: '0px',
       borderColor: 'transparent',
       ease: 'expo.out',

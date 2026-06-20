@@ -3191,7 +3191,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   .hero-h1 { font-size: clamp(40px, 11vw, 62px) !important; }
   /* mob-svc-card scales with vw automatically — no overrides needed at 480px */
   .section-title { font-size: clamp(30px, 9vw, 52px) !important; }
-  #tsm-vc, #ab-tsm-vc { width: 72vw !important; height: 72vw !important; }
+  #tsm-vc, #ab-tsm-vc { width: 72vw; height: 72vw; }
 }
 
 /* ══════════════════════════════════════════════════
