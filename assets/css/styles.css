@@ -2785,11 +2785,14 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   border-radius: 3px;
   box-shadow: 0 0 8px rgba(255,92,0,0.5);
 }
-/* RING CAROUSEL — home page only (#mobSvcCarousel).
+/* RING CAROUSEL — used by both the home page (#mobSvcCarousel) and the
+   services page (#pageMobSvcCarousel) so they are visually and
+   behaviorally identical, not just similarly named.
    Cards are positioned purely by JS transforms (translateX based on
    circular distance from the active index), not native scroll, so there
    is no edge, no clone, and nothing to snap or jump — it's a true loop. */
-#mobSvcCarousel .mob-svc-track-outer {
+#mobSvcCarousel .mob-svc-track-outer,
+#pageMobSvcCarousel .mob-svc-track-outer {
   overflow: hidden;
   scroll-snap-type: none;
   scroll-behavior: auto;
@@ -2797,14 +2800,17 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   cursor: grab;
   user-select: none;
 }
-#mobSvcCarousel .mob-svc-track-outer:active { cursor: grabbing; }
-#mobSvcCarousel .mob-svc-track {
+#mobSvcCarousel .mob-svc-track-outer:active,
+#pageMobSvcCarousel .mob-svc-track-outer:active { cursor: grabbing; }
+#mobSvcCarousel .mob-svc-track,
+#pageMobSvcCarousel .mob-svc-track {
   position: relative;
   width: 100%;
   height: 100%;
   display: block;
 }
-#mobSvcCarousel .mob-svc-card {
+#mobSvcCarousel .mob-svc-card,
+#pageMobSvcCarousel .mob-svc-card {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2851,7 +2857,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 
 /* Show/hide based on screen size */
 @media(max-width:768px){
-  /* Hide the scroll-based coverflow on mobile */
+  /* Hide the scroll-based coverflow on mobile (home page preview) */
   #homeSvcScrollWrapper { display: none !important; }
   #pageSvcScrollWrapper { display: none !important; }
   /* Show the touch carousel instead */

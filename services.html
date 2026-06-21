@@ -197,38 +197,36 @@
     </div>
   </section>
 
-  <!-- SERVICES PAGE COVERFLOW -->
-  <section class="home-coverflow-section" id="pageSvcCoverflowSection" style="padding-top:0;background:var(--black);">
-    <div class="hcf-header" style="padding-top:0;display:none;"></div>
+  <!-- ALL SERVICES — SAME COVERFLOW AS HOME PAGE -->
+  <section class="home-coverflow-section" id="pageSvcCoverflowSection" style="padding-top:0;padding-bottom:0;background:var(--black);">
     <div class="hcf-scroll-wrapper" id="pageSvcScrollWrapper">
-      <div class="hcf-gallery" id="pageSvcGallery">
-        <ul class="hcf-list" id="pageSvcList"></ul>
+      <div class="hcf-gallery" id="pageSvcGallery" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:0;padding:32px 24px 28px;">
+        <!-- Heading sits at top of the pinned viewport -->
+        <div class="journal-header" style="width:100%;flex-shrink:0;margin-bottom:20px;">
+          <div>
+            <div class="section-tag" style="color:var(--orange);margin-bottom:10px;">All 10 Services</div>
+            <h2 class="section-title">Scroll Through <span>What We Do</span></h2>
+            <p class="hcf-sub" style="margin:10px 0 0;text-align:left;">Every discipline. One agency. Built to dominate your entire digital ecosystem.</p>
+          </div>
+        </div>
+        <!-- Card list -->
+        <ul class="hcf-list" id="pageSvcList" style="position:relative;top:auto;left:auto;transform:none;flex-shrink:0;"></ul>
       </div>
-    </div>
-    <div style="text-align:center;padding:40px 0 60px;" class="reveal d2">
-      <p style="color:rgba(245,240,235,.5);font-size:15px;margin-bottom:20px;">Click any service card to explore in detail</p>
     </div>
   </section>
 
-
-
-  <!-- MOBILE SWIPE CAROUSEL — Services page (shown only on mobile) -->
-  <div class="mob-svc-carousel-wrap" id="pageMobSvcCarousel" style="background:var(--black);padding-top:24px;display:none;">
-    <div style="padding:0 20px 20px;">
-      <div class="section-tag" style="color:var(--orange);margin-bottom:8px;">All 10 Services</div>
-      <h2 class="section-title" style="font-size:clamp(28px,8vw,48px);text-align:left;line-height:1;color:var(--white);">Swipe Through <span style="color:var(--orange);">What We Do</span></h2>
-      <p style="font-size:14px;color:rgba(245,240,235,.45);margin-top:8px;font-weight:300;">Tap any card to learn more.</p>
+  <!-- MOBILE SWIPE CAROUSEL — Services page (shown only on mobile, hidden on desktop via CSS) -->
+  <div class="mob-svc-carousel-wrap" id="pageMobSvcCarousel" style="background:var(--black);padding-top:8px;">
+    <div style="padding:0 20px 16px;">
+      <div class="section-tag" style="color:var(--orange);margin-bottom:6px;">All 10 Services</div>
+      <h2 class="section-title" style="font-size:clamp(26px,7.5vw,44px);text-align:left;line-height:1;color:var(--white);">Swipe Through <span style="color:var(--orange);">What We Do</span></h2>
+      <p style="font-size:13px;color:rgba(245,240,235,.45);margin-top:6px;font-weight:300;">Every discipline. One agency.</p>
     </div>
     <div class="mob-svc-track-outer" id="pageMobSvcTrackOuter">
       <div class="mob-svc-track" id="pageMobSvcTrack"></div>
     </div>
     <div class="mob-svc-arrows">
-      <button class="mob-svc-arrow" id="pageMobSvcPrev" aria-label="Previous service">&#8592;</button>
       <div class="mob-svc-dots" id="pageMobSvcDots"></div>
-      <button class="mob-svc-arrow" id="pageMobSvcNext" aria-label="Next service">&#8594;</button>
-    </div>
-    <div style="text-align:center;margin-top:28px;padding:0 20px 8px;">
-      <a href="#" onclick="navigate('contact');return false;" class="btn-p" style="width:100%;justify-content:center;">Start Your Project &#8594;</a>
     </div>
   </div>
 
