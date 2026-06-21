@@ -4701,3 +4701,21 @@ a.social-icon:focus-visible {
   }
 }
 
+/* ══════════════════════════════════════════════════════════
+   GLOBAL MOBILE ZOOM-ON-FOCUS FIX
+   iOS Safari auto-zooms the page when a tapped form field has
+   a computed font-size below 16px. This rule forces every text
+   field site-wide (including ones inside page-specific <style>
+   blocks like .inp on the builder pages) to render at 16px on
+   mobile, so tapping to type never triggers the zoom.
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select,
+  .inp,
+  .inp-select {
+    font-size: 16px !important;
+  }
+}
+
