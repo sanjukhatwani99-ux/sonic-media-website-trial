@@ -1890,14 +1890,16 @@
     background: rgba(255,92,0,.12); border: 1px solid rgba(255,92,0,.2);
     display: flex; align-items: center; justify-content: center; font-size: 18px;
   }
-  .smm-tl-mock-text {}
+  .smm-tl-mock-text { flex: 1; min-width: 0; }
   .smm-tl-mock-label {
     font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
     letter-spacing: .1em; text-transform: uppercase;
     color: rgba(255,255,255,.3); margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .smm-tl-mock-val {
     font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,.7);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .smm-tl-mock-bar {
     height: 4px; border-radius: 2px; background: rgba(255,255,255,.06);
@@ -1925,7 +1927,18 @@
     .smm-tl-node { width: 48px; height: 48px; font-size: 18px; overflow: visible; }
     .smm-tl-step-num { width: 18px; height: 18px; font-size: 8px; top: -6px; right: -3px; }
     .smm-tl-step-label { font-size: 8px; line-height: 1.3; }
-    .smm-tl-detail { grid-template-columns: 1fr; gap: 20px; padding: 20px 16px; border-radius: 14px; }
+    .smm-tl-detail { grid-template-columns: 1fr; gap: 16px; padding: 22px 18px; border-radius: 16px; margin-top: 28px; }
+    .smm-tl-detail-step-badge { font-size: 9px; padding: 4px 12px; margin-bottom: 12px; }
+    .smm-tl-detail-title { font-size: 24px; line-height: 1.1; margin-bottom: 10px; }
+    .smm-tl-detail-desc { font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
+    .smm-tl-detail-tasks { gap: 7px; }
+    .smm-tl-detail-task { font-size: 12.5px; gap: 8px; }
+    .smm-tl-detail-right { gap: 10px; }
+    .smm-tl-mock-card { padding: 12px 14px; gap: 12px; border-radius: 10px; }
+    .smm-tl-mock-icon { width: 34px; height: 34px; font-size: 15px; border-radius: 9px; }
+    .smm-tl-mock-label { font-size: 8.5px; margin-bottom: 2px; }
+    .smm-tl-mock-val { font-size: 12px; }
+    .smm-tl-mock-bar { margin-top: 6px; }
   }
   @media (max-width: 480px) {
     .smm-tl-track { grid-template-columns: repeat(7, minmax(46px, 1fr)); }
@@ -2714,17 +2727,30 @@
     var detail = document.getElementById('smmTlDetail');
     if (!track || !detail) return;
 
+    function shortMobileVal(val) {
+      /* Keep mobile mock-card values short and clean so they never wrap/overflow */
+      if (val.length <= 16) return val;
+      var trimmed = val.slice(0, 16);
+      var lastSpace = trimmed.lastIndexOf(' ');
+      if (lastSpace > 8) trimmed = trimmed.slice(0, lastSpace);
+      return trimmed + '…';
+    }
+
     function renderDetail(i) {
       var s = steps[i];
-      var tasksHtml = s.tasks.map(function(t) {
+      var isMobile = window.innerWidth <= 900;
+      var visibleTasks = isMobile ? s.tasks.slice(0, 3) : s.tasks;
+      var visibleMocks = isMobile ? s.mocks.slice(0, 2) : s.mocks;
+      var tasksHtml = visibleTasks.map(function(t) {
         return '<div class="smm-tl-detail-task">' + t + '</div>';
       }).join('');
-      var mocksHtml = s.mocks.map(function(m) {
+      var mocksHtml = visibleMocks.map(function(m) {
+        var val = isMobile ? shortMobileVal(m.val) : m.val;
         return '<div class="smm-tl-mock-card">'
           + '<div class="smm-tl-mock-icon">' + m.icon + '</div>'
           + '<div class="smm-tl-mock-text">'
           + '<div class="smm-tl-mock-label">' + m.label + '</div>'
-          + '<div class="smm-tl-mock-val">' + m.val + '</div>'
+          + '<div class="smm-tl-mock-val">' + val + '</div>'
           + '<div class="smm-tl-mock-bar"><div class="smm-tl-mock-bar-fill" style="width:0%" data-w="' + m.bar + '%"></div></div>'
           + '</div></div>';
       }).join('');
@@ -2746,12 +2772,21 @@
       }, 50);
     }
 
+    var activeStepIdx = 0;
     track.querySelectorAll('.smm-tl-step').forEach(function(step) {
       step.addEventListener('click', function() {
         track.querySelectorAll('.smm-tl-step').forEach(function(s) { s.classList.remove('active'); });
         step.classList.add('active');
-        renderDetail(parseInt(step.getAttribute('data-step')));
+        activeStepIdx = parseInt(step.getAttribute('data-step'));
+        renderDetail(activeStepIdx);
       });
+    });
+
+    /* Re-render on resize so rotating/resizing crosses the mobile breakpoint cleanly */
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() { renderDetail(activeStepIdx); }, 200);
     });
 
     renderDetail(0);

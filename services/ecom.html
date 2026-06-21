@@ -985,8 +985,9 @@
     position: relative; z-index: 1;
     overflow: hidden;
     background: transparent;
-    border: none;
-    border-radius: 0;
+    border: 1.5px solid transparent;
+    border-radius: 16px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
   }
   .svp-card-logo-wrap img {
     width: 100%; height: 100%; object-fit: contain; display: block;
@@ -995,6 +996,22 @@
     transition: transform .42s cubic-bezier(.2,.8,.2,1);
   }
   .svp-card-logo-type:hover .svp-card-logo-wrap img { transform: scale(1.1); }
+  .svp-card-logo-type:hover .svp-card-logo-wrap {
+    background: rgba(255,92,0,.06);
+    border-color: rgba(255,92,0,.25);
+  }
+  .svp-cat-body-advertising .svp-card-logo-type:hover .svp-card-logo-wrap {
+    background: rgba(43,127,189,.06);
+    border-color: rgba(43,127,189,.25);
+  }
+
+  /* Touch/click highlight — instant feedback the moment the icon is pressed */
+  .svp-card-logo-type:active .svp-card-logo-wrap,
+  .svp-card-logo-type:focus-visible .svp-card-logo-wrap {
+    background: rgba(255,92,0,.12);
+    border-color: rgba(255,92,0,.5);
+    box-shadow: 0 0 0 4px rgba(255,92,0,.1);
+  }
 
   /* Title sits OUTSIDE the card box, below the wrapper */
   .svp-logo-card-wrapper .svp-card-title {
@@ -1006,18 +1023,40 @@
     z-index: auto;
     line-height: 1.3;
     width: 100%;
+    transition: color .25s ease, font-weight .25s ease;
   }
   /* Hide the title that remains inside the card (will be removed via HTML) */
   .svp-card-logo-type .svp-card-title { display: none; }
-  /* No border/bg on selected state for logo cards — just scale the image */
+
+  /* Selected state — highlight the icon itself instead of a tick badge */
   .svp-card-logo-type.svp-card--selected {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
   }
+  .svp-card-logo-type.svp-card--selected .svp-card-logo-wrap {
+    background: rgba(255,92,0,.1);
+    border-color: var(--svp-accent, #ff5c00);
+    box-shadow: 0 0 0 4px rgba(255,92,0,.12), 0 8px 20px rgba(255,92,0,.25);
+  }
   .svp-card-logo-type.svp-card--selected .svp-card-logo-wrap img {
-    transform: scale(1.12);
-    filter: drop-shadow(0 6px 18px rgba(255,92,0,.45));
+    transform: scale(1.08);
+    filter: drop-shadow(0 6px 14px rgba(255,92,0,.4));
+  }
+  .svp-card-logo-type.svp-card--selected .svp-card-title {
+    color: #ff5c00;
+    font-weight: 700;
+  }
+  .svp-cat-body-advertising .svp-card-logo-type.svp-card--selected .svp-card-logo-wrap {
+    background: rgba(43,127,189,.1);
+    border-color: #2b7fbd;
+    box-shadow: 0 0 0 4px rgba(43,127,189,.12), 0 8px 20px rgba(43,127,189,.25);
+  }
+  .svp-cat-body-advertising .svp-card-logo-type.svp-card--selected .svp-card-logo-wrap img {
+    filter: drop-shadow(0 6px 14px rgba(43,127,189,.4));
+  }
+  .svp-cat-body-advertising .svp-card-logo-type.svp-card--selected .svp-card-title {
+    color: #2b7fbd;
   }
 
   @media (max-width: 1100px) { .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -1028,6 +1067,22 @@
     .svp-logo-card-wrapper { max-width: 86px; margin: 0 auto; gap: 6px; }
     .svp-card-logo-wrap img { padding: 10px; }
     .svp-logo-card-wrapper .svp-card-title { font-size: 10.5px; }
+
+    /* The circular tick badge is too large for small mobile icons — hide it here only */
+    .svp-card-logo-type .svp-card-check { display: none !important; }
+
+    /* Replacement feedback: highlight the icon itself the moment it's tapped */
+    .svp-card-logo-type:active .svp-card-logo-wrap {
+      background: rgba(255,92,0,.14);
+      border-color: rgba(255,92,0,.55);
+      box-shadow: 0 0 0 4px rgba(255,92,0,.12);
+      transform: scale(0.96);
+    }
+    .svp-cat-body-advertising .svp-card-logo-type:active .svp-card-logo-wrap {
+      background: rgba(43,127,189,.14);
+      border-color: rgba(43,127,189,.55);
+      box-shadow: 0 0 0 4px rgba(43,127,189,.12);
+    }
   }
   @media (max-width: 480px) {
     .svp-cat-header { padding: 14px 16px; }

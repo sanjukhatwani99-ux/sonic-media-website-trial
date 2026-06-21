@@ -3986,6 +3986,17 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   .contact-method:active { border-color: rgba(255,92,0,0.3) !important; background: rgba(255,92,0,0.04) !important; }
   .mob-svc-card-inner-wrap:active { border-color: rgba(255,255,255,0.12) !important; }
   .fsoc:active { background: var(--orange) !important; border-color: var(--orange) !important; color: #fff !important; }
+  .svp-card-logo-type:active .svp-card-logo-wrap {
+    background: rgba(255,92,0,.14) !important;
+    border-color: rgba(255,92,0,.55) !important;
+    box-shadow: 0 0 0 4px rgba(255,92,0,.12) !important;
+  }
+  .svp-card-logo-type:active .svp-card-logo-wrap img { transform: scale(1.08) !important; }
+  .svp-cat-body-advertising .svp-card-logo-type:active .svp-card-logo-wrap {
+    background: rgba(43,127,189,.14) !important;
+    border-color: rgba(43,127,189,.55) !important;
+    box-shadow: 0 0 0 4px rgba(43,127,189,.12) !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════
