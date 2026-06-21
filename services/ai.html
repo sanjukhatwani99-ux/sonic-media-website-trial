@@ -979,14 +979,47 @@
     .ai-vw-play svg { width: 15px; height: 15px; }
   }
   @media (max-width: 600px) {
-    .ai-vw-row {
-      overflow-x: auto; flex-wrap: nowrap;
-      height: 150px; gap: 8px;
-      scrollbar-width: none;
+    /* Masonry-style grid: shows the first 8 videos in mixed aspect-ratio tiles.
+       Remaining videos stay in the markup (for tablet/desktop) but are hidden here. */
+    .ai-vw-rows {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 76px;
+      grid-auto-flow: dense;
+      gap: 8px;
+      padding: 0 16px;
     }
-    .ai-vw-row::-webkit-scrollbar { display: none; }
-    .ai-vw-cell { min-width: 190px; border-radius: 10px; }
-    .ai-vw-rows { padding: 0 16px; gap: 8px; }
+    .ai-vw-row { display: contents; }
+    .ai-vw-cell {
+      width: 100%; height: 100%;
+      min-width: 0; flex-shrink: initial;
+      border-radius: 10px;
+    }
+    .ai-vw-cell video { border-radius: 10px; }
+    .ai-vw-cell-overlay { border-radius: 10px; padding: 10px 12px; }
+    .ai-vw-cell::before { border-radius: 0 0 10px 10px; height: 40px; }
+
+    /* Hide everything beyond the first 8 videos (row3 fully, row2 tail) */
+    .ai-vw-row:nth-of-type(n+3),
+    .ai-vw-row:nth-of-type(2) .ai-vw-cell:nth-child(n+4) {
+      display: none;
+    }
+
+    /* First 8 visible cells: mixed spans for a masonry feel */
+    .ai-vw-row:nth-of-type(1) .ai-vw-cell:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .ai-vw-row:nth-of-type(1) .ai-vw-cell:nth-child(2) { grid-column: span 1; grid-row: span 3; }
+    .ai-vw-row:nth-of-type(1) .ai-vw-cell:nth-child(3) { grid-column: span 1; grid-row: span 1; }
+    .ai-vw-row:nth-of-type(1) .ai-vw-cell:nth-child(4) { grid-column: span 1; grid-row: span 2; }
+    .ai-vw-row:nth-of-type(1) .ai-vw-cell:nth-child(5) { grid-column: span 2; grid-row: span 1; }
+    .ai-vw-row:nth-of-type(2) .ai-vw-cell:nth-child(1) { grid-column: span 1; grid-row: span 2; }
+    .ai-vw-row:nth-of-type(2) .ai-vw-cell:nth-child(2) { grid-column: span 1; grid-row: span 1; }
+    .ai-vw-row:nth-of-type(2) .ai-vw-cell:nth-child(3) { grid-column: span 1; grid-row: span 2; }
+  }
+
+  /* Extra-narrow phones: tighten row unit & spacing, keep same 8-video grid */
+  @media (max-width: 359px) {
+    .ai-vw-rows { grid-auto-rows: 64px; gap: 6px; padding: 0 12px; }
+    .ai-vw-cell { border-radius: 8px; }
   }
   </style>
 
@@ -996,28 +1029,28 @@
 
     <!-- ROW 1 — (16:9 | 9:16 | 4:3 | 1:1 | 21:9) -->
     <div class="ai-vw-row">
-      <div class="ai-vw-cell" style="flex:2.667;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="16/9" style="flex:2.667;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Runway Gen-3</div><div class="ai-vw-cell-label">Generative Brand Film</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:0.5625;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="9/16" style="flex:0.5625;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Reel</div><div class="ai-vw-cell-label">AI Reel</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:1.333;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="4/3" style="flex:1.333;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Midjourney</div><div class="ai-vw-cell-label">AI Product Visual</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:1;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="1/1" style="flex:1;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Square</div><div class="ai-vw-cell-label">Social Post</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:2.333;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="21/9" style="flex:2.333;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Cinematic 21:9</div><div class="ai-vw-cell-label">AI Brand Campaign</div></div></div>
       </div>
@@ -1025,33 +1058,33 @@
 
     <!-- ROW 2 — (1:1 | 4:3 | 16:9 | 9:16 | 4:3 | 1:1) -->
     <div class="ai-vw-row">
-      <div class="ai-vw-cell" style="flex:1;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="1/1" style="flex:1;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">DALL·E</div><div class="ai-vw-cell-label">AI Art Direction</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:1.333;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="4/3" style="flex:1.333;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Adobe Firefly</div><div class="ai-vw-cell-label">Generative Fill</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:2.667;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="16/9" style="flex:2.667;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Runway</div><div class="ai-vw-cell-label">AI Video Edit</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:0.5625;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="9/16" style="flex:0.5625;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">TikTok</div><div class="ai-vw-cell-label">Short-Form Reel</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:1.333;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="4/3" style="flex:1.333;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Kling AI</div><div class="ai-vw-cell-label">Motion Graphics</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:1;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="1/1" style="flex:1;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Stable Diffusion</div><div class="ai-vw-cell-label">Brand Identity</div></div></div>
       </div>
@@ -1059,28 +1092,28 @@
 
     <!-- ROW 3 — (21:9 | 9:16 | 1:1 | 4:3 | 16:9) -->
     <div class="ai-vw-row">
-      <div class="ai-vw-cell" style="flex:2.333;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="21/9" style="flex:2.333;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Sora</div><div class="ai-vw-cell-label">AI Cinematic Scene</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:0.5625;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="9/16" style="flex:0.5625;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Stories</div><div class="ai-vw-cell-label">Story Content</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:1;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="1/1" style="flex:1;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">CapCut AI</div><div class="ai-vw-cell-label">Auto-Edited Reel</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:1.333;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="4/3" style="flex:1.333;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">ElevenLabs</div><div class="ai-vw-cell-label">AI Voiceover Video</div></div></div>
       </div>
-      <div class="ai-vw-cell" style="flex:2.667;">
-        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+      <div class="ai-vw-cell" data-ratio="16/9" style="flex:2.667;">
+        <video muted loop playsinline preload="metadata"><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Descript</div><div class="ai-vw-cell-label">AI Ad Creative</div></div></div>
       </div>
@@ -1090,41 +1123,146 @@
   </section>
   <!-- ═══ END VIDEO WALL ═══ -->
 
+  <style>
+  /* ── Lightbox — fullscreen viewer, scales to the video's true aspect ratio ── */
+  .ai-vw-lightbox {
+    position: fixed; inset: 0; z-index: 9999;
+    display: none; align-items: center; justify-content: center;
+    width: 100vw; height: 100vh; height: 100dvh;
+  }
+  .ai-vw-lightbox.is-active { display: flex; }
+  .ai-vw-lightbox-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(4,5,8,.95);
+    backdrop-filter: blur(10px);
+  }
+  /* Frame fills the screen; video inside is letterboxed by object-fit:contain
+     so it always shows the FULL frame, scaled to fit, no crop/distortion. */
+  .ai-vw-lightbox-frame {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: clamp(10px, 3vw, 40px);
+    box-sizing: border-box;
+  }
+  .ai-vw-lightbox-video {
+    display: block;
+    /* Intrinsic sizing: the browser uses the video's real width/height
+       (whatever ratio it is) and scales it down to fit inside the frame,
+       capped by max-width/max-height. Only one axis ever ends up
+       constraining, the other is derived automatically — so the box
+       itself (not just the pixels) always matches the true aspect
+       ratio. No cropping, no stretching, and it always fills as much
+       of the screen as the ratio allows. */
+    width: auto; height: auto;
+    max-width: 100%; max-height: 100%;
+    border-radius: 12px;
+    background: #000;
+    box-shadow: 0 24px 90px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.06);
+    object-fit: contain;
+    animation: ai-vw-lightbox-in .28s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes ai-vw-lightbox-in {
+    from { opacity: 0; transform: scale(.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .ai-vw-lightbox-close {
+    position: fixed; top: 18px; right: 20px; z-index: 2;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,.08);
+    border: 1.5px solid rgba(255,255,255,.18);
+    color: #fff; font-size: 20px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background .2s, border-color .2s, transform .2s;
+  }
+  .ai-vw-lightbox-close:hover {
+    background: rgba(255,92,0,.55); border-color: rgba(255,92,0,.8);
+    transform: rotate(90deg);
+  }
+  .ai-vw-lightbox-caption {
+    position: fixed; left: 20px; bottom: 16px; z-index: 2;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(255,255,255,.55);
+    pointer-events: none;
+  }
+  .ai-vw-lightbox-caption span { color: #ff5c00; }
+  @media (max-width: 600px) {
+    .ai-vw-lightbox-close { top: 12px; right: 12px; width: 34px; height: 34px; font-size: 17px; }
+    .ai-vw-lightbox-caption { left: 14px; bottom: 12px; font-size: 9.5px; }
+  }
+  </style>
+
+  <div class="ai-vw-lightbox" id="aiVwLightbox" aria-hidden="true">
+    <div class="ai-vw-lightbox-backdrop" data-ai-vw-close></div>
+    <button type="button" class="ai-vw-lightbox-close" data-ai-vw-close aria-label="Close video">&times;</button>
+    <div class="ai-vw-lightbox-frame" data-ai-vw-close>
+      <video class="ai-vw-lightbox-video" playsinline controls></video>
+    </div>
+    <div class="ai-vw-lightbox-caption"><span id="aiVwLbTag"></span> &nbsp;&middot;&nbsp; <span id="aiVwLbLabel"></span></div>
+  </div>
+
   <script>
-  /* Video Wall — manual play only (no autoplay).
-     Clicking a cell plays its video; clicking again pauses it.
-     Playing a video pauses any other currently-playing video. */
+  /* Video Wall — cells act as static thumbnails only (no inline playback).
+     Clicking any cell opens a fullscreen lightbox. The video element uses
+     object-fit:contain inside a full-viewport frame, so whatever the clip's
+     real aspect ratio is (16:9, 9:16, 1:1, 21:9, etc.) it scales to the
+     largest size that fits the screen with no cropping or stretching. */
   (function() {
     function initVideoWall() {
       var cells = document.querySelectorAll('.ai-vw-cell');
       if (!cells.length) return;
+
+      var lightbox = document.getElementById('aiVwLightbox');
+      var lbVideo  = lightbox.querySelector('.ai-vw-lightbox-video');
+      var lbTag    = document.getElementById('aiVwLbTag');
+      var lbLabel  = document.getElementById('aiVwLbLabel');
+      var lastFocused = null;
+
       cells.forEach(function(cell) {
         var video = cell.querySelector('video');
-        var playBtn = cell.querySelector('.ai-vw-play');
         if (!video) return;
         video.removeAttribute('autoplay');
         video.pause();
 
-        function togglePlay(e) {
-          if (e) e.stopPropagation();
-          if (video.paused) {
-            cells.forEach(function(other) {
-              var ov = other.querySelector('video');
-              if (ov && ov !== video) {
-                ov.pause();
-                other.classList.remove('is-playing');
-              }
-            });
-            video.play();
-            cell.classList.add('is-playing');
-          } else {
-            video.pause();
-            cell.classList.remove('is-playing');
-          }
-        }
+        cell.addEventListener('click', function() {
+          var source = video.querySelector('source');
+          var tag    = cell.querySelector('.ai-vw-cell-tag');
+          var label  = cell.querySelector('.ai-vw-cell-label');
 
-        cell.addEventListener('click', togglePlay);
-        if (playBtn) playBtn.addEventListener('click', togglePlay);
+          lastFocused = document.activeElement;
+          lbVideo.pause();
+          lbVideo.src = source ? source.getAttribute('src') : video.currentSrc;
+          lbTag.textContent = tag ? tag.textContent : '';
+          lbLabel.textContent = label ? label.textContent : '';
+
+          lightbox.classList.add('is-active');
+          lightbox.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+
+          lbVideo.currentTime = 0;
+          var playPromise = lbVideo.play();
+          if (playPromise && playPromise.catch) playPromise.catch(function(){});
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('is-active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        lbVideo.pause();
+        lbVideo.removeAttribute('src');
+        lbVideo.load();
+        if (lastFocused && lastFocused.focus) lastFocused.focus();
+      }
+
+      lightbox.querySelectorAll('[data-ai-vw-close]').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+          if (e.target === el) closeLightbox();
+        });
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('is-active')) closeLightbox();
       });
     }
     if (document.readyState === 'loading') {
@@ -1599,7 +1737,7 @@
     .app-caps-deliv-strip-right { gap: 8px; }
     .app-caps-deliv-strip-pill { padding: 6px 12px; font-size: 10px; }
   }
-  @media (max-width: 380px) {
+  @media (max-width: 359px) {
     .app-caps-deliv-grid { grid-template-columns: 1fr; }
     .app-caps-deliv-card { grid-template-columns: auto 1fr; }
   }

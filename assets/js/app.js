@@ -3840,3 +3840,112 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
     initVideoLoops();
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════════
+   MEET THE CO-FOUNDERS — Cinematic GSAP ScrollTrigger sequence
+   Two full-screen (100vh) panels. Each photo slides in from off-
+   screen (left panel's image from the left, right panel's image
+   from the right), while copy fades + rises into place. A slow
+   parallax drift continues on the photo for the remainder of the
+   panel's scroll life. Respects prefers-reduced-motion.
+═══════════════════════════════════════════════════════════════ */
+(function initFoundersCinematic() {
+  function boot() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      setTimeout(boot, 80);
+      return;
+    }
+    var section = document.getElementById('foundersCinematic');
+    if (!section) return; // not on this page
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Kill any stale instances from a prior init (e.g. hot nav / resize rebuild)
+    ScrollTrigger.getAll().forEach(function (st) {
+      if (st.vars && st.vars.id && st.vars.id.indexOf('fc-') === 0) st.kill();
+    });
+
+    var panels = section.querySelectorAll('.fc-panel');
+
+    panels.forEach(function (panel, i) {
+      var media = panel.querySelector('.fc-media');
+      var copy  = panel.querySelector('.fc-copy');
+      var index = panel.querySelector('.fc-index');
+      var role  = panel.querySelector('.fc-role');
+      var name  = panel.querySelector('.fc-name');
+      var bio   = panel.querySelector('.fc-bio');
+      var glow  = panel.querySelector('.fc-glow');
+      var fromLeft = media.classList.contains('fc-media-left');
+
+      if (reduceMotion) {
+        gsap.set([media, copy], { clearProps: 'all' });
+        return;
+      }
+
+      // ── Entrance timeline: plays once as the panel arrives ──
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          id: 'fc-enter-' + i,
+          trigger: panel,
+          start: 'top 75%',
+          end: 'top 20%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+
+      tl.fromTo(media,
+        { xPercent: fromLeft ? -120 : 120, opacity: 0, scale: 1.04 },
+        { xPercent: 0, opacity: 1, scale: 1, duration: 1.3, ease: 'power4.out' },
+        0
+      );
+
+      if (glow) {
+        tl.fromTo(glow, { opacity: 0 }, { opacity: 1, duration: 1.6, ease: 'power2.out' }, 0.1);
+      }
+
+      [index, role, name, bio].forEach(function (el, idx) {
+        if (!el) return;
+        tl.fromTo(el,
+          { y: 46, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+          0.18 + idx * 0.1
+        );
+      });
+
+      // ── Slow continuous parallax while the panel is in view ──
+      gsap.to(media, {
+        yPercent: -6,
+        ease: 'none',
+        scrollTrigger: {
+          id: 'fc-parallax-' + i,
+          trigger: panel,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      gsap.to(copy, {
+        yPercent: 4,
+        ease: 'none',
+        scrollTrigger: {
+          id: 'fc-parallax-copy-' + i,
+          trigger: panel,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    });
+
+    ScrollTrigger.refresh();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { setTimeout(boot, 150); });
+  } else {
+    setTimeout(boot, 150);
+  }
+})();
