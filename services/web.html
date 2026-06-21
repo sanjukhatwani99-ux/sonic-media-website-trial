@@ -3482,7 +3482,7 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
   /* Tablet portrait — drop to 1 column so each card gets full width to breathe */
   @media (max-width: 860px) {
     .wsv-live-row { grid-template-columns: 1fr; gap: 26px; min-height: auto; padding: 28px 0; }
-    .wsv-lcard-viewport { aspect-ratio: 16 / 10; }
+    /* aspect-ratio stays 16:9 — keeps showing the full desktop layout, not a cropped mobile sliver */
   }
 
   /* Phones */
@@ -3494,7 +3494,6 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
     .wsv-lcard-meta { display: none; }
     .wsv-lcard-url { font-size: 10.5px; padding: 5px 10px; }
     .wsv-lcard-bar { padding: 9px 10px 9px 14px; gap: 8px; }
-    .wsv-lcard-viewport { aspect-ratio: 4 / 3; }
     .wsv-lcard-footer { padding: 9px 14px; }
     .wsv-lcard-type { font-size: 10px; }
   }
@@ -3507,7 +3506,6 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
     .wsv-lcard-title-badge { font-size: 10px; padding: 3px 8px; }
     .wsv-lcard-url { font-size: 10px; }
     .wsv-lcard-maximize { width: 26px; height: 26px; }
-    .wsv-lcard-viewport { aspect-ratio: 1 / 1; }
     .wsv-lcard-visit-btn { font-size: 12px; padding: 8px 14px; }
   }
 
