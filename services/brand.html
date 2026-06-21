@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Branding & Creative Design — The Sonic Media</title>
+<title>Branding & Advertising Solutions — The Sonic Media</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -2096,7 +2096,7 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
         <a href="#" onclick="navigate('svc-inf');return false;"><span class="drop-icon">🤝</span>Influencer Marketing</a>
         <a href="#" onclick="navigate('svc-ecom');return false;"><span class="drop-icon">🛒</span>E-Commerce Marketing</a>
         <a href="#" onclick="navigate('svc-content');return false;"><span class="drop-icon">🎬</span>Content Production & Photo/Videography</a>
-        <a href="#" onclick="navigate('svc-brand');return false;"><span class="drop-icon">🎨</span>Branding & Creative Design</a>
+        <a href="#" onclick="navigate('svc-brand');return false;"><span class="drop-icon">🎨</span>Branding & Advertising Solutions</a>
         <a href="#" onclick="navigate('svc-ai');return false;"><span class="drop-icon">🤖</span>AI Doodling/Editing</a>
       </div>
     </li>
@@ -2176,7 +2176,7 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
           <span class="mob-svc-item-icon">🎬</span> Content Production
         </button>
         <button class="mob-svc-item" onclick="navigate('svc-brand');closeMob()">
-          <span class="mob-svc-item-icon">🎨</span> Branding & Creative Design
+          <span class="mob-svc-item-icon">🎨</span> Branding & Advertising Solutions
         </button>
         <button class="mob-svc-item" onclick="navigate('svc-ai');closeMob()">
           <span class="mob-svc-item-icon">🤖</span> AI Doodling / Editing
@@ -2948,7 +2948,7 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
     .svp-master-layout { grid-template-columns: 1fr 300px; }
     /* Advertising & Brand Visibility: 8 boxes, 2 per row */
     .svp-grid { grid-template-columns: repeat(2, 1fr); }
-    /* Branding & Creative Design: 8 icons, 4 per row — shrink the icon cards so 4 fit cleanly */
+    /* Branding & Advertising Solutions: 8 icons, 4 per row — shrink the icon cards so 4 fit cleanly */
     .svp-cat-body-branding { padding: 14px; }
     .svp-cat-body-branding .svp-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
     .svp-cat-body-branding .svp-card-icon-type { padding: 14px 8px 8px; }
@@ -2974,7 +2974,7 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
     .svp-cat-header { padding: 14px 16px; }
     /* Advertising & Brand Visibility: keep 2 per row (was collapsing to 1 per row) */
     .svp-grid { grid-template-columns: repeat(2, 1fr); }
-    /* Branding & Creative Design: stay at 4 per row, sized down further for phones */
+    /* Branding & Advertising Solutions: stay at 4 per row, sized down further for phones */
     .svp-cat-body-branding { padding: 10px; }
     .svp-cat-body-branding .svp-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
     .svp-cat-body-branding .svp-card-icon-type { padding: 10px 5px 6px; }
@@ -3029,7 +3029,7 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
             <div class="svp-cat-icon">🎨</div>
             <div>
               <div class="svp-cat-label">Identity & Design</div>
-              <h3 class="svp-cat-title">Branding & Creative Design</h3>
+              <h3 class="svp-cat-title">Branding & Advertising Solutions</h3>
             </div>
           </div>
           <div class="svp-cat-body svp-cat-body-branding">
@@ -4068,7 +4068,7 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
               </select>
             </div>
           </div>
-          <input type="hidden" name="service" value="Branding & Creative Design">
+          <input type="hidden" name="service" value="Branding & Advertising Solutions">
           <button class="wsv-pf-btn" type="button" onclick="wsvSubmitProposalBrand()">
             Get My Proposal →
           </button>
@@ -4340,8 +4340,8 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
     var industryText = document.getElementById('pfBrandIndustry').options[document.getElementById('pfBrandIndustry').selectedIndex].text;
     var budgetText   = document.getElementById('pfBrandBudget').options[document.getElementById('pfBrandBudget').selectedIndex].text;
 
-    var body = '🎨 New Branding & Creative Design Request\n\n'
-      + 'Service: Branding & Creative Design\n'
+    var body = '🎨 New Branding & Advertising Solutions Request\n\n'
+      + 'Service: Branding & Advertising Solutions\n'
       + 'Type: ' + type + '\n'
       + 'Company Name: ' + company + '\n'
       + 'Industry: ' + industryText + '\n'
@@ -4356,7 +4356,7 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           access_key: '66f90d59-83e7-4136-8823-1bfeb38deb41',
-          subject: 'New Branding & Creative Design Request – ' + name,
+          subject: 'New Branding & Advertising Solutions Request – ' + name,
           from_name: name,
           email: email,
           message: body

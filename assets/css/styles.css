@@ -3226,22 +3226,22 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
     letter-spacing: 0.06em !important;
   }
   .mob-nav-link {
-    padding: 16px 22px !important;
-    font-size: 15px !important;
+    padding: 13px 22px !important;
+    font-size: 11.5px !important;
     letter-spacing: 0.05em !important;
     border-radius: 0 !important;
   }
   .mob-nav-link-arrow {
-    font-size: 13px !important;
+    font-size: 11px !important;
     opacity: 0.5;
   }
   .mob-services-toggle {
-    padding: 16px 22px !important;
-    font-size: 15px !important;
+    padding: 13px 22px !important;
+    font-size: 11.5px !important;
   }
   .mob-svc-item {
-    padding: 13px 24px 13px 32px !important;
-    font-size: 13px !important;
+    padding: 11px 24px 11px 32px !important;
+    font-size: 11px !important;
   }
   .mob-nav-cta {
     margin: 16px 20px 12px !important;

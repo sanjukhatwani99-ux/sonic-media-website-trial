@@ -89,7 +89,7 @@ function navigate(page) {
     a.classList.toggle('active-link', a.dataset.page === page);
   });
   // Update title
-  const titles = {home:'The Sonic Media — Premium Digital Marketing Agency',about:'About Us — The Sonic Media',services:'Services — The Sonic Media',studio:'Portfolio — The Sonic Media',casestudies:'Case Studies — The Sonic Media',journal:'Journal — The Sonic Media',future:'Future Vision — The Sonic Media',faq:'FAQ — The Sonic Media',contact:'Contact — The Sonic Media','svc-web':'Website Development — The Sonic Media','svc-app':'Mobile App Development — The Sonic Media','svc-seo':'SEO — The Sonic Media','svc-smm':'Social Media Management — The Sonic Media','svc-perf':'Performance Marketing — The Sonic Media','svc-inf':'Influencer Marketing — The Sonic Media','svc-ecom':'E-Commerce Marketing — The Sonic Media','svc-content':'Content Production — The Sonic Media','svc-brand':'Branding & Creative Design — The Sonic Media','svc-ai':'AI Doodling/Editing — The Sonic Media'};
+  const titles = {home:'The Sonic Media — Premium Digital Marketing Agency',about:'About Us — The Sonic Media',services:'Services — The Sonic Media',studio:'Portfolio — The Sonic Media',casestudies:'Case Studies — The Sonic Media',journal:'Journal — The Sonic Media',future:'Future Vision — The Sonic Media',faq:'FAQ — The Sonic Media',contact:'Contact — The Sonic Media','svc-web':'Website Development — The Sonic Media','svc-app':'Mobile App Development — The Sonic Media','svc-seo':'SEO — The Sonic Media','svc-smm':'Social Media Management — The Sonic Media','svc-perf':'Performance Marketing — The Sonic Media','svc-inf':'Influencer Marketing — The Sonic Media','svc-ecom':'E-Commerce Marketing — The Sonic Media','svc-content':'Content Production — The Sonic Media','svc-brand':'Branding & Advertising Solutions — The Sonic Media','svc-ai':'AI Doodling/Editing — The Sonic Media'};
   document.title = titles[page] || titles.home;
   // Re-init observers for new page
   setTimeout(initReveal, 50);
@@ -740,7 +740,7 @@ const workDetails = {
   nexahealth: {
     title: 'Spice Theory Kitchen',
     subtitle: 'Restaurant Menu & Packaging Design',
-    category: 'Branding & Creative Design',
+    category: 'Branding & Advertising Solutions',
     type: ' Branding Project',
     status: 'Completed',
     location: 'Ahmedabad, Gujarat',
@@ -750,7 +750,7 @@ const workDetails = {
     about: 'Spice Theory Kitchen is a modern food brand focused on premium Indian fusion meals and takeaway services.',
     challenge: 'The brand needed visually appealing menus and packaging that felt premium while maintaining readability and strong brand consistency.',
     solution: 'Designed a complete  branding system including menu layouts, takeaway packaging, and promotional print materials aligned with the restaurant\'s modern identity.',
-    tags: ['Branding & Creative Design', 'Packaging Design', 'Print Design', 'Typography', 'Food Industry'],
+    tags: ['Branding & Advertising Solutions', 'Packaging Design', 'Print Design', 'Typography', 'Food Industry'],
     deliverables: [
       'Menu card design',
       'Food packaging design',
@@ -798,7 +798,7 @@ const workDetails = {
   ahmdstartup: {
     title: 'Ahmedabad Startup Connect',
     subtitle: 'Event Branding & Promotional Design',
-    category: 'Event Branding & Creative Design',
+    category: 'Event Branding & Advertising Solutions',
     type: 'Event Branding Project',
     status: 'Completed',
     location: 'Ahmedabad, Gujarat',
@@ -1765,7 +1765,7 @@ const PAGE_DATA = {
       {
         id: 'nexahealth',
         num: '04',
-        cat: 'Branding & Creative Design',
+        cat: 'Branding & Advertising Solutions',
         name: 'Spice Theory Kitchen — Restaurant Menu & Packaging Design',
         tags: ['Menu Design', 'Packaging', 'Print Design'],
         img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80',
@@ -2176,7 +2176,7 @@ const SVC_CARDS_DATA = [
   { img: 'https://res.cloudinary.com/dq2nrpky0/image/upload/v1779741221/IM_pev5ba.jpg', cat: '06 · Influencer',     title: 'Influencer Marketing',         page: 'svc-inf'     },
   { img: 'https://res.cloudinary.com/dq2nrpky0/image/upload/v1779741212/EM_ptuofv.jpg', cat: '07 · E-Commerce',     title: 'E-Commerce Marketing',         page: 'svc-ecom'    },
   { img: 'https://res.cloudinary.com/dq2nrpky0/image/upload/v1779741212/PV_twlw1w.jpg', cat: '08 · Content',     title: 'Content Production',           page: 'svc-content' },
-  { img: 'https://res.cloudinary.com/dq2nrpky0/image/upload/v1779741210/BD_djg0wp.jpg', cat: '09 · Branding',       title: 'Branding & Creative Design',   page: 'svc-brand'   },
+  { img: 'https://res.cloudinary.com/dq2nrpky0/image/upload/v1779741210/BD_djg0wp.jpg', cat: '09 · Branding',       title: 'Branding & Advertising Solutions',   page: 'svc-brand'   },
   { img: 'https://res.cloudinary.com/dq2nrpky0/image/upload/v1779741213/AI_d2vdpn.jpg', cat: '10 · AI',          title: 'AI Doodling / Editing',        page: 'svc-ai'      },
 ];
 
@@ -3775,18 +3775,104 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
    GSAP manages the element. Force a restart on 'ended'.
 ═══════════════════════════════════════════════════ */
 (function fixMobileVideoLoop() {
+  /**
+   * Attempts to play a video and handles Low Power Mode / autoplay restrictions
+   * gracefully by showing a poster-frame fallback with a tap-to-play overlay.
+   *
+   * Strategy:
+   *  1. Try autoplay as normal (works on most browsers/conditions).
+   *  2. If the play() promise rejects (Low Power Mode, aggressive autoplay
+   *     policy, etc.), show a lightweight tap-to-play UI anchored to the video.
+   *  3. On first user tap anywhere on the page, attempt playback again — this
+   *     satisfies the "user gesture" requirement that Low Power Mode enforces.
+   *  4. Keep the loop/ended fallback for browsers that ignore the `loop` attr.
+   */
   function ensureLoop(videoEl) {
     if (!videoEl) return;
+
+    // Force-restart when the 'loop' attribute is silently ignored
     videoEl.addEventListener('ended', function() {
       videoEl.currentTime = 0;
       videoEl.play().catch(function(){});
     });
-    // Resume play after tab becomes visible again
+
+    // Resume after tab becomes visible again
     document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'visible' && videoEl.paused) {
         videoEl.play().catch(function(){});
       }
     });
+
+    // --- Low Power Mode graceful fallback ---
+    var playPromise = videoEl.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(function(err) {
+        // Only handle NotAllowedError (autoplay blocked) — rethrow others
+        if (err && err.name !== 'NotAllowedError') return;
+
+        // Ensure the video has a poster so something meaningful is shown
+        if (!videoEl.hasAttribute('poster') && videoEl.dataset.poster) {
+          videoEl.setAttribute('poster', videoEl.dataset.poster);
+        }
+
+        // Inject a subtle tap-to-play overlay if one doesn't already exist
+        var wrapper = videoEl.parentElement;
+        if (wrapper && !wrapper.querySelector('.tsm-tap-to-play')) {
+          var overlay = document.createElement('button');
+          overlay.className = 'tsm-tap-to-play';
+          overlay.setAttribute('aria-label', 'Tap to play video');
+          overlay.innerHTML =
+            '<span class="tsm-ttp-circle">' +
+              '<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+                '<circle cx="14" cy="14" r="14" fill="rgba(255,92,0,0.85)"/>' +
+                '<polygon points="11,8 22,14 11,20" fill="#fff"/>' +
+              '</svg>' +
+            '</span>';
+
+          // Position relative to wrapper
+          var wPos = getComputedStyle(wrapper).position;
+          if (wPos === 'static') { wrapper.style.position = 'relative'; }
+
+          Object.assign(overlay.style, {
+            position: 'absolute',
+            inset: '0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(0,0,0,0.25)',
+            border: 'none',
+            cursor: 'pointer',
+            zIndex: '10',
+            backdropFilter: 'blur(2px)',
+            WebkitBackdropFilter: 'blur(2px)',
+            transition: 'opacity 0.3s'
+          });
+
+          function dismissOverlay() {
+            videoEl.play().then(function() {
+              overlay.style.opacity = '0';
+              setTimeout(function() {
+                if (overlay.parentNode) { overlay.parentNode.removeChild(overlay); }
+              }, 300);
+            }).catch(function(){});
+          }
+
+          overlay.addEventListener('click', dismissOverlay);
+
+          // Also attempt resume on any user gesture on the page (first touch/click)
+          function onFirstGesture() {
+            document.removeEventListener('touchstart', onFirstGesture, { once: true });
+            document.removeEventListener('click',      onFirstGesture, { once: true });
+            if (videoEl.paused) { dismissOverlay(); }
+          }
+          document.addEventListener('touchstart', onFirstGesture, { once: true, passive: true });
+          document.addEventListener('click',      onFirstGesture, { once: true });
+
+          wrapper.appendChild(overlay);
+        }
+      });
+    }
+    // --- end Low Power Mode fallback ---
   }
 
   function initVideoLoops() {
@@ -3796,6 +3882,9 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
     ensureLoop(document.getElementById('ab-tsm-vid'));
     // Also cover the home thought-vessel video
     ensureLoop(document.getElementById('tsm-vid'));
+    // Hero mobile background videos (inline autoplay, no id — select by class)
+    var heroBgVideos = document.querySelectorAll('.hero-mobile-bg video');
+    heroBgVideos.forEach(function(v) { ensureLoop(v); });
   }
 
   if (document.readyState === 'loading') {
