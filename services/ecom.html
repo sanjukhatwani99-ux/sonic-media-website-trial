@@ -1059,14 +1059,14 @@
     color: #2b7fbd;
   }
 
-  @media (max-width: 1100px) { .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 1100px) { .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(5, 1fr); } }
   @media (max-width: 640px) {
     .svp-cat-header { padding: 16px 18px; }
-    .svp-cat-body { padding: 16px; }
-    .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .svp-logo-card-wrapper { max-width: 86px; margin: 0 auto; gap: 6px; }
-    .svp-card-logo-wrap img { padding: 10px; }
-    .svp-logo-card-wrapper .svp-card-title { font-size: 10.5px; }
+    .svp-cat-body { padding: 14px; }
+    .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .svp-logo-card-wrapper { max-width: 60px; margin: 0 auto; gap: 5px; }
+    .svp-card-logo-wrap img { padding: 7px; }
+    .svp-logo-card-wrapper .svp-card-title { font-size: 8.5px; line-height: 1.2; }
 
     /* The circular tick badge is too large for small mobile icons — hide it here only */
     .svp-card-logo-type .svp-card-check { display: none !important; }
@@ -1086,19 +1086,21 @@
   }
   @media (max-width: 480px) {
     .svp-cat-header { padding: 14px 16px; }
-    .svp-cat-body { padding: 12px; }
-    .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .svp-logo-card-wrapper { max-width: 74px; gap: 5px; }
-    .svp-card-logo-wrap img { padding: 9px; }
-    .svp-logo-card-wrapper .svp-card-title { font-size: 9.5px; }
+    .svp-cat-body { padding: 11px; }
+    .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .svp-logo-card-wrapper { max-width: 52px; gap: 4px; }
+    .svp-card-logo-wrap img { padding: 6px; }
+    .svp-logo-card-wrapper .svp-card-title { font-size: 7.5px; line-height: 1.15; }
   }
   @media (max-width: 390px) {
-    .svp-cat-body { padding: 10px; }
-    .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-    .svp-logo-card-wrapper { max-width: 64px; gap: 4px; }
-    .svp-card-logo-wrap img { padding: 8px; }
-    .svp-logo-card-wrapper .svp-card-title { font-size: 9px; line-height: 1.2; }
+    .svp-cat-body { padding: 8px; }
+    .svp-cat-body-logos .svp-grid { grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    .svp-logo-card-wrapper { max-width: 46px; gap: 3px; }
+    .svp-card-logo-wrap img { padding: 5px; }
+    .svp-logo-card-wrapper .svp-card-title { font-size: 7px; line-height: 1.1; }
   }
+
+
 
   /* Shared title */
   .svp-card-title {
@@ -1368,19 +1370,19 @@
   @media (max-width: 1100px) {
     .svp-master-layout { grid-template-columns: 1fr 300px; }
     .svp-grid { grid-template-columns: repeat(2, 1fr); }
-    .svp-cat-body-branding .svp-grid { grid-template-columns: repeat(3, 1fr); }
+    .svp-cat-body-branding:not(.svp-cat-body-logos) .svp-grid { grid-template-columns: repeat(3, 1fr); }
   }
   @media (max-width: 860px) {
     .svp-master-layout { grid-template-columns: 1fr; }
     .svp-sticky-panel { position: static; }
     .svp-grid { grid-template-columns: repeat(2, 1fr); }
-    .svp-cat-body-branding .svp-grid { grid-template-columns: repeat(2, 1fr); }
+    .svp-cat-body-branding:not(.svp-cat-body-logos) .svp-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 540px) {
     .svp-inner { padding: 0 20px; }
     .svp-header { margin-bottom: 48px; }
     .svp-grid { grid-template-columns: 1fr; }
-    .svp-cat-body-branding .svp-grid { grid-template-columns: repeat(2, 1fr); }
+    .svp-cat-body-branding:not(.svp-cat-body-logos) .svp-grid { grid-template-columns: repeat(2, 1fr); }
   }
   </style>
 
