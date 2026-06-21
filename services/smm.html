@@ -1913,13 +1913,15 @@
       grid-template-columns: repeat(7, 1fr);
       gap: 4px;
       overflow-x: auto;
+      overflow-y: visible;
       -webkit-overflow-scrolling: touch;
+      padding-top: 16px;
       padding-bottom: 8px;
       scrollbar-width: none;
     }
     .smm-tl-track::-webkit-scrollbar { display: none; }
     .smm-tl-track::before { display: none; }
-    .smm-tl-inner { padding: 0 16px 56px; }
+    .smm-tl-inner { padding: 0 16px 56px; overflow: visible; }
     .smm-tl-node { width: 48px; height: 48px; font-size: 18px; overflow: visible; }
     .smm-tl-step-num { width: 18px; height: 18px; font-size: 8px; top: -6px; right: -3px; }
     .smm-tl-step-label { font-size: 8px; line-height: 1.3; }

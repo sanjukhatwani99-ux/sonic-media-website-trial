@@ -924,20 +924,39 @@
     border: 1px solid rgba(255,92,0,.35); padding: 3px 9px; border-radius: 100px;
   }
 
-  /* Play button */
+  /* Play button — always visible, centered */
   .ai-vw-play {
-    position: absolute; top: 14px; right: 14px;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(255,255,255,.12);
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(0,0,0,.38);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,.18);
+    border: 1.5px solid rgba(255,255,255,.55);
     display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity .3s, transform .3s;
-    transform: scale(.8);
+    opacity: 1; transition: opacity .3s, transform .3s, background .25s, border-color .25s;
+    pointer-events: none;
   }
-  .ai-vw-play svg { width: 13px; height: 13px; fill: #fff; margin-left: 2px; }
+  .ai-vw-play svg { width: 18px; height: 18px; fill: #fff; margin-left: 3px; transition: opacity .2s; }
   .ai-vw-cell:hover .ai-vw-play {
-    opacity: 1; transform: scale(1);
+    transform: translate(-50%, -50%) scale(1.08);
+    background: rgba(255,92,0,.55);
+    border-color: rgba(255,92,0,.8);
+  }
+  /* While playing: fade the play button down to a small corner pause control */
+  .ai-vw-cell.is-playing .ai-vw-play {
+    top: 14px; left: auto; right: 14px;
+    width: 36px; height: 36px;
+    transform: translate(0, 0) scale(1);
+    background: rgba(255,255,255,.12);
+    border-color: rgba(255,255,255,.18);
+    opacity: 0;
+  }
+  .ai-vw-cell.is-playing:hover .ai-vw-play,
+  .ai-vw-cell.is-playing .ai-vw-play:focus {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+    background: rgba(255,92,0,.55);
+    border-color: rgba(255,92,0,.8);
   }
 
   /* Subtle always-on dimming at bottom of card */
@@ -956,6 +975,8 @@
     .ai-vw-rows { padding: 0 20px; gap: 10px; }
     .ai-vw-row  { height: 175px; gap: 10px; }
     .ai-vw-cell { border-radius: 12px; }
+    .ai-vw-play { width: 42px; height: 42px; }
+    .ai-vw-play svg { width: 15px; height: 15px; }
   }
   @media (max-width: 600px) {
     .ai-vw-row {
@@ -976,27 +997,27 @@
     <!-- ROW 1 — (16:9 | 9:16 | 4:3 | 1:1 | 21:9) -->
     <div class="ai-vw-row">
       <div class="ai-vw-cell" style="flex:2.667;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Runway Gen-3</div><div class="ai-vw-cell-label">Generative Brand Film</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:0.5625;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Reel</div><div class="ai-vw-cell-label">AI Reel</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:1.333;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Midjourney</div><div class="ai-vw-cell-label">AI Product Visual</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:1;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Square</div><div class="ai-vw-cell-label">Social Post</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:2.333;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Cinematic 21:9</div><div class="ai-vw-cell-label">AI Brand Campaign</div></div></div>
       </div>
@@ -1005,32 +1026,32 @@
     <!-- ROW 2 — (1:1 | 4:3 | 16:9 | 9:16 | 4:3 | 1:1) -->
     <div class="ai-vw-row">
       <div class="ai-vw-cell" style="flex:1;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">DALL·E</div><div class="ai-vw-cell-label">AI Art Direction</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:1.333;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Adobe Firefly</div><div class="ai-vw-cell-label">Generative Fill</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:2.667;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Runway</div><div class="ai-vw-cell-label">AI Video Edit</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:0.5625;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">TikTok</div><div class="ai-vw-cell-label">Short-Form Reel</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:1.333;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Kling AI</div><div class="ai-vw-cell-label">Motion Graphics</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:1;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Stable Diffusion</div><div class="ai-vw-cell-label">Brand Identity</div></div></div>
       </div>
@@ -1039,27 +1060,27 @@
     <!-- ROW 3 — (21:9 | 9:16 | 1:1 | 4:3 | 16:9) -->
     <div class="ai-vw-row">
       <div class="ai-vw-cell" style="flex:2.333;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Sora</div><div class="ai-vw-cell-label">AI Cinematic Scene</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:0.5625;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Stories</div><div class="ai-vw-cell-label">Story Content</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:1;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">CapCut AI</div><div class="ai-vw-cell-label">Auto-Edited Reel</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:1.333;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">ElevenLabs</div><div class="ai-vw-cell-label">AI Voiceover Video</div></div></div>
       </div>
       <div class="ai-vw-cell" style="flex:2.667;">
-        <video autoplay muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
+        <video muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video>
         <div class="ai-vw-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="ai-vw-cell-overlay"><div><div class="ai-vw-cell-tag">Descript</div><div class="ai-vw-cell-label">AI Ad Creative</div></div></div>
       </div>
@@ -1068,6 +1089,51 @@
   </div><!-- /ai-vw-rows -->
   </section>
   <!-- ═══ END VIDEO WALL ═══ -->
+
+  <script>
+  /* Video Wall — manual play only (no autoplay).
+     Clicking a cell plays its video; clicking again pauses it.
+     Playing a video pauses any other currently-playing video. */
+  (function() {
+    function initVideoWall() {
+      var cells = document.querySelectorAll('.ai-vw-cell');
+      if (!cells.length) return;
+      cells.forEach(function(cell) {
+        var video = cell.querySelector('video');
+        var playBtn = cell.querySelector('.ai-vw-play');
+        if (!video) return;
+        video.removeAttribute('autoplay');
+        video.pause();
+
+        function togglePlay(e) {
+          if (e) e.stopPropagation();
+          if (video.paused) {
+            cells.forEach(function(other) {
+              var ov = other.querySelector('video');
+              if (ov && ov !== video) {
+                ov.pause();
+                other.classList.remove('is-playing');
+              }
+            });
+            video.play();
+            cell.classList.add('is-playing');
+          } else {
+            video.pause();
+            cell.classList.remove('is-playing');
+          }
+        }
+
+        cell.addEventListener('click', togglePlay);
+        if (playBtn) playBtn.addEventListener('click', togglePlay);
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initVideoWall);
+    } else {
+      initVideoWall();
+    }
+  })();
+  </script>
 
 
 

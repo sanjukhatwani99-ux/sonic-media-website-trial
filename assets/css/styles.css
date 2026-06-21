@@ -113,7 +113,8 @@ nav{
   height:72px;
   transition:all .4s ease;
 }
-nav.stuck{
+nav.stuck,
+body.mob-open nav{
   background:rgba(8,8,8,.88);
   backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(255,255,255,.06);
@@ -213,10 +214,7 @@ nav.stuck{
   overflow:hidden;
 }
 .mob-nav.open{visibility:visible;pointer-events:all;}
-/* When drawer is open: hide nav-left brand but keep ham visible for toggle */
-.mob-nav.open ~ nav .nav-left,
-body.mob-open .nav-left{opacity:0;pointer-events:none;transition:opacity .25s ease;}
-body.mob-open #mobClose{opacity:0;pointer-events:none;transition:opacity .25s ease;}
+/* Keep logo + brand visible in the top navbar even when the mobile drawer is open */
 .nav-left{transition:opacity .25s ease;}
 .ham{transition:opacity .25s ease, background .25s, border-color .25s;}
 
@@ -263,7 +261,7 @@ body.mob-open #mobClose{opacity:0;pointer-events:none;transition:opacity .25s ea
   width:36px;height:36px;border-radius:8px;
   background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
   display:flex;align-items:center;justify-content:center;
-  font-size:14px;color:var(--white2);
+  font-size:14px;color:#fff;
   transition:all .2s;flex-shrink:0;
 }
 .mob-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:var(--orange);}
@@ -303,7 +301,7 @@ body.mob-open #mobClose{opacity:0;pointer-events:none;transition:opacity .25s ea
 }
 .mob-nav-link:hover{color:var(--white);background:rgba(255,255,255,.04);}
 .mob-nav-link:hover::before{height:60%;}
-.mob-nav-link.active-mob{color:var(--orange);}
+.mob-nav-link.active-mob{color:var(--orange);background:rgba(255,92,0,.08);}
 .mob-nav-link.active-mob::before{height:60%;}
 .mob-nav-link-arrow{
   font-size:11px;color:var(--gray);
@@ -1700,6 +1698,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   .faq-section{padding:80px 40px;}
   .inner-hero{padding:130px 40px 80px;}
   .contact-section{padding:80px 24px;}
+  /* Swap Map/Form order on mobile: form first, map+info second */
+  .contact-form{order:1;}
+  .contact-info{order:2;}
   .services-grid{grid-template-columns:1fr 1fr;}
   .svc-card.svc-featured{grid-column:span 1;}
   .values-grid{grid-template-columns:1fr 1fr;}
@@ -3830,21 +3831,25 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   .contact-section { padding: 64px 22px !important; }
   .contact-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
   .contact-info-title { font-size: clamp(34px, 9vw, 52px) !important; }
-  .contact-form { padding: 28px 22px 36px !important; border-radius: 20px !important; }
-  .cf-title { font-size: 19px !important; }
-  .cf-row { grid-template-columns: 1fr !important; gap: 0 !important; }
+  .contact-form { padding: 24px 20px 28px !important; border-radius: 20px !important; }
+  .cf-title { font-size: 18px !important; margin-bottom: 5px !important; }
+  .cf-sub { font-size: 12.5px !important; line-height: 1.5 !important; margin-bottom: 20px !important; }
+  .cf-row { grid-template-columns: 1fr !important; gap: 0 !important; margin-bottom: 0 !important; }
+  .cf-field { gap: 5px !important; margin-bottom: 11px !important; }
+  .cf-label { font-size: 10px !important; }
   .cf-input, .cf-textarea, .cf-select {
-    padding: 14px 16px !important;
+    padding: 11px 14px !important;
     font-size: 16px !important; /* 16px prevents iOS Safari zoom-in on focus */
-    border-radius: 12px !important;
-    min-height: 50px !important;
+    border-radius: 10px !important;
+    min-height: 44px !important;
   }
-  .cf-textarea { min-height: 130px !important; }
+  .cf-textarea { min-height: 84px !important; }
   .cf-submit {
-    padding: 16px !important;
-    font-size: 15px !important;
-    border-radius: 14px !important;
-    min-height: 54px !important;
+    padding: 14px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
+    min-height: 48px !important;
+    margin-top: 2px !important;
     letter-spacing: 0.1em !important;
   }
   .contact-method {

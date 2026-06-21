@@ -194,13 +194,13 @@
     </div>
     <div class="hero-left">
       <div class="hero-eyebrow">MARKETING AGENCY · AHMEDABAD</div>
-      <p class="hero-sub">Transform your brand into a cultural movement — through data-driven strategy, cinematic content & technology that actually converts.</p>
       <div class="hero-bottom-panel">
         <h1 class="hero-h1">
           <span class="line">WE DON'T JUST</span>
           <span class="line">MARKET.</span>
           <span class="line"><span class="or">WE DOMINATE.</span></span>
         </h1>
+        <p class="hero-sub">Transform your brand into a cultural movement — through data-driven strategy, cinematic content & technology that actually converts.</p>
         <div class="hero-btns">
           <a href="#" onclick="navigate('services');return false;" class="btn-p">Explore Services <span class="btn-arrow">→</span></a>
           <a href="#" onclick="navigate('contact');return false;" class="btn-s">Start Your Journey</a>
@@ -421,9 +421,9 @@
         <p class="nl-p">Marketing takes hotter than your morning coffee. — Weekly growth tactics, ad breakdowns, branding gems, and behind-the-scenes chaos from the agency world.</p>
         <div class="nl-count">2,400+ marketers already subscribed</div>
         <div class="nl-form">
-          <input type="text" class="nl-input" placeholder="Your full name" autocomplete="name" inputmode="text">
-          <input type="email" class="nl-input" placeholder="Your email address" autocomplete="email" inputmode="email">
-          <button class="nl-submit" type="button">JOIN THE DISPATCH →</button>
+          <input type="text" class="nl-input" id="nl-name-input" placeholder="Your full name" autocomplete="name" inputmode="text">
+          <input type="email" class="nl-input" id="nl-email-input" placeholder="Your email address" autocomplete="email" inputmode="email">
+          <button class="nl-submit" type="button" id="nl-submit-btn" onclick="tsmNewsletterSubmit(event)">JOIN THE DISPATCH →</button>
         </div>
         <div class="nl-privacy">🔒 No spam. Unsubscribe anytime. We respect your inbox.</div>
       </div>
@@ -508,8 +508,8 @@
       <div class="cta-proposal-form-wrap reveal d2">
         <div class="cta-proposal-form">
 
-          <!-- Service + Company (2 col) -->
-          <div class="cta-pf-row">
+          <!-- Row 1: Service Needed (full width) -->
+          <div class="cta-pf-row cta-pf-row-1col">
             <div class="cta-pf-field">
               <label class="cta-pf-label">Service Needed</label>
               <!-- Custom multi-select dropdown -->
@@ -537,13 +537,21 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- Row 2: Company Name + Industry -->
+          <div class="cta-pf-row">
             <div class="cta-pf-field">
-              <label class="cta-pf-label" for="ctaCompany">Company Name</label>
+              <label class="cta-pf-label" for="ctaCompany">Your Company</label>
               <input class="cta-pf-input" type="text" id="ctaCompany" name="company_name" placeholder="Enter Company Name">
+            </div>
+            <div class="cta-pf-field">
+              <label class="cta-pf-label" for="ctaIndustry">Industry</label>
+              <input class="cta-pf-input" type="text" id="ctaIndustry" name="industry" placeholder="Enter Your Industry">
             </div>
           </div>
 
-          <!-- Name + Mobile (2 col) -->
+          <!-- Row 3: Name + Mobile (2 col) -->
           <div class="cta-pf-row">
             <div class="cta-pf-field">
               <label class="cta-pf-label" for="ctaName">Your Name</label>
@@ -555,7 +563,7 @@
             </div>
           </div>
 
-          <!-- Email + Budget (2 col) -->
+          <!-- Row 4: Email + Budget (2 col) -->
           <div class="cta-pf-row">
             <div class="cta-pf-field">
               <label class="cta-pf-label" for="ctaEmail">Email Address</label>
@@ -575,7 +583,7 @@
           </div>
 
           <!-- Submit -->
-          <button class="cta-pf-btn" type="button" onclick="ctaSubmitProposal()">
+          <button class="cta-pf-btn" type="button" id="ctaSubmitBtn" onclick="ctaSubmitProposal()">
             Get My Free Proposal →
           </button>
 
@@ -674,6 +682,9 @@
     grid-template-columns: 1fr 1fr;
     gap: 14px;
   }
+  .cta-pf-row-1col {
+    grid-template-columns: 1fr;
+  }
   .cta-pf-field {
     margin-bottom: 14px;
     display: flex;
@@ -726,6 +737,11 @@
     box-shadow: 0 8px 32px rgba(0,0,0,.5);
     transform: translateY(-2px);
   }
+  .cta-pf-btn.is-submitted {
+    background: #16a34a !important;
+    color: #fff !important;
+    box-shadow: 0 8px 32px rgba(22,163,74,.45) !important;
+  }
   @media (max-width: 600px) {
     .cta-proposal-form-wrap { margin-top: 28px; }
     .cta-proposal-form { padding: 20px 16px 18px; border-radius: 16px; }
@@ -742,11 +758,36 @@
   </style>
 
   <script>
-  /* ── Multi-select helpers ── */
+  /* ── Multi-select helpers ──
+     The dropdown panel is reparented to <body> with position:fixed
+     while open so it always renders on top and is never clipped by
+     the .cta section's `overflow:hidden`. */
+  function positionCtaMsDropdown() {
+    var trigger = document.getElementById('ctaServiceTrigger');
+    var dd = document.getElementById('ctaServiceDropdown');
+    if (!trigger || !dd) return;
+    var rect = trigger.getBoundingClientRect();
+    dd.style.position = 'fixed';
+    dd.style.top   = (rect.bottom + 6) + 'px';
+    dd.style.left  = rect.left + 'px';
+    dd.style.width = rect.width + 'px';
+  }
   function toggleCtaMs(e) {
     e.stopPropagation();
     var dd = document.getElementById('ctaServiceDropdown');
-    dd.classList.toggle('open');
+    if (!dd) return;
+    var opening = !dd.classList.contains('open');
+    if (opening) {
+      if (dd.parentElement !== document.body) document.body.appendChild(dd);
+      positionCtaMsDropdown();
+      dd.classList.add('open');
+      window.addEventListener('scroll', positionCtaMsDropdown, true);
+      window.addEventListener('resize', positionCtaMsDropdown);
+    } else {
+      dd.classList.remove('open');
+      window.removeEventListener('scroll', positionCtaMsDropdown, true);
+      window.removeEventListener('resize', positionCtaMsDropdown);
+    }
   }
   function ctaMsUpdate() {
     var checked = Array.from(document.querySelectorAll('#ctaServiceDropdown input[type=checkbox]:checked')).map(function(c){return c.value;});
@@ -763,36 +804,70 @@
     document.querySelectorAll('#ctaServiceDropdown input[type=checkbox]').forEach(function(c){c.checked=false;});
     ctaMsUpdate();
   }
-  /* Close dropdown when clicking outside */
+  /* Close dropdown when clicking outside (works even though the dropdown
+     now lives in <body> while open — check both the trigger wrap and the
+     dropdown itself). */
   document.addEventListener('click', function(e) {
     var wrap = document.getElementById('ctaServiceWrap');
-    if (wrap && !wrap.contains(e.target)) {
-      var dd = document.getElementById('ctaServiceDropdown');
-      if (dd) dd.classList.remove('open');
+    var dd   = document.getElementById('ctaServiceDropdown');
+    if (!dd || !dd.classList.contains('open')) return;
+    var clickedInsideWrap = wrap && wrap.contains(e.target);
+    var clickedInsideDropdown = dd.contains(e.target);
+    if (!clickedInsideWrap && !clickedInsideDropdown) {
+      dd.classList.remove('open');
+      window.removeEventListener('scroll', positionCtaMsDropdown, true);
+      window.removeEventListener('resize', positionCtaMsDropdown);
     }
   });
 
   function ctaSubmitProposal() {
     var services = Array.from(document.querySelectorAll('#ctaServiceDropdown input[type=checkbox]:checked')).map(function(c){return c.value;});
-    var company = document.getElementById('ctaCompany').value.trim();
-    var name    = document.getElementById('ctaName').value.trim();
-    var mobile  = document.getElementById('ctaMobile').value.trim();
-    var email   = document.getElementById('ctaEmail').value.trim();
-    var budget  = document.getElementById('ctaBudget').value;
+    var company  = document.getElementById('ctaCompany').value.trim();
+    var industry = document.getElementById('ctaIndustry').value.trim();
+    var name     = document.getElementById('ctaName').value.trim();
+    var mobile   = document.getElementById('ctaMobile').value.trim();
+    var email    = document.getElementById('ctaEmail').value.trim();
+    var budget   = document.getElementById('ctaBudget').value;
     if (!services.length || !name || !mobile || !email || !budget) {
       alert('Please fill in all required fields before submitting.');
       return;
     }
     var budgetText = document.getElementById('ctaBudget').options[document.getElementById('ctaBudget').selectedIndex].text;
-    var msg = '🚀 *New Proposal Request — The Sonic Media*\n\n'
-      + '*Services:* ' + services.join(', ') + '\n'
-      + (company ? '*Company:* ' + company + '\n' : '')
-      + '*Name:* ' + name + '\n'
-      + '*Mobile:* ' + mobile + '\n'
-      + '*Email:* ' + email + '\n'
-      + '*Budget:* ' + budgetText;
-    var waURL = 'https://wa.me/918733087249?text=' + encodeURIComponent(msg);
-    window.open(waURL, '_blank');
+
+    var btn = document.getElementById('ctaSubmitBtn');
+    var originalBtnText = btn ? btn.textContent : '';
+
+    // Submit to Web3Forms — same access key used by the Footer Enquiry form
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: '66f90d59-83e7-4136-8823-1bfeb38deb41',
+        subject:    'New Proposal Request — ' + name,
+        from_name:  name,
+        email:      email,
+        message:    'New proposal request from CTA form.\n\n'
+          + 'Services: ' + services.join(', ') + '\n'
+          + (company ? 'Company: ' + company + '\n' : '')
+          + (industry ? 'Industry: ' + industry + '\n' : '')
+          + 'Name: ' + name + '\n'
+          + 'Mobile: ' + mobile + '\n'
+          + 'Email: ' + email + '\n'
+          + 'Budget: ' + budgetText + '\n\n'
+          + 'Source page: ' + window.location.href
+      })
+    }).catch(function() { /* network errors are silently ignored; UI already shows submitted state */ });
+
+    if (btn) {
+      btn.textContent = '✓ Submitted!';
+      btn.classList.add('is-submitted');
+      btn.disabled = true;
+      setTimeout(function() {
+        btn.textContent = originalBtnText;
+        btn.classList.remove('is-submitted');
+        btn.disabled = false;
+      }, 4000);
+    }
   }
   </script>
 

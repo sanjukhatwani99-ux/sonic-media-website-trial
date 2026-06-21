@@ -122,8 +122,10 @@
   }
 
   // 6. Pause videos when out of viewport
+  // (Videos inside .ai-vw-cell are click-to-play only and must never be
+  // auto-played by this scroll-based optimization.)
   function setupVideoOptimization() {
-    const videos = document.querySelectorAll('video');
+    const videos = document.querySelectorAll('video:not(.ai-vw-cell video)');
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const video = entry.target;

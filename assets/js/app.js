@@ -391,10 +391,6 @@ window._addNavHook(function(page){
     btn.classList.toggle('active-mob', btn.dataset.mobPage===page);
   });
 });
-// Also patch post-script navigate calls
-document.querySelectorAll('[data-mob-page]').forEach(btn=>{
-  btn.classList.toggle('active-mob', btn.dataset.mobPage==='home');
-});
 
 /* ─ Reveal Observer ─ */
 /* ── Activate the correct initial page on load ── */
@@ -414,7 +410,7 @@ document.querySelectorAll('[data-mob-page]').forEach(btn=>{
     a.classList.toggle('active-link', a.dataset.page === initPage);
   });
   document.querySelectorAll('[data-mob-page]').forEach(b => {
-    b.classList.toggle('active', b.dataset.mobPage === initPage);
+    b.classList.toggle('active-mob', b.dataset.mobPage === initPage);
   });
 })();
 
@@ -3572,6 +3568,85 @@ document.addEventListener('keydown', function(e) {
     window.tsmFooterEnquiry(e);
   }
 });
+
+/* ═══════════════════════════════════════════════════
+   WEEKLY NEWSLETTER — WEB3FORMS SUBMISSION
+   Uses the same Web3Forms access key as the Footer
+   Enquiry form so every subscription is delivered the
+   same way enquiries are.
+═══════════════════════════════════════════════════ */
+window.tsmNewsletterSubmit = function(e) {
+  if (e) e.preventDefault();
+
+  var nameInput  = document.getElementById('nl-name-input');
+  var emailInput = document.getElementById('nl-email-input');
+  var btn        = document.getElementById('nl-submit-btn');
+  if (!nameInput || !emailInput || !btn) return;
+
+  var name  = (nameInput.value || '').trim();
+  var email = (emailInput.value || '').trim();
+
+  if (!name) {
+    nameInput.focus();
+    nameInput.style.borderColor = '#ff5c00';
+    setTimeout(function() { nameInput.style.borderColor = ''; }, 1500);
+    return;
+  }
+
+  var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!isEmail) {
+    emailInput.focus();
+    emailInput.style.borderColor = '#ff5c00';
+    emailInput.placeholder = 'ENTER A VALID EMAIL ADDRESS';
+    setTimeout(function() {
+      emailInput.style.borderColor = '';
+      emailInput.placeholder = 'Your email address';
+    }, 2500);
+    return;
+  }
+
+  var subject = 'Weekly Newsletter Subscription — ' + name;
+  var message = 'New newsletter subscription.\n\nName: ' + name + '\nEmail: ' + email + '\n\nSource page: ' + window.location.href;
+  var originalText = btn.textContent;
+
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      access_key: '66f90d59-83e7-4136-8823-1bfeb38deb41',
+      subject:    subject,
+      from_name:  name,
+      email:      email,
+      message:    message
+    })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(result) {
+    if (result.success) {
+      btn.textContent = '✓ Subscribed!';
+      btn.style.background = '#16a34a';
+      btn.style.color = '#fff';
+      nameInput.value = '';
+      emailInput.value = '';
+      setTimeout(function() {
+        btn.textContent = originalText;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 4000);
+    } else {
+      throw new Error(result.message || 'Submission failed');
+    }
+  })
+  .catch(function() {
+    btn.textContent = originalText;
+    btn.disabled = false;
+    alert('Subscription failed. Please email us at info@thesonicmedia.com');
+  });
+};
 
 /* ═══════════════════════════════════════════════════
    FUTURE VISION DETAIL MODAL
