@@ -700,7 +700,7 @@
   max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: minmax(0, 380px) 1fr;
   gap: 48px;
   align-items: start;
 }
@@ -1165,8 +1165,8 @@
 }
 .wsv-orbit-wrap {
   position: relative;
-  width: 580px;
-  height: 580px;
+  width: min(580px, 92vw);
+  height: min(580px, 92vw);
   margin: 0 auto;
 }
 .wsv-orbit-canvas {
@@ -1287,7 +1287,7 @@
   max-width: 1380px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: minmax(0, 420px) 1fr;
   gap: 56px;
   align-items: center;
 }
@@ -1340,6 +1340,8 @@
   .wsv-gen-ui { grid-template-columns: 1fr; }
   .wsv-test-grid { grid-template-columns: 1fr; }
   .wsv-hero-stats { gap: 24px; }
+  .wsv-final-inner { grid-template-columns: 1fr; }
+  .wsv-tech-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 @media (max-width: 768px) {
   .wsv-hero-inner,
@@ -1352,6 +1354,35 @@
   .wsv-caps-grid { grid-template-columns: 1fr; }
   .wsv-hscroll-track { padding: 0 24px; }
   .wsv-step-card { width: 320px; }
+  .wsv-orbit-wrap { width: min(480px, 90vw); height: min(480px, 90vw); }
+  .wsv-orbit-section { padding: 80px 24px; }
+  .wsv-process-header { padding-left: 24px; padding-right: 24px; }
+  .wsv-step-left { padding: 60px 24px; }
+  .wsv-final-inner { padding: 0; }
+  .wsv-final-btns { flex-direction: column; }
+  .wsv-tech-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .wsv-hero-inner { padding: 120px 20px 60px; }
+  .wsv-caps-section,
+  .wsv-gen-section,
+  .wsv-testimonials,
+  .wsv-tech-section,
+  .wsv-final-cta,
+  .wsv-process-outer { padding-left: 16px; padding-right: 16px; }
+  .wsv-orbit-wrap { width: min(340px, 92vw); height: min(340px, 92vw); }
+  .wsv-orbit-brand-ring { width: 100px; height: 100px; }
+  .wsv-orbit-logo-img { width: 24px; height: 24px; }
+  .wsv-orbit-brand-name { font-size: 10px; }
+  .wsv-orbit-input-row { flex-direction: column; }
+  .wsv-caps-grid { grid-template-columns: 1fr; }
+  .wsv-tech-grid { grid-template-columns: 1fr !important; }
+  .wsv-hero-stats { flex-wrap: wrap; gap: 16px; }
+  .wsv-hero-btns { flex-direction: column; }
+  .wsv-gen-panel { padding: 24px 20px; }
+  .wsv-process-header { padding-left: 16px; padding-right: 16px; padding-bottom: 40px; }
+  .wsv-step-left { padding: 40px 16px; }
+  .wsv-step-right { min-height: 220px; }
 }
 
 /* ══ PREVIEW GENERATOR V2 STYLES ══ */

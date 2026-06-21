@@ -142,9 +142,9 @@ body.mob-open nav{
 }
 .nav-links > li{position:relative;}
 .nav-links a, .nav-links button{
-  padding:8px 13px;
+  padding:6px 10px;
   font-family:var(--font-heading);
-  font-size:12px;font-weight:600;letter-spacing:.06em;
+  font-size:10px;font-weight:600;letter-spacing:.05em;
   text-transform:uppercase;color:rgba(245,240,235,.65);
   border-radius:6px;
   transition:color .25s,background .25s;
@@ -180,7 +180,8 @@ body.mob-open nav{
 .drop-icon{font-size:18px;width:30px;text-align:center;}
 .nav-cta{
   background:var(--orange);color:#fff !important;
-  padding:10px 22px !important;border-radius:50px !important;
+  padding:8px 18px !important;border-radius:50px !important;
+  font-size:10px !important;
   font-weight:700 !important;
   box-shadow:0 0 20px rgba(255,92,0,.35);
   transition:all .3s !important;
@@ -285,8 +286,8 @@ body.mob-open nav{
 /* Primary nav links */
 .mob-nav-link{
   display:flex;align-items:center;justify-content:space-between;
-  width:100%;padding:14px 20px;
-  font-family:var(--font-heading);font-size:14px;font-weight:700;
+  width:100%;padding:12px 20px;
+  font-family:var(--font-heading);font-size:12px;font-weight:700;
   letter-spacing:.04em;text-transform:uppercase;
   color:rgba(245,240,235,.8);background:none;border:none;
   text-align:left;
@@ -313,8 +314,8 @@ body.mob-open nav{
 /* Services accordion */
 .mob-services-toggle{
   display:flex;align-items:center;justify-content:space-between;
-  width:100%;padding:14px 20px;
-  font-family:var(--font-heading);font-size:14px;font-weight:700;
+  width:100%;padding:12px 20px;
+  font-family:var(--font-heading);font-size:12px;font-weight:700;
   letter-spacing:.04em;text-transform:uppercase;
   color:rgba(245,240,235,.8);background:none;border:none;
   text-align:left;
