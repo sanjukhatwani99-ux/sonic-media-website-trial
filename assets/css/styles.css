@@ -2604,7 +2604,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   .journal { padding: 80px 40px; }
   .jnl-grid { grid-template-columns: 1fr 1fr; }
   .jnl-grid .jcard:first-child { grid-column: span 2; }
-  .jnl-full-grid { grid-template-columns: repeat(2,1fr); }
+  .jnl-full-grid { grid-template-columns: 1fr 1fr; }
 
   /* Future Vision */
   .future { padding: 80px 40px; }
@@ -4795,31 +4795,43 @@ a.social-icon:focus-visible {
   gap: 16px !important;
 }
 
-/* Case studies full grid */
-.cs-full-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
-  gap: 20px !important;
-}
-
-/* Case studies stat row — 2-col on mobile */
-.cs-stat-row {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
-  gap: 16px !important;
-}
-
 /* Featured work stat strip */
 .fw-stat-strip {
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
 }
 
-/* Journal full grid */
-.jnl-full-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
-  gap: 20px !important;
+/* Journal full grid (mobile fluid fallback only — desktop sizing matches
+   Insights & Ideas .jnl-grid via the min-width:1025px rule below) */
+@media (max-width: 1024px) {
+  .jnl-full-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+    gap: 20px !important;
+  }
+}
+
+/* Case studies page: same box-size layout as the home page
+   "Insights & Ideas" section (.jnl-grid) on desktop —
+   row 1 mirrors the 1.5fr / 1fr / 1fr ratio (card 1 bigger), while every
+   row after that (card 4 onward) is 3 perfectly equal-size boxes with NO
+   leftover gap. A 21-column fine grid is used so the spans always add up
+   exactly to a full row (9+6+6=21 for row 1, 7+7+7=21 for every row after). */
+@media (min-width: 1025px) {
+  .jnl-full-grid {
+    grid-template-columns: repeat(21, 1fr) !important;
+    gap: 20px !important;
+  }
+  .jnl-full-grid .jcard:first-child {
+    grid-column: span 9 !important;
+  }
+  .jnl-full-grid .jcard:nth-child(2),
+  .jnl-full-grid .jcard:nth-child(3) {
+    grid-column: span 6 !important;
+  }
+  .jnl-full-grid .jcard:nth-child(n+4) {
+    grid-column: span 7 !important;
+  }
 }
 
 /* Pricing grid */
