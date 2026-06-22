@@ -3285,9 +3285,15 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
     font-size: 16px !important;
   }
 
-  /* ── HERO: EDITORIAL MOBILE HERO — full-screen image, centered serif, minimalist CTAs ── */
+  /* ── HERO: EDITORIAL MOBILE HERO — fixed 4:5 ratio, rigid across all vertical screen sizes ── */
   .hero {
-    min-height: 100svh !important;
+    /* Fixed 4:5 aspect ratio — identical dimensions on every Android, iPhone, and vertical device.
+       Replaces min-height:100svh which caused the panel to resize with the viewport height. */
+    aspect-ratio: 4 / 5 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: unset !important;
+    max-height: none !important;
     padding: 0 !important;
     display: flex !important;
     flex-direction: column !important;
@@ -3509,7 +3515,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
     inset: 0 !important;
     z-index: 999 !important;
     overflow: hidden !important;
-    min-height: 100svh !important;
+    /* min-height removed — the parent section's aspect-ratio controls the height */
     background: #0a0c10 !important;
   }
   .svc-mobile-hero-bg {
@@ -5036,3 +5042,75 @@ a.social-icon:focus-visible {
 /* ─────────────────────────────────────────────
    END DEVICE-INDEPENDENT RESPONSIVE FIX
    ───────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE HERO VIDEO PANEL — FIXED 4:5 ASPECT RATIO
+   Ensures the hero video container is always exactly 4:5 on all
+   mobile/vertical devices (Android, iPhone, any screen size).
+   Overrides inline min-height:100vh on service page hero sections.
+   Does NOT affect tablet or desktop layouts.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── INDEX PAGE HERO ─────────────────────────────────────────── */
+  /* .hero aspect-ratio is set above; ensure the video container
+     and video itself fill it correctly */
+  .hero-mobile-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+  .hero-mobile-bg video,
+  .hero-mobile-bg img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+  /* ── SERVICE PAGE HERO SECTIONS ──────────────────────────────── */
+  /* Override the inline style="min-height:100vh" on each section
+     so the container becomes a rigid 4:5 panel. */
+  #wsv-hero-new,
+  #wsv-hero-ecom,
+  #inf-hero-new,
+  #seo-hero-new,
+  .pm-hero {
+    aspect-ratio: 4 / 5 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: unset !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  /* .svc-mobile-hero fills the fixed-ratio parent via absolute inset:0 */
+  .svc-mobile-hero {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: unset !important;
+  }
+
+  /* Video always fills and centers within the container */
+  .svc-mobile-hero-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+  .svc-mobile-hero-bg video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+}
+/* ═══════════════════════════════════════════════════════════════════
+   END MOBILE HERO VIDEO PANEL FIX
+   ═══════════════════════════════════════════════════════════════════ */
