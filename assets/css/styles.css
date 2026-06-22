@@ -5037,181 +5037,308 @@ a.social-icon:focus-visible {
    END DEVICE-INDEPENDENT RESPONSIVE FIX
    ───────────────────────────────────────────── */
 
-/* ══════════════════════════════════════════════════════════════════
-   TABLET PORTRAIT MODE — FULL MOBILE LAYOUT
-   Targets all tablets (including iPads) in portrait (vertical)
-   orientation. Width range 600–1100px + portrait orientation.
-   Uses the same mobile styles as ≤768px, ensuring no desktop/mobile
-   style mixing. Landscape mode still uses the desktop layout.
-   ══════════════════════════════════════════════════════════════════ */
-@media (min-width: 601px) and (max-width: 1100px) and (orientation: portrait) {
+/* ══════════════════════════════════════════════════════════════
+   iPAD PORTRAIT FIX — 769px to 900px
+   Mirrors the mobile experience for iPad mini / Air / Pro portrait.
+   All the same premium treatments phones get, adapted for ~768–834px.
+   Uses !important to override the generic 769–1100 tablet block above.
+══════════════════════════════════════════════════════════════ */
+@media (min-width: 769px) and (max-width: 900px) {
 
-  /* ── NAV: mobile hamburger drawer ── */
-  nav {
-    height: 60px !important;
-    padding: 0 18px !important;
-    background: rgba(8,8,8,0.92) !important;
-    backdrop-filter: blur(24px) saturate(1.6) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(1.6) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-  }
+  /* ── NAV: hamburger drawer, just like phones ── */
   .nav-links { display: none !important; }
   .ham { display: flex !important; }
-  .nav-logo-img { width: 34px; height: 34px; }
-  .nav-brand { font-size: 13px; }
+  nav {
+    height: 64px !important;
+    padding: 0 24px !important;
+    background: rgba(8,8,8,0.92) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+  }
 
-  /* ── HERO: mobile single-column layout ── */
+  /* ── HERO: full-screen editorial treatment, same as phone ── */
+  .hero {
+    min-height: 100svh !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Show the full-bleed mobile background */
+  .hero-mobile-bg {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    overflow: hidden !important;
+  }
+  .hero-mobile-bg img,
+  .hero-mobile-bg video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: scale(1.08) !important;
+    animation: heroKenBurns 14s ease-out forwards !important;
+  }
+  .hero-mobile-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: transparent !important;
+  }
+
+  /* Hide desktop chrome */
+  .hero-noise, .hero-orb { display: none !important; }
   .hero-right { display: none !important; }
   .mstrip-wrap { display: none !important; }
-  .hero-left { padding: 110px 24px 80px !important; }
-  .hero-stats { display: none !important; }
-  .hero-scroll { display: none !important; }
-  .hero-h1 { font-size: clamp(34px, 9.5vw, 60px) !important; }
-  .hero-eyebrow { font-size: 10px !important; }
-  .hero-sub { font-size: 14px !important; }
-  .btn-p, .btn-s { font-size: 9px !important; padding: 8px 8px !important; min-height: 32px !important; }
 
-  /* ── SECTION TITLES ── */
-  .section-title { font-size: clamp(34px, 9vw, 58px) !important; }
-  .fw-title { font-size: clamp(40px, 8vw, 80px) !important; }
+  /* Hero left — centered overlay */
+  .hero-left {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2 !important;
+    padding: 0 48px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0 !important;
+    max-width: 640px !important;
+    margin: 0 auto !important;
+  }
 
-  /* ── ABOUT ── */
-  .about { padding: 80px 24px !important; gap: 60px !important; }
-  .about-badge-circle { right: -10px; bottom: -20px; }
-  .about-float { left: 12px; top: 12px; }
+  /* Eyebrow badge */
+  .hero-eyebrow {
+    position: absolute !important;
+    top: 15% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: max-content !important;
+    max-width: calc(100% - 96px) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 10px !important;
+    padding: 8px 18px !important;
+    margin-bottom: 0 !important;
+  }
 
-  /* ── SERVICES ── */
-  .services { padding: 80px 24px !important; }
-  /* Show mobile carousel, hide desktop coverflow */
+  /* Hero heading */
+  .hero-h1 {
+    font-size: clamp(52px, 8vw, 80px) !important;
+    text-align: center !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* Subtitle */
+  .hero-sub { display: none !important; }
+
+  /* Bottom panel matching phone layout */
+  .hero-bottom-panel {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: 28% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    padding: 0 48px 36px !important;
+    z-index: 3 !important;
+    background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 100%) !important;
+    gap: 16px !important;
+  }
+
+  /* CTA Buttons on iPad portrait */
+  .hero-btns {
+    display: flex !important;
+    gap: 12px !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+  }
+  .hero-btns .btn-p,
+  .hero-btns .btn-s {
+    padding: 13px 30px !important;
+    font-size: 13px !important;
+  }
+
+  /* Hero stats */
+  .hero-stats {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 20px 36px !important;
+    margin-top: 32px !important;
+    justify-content: center !important;
+  }
+  .hero-stat .num { font-size: 36px !important; }
+
+  /* ── MOBILE SERVICE CAROUSEL: show on iPad portrait too ── */
   #homeSvcScrollWrapper { display: none !important; }
   #pageSvcScrollWrapper { display: none !important; }
-  #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: none !important; }
   .mob-svc-carousel-wrap { display: flex !important; }
+  #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: none !important; }
 
-  /* ── STUDIO ── */
-  .studio { padding: 80px 24px !important; }
-  .studio-floats { position: static !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 10px !important; margin-top: 16px !important; }
-  .sfloat { min-width: 120px; }
-  .studio-equip { padding: 80px 24px !important; }
-  .equip-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .studio-reel { aspect-ratio: 4/3; }
+  /* ── SECTION TITLES: scale for iPad portrait ── */
+  .section-title { font-size: clamp(38px, 6vw, 64px) !important; }
+  .fw-title { font-size: clamp(38px, 6vw, 64px) !important; }
 
-  /* ── FUTURE VISION ── */
-  .future { padding: 80px 24px !important; }
-  #futureSplitSection { padding-bottom: 40px !important; }
-  #fv-home-header {
-    position: relative !important;
-    top: auto !important;
-    padding: 24px 20px !important;
-    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+  /* ── ABOUT: single column stacked ── */
+  .about {
+    grid-template-columns: 1fr !important;
+    padding: 72px 40px !important;
+    gap: 56px !important;
   }
-  #fv-home-header .section-title { font-size: clamp(24px, 7vw, 38px) !important; }
-  .fv-container { padding: 0 16px !important; }
+  .about-h2 { font-size: clamp(36px, 6vw, 58px) !important; }
+  .about-badge-circle { bottom: -20px !important; right: -10px !important; }
+  .about-float { left: 12px !important; top: 12px !important; }
+
+  /* ── SERVICES: single-column cards ── */
+  .services { padding: 72px 40px !important; }
+  .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .svc-card.svc-featured { grid-column: span 1 !important; }
+  .svc-card.svc-featured .svc-img { aspect-ratio: 16/9 !important; }
+  .svc-bento { gap: 12px !important; }
+
+  /* ── STUDIO: single column ── */
+  .studio { padding: 72px 40px !important; }
+  .studio-inner { grid-template-columns: 1fr !important; gap: 48px !important; }
+  .studio-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+  .studio-floats {
+    position: static !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    margin-top: 18px !important;
+  }
+  .sfloat { min-width: 130px !important; flex: 1 !important; }
+
+  /* ── FUTURE VISION: single column ── */
+  .future { padding: 72px 40px !important; }
+  .future-grid { grid-template-columns: 1fr !important; }
   .fv-arch { flex-direction: column !important; gap: 0 !important; }
-  .fv-arch__left { order: 1; }
-  .fv-arch__right { display: none !important; }
   .fv-arch__info { height: auto !important; padding: 20px 0 !important; }
-  .future-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .timeline-items { flex-wrap: wrap !important; }
   .ti { flex: 0 0 50% !important; }
-  #home-fv-mobile, #page-fv-mobile {
-    padding: 20px 20px 36px !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 12px !important;
-  }
+
+  /* ── PRICING: single column ── */
+  .pricing { padding: 72px 40px !important; }
+  .pricing-grid { grid-template-columns: 1fr !important; }
+  .price-card { padding: 28px 24px !important; }
+  .price-amt { font-size: 48px !important; }
 
   /* ── TESTIMONIALS ── */
-  .testimonials { padding: 80px 24px !important; }
-  .testimonials-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
-
-  /* ── CASE STUDIES ── */
-  .casestudies { padding: 80px 24px !important; }
-  .cs-full-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .cs-stat-row { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+  .testimonials { padding: 72px 40px !important; }
+  .testimonials-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 40px !important;
+  }
+  .tcard { flex: 0 0 calc(100% - 0px) !important; }
 
   /* ── JOURNAL ── */
-  .journal { padding: 80px 24px !important; }
-  .journal-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
-  .jnl-grid { grid-template-columns: 1fr 1fr !important; }
-  .jnl-grid .jcard:first-child { grid-column: span 2 !important; }
+  .journal { padding: 72px 40px !important; }
+  .journal-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 40px !important;
+  }
+  .jnl-grid { grid-template-columns: 1fr !important; }
+  .jnl-grid .jcard:first-child { grid-column: span 1 !important; }
   .jnl-full-grid { grid-template-columns: 1fr 1fr !important; }
 
+  /* ── CASE STUDIES ── */
+  .casestudies { padding: 72px 40px !important; }
+  .cs-grid { grid-template-columns: 1fr !important; }
+  .cs-item:first-child { grid-row: auto !important; }
+  .cs-full-grid { grid-template-columns: 1fr !important; }
+  .cs-stat-row { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+
   /* ── PORTFOLIO ── */
-  .portfolio { padding: 80px 24px !important; }
-  .portfolio-masonry { grid-template-columns: repeat(2, 1fr) !important; grid-auto-rows: 260px !important; }
+  .portfolio { padding: 72px 40px !important; }
+  .portfolio-masonry {
+    grid-template-columns: 1fr 1fr !important;
+    grid-auto-rows: 240px !important;
+  }
   .port-item.port-wide { grid-column: span 2 !important; }
   .port-item.port-tall { grid-row: span 2 !important; }
 
-  /* ── PRICING ── */
-  .pricing { padding: 80px 24px !important; }
-  .pricing-grid { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
-  .price-card { padding: 28px 20px !important; }
-  .price-amt { font-size: 48px !important; }
+  /* ── CTA ── */
+  .cta { padding: 100px 40px !important; }
+  .cta-card { flex: 0 0 calc(50% - 8px) !important; }
+  .cta-h { font-size: clamp(42px, 7vw, 72px) !important; }
 
   /* ── FAQ ── */
-  .faq-section { padding: 80px 24px !important; }
-  .faq-inner { grid-template-columns: 1fr !important; gap: 40px !important; }
-
-  /* ── CTA ── */
-  .cta { padding: 80px 24px !important; }
-  .cta-cards { gap: 14px !important; flex-wrap: wrap !important; }
-  .cta-card { flex: 0 0 100% !important; max-width: 100% !important; }
+  .faq-section { padding: 72px 40px !important; }
+  .faq-inner { grid-template-columns: 1fr !important; gap: 48px !important; }
 
   /* ── BLOGS & NEWSLETTER ── */
   .blogs-newsletter { grid-template-columns: 1fr !important; }
-  .blogs-half { padding: 80px 24px !important; }
-  .newsletter-half { padding: 80px 24px !important; }
+  .blogs-half, .newsletter-half { padding: 72px 40px !important; }
 
   /* ── CONTACT ── */
-  .contact-section { padding: 80px 24px !important; }
-  .contact-form { padding: 32px 24px !important; }
-  .cf-row { grid-template-columns: 1fr !important; }
+  .contact-section { padding: 72px 40px !important; }
+  .contact-grid { grid-template-columns: 1fr !important; gap: 50px !important; }
+  .contact-form { order: 1 !important; padding: 36px 32px !important; }
+  .contact-info { order: 2 !important; }
+  .cf-row { grid-template-columns: 1fr 1fr !important; }
 
-  /* ── INNER HERO (service/about/etc pages) ── */
-  .inner-hero { padding: 110px 24px 60px !important; }
-  .inner-hero-h { font-size: clamp(48px, 11vw, 80px) !important; }
-
-  /* ── FEATURED WORK ── */
-  .fw-header { padding: 60px 24px 40px !important; }
-  .fw-topbar { padding: 14px 24px !important; }
-  .fw-row { grid-template-columns: 60px 1fr 220px 120px !important; min-height: 140px !important; }
-  .fw-row-info { padding: 28px 24px !important; }
-  .fw-stat-strip { grid-template-columns: repeat(2, 1fr) !important; }
-  .fw-stat-cell:nth-child(2) { border-right: none !important; }
-  .fw-stat-cell:nth-child(3) { border-top: 1px solid rgba(0,0,0,.1) !important; }
+  /* ── INNER PAGE HERO ── */
+  .inner-hero { padding: 120px 40px 72px !important; }
+  .inner-hero-h { font-size: clamp(48px, 8vw, 80px) !important; }
+  .inner-hero-p { font-size: 16px !important; }
 
   /* ── FOOTER ── */
-  footer { padding: 60px 20px 30px !important; padding-top: 220px !important; }
-  .footer-parallax { height: 220px !important; }
-  .footer-top { grid-template-columns: 1fr !important; gap: 32px !important; }
+  footer { padding: 60px 40px 30px !important; padding-top: 240px !important; }
+  .footer-top { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
   .footer-bottom { flex-direction: column !important; align-items: flex-start !important; }
-  .footer-bar-item { font-size: 22px !important; }
-  .footer-bl { flex-wrap: wrap !important; gap: 14px !important; }
-  .footer-desc { max-width: 100% !important; }
+  .footer-bl { flex-wrap: wrap !important; }
+  .footer-bar-item { font-size: 26px !important; }
 
-  /* ── GRIDS: force single or 2-column on portrait tablets ── */
-  .services-grid,
-  .faq-stats {
+  /* ── FC PANELS (Portfolio full-scroll) ── */
+  .fc-panel {
     grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    padding: 130px 40px 72px !important;
+    gap: 36px !important;
+    text-align: center !important;
+    justify-items: center !important;
   }
-  [class*="svp-grid"],
-  [class*="svp-cat-grid"],
-  [class*="-caps-grid"],
-  [class*="-tech-grid"],
-  [class*="-info-grid"],
-  [class*="-stat-grid"] {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+  .fc-media, #fcPanel2 .fc-media {
+    grid-column: 1 !important;
+    justify-self: center !important;
+    width: 100% !important;
+    max-width: 380px !important;
+    min-width: 0 !important;
+    aspect-ratio: 4/5 !important;
+    height: auto !important;
+  }
+  .fc-copy, #fcPanel2 .fc-copy, .fc-copy-right, .fc-copy-left {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    justify-self: center !important;
+    text-align: center !important;
+    padding: 0 !important;
+    max-width: 520px !important;
   }
 
-  /* ── FEATURED WORK (fw-row) compact on portrait ── */
-  .fw-header-left { flex: 1 !important; min-width: 0 !important; }
+  /* ── EQUIP GRID ── */
+  .equip-grid { grid-template-columns: 1fr 1fr !important; }
+  .studio-equip { padding: 72px 40px !important; }
 
-  /* ── HOME COVERFLOW: hide on portrait, use carousel ── */
-  .hcf-list { display: none !important; }
-  .hcf-card { display: none !important; }
-
-  /* ── SERVICE-PAGE HEROES ── */
+  /* ── SERVICE PAGE: show mobile video hero on iPad portrait too ── */
   #wsv-hero-new, #wsv-hero-ecom, #inf-hero-new, #seo-hero-new, .pm-hero {
     position: relative !important;
   }
@@ -5231,54 +5358,23 @@ a.social-icon:focus-visible {
     position: absolute !important;
     inset: 0 !important;
     z-index: 999 !important;
-    overflow: hidden !important;
-    min-height: 100svh !important;
-    background: #0a0c10 !important;
   }
-}
 
-/* ══════════════════════════════════════════════════════════════════
-   TABLET LANDSCAPE — RESTORE DESKTOP LAYOUT
-   Overrides any mobile-portrait rules for tablets that rotate
-   to landscape. Applies to 601–1100px in landscape orientation.
-   ══════════════════════════════════════════════════════════════════ */
-@media (min-width: 601px) and (max-width: 1100px) and (orientation: landscape) {
-
-  /* ── NAV: restore desktop nav links, hide hamburger ── */
-  .nav-links { display: flex !important; }
-  .ham { display: none !important; }
-  nav { padding: 0 28px !important; height: auto !important; }
-
-  /* ── HERO: restore desktop right strips ── */
-  .hero-right { display: flex !important; }
-  .mstrip-wrap { display: flex !important; }
-  .hero-stats { display: flex !important; }
-  .hero-scroll { display: block !important; }
-
-  /* ── SERVICES: restore desktop coverflow ── */
-  #homeSvcScrollWrapper { display: block !important; }
-  #pageSvcScrollWrapper { display: block !important; }
-  #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: block !important; }
-  .mob-svc-carousel-wrap { display: none !important; }
-
-  /* ── FUTURE VISION: restore split screen ── */
-  .fv-arch__right { display: flex !important; }
-  .fv-arch { flex-direction: row !important; }
-  #fv-home-header { position: sticky !important; }
-  #home-fv-mobile, #page-fv-mobile { display: none !important; }
-
-  /* ── FOOTER: restore tablet layout ── */
-  .footer-top { grid-template-columns: 1fr 1fr !important; }
-  .footer-bar-item { font-size: 28px !important; }
-
-  /* ── SERVICE-PAGE HEROES: restore desktop heroes ── */
-  .svc-mobile-hero { display: none !important; }
-  #wsv-hero-new .eyebrow, #wsv-hero-new .hero-h1, #wsv-hero-new .hero-sub, #wsv-hero-new .hero-btns,
-  #wsv-hero-ecom .eyebrow, #wsv-hero-ecom .hero-h1, #wsv-hero-ecom .hero-sub, #wsv-hero-ecom .hero-btns,
-  #inf-hero-new .eyebrow, #inf-hero-new .hero-h1, #inf-hero-new .hero-sub, #inf-hero-new .hero-btns,
-  #seo-hero-new .eyebrow, #seo-hero-new .hero-h1, #seo-hero-new .hero-sub, #seo-hero-new .hero-btns,
-  .pm-hero-label, .pm-hero-h1, .pm-hero-desc, .pm-hero-btns, .pm-hero-trust {
-    display: block !important;
+  /* ── SERVICE VIEWPORT GRIDS: stack on iPad portrait ── */
+  [class*="svp-grid"],
+  [class*="svp-cat-grid"],
+  [class*="-caps-grid"],
+  [class*="-tech-grid"],
+  [class*="-info-grid"],
+  [class*="-stat-grid"] {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
   }
+
+  /* ── HOME COVERFLOW ── */
+  .hcf-list { width: 20rem !important; height: 26rem !important; }
+  .hcf-card { width: 20rem !important; height: 26rem !important; }
+
+  /* ── FUTURE SPLIT SECTION ── */
+  #futureSplitSection { padding-bottom: 40px !important; }
 }
-/* ══ END TABLET ORIENTATION RESPONSIVE FIX ══ */
+/* ── END iPAD PORTRAIT FIX ── */
