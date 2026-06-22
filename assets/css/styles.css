@@ -5037,15 +5037,16 @@ a.social-icon:focus-visible {
    END DEVICE-INDEPENDENT RESPONSIVE FIX
    ───────────────────────────────────────────── */
 
-/* ═══════════════════════════════════════════════════════════════════════
-   TABLET PORTRAIT — FORCE FULL MOBILE LAYOUT
-   Targets all tablets (iPad Mini → iPad Pro 12.9") held vertically.
-   Landscape orientation stays on the desktop layout (no change).
-   Does NOT affect phones (≤768px handles those) or desktops (>1366px).
-   ═══════════════════════════════════════════════════════════════════════ */
-@media (min-width: 769px) and (max-width: 1366px) and (orientation: portrait) {
+/* ══════════════════════════════════════════════════════════════════
+   TABLET PORTRAIT MODE — FULL MOBILE LAYOUT
+   Targets all tablets (including iPads) in portrait (vertical)
+   orientation. Width range 600–1100px + portrait orientation.
+   Uses the same mobile styles as ≤768px, ensuring no desktop/mobile
+   style mixing. Landscape mode still uses the desktop layout.
+   ══════════════════════════════════════════════════════════════════ */
+@media (min-width: 601px) and (max-width: 1100px) and (orientation: portrait) {
 
-  /* ── NAV: mobile glass bar + hamburger ── */
+  /* ── NAV: mobile hamburger drawer ── */
   nav {
     height: 60px !important;
     padding: 0 18px !important;
@@ -5056,240 +5057,144 @@ a.social-icon:focus-visible {
   }
   .nav-links { display: none !important; }
   .ham { display: flex !important; }
+  .nav-logo-img { width: 34px; height: 34px; }
+  .nav-brand { font-size: 13px; }
 
-  /* ── HERO: editorial full-screen mobile hero ── */
-  .hero {
-    min-height: 100svh !important;
-    padding: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    position: relative !important;
-    overflow: hidden !important;
-  }
-  .hero-noise, .hero-orb { display: none !important; }
+  /* ── HERO: mobile single-column layout ── */
   .hero-right { display: none !important; }
   .mstrip-wrap { display: none !important; }
-  .hero-mobile-bg { display: block !important; }
-  .hero-mobile-bg img, .hero-mobile-bg video {
-    width: 100% !important; height: 100% !important;
-    object-fit: cover !important; object-position: center !important;
-  }
-  .hero-left {
-    position: absolute !important; inset: 0 !important; z-index: 2 !important;
-    padding: 0 28px !important;
-    display: flex !important; flex-direction: column !important;
-    align-items: center !important; gap: 0 !important;
-    max-width: 560px !important; margin: 0 auto !important;
-  }
-  .hero-eyebrow {
-    position: absolute !important; top: 15% !important;
-    left: 50% !important; transform: translate(-50%, -50%) !important;
-    width: max-content !important; max-width: calc(100% - 56px) !important;
-    display: inline-flex !important; align-items: center !important; gap: 8px !important;
-    font-size: 9.5px !important; padding: 7px 16px !important;
-    border-radius: 50px !important; margin-bottom: 0 !important;
-  }
-  .hero-sub { display: none !important; }
-  .hero-bottom-panel {
-    position: absolute !important; left: 0 !important; right: 0 !important;
-    bottom: 0 !important; height: 25% !important;
-    display: flex !important; flex-direction: column !important;
-    align-items: center !important; justify-content: center !important;
-    padding: 0 18px !important; gap: 10px !important; box-sizing: border-box !important;
-  }
-  .hero-h1 {
-    font-weight: 700 !important;
-    font-size: clamp(22px, 4vw, 36px) !important;
-    line-height: 1.15 !important; letter-spacing: 0 !important;
-    text-transform: none !important; margin-bottom: 0 !important;
-    color: var(--orange) !important; white-space: nowrap !important;
-  }
-  .hero-btns {
-    display: flex !important; flex-direction: row !important;
-    align-items: stretch !important; justify-content: center !important;
-    flex-wrap: nowrap !important; gap: 8px !important;
-    width: 100% !important; max-width: 300px !important; margin: 0 auto !important;
-  }
-  .hero-btns .btn-arrow { display: none !important; }
-  .btn-p, .btn-s {
-    display: block !important; flex: 1 1 0 !important; width: auto !important;
-    justify-content: center !important; text-align: center !important;
-    padding: 10px 12px !important; font-size: 10px !important;
-    font-weight: 700 !important; letter-spacing: 0.02em !important;
-    text-transform: uppercase !important; border-radius: 2px !important;
-    min-height: 36px !important; white-space: nowrap !important;
-  }
+  .hero-left { padding: 110px 24px 80px !important; }
   .hero-stats { display: none !important; }
   .hero-scroll { display: none !important; }
-
-  /* ── SERVICES: show mobile carousel, hide desktop scroll ── */
-  #homeSvcScrollWrapper { display: none !important; }
-  #pageSvcScrollWrapper { display: none !important; }
-  .mob-svc-carousel-wrap { display: flex !important; }
+  .hero-h1 { font-size: clamp(34px, 9.5vw, 60px) !important; }
+  .hero-eyebrow { font-size: 10px !important; }
+  .hero-sub { font-size: 14px !important; }
+  .btn-p, .btn-s { font-size: 9px !important; padding: 8px 8px !important; min-height: 32px !important; }
 
   /* ── SECTION TITLES ── */
-  .section-title { font-size: clamp(38px, 7vw, 68px) !important; }
-  .fw-title { font-size: clamp(38px, 7vw, 68px) !important; }
+  .section-title { font-size: clamp(34px, 9vw, 58px) !important; }
+  .fw-title { font-size: clamp(40px, 8vw, 80px) !important; }
 
   /* ── ABOUT ── */
-  .about {
-    grid-template-columns: 1fr !important;
-    padding: 80px 32px !important;
-    gap: 60px !important;
-  }
-  .about-badge-circle { bottom: -20px !important; right: -10px !important; }
-  .about-float { left: 12px !important; top: 12px !important; }
+  .about { padding: 80px 24px !important; gap: 60px !important; }
+  .about-badge-circle { right: -10px; bottom: -20px; }
+  .about-float { left: 12px; top: 12px; }
 
   /* ── SERVICES ── */
-  .services { padding: 80px 32px !important; }
+  .services { padding: 80px 24px !important; }
+  /* Show mobile carousel, hide desktop coverflow */
+  #homeSvcScrollWrapper { display: none !important; }
+  #pageSvcScrollWrapper { display: none !important; }
+  #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: none !important; }
+  .mob-svc-carousel-wrap { display: flex !important; }
 
   /* ── STUDIO ── */
-  .studio { padding: 80px 32px !important; }
-  .studio-inner { grid-template-columns: 1fr !important; }
+  .studio { padding: 80px 24px !important; }
   .studio-floats { position: static !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 10px !important; margin-top: 16px !important; }
-  .sfloat { min-width: 120px !important; }
-  .studio-equip { padding: 80px 32px !important; }
-  .equip-grid { grid-template-columns: repeat(2,1fr) !important; }
-
-  /* ── FEATURED WORK ── */
-  .fw-header { padding: 32px 32px 20px !important; }
-  .fw-topbar { padding: 12px 32px !important; }
-  .fw-row {
-    grid-template-columns: 24px 1fr 120px !important;
-    grid-template-rows: auto auto !important;
-    min-height: 120px !important;
-    align-items: center !important;
-  }
-  .fw-row-num {
-    grid-column: 1 !important; grid-row: 1 / 3 !important;
-    padding: 0 !important; font-size: 10px !important;
-    align-items: flex-start !important; padding-top: 16px !important;
-    border-right: none !important;
-  }
-  .fw-row-info {
-    grid-column: 2 !important; grid-row: 1 !important;
-    padding: 14px 12px 4px !important; gap: 6px !important;
-    justify-content: flex-end !important;
-  }
-  .fw-row-photo {
-    grid-column: 3 !important; grid-row: 1 / 3 !important;
-    width: 120px !important; aspect-ratio: 1 / 1 !important; height: auto !important;
-    border-left: 1px solid rgba(0,0,0,.08) !important;
-    border-radius: 12px !important; overflow: hidden !important;
-  }
-  .fw-row-photo img { position: absolute !important; }
-  .fw-row-metric {
-    grid-column: 2 !important; grid-row: 2 !important;
-    flex-direction: row !important; justify-content: flex-start !important;
-    align-items: center !important; padding: 4px 12px 14px !important;
-    border-top: none !important; gap: 10px !important;
-  }
-  .fw-stat-strip { grid-template-columns: repeat(2,1fr) !important; }
-  .fw-row-val { display: none !important; }
-
-  /* ── CASE STUDIES ── */
-  .casestudies { padding: 80px 32px !important; }
-  .cs-full-grid { grid-template-columns: 1fr !important; }
-  .cs-stat-row { grid-template-columns: repeat(2,1fr) !important; gap: 16px !important; }
-
-  /* ── JOURNAL ── */
-  .journal { padding: 80px 32px !important; }
-  .jnl-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
-  .jnl-grid .jcard:first-child { grid-column: span 1 !important; }
-  .jnl-full-grid { grid-template-columns: 1fr 1fr !important; }
-  .jcard { flex-direction: row !important; align-items: stretch !important; min-height: 112px !important; }
-  .jcard-img, .jcard:first-child .jcard-img {
-    order: 2 !important; width: 120px !important; min-width: 120px !important;
-    max-width: 120px !important; height: 120px !important; max-height: 120px !important;
-    flex: 0 0 120px !important; align-self: center !important; aspect-ratio: 1 / 1 !important;
-  }
-  .jcard-body { order: 1 !important; padding: 14px 12px !important; flex: 1 !important; justify-content: center !important; gap: 2px !important; }
-  .jcard-excerpt { display: none !important; }
-  .jcard-date { display: none !important; }
+  .sfloat { min-width: 120px; }
+  .studio-equip { padding: 80px 24px !important; }
+  .equip-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .studio-reel { aspect-ratio: 4/3; }
 
   /* ── FUTURE VISION ── */
-  .future { padding: 80px 32px !important; }
-  .future-grid { grid-template-columns: 1fr 1fr !important; }
-  .fv-arch { flex-direction: column !important; gap: 0 !important; }
-  .fv-arch__info { height: auto !important; padding: 20px 0 !important; display: block !important; place-items: unset !important; }
-  .fv-arch__right { display: none !important; }
-  .fv-arch__left { order: 1 !important; }
+  .future { padding: 80px 24px !important; }
+  #futureSplitSection { padding-bottom: 40px !important; }
   #fv-home-header {
-    position: relative !important; top: auto !important;
-    padding: 24px 32px !important;
+    position: relative !important;
+    top: auto !important;
+    padding: 24px 20px !important;
     border-bottom: 1px solid rgba(255,255,255,0.07) !important;
   }
+  #fv-home-header .section-title { font-size: clamp(24px, 7vw, 38px) !important; }
+  .fv-container { padding: 0 16px !important; }
+  .fv-arch { flex-direction: column !important; gap: 0 !important; }
+  .fv-arch__left { order: 1; }
+  .fv-arch__right { display: none !important; }
+  .fv-arch__info { height: auto !important; padding: 20px 0 !important; }
+  .future-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .timeline-items { flex-wrap: wrap !important; }
+  .ti { flex: 0 0 50% !important; }
   #home-fv-mobile, #page-fv-mobile {
-    padding: 20px 32px 36px !important;
+    padding: 20px 20px 36px !important;
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 12px !important;
   }
-  .timeline-items { flex-wrap: wrap !important; }
-  .ti { flex: 0 0 50% !important; }
 
   /* ── TESTIMONIALS ── */
-  .testimonials { padding: 80px 32px !important; }
+  .testimonials { padding: 80px 24px !important; }
   .testimonials-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
-  .tcard { flex: 0 0 calc(100% - 0px) !important; }
+
+  /* ── CASE STUDIES ── */
+  .casestudies { padding: 80px 24px !important; }
+  .cs-full-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .cs-stat-row { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+
+  /* ── JOURNAL ── */
+  .journal { padding: 80px 24px !important; }
+  .journal-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
+  .jnl-grid { grid-template-columns: 1fr 1fr !important; }
+  .jnl-grid .jcard:first-child { grid-column: span 2 !important; }
+  .jnl-full-grid { grid-template-columns: 1fr 1fr !important; }
 
   /* ── PORTFOLIO ── */
-  .portfolio { padding: 80px 32px !important; }
-  .portfolio-masonry { grid-template-columns: repeat(2,1fr) !important; grid-auto-rows: 260px !important; }
+  .portfolio { padding: 80px 24px !important; }
+  .portfolio-masonry { grid-template-columns: repeat(2, 1fr) !important; grid-auto-rows: 260px !important; }
   .port-item.port-wide { grid-column: span 2 !important; }
   .port-item.port-tall { grid-row: span 2 !important; }
 
   /* ── PRICING ── */
-  .pricing { padding: 80px 32px !important; }
+  .pricing { padding: 80px 24px !important; }
   .pricing-grid { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
   .price-card { padding: 28px 20px !important; }
   .price-amt { font-size: 48px !important; }
 
   /* ── FAQ ── */
-  .faq-section { padding: 80px 32px !important; }
+  .faq-section { padding: 80px 24px !important; }
   .faq-inner { grid-template-columns: 1fr !important; gap: 40px !important; }
 
   /* ── CTA ── */
-  .cta { padding: 80px 32px !important; }
-  .cta-cards { flex-direction: column !important; gap: 10px !important; }
-  .cta-card { flex: 0 0 100% !important; max-width: 100% !important; padding: 20px 18px !important; border-radius: 14px !important; }
-  .cta-zoom-wrapper { display: none !important; }
+  .cta { padding: 80px 24px !important; }
+  .cta-cards { gap: 14px !important; flex-wrap: wrap !important; }
+  .cta-card { flex: 0 0 100% !important; max-width: 100% !important; }
+
+  /* ── BLOGS & NEWSLETTER ── */
   .blogs-newsletter { grid-template-columns: 1fr !important; }
-  .blogs-half, .newsletter-half { padding: 80px 32px !important; }
+  .blogs-half { padding: 80px 24px !important; }
+  .newsletter-half { padding: 80px 24px !important; }
 
   /* ── CONTACT ── */
-  .contact-section { padding: 80px 32px !important; }
-  .contact-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .contact-section { padding: 80px 24px !important; }
   .contact-form { padding: 32px 24px !important; }
   .cf-row { grid-template-columns: 1fr !important; }
 
-  /* ── INNER HERO (service/inner pages) ── */
-  .inner-hero { padding: 120px 32px 60px !important; }
-  .inner-hero-h { font-size: clamp(48px, 10vw, 80px) !important; }
+  /* ── INNER HERO (service/about/etc pages) ── */
+  .inner-hero { padding: 110px 24px 60px !important; }
+  .inner-hero-h { font-size: clamp(48px, 11vw, 80px) !important; }
+
+  /* ── FEATURED WORK ── */
+  .fw-header { padding: 60px 24px 40px !important; }
+  .fw-topbar { padding: 14px 24px !important; }
+  .fw-row { grid-template-columns: 60px 1fr 220px 120px !important; min-height: 140px !important; }
+  .fw-row-info { padding: 28px 24px !important; }
+  .fw-stat-strip { grid-template-columns: repeat(2, 1fr) !important; }
+  .fw-stat-cell:nth-child(2) { border-right: none !important; }
+  .fw-stat-cell:nth-child(3) { border-top: 1px solid rgba(0,0,0,.1) !important; }
 
   /* ── FOOTER ── */
-  footer { padding: 60px 32px 30px !important; padding-top: 220px !important; }
+  footer { padding: 60px 20px 30px !important; padding-top: 220px !important; }
   .footer-parallax { height: 220px !important; }
   .footer-top { grid-template-columns: 1fr !important; gap: 32px !important; }
   .footer-bottom { flex-direction: column !important; align-items: flex-start !important; }
   .footer-bar-item { font-size: 22px !important; }
   .footer-bl { flex-wrap: wrap !important; gap: 14px !important; }
-  .footer-journal-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
+  .footer-desc { max-width: 100% !important; }
 
-  /* ── FLOATING BUTTONS ── */
-  .wa-float { width: 52px !important; height: 52px !important; bottom: 20px !important; right: 16px !important; }
-  .wa-float svg { width: 26px !important; height: 26px !important; }
-  .email-float { width: 52px !important; height: 52px !important; bottom: 84px !important; right: 16px !important; }
-  .email-float svg { width: 22px !important; height: 22px !important; }
-
-  /* ── HOME COVERFLOW ── */
-  .hcf-list { width: 19rem !important; height: 25rem !important; }
-  .hcf-card { width: 19rem !important; height: 25rem !important; }
-
-  /* ── SERVICE PAGE GRIDS ── */
+  /* ── GRIDS: force single or 2-column on portrait tablets ── */
+  .services-grid,
+  .faq-stats {
+    grid-template-columns: 1fr !important;
+  }
   [class*="svp-grid"],
   [class*="svp-cat-grid"],
   [class*="-caps-grid"],
@@ -5299,27 +5204,81 @@ a.social-icon:focus-visible {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
   }
 
-  /* ── FC PANELS (About / Team sections) ── */
-  .fc-panel {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto auto !important;
-    height: auto !important; min-height: 100vh !important; min-height: 100dvh !important;
-    padding: 140px 32px 80px !important; gap: 36px !important;
-    text-align: center !important; justify-items: center !important;
-  }
-  .fc-media, #fcPanel2 .fc-media {
-    grid-column: 1 !important; justify-self: center !important;
-    width: 100% !important; max-width: 420px !important; min-width: 0 !important;
-    aspect-ratio: 4/5 !important; height: auto !important;
-  }
-  .fc-copy, #fcPanel2 .fc-copy, .fc-copy-right, .fc-copy-left {
-    grid-column: 1 !important; grid-row: 2 !important;
-    justify-self: center !important; text-align: center !important;
-    padding: 0 !important; max-width: 520px !important;
-  }
-  .fc-copy-left .fc-bio { margin-left: auto !important; margin-right: auto !important; }
+  /* ── FEATURED WORK (fw-row) compact on portrait ── */
+  .fw-header-left { flex: 1 !important; min-width: 0 !important; }
 
-  /* ── SCROLL PROGRESS BAR ── */
-  #sp { height: 3px !important; }
+  /* ── HOME COVERFLOW: hide on portrait, use carousel ── */
+  .hcf-list { display: none !important; }
+  .hcf-card { display: none !important; }
+
+  /* ── SERVICE-PAGE HEROES ── */
+  #wsv-hero-new, #wsv-hero-ecom, #inf-hero-new, #seo-hero-new, .pm-hero {
+    position: relative !important;
+  }
+  #wsv-hero-new .eyebrow, #wsv-hero-new .hero-h1, #wsv-hero-new .hero-sub, #wsv-hero-new .hero-btns,
+  #wsv-hero-ecom .eyebrow, #wsv-hero-ecom .hero-h1, #wsv-hero-ecom .hero-sub, #wsv-hero-ecom .hero-btns,
+  #inf-hero-new .eyebrow, #inf-hero-new .hero-h1, #inf-hero-new .hero-sub, #inf-hero-new .hero-btns,
+  #seo-hero-new .eyebrow, #seo-hero-new .hero-h1, #seo-hero-new .hero-sub, #seo-hero-new .hero-btns,
+  .pm-hero-label, .pm-hero-h1, .pm-hero-desc, .pm-hero-btns, .pm-hero-trust {
+    display: none !important;
+  }
+  .svc-mobile-hero {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 999 !important;
+    overflow: hidden !important;
+    min-height: 100svh !important;
+    background: #0a0c10 !important;
+  }
 }
-/* ── END TABLET PORTRAIT OVERRIDE ── */
+
+/* ══════════════════════════════════════════════════════════════════
+   TABLET LANDSCAPE — RESTORE DESKTOP LAYOUT
+   Overrides any mobile-portrait rules for tablets that rotate
+   to landscape. Applies to 601–1100px in landscape orientation.
+   ══════════════════════════════════════════════════════════════════ */
+@media (min-width: 601px) and (max-width: 1100px) and (orientation: landscape) {
+
+  /* ── NAV: restore desktop nav links, hide hamburger ── */
+  .nav-links { display: flex !important; }
+  .ham { display: none !important; }
+  nav { padding: 0 28px !important; height: auto !important; }
+
+  /* ── HERO: restore desktop right strips ── */
+  .hero-right { display: flex !important; }
+  .mstrip-wrap { display: flex !important; }
+  .hero-stats { display: flex !important; }
+  .hero-scroll { display: block !important; }
+
+  /* ── SERVICES: restore desktop coverflow ── */
+  #homeSvcScrollWrapper { display: block !important; }
+  #pageSvcScrollWrapper { display: block !important; }
+  #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: block !important; }
+  .mob-svc-carousel-wrap { display: none !important; }
+
+  /* ── FUTURE VISION: restore split screen ── */
+  .fv-arch__right { display: flex !important; }
+  .fv-arch { flex-direction: row !important; }
+  #fv-home-header { position: sticky !important; }
+  #home-fv-mobile, #page-fv-mobile { display: none !important; }
+
+  /* ── FOOTER: restore tablet layout ── */
+  .footer-top { grid-template-columns: 1fr 1fr !important; }
+  .footer-bar-item { font-size: 28px !important; }
+
+  /* ── SERVICE-PAGE HEROES: restore desktop heroes ── */
+  .svc-mobile-hero { display: none !important; }
+  #wsv-hero-new .eyebrow, #wsv-hero-new .hero-h1, #wsv-hero-new .hero-sub, #wsv-hero-new .hero-btns,
+  #wsv-hero-ecom .eyebrow, #wsv-hero-ecom .hero-h1, #wsv-hero-ecom .hero-sub, #wsv-hero-ecom .hero-btns,
+  #inf-hero-new .eyebrow, #inf-hero-new .hero-h1, #inf-hero-new .hero-sub, #inf-hero-new .hero-btns,
+  #seo-hero-new .eyebrow, #seo-hero-new .hero-h1, #seo-hero-new .hero-sub, #seo-hero-new .hero-btns,
+  .pm-hero-label, .pm-hero-h1, .pm-hero-desc, .pm-hero-btns, .pm-hero-trust {
+    display: block !important;
+  }
+}
+/* ══ END TABLET ORIENTATION RESPONSIVE FIX ══ */
