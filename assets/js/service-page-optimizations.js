@@ -85,7 +85,7 @@
         ctx.imageSmoothingEnabled = false;
         
         // Use lower resolution on mobile
-        if (window.innerWidth < 768) {
+        if (document.body.getAttribute("data-orientation") === "portrait" || (window.innerWidth < 768 && !document.body.getAttribute("data-orientation"))) {
           canvas.style.transform = 'scale(1.2)';
           canvas.style.transformOrigin = 'center';
           canvas.width = canvas.offsetWidth * 0.7;
