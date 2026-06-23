@@ -3987,12 +3987,19 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
     return isTablet() && window.innerWidth >= window.innerHeight;
   }
 
-  /* ── Set / clear the html class ── */
+  /* ── Set / clear the html classes ── */
   function applyClass() {
+    var html = document.documentElement;
     if (isTabletPortrait()) {
-      document.documentElement.classList.add('tablet-portrait');
+      html.classList.add('tablet-portrait');
+      html.classList.remove('tablet-landscape');
+    } else if (isTabletLandscape()) {
+      html.classList.add('tablet-landscape');
+      html.classList.remove('tablet-portrait');
     } else {
-      document.documentElement.classList.remove('tablet-portrait');
+      /* Outside tablet zone entirely — clear both */
+      html.classList.remove('tablet-portrait');
+      html.classList.remove('tablet-landscape');
     }
   }
 

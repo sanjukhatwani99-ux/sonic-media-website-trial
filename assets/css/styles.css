@@ -5187,3 +5187,61 @@ a.social-icon:focus-visible {
    END DEVICE-INDEPENDENT RESPONSIVE FIX
    ───────────────────────────────────────────── */
 
+/* ═══════════════════════════════════════════════════
+   TABLET LANDSCAPE OVERRIDE — placed LAST so it wins
+   over every earlier max-width:1100px / max-width:900px
+   block. Added by JS as html.tablet-landscape when the
+   device is 769-1024px wide AND landscape orientation.
+   Desktop (≥1025) and Mobile (≤768) are untouched.
+═══════════════════════════════════════════════════ */
+
+/* ── Nav: desktop links visible, hamburger hidden ── */
+html.tablet-landscape .nav-links { display: flex !important; }
+html.tablet-landscape .ham       { display: none  !important; }
+html.tablet-landscape nav        { padding: 0 32px !important; }
+
+/* ── Hero: two-column desktop layout ── */
+html.tablet-landscape .hero                      { grid-template-columns: 1fr 1fr !important; }
+html.tablet-landscape .hero-right                { display: block !important; }
+html.tablet-landscape .hero-left                 { padding: 130px 48px 80px !important; }
+
+/* ── About: two-column ── */
+html.tablet-landscape .about                     { grid-template-columns: 1fr 1fr !important; padding: 80px 40px !important; gap: 60px !important; }
+
+/* ── Studio: two-column ── */
+html.tablet-landscape .studio-inner              { grid-template-columns: 1fr 1fr !important; }
+
+/* ── FC panels: two-column desktop ── */
+html.tablet-landscape .fc-panel                  { grid-template-columns: 1fr 1fr !important; grid-template-rows: 1fr !important; height: 100vh !important; height: 100dvh !important; padding: 140px 40px 80px !important; gap: 0 !important; text-align: left !important; justify-items: start !important; }
+html.tablet-landscape .fc-media,
+html.tablet-landscape #fcPanel2 .fc-media        { grid-column: unset !important; justify-self: unset !important; width: 100% !important; max-width: unset !important; aspect-ratio: unset !important; height: 100% !important; }
+html.tablet-landscape .fc-copy,
+html.tablet-landscape #fcPanel2 .fc-copy,
+html.tablet-landscape .fc-copy-right,
+html.tablet-landscape .fc-copy-left              { grid-column: unset !important; grid-row: unset !important; justify-self: unset !important; text-align: left !important; padding: unset !important; max-width: unset !important; }
+html.tablet-landscape .fc-copy-left .fc-bio      { margin-left: 0 !important; margin-right: 0 !important; }
+
+/* ── Contact: two-column ── */
+html.tablet-landscape .contact-grid              { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+
+/* ── Footer: two-column ── */
+html.tablet-landscape .footer-top                { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+
+/* ── Featured work: restore 4-col row ── */
+html.tablet-landscape .fw-row                    { grid-template-columns: 60px 1fr 220px 120px !important; min-height: 140px !important; }
+
+/* ── Cursor: restore on landscape ── */
+html.tablet-landscape #cursor         { display: block !important; }
+html.tablet-landscape #cursor-follower{ display: block !important; }
+html.tablet-landscape #cursor-trail   { display: block !important; }
+html.tablet-landscape #mouse-glow     { display: block !important; }
+
+/* ── Mobile-only widgets: off in landscape ── */
+html.tablet-landscape .mob-svc-carousel-wrap     { display: none  !important; }
+html.tablet-landscape #home-fv-mobile            { display: none  !important; }
+html.tablet-landscape #page-fv-mobile            { display: none  !important; }
+html.tablet-landscape #pageSvcScrollWrapper      { display: block !important; }
+html.tablet-landscape #fvContainer               { display: block !important; }
+html.tablet-landscape #fvContainerPage           { display: block !important; }
+
+/* ══ END TABLET LANDSCAPE OVERRIDE ══ */
