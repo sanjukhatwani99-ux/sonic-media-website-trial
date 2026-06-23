@@ -2158,12 +2158,9 @@ input:checked + .toggle-slider:before{transform:translateX(16px);}
 </style>
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 <script>
-/* Tablet orientation: runs before first paint — no flash */
 (function(){
-  var w = window.innerWidth, h = window.innerHeight;
-  if(w >= 769 && w <= 1024){
-    document.documentElement.classList.add(h > w ? 'tab-portrait' : 'tab-landscape');
-  }
+  var w=window.innerWidth,h=window.innerHeight;
+  if(w>=769&&w<=1024){document.documentElement.classList.add(h>w?'tab-p':'tab-l');}
 })();
 </script>
 </head>

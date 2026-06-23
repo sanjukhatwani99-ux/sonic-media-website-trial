@@ -3951,144 +3951,39 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 })();
 
 
-/* ═══════════════════════════════════════════════════
-   iPAD / TABLET ORIENTATION
-   Uses JS classes (tab-portrait / tab-landscape) on <html>
-   instead of CSS orientation media queries — required because
-   iOS Safari ignores orientation queries when viewport meta
-   has maximum-scale or user-scalable set.
-   window.innerWidth/Height always reflect actual dimensions.
-   769px–1024px only. Desktop (≥1025px) & Mobile (≤768px) untouched.
-═══════════════════════════════════════════════════ */
-(function tabletOrientation() {
 
+/* ── TABLET ORIENTATION ── */
+(function(){
   var html = document.documentElement;
 
-  function isTablet() {
-    var w = window.innerWidth;
-    return w >= 769 && w <= 1024;
-  }
-
-  function isPortrait() {
-    return window.innerHeight > window.innerWidth;
-  }
-
-  function buildFvHTML(panels) {
-    return panels.map(function(p, i) {
-      return '<div class="fv-mobile-card">' +
-        '<div class="fv-mobile-card-img"><img src="' + p.img + '" alt="' + p.title + '" loading="lazy"></div>' +
-        '<div class="fv-mobile-card-body">' +
-          '<div class="fv-mobile-card-tag">' + (p.tag || 'Vision') + '</div>' +
-          '<div class="fv-mobile-card-title">' + p.title + '</div>' +
-          '<div class="fv-mobile-card-desc">' + (p.desc || '') + '</div>' +
-          '<button class="fv-mobile-card-btn" onclick="openFvDetail(' + i + ')">Learn More &#8594;</button>' +
-        '</div></div>';
-    }).join('');
-  }
-
-  function mountPortraitWidgets() {
-    /* Services: show mobile carousel, hide desktop coverflow */
-    var carousel  = document.getElementById('pageMobSvcCarousel');
-    var coverflow = document.getElementById('pageSvcScrollWrapper');
-    if (carousel)  carousel.style.display = 'flex';
-    if (coverflow) coverflow.style.display = 'none';
-
-    /* Future Vision: show mobile cards, hide desktop container */
-    var fvD1 = document.getElementById('fvContainer');
-    var fvD2 = document.getElementById('fvContainerPage');
-    var fvM1 = document.getElementById('home-fv-mobile');
-    var fvM2 = document.getElementById('page-fv-mobile');
-    if (fvD1) fvD1.style.display = 'none';
-    if (fvD2) fvD2.style.display = 'none';
-    if (fvM1 && typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future) {
-      if (!fvM1.dataset.built) {
-        fvM1.dataset.built = '1';
-        fvM1.innerHTML = buildFvHTML(PAGE_DATA.future.panels.slice(0, 4));
+  function apply() {
+    var w = window.innerWidth, h = window.innerHeight;
+    if (w < 769 || w > 1024) { html.classList.remove('tab-p','tab-l'); return; }
+    var portrait = h > w;
+    html.classList.toggle('tab-p', portrait);
+    html.classList.toggle('tab-l', !portrait);
+    /* Widget swap — carousel vs coverflow */
+    var car = document.getElementById('pageMobSvcCarousel');
+    var cov = document.getElementById('pageSvcScrollWrapper');
+    if (car) car.style.display = portrait ? 'flex' : 'none';
+    if (cov) cov.style.display = portrait ? 'none' : '';
+    /* Close nav on rotate to landscape */
+    if (!portrait) {
+      var nav = document.getElementById('mob-nav');
+      if (nav && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        var ham = document.getElementById('ham');
+        if (ham) ham.classList.remove('active');
+        document.body.classList.remove('mob-open');
+        document.body.style.overflow = '';
       }
-      fvM1.style.display = 'grid';
     }
-    if (fvM2 && typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future) {
-      if (!fvM2.dataset.built) {
-        fvM2.dataset.built = '1';
-        fvM2.innerHTML = buildFvHTML(PAGE_DATA.future.panels);
-      }
-      fvM2.style.display = 'grid';
-    }
+    if (typeof ScrollTrigger !== 'undefined') setTimeout(function(){ ScrollTrigger.refresh(); }, 200);
   }
 
-  function mountLandscapeWidgets() {
-    /* Services: hide mobile carousel, show desktop coverflow */
-    var carousel  = document.getElementById('pageMobSvcCarousel');
-    var coverflow = document.getElementById('pageSvcScrollWrapper');
-    if (carousel)  carousel.style.display = 'none';
-    if (coverflow) coverflow.style.display = '';
-
-    /* Future Vision: hide mobile cards, show desktop container */
-    var fvD1 = document.getElementById('fvContainer');
-    var fvD2 = document.getElementById('fvContainerPage');
-    var fvM1 = document.getElementById('home-fv-mobile');
-    var fvM2 = document.getElementById('page-fv-mobile');
-    if (fvD1) fvD1.style.display = '';
-    if (fvD2) fvD2.style.display = '';
-    if (fvM1) { fvM1.style.display = 'none'; fvM1.dataset.built = ''; fvM1.innerHTML = ''; }
-    if (fvM2) { fvM2.style.display = 'none'; fvM2.dataset.built = ''; fvM2.innerHTML = ''; }
-
-    /* Close mobile nav drawer if open */
-    var mobNav = document.getElementById('mob-nav');
-    if (mobNav && mobNav.classList.contains('open')) {
-      mobNav.classList.remove('open');
-      var ham = document.getElementById('ham');
-      if (ham) ham.classList.remove('active');
-      document.body.classList.remove('mob-open');
-      document.body.style.overflow = '';
-    }
-  }
-
-  function update() {
-    if (!isTablet()) {
-      /* Outside tablet zone — remove both classes, don't touch widgets */
-      html.classList.remove('tab-portrait', 'tab-landscape');
-      return;
-    }
-
-    var portrait = isPortrait();
-
-    if (portrait) {
-      html.classList.add('tab-portrait');
-      html.classList.remove('tab-landscape');
-      mountPortraitWidgets();
-    } else {
-      html.classList.add('tab-landscape');
-      html.classList.remove('tab-portrait');
-      mountLandscapeWidgets();
-    }
-
-    if (typeof ScrollTrigger !== 'undefined') {
-      setTimeout(function() { ScrollTrigger.refresh(); }, 250);
-    }
-  }
-
-  /* Run immediately (DOM may not be ready yet, but class set in inline <head> script) */
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { setTimeout(update, 50); });
-  } else {
-    update();
-  }
-
-  /* On rotation: wait 80ms for browser to update innerWidth/Height */
-  window.addEventListener('orientationchange', function() { setTimeout(update, 80); });
-
-  /* On resize (covers split-screen, browser chrome resize) */
-  var resizeTimer;
-  window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(update, 150);
-  });
-
-  /* SPA nav hook */
-  if (typeof window._addNavHook === 'function') {
-    window._addNavHook(function() { setTimeout(update, 80); });
-  }
-
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
+  else apply();
+  window.addEventListener('orientationchange', function(){ setTimeout(apply, 80); });
+  var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(apply, 150); });
 })();
-/* ══ END iPAD / TABLET ORIENTATION ══ */
+/* ── END TABLET ORIENTATION ── */

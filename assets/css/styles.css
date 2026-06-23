@@ -4928,102 +4928,86 @@ a.social-icon:focus-visible {
    ───────────────────────────────────────────── */
 
 
+
 /* ═══════════════════════════════════════════════════
-   iPAD / TABLET ORIENTATION
-   Class-based (not CSS orientation queries) so it works
-   on iOS Safari/iPadOS where orientation media queries
-   are unreliable. JS sets html.tab-portrait or
-   html.tab-landscape based on window.innerWidth/Height.
-   769px – 1024px only. Desktop & Mobile untouched.
+   TABLET ORIENTATION
+   html.tab-p  = portrait  → mirror mobile (≤768px)
+   html.tab-l  = landscape → mirror desktop (≥1025px)
+   Set by inline <head> script + app.js on rotate.
+   Zero changes to existing desktop or mobile CSS.
 ═══════════════════════════════════════════════════ */
 
-/* PORTRAIT → mobile layout */
-html.tab-portrait .nav-links { display: none !important; }
-html.tab-portrait .ham { display: flex !important; }
-html.tab-portrait nav { padding: 0 24px !important; }
-html.tab-portrait .hero { grid-template-columns: 1fr !important; }
-html.tab-portrait .hero-right { display: none !important; }
-html.tab-portrait .hero-left { padding: 110px 24px 80px !important; }
-html.tab-portrait .about { grid-template-columns: 1fr !important; padding: 80px 24px !important; }
-html.tab-portrait .studio-inner { grid-template-columns: 1fr !important; }
-html.tab-portrait .studio { padding: 80px 24px !important; }
-html.tab-portrait .studio-equip { padding: 80px 24px !important; }
-html.tab-portrait .services { padding: 80px 24px !important; }
-html.tab-portrait .pricing { padding: 80px 24px !important; }
-html.tab-portrait .pricing-grid { grid-template-columns: 1fr !important; }
-html.tab-portrait .future { padding: 80px 24px !important; }
-html.tab-portrait .future-grid { grid-template-columns: 1fr !important; }
-html.tab-portrait .testimonials { padding: 80px 24px !important; }
-html.tab-portrait .tcard { flex: 0 0 100% !important; }
-html.tab-portrait .journal { padding: 80px 24px !important; }
-html.tab-portrait .jnl-grid { grid-template-columns: 1fr !important; }
-html.tab-portrait .jnl-grid .jcard:first-child { grid-column: span 1 !important; }
-html.tab-portrait .casestudies { padding: 80px 24px !important; }
-html.tab-portrait .cs-grid { grid-template-columns: 1fr !important; }
-html.tab-portrait .portfolio { padding: 80px 24px !important; }
-html.tab-portrait .portfolio-masonry { grid-template-columns: 1fr !important; grid-auto-rows: 260px !important; }
-html.tab-portrait .port-item.port-wide { grid-column: span 1 !important; }
-html.tab-portrait .port-item.port-tall { grid-row: span 1 !important; }
-html.tab-portrait .blogs-half,
-html.tab-portrait .newsletter-half { padding: 70px 24px !important; }
-html.tab-portrait .blogs-newsletter { grid-template-columns: 1fr !important; }
-html.tab-portrait .faq-section { padding: 80px 24px !important; }
-html.tab-portrait .faq-inner { grid-template-columns: 1fr !important; }
-html.tab-portrait .contact-section { padding: 80px 24px !important; }
-html.tab-portrait .contact-grid { grid-template-columns: 1fr !important; gap: 50px !important; }
-html.tab-portrait .contact-form { order: 1 !important; }
-html.tab-portrait .contact-info { order: 2 !important; }
-html.tab-portrait .cta { padding: 100px 24px !important; }
-html.tab-portrait footer { padding: 60px 24px 30px !important; }
-html.tab-portrait .footer-top { grid-template-columns: 1fr 1fr !important; }
-html.tab-portrait .inner-hero { padding: 120px 24px 60px !important; }
-html.tab-portrait .fc-panel { grid-template-columns: 1fr !important; height: auto !important; min-height: 100vh !important; padding: 120px 24px 60px !important; text-align: center !important; justify-items: center !important; }
-html.tab-portrait #cursor,
-html.tab-portrait #cursor-follower,
-html.tab-portrait #cursor-trail,
-html.tab-portrait #mouse-glow { display: none !important; }
-html.tab-portrait .mob-svc-carousel-wrap { display: flex !important; }
-html.tab-portrait #pageSvcScrollWrapper { display: none !important; }
-html.tab-portrait #fvContainer,
-html.tab-portrait #fvContainerPage { display: none !important; }
-html.tab-portrait #home-fv-mobile,
-html.tab-portrait #page-fv-mobile { display: grid !important; }
+/* ── PORTRAIT: everything the ≤768px blocks do ── */
+html.tab-p .fw-header { grid-template-columns: 1fr; padding: 48px 24px 36px; }
+html.tab-p .fw-header-right { align-items: flex-start; }
+html.tab-p .fw-tagline { text-align: left; }
+html.tab-p .fw-topbar { padding: 12px 24px; }
+html.tab-p .fw-row { grid-template-columns: 48px 1fr; grid-template-rows: auto auto; min-height: auto; }
+html.tab-p .fw-row-photo { grid-column: 1/3; height: 200px; border-left: none; border-right: none; }
+html.tab-p .fw-row-photo img { position: absolute; }
+html.tab-p .fw-row-metric { grid-column: 1/3; flex-direction: row; justify-content: flex-start; padding: 16px 24px; border-top: 1px solid rgba(0,0,0,.08); gap: 12px; }
+html.tab-p .fw-row-arrow { margin-top: 0; }
+html.tab-p .fw-stat-strip { grid-template-columns: 1fr 1fr; }
+html.tab-p .fw-stat-cell:nth-child(2) { border-right: 1px solid rgba(0,0,0,.1); }
+html.tab-p .testi-marquee-track { gap: 14px; animation-duration: 36s; }
+html.tab-p .tcard { flex: 0 0 300px; }
+html.tab-p .fv-arch { flex-direction: column; gap: 20px; }
+html.tab-p .fv-arch__left, html.tab-p .fv-arch__right { display: contents; }
+html.tab-p .fv-img-wrapper { position: static; transform: none; height: 280px; margin-bottom: 16px; }
+html.tab-p .fv-arch__info { height: auto; padding: 20px 0; }
+html.tab-p nav { padding: 0 20px !important; height: 64px; }
+html.tab-p .hero-stats { display: flex !important; flex-wrap: wrap; gap: 20px 32px; margin-top: 40px; }
+html.tab-p .hero-stat .num { font-size: 36px; }
+html.tab-p .footer-bottom { flex-direction: column; align-items: flex-start; }
+html.tab-p .footer-bl { flex-wrap: wrap; }
+html.tab-p .testimonials-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
+html.tab-p .journal-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
+html.tab-p .about-badge-circle { bottom: -20px; right: -10px; }
+html.tab-p .about-float { left: 12px; top: 12px; }
+html.tab-p .studio-floats { position: static; flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+html.tab-p .sfloat { min-width: 120px; }
+html.tab-p #fv-home-header { padding: 12px 20px; }
+html.tab-p #homeSvcScrollWrapper { display: none !important; }
+html.tab-p #pageSvcScrollWrapper { display: none !important; }
+html.tab-p .mob-svc-carousel-wrap { display: flex !important; }
+html.tab-p .hero-right { display: none; }
+html.tab-p .mstrip-wrap { display: none; }
+html.tab-p .section-title { font-size: clamp(34px, 9vw, 58px) !important; }
+html.tab-p #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: none !important; }
+html.tab-p #futureSplitSection { padding-bottom: 40px; }
+html.tab-p #fv-home-header { position: relative !important; top: auto !important; padding: 24px 20px !important; border-bottom: 1px solid rgba(255,255,255,0.07); }
+html.tab-p #fv-home-header .section-title { font-size: clamp(24px, 7vw, 38px) !important; }
+html.tab-p nav { height: 60px !important; padding: 0 18px !important; }
+html.tab-p .nav-logo-img { width: 34px; height: 34px; }
+html.tab-p .nav-brand { font-size: 13px; }
+html.tab-p input, html.tab-p textarea, html.tab-p select, html.tab-p .inp, html.tab-p .inp-select { font-size: 16px !important; }
+html.tab-p .future-grid { grid-template-columns: 1fr 1fr !important; }
+html.tab-p .fv-card:nth-child(3n) { border-right: 1px solid rgba(255,92,0,.1) !important; }
+html.tab-p .fv-card:nth-child(2n) { border-right: none !important; }
+html.tab-p .fv-card:nth-last-child(-n+2) { border-bottom: none !important; }
+html.tab-p .studio-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+html.tab-p .equip-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+html.tab-p .cs-stat-row { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
+html.tab-p [class*="svp-grid"], html.tab-p [class*="svp-cat-grid"], html.tab-p [class*="-caps-grid"], html.tab-p [class*="-tech-grid"], html.tab-p [class*="-info-grid"], html.tab-p [class*="-stat-grid"] { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
+html.tab-p #cursor, html.tab-p #cursor-follower, html.tab-p #cursor-trail, html.tab-p #mouse-glow { display: none !important; }
+html.tab-p #fvContainer, html.tab-p #fvContainerPage { display: none !important; }
+html.tab-p #home-fv-mobile, html.tab-p #page-fv-mobile { display: grid !important; }
 
-/* LANDSCAPE → desktop layout */
-html.tab-landscape .nav-links { display: flex !important; }
-html.tab-landscape .ham { display: none !important; }
-html.tab-landscape nav { padding: 0 32px !important; }
-html.tab-landscape .hero { grid-template-columns: 1fr 1fr !important; }
-html.tab-landscape .hero-right { display: block !important; }
-html.tab-landscape .hero-left { padding: 130px 48px 80px !important; }
-html.tab-landscape .about { grid-template-columns: 1fr 1fr !important; padding: 80px 40px !important; }
-html.tab-landscape .studio-inner { grid-template-columns: 1fr 1fr !important; }
-html.tab-landscape .contact-grid { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
-html.tab-landscape .fc-panel { grid-template-columns: 1fr 1fr !important; grid-template-rows: 1fr !important; height: 100vh !important; padding: 140px 40px 80px !important; text-align: left !important; justify-items: start !important; }
-html.tab-landscape .fc-media,
-html.tab-landscape #fcPanel2 .fc-media { grid-column: unset !important; max-width: unset !important; aspect-ratio: unset !important; height: 100% !important; }
-html.tab-landscape .fc-copy,
-html.tab-landscape #fcPanel2 .fc-copy,
-html.tab-landscape .fc-copy-right,
-html.tab-landscape .fc-copy-left { grid-column: unset !important; grid-row: unset !important; text-align: left !important; padding: unset !important; }
-html.tab-landscape .fc-copy-left .fc-bio { margin-left: 0 !important; margin-right: 0 !important; }
-html.tab-landscape .future-grid { grid-template-columns: 1fr 1fr !important; }
-html.tab-landscape .pricing-grid { grid-template-columns: repeat(3, 1fr) !important; }
-html.tab-landscape .jnl-grid { grid-template-columns: 1fr 1fr !important; }
-html.tab-landscape .jnl-grid .jcard:first-child { grid-column: span 2 !important; }
-html.tab-landscape .portfolio-masonry { grid-template-columns: repeat(2, 1fr) !important; grid-auto-rows: 260px !important; }
-html.tab-landscape .port-item.port-wide { grid-column: span 2 !important; }
-html.tab-landscape .port-item.port-tall { grid-row: span 2 !important; }
-html.tab-landscape .fw-row { grid-template-columns: 60px 1fr 220px 120px !important; }
-html.tab-landscape #cursor { display: block !important; }
-html.tab-landscape #cursor-follower { display: block !important; }
-html.tab-landscape #cursor-trail { display: block !important; }
-html.tab-landscape #mouse-glow { display: block !important; }
-html.tab-landscape .mob-svc-carousel-wrap { display: none !important; }
-html.tab-landscape #pageSvcScrollWrapper { display: block !important; }
-html.tab-landscape #fvContainer,
-html.tab-landscape #fvContainerPage { display: block !important; }
-html.tab-landscape #home-fv-mobile,
-html.tab-landscape #page-fv-mobile { display: none !important; }
+/* ── LANDSCAPE: undo any ≤1100px rules that bleed into tablet landscape ── */
+html.tab-l .nav-links { display: flex !important; }
+html.tab-l .ham { display: none !important; }
+html.tab-l nav { padding: 0 40px !important; height: 72px !important; }
+html.tab-l .hero { grid-template-columns: 1fr 1fr !important; }
+html.tab-l .hero-right { display: block !important; }
+html.tab-l .hero-left { padding: 130px 48px 80px !important; }
+html.tab-l .mob-svc-carousel-wrap { display: none !important; }
+html.tab-l #pageSvcScrollWrapper { display: block !important; }
+html.tab-l #homeSvcScrollWrapper { display: block !important; }
+html.tab-l #fvContainer, html.tab-l #fvContainerPage { display: block !important; }
+html.tab-l #home-fv-mobile, html.tab-l #page-fv-mobile { display: none !important; }
+html.tab-l #cursor { display: block !important; }
+html.tab-l #cursor-follower { display: block !important; }
+html.tab-l #cursor-trail { display: block !important; }
+html.tab-l #mouse-glow { display: block !important; }
 
-/* ══ END iPAD / TABLET ORIENTATION ══ */
+/* ══ END TABLET ORIENTATION ══ */

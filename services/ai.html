@@ -366,12 +366,9 @@
 }
 </style>
 <script>
-/* Tablet orientation: runs before first paint — no flash */
 (function(){
-  var w = window.innerWidth, h = window.innerHeight;
-  if(w >= 769 && w <= 1024){
-    document.documentElement.classList.add(h > w ? 'tab-portrait' : 'tab-landscape');
-  }
+  var w=window.innerWidth,h=window.innerHeight;
+  if(w>=769&&w<=1024){document.documentElement.classList.add(h>w?'tab-p':'tab-l');}
 })();
 </script>
 </head>
