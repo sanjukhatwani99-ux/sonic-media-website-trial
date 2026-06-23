@@ -2558,24 +2558,169 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
    TABLET / iPAD — fills gaps between 768–1100px
    Only properties not already handled above
 ══════════════════════════════════════════════════ */
-@media(min-width:769px) and (max-width:1100px){
+/* ═══════════════════════════════════════════════════
+   TABLET / iPAD ORIENTATION ADAPTER
+   ─────────────────────────────────────────────────
+   The range 769px–1024px is the tablet zone.
+   We split it cleanly by orientation:
 
-  /* Nav */
+   PORTRAIT  (height > width)  → full mobile layout
+             Driven by JS adding  html.tablet-portrait
+             Rules mirror ≤900px mobile breakpoint exactly.
+
+   LANDSCAPE (width > height)  → full desktop layout
+             Driven by JS removing html.tablet-portrait
+             Rules override the 769-1100 intermediate zone
+             and restore every desktop behaviour.
+
+   ⚠  Desktop (≥1025px) and Mobile (≤768px) CSS is
+      NOT touched — these blocks only cover 769-1024px.
+═══════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────
+   TABLET PORTRAIT  →  MOBILE LAYOUT
+   Applied when JS sets html.tablet-portrait
+   (device is 769-1024px wide AND height > width)
+   Every rule mirrors the existing ≤900px mobile block.
+────────────────────────────────────────────────── */
+html.tablet-portrait nav { padding: 0 24px; }
+html.tablet-portrait .nav-links { display: none !important; }
+html.tablet-portrait .ham { display: flex !important; }
+
+html.tablet-portrait .hero { grid-template-columns: 1fr; }
+html.tablet-portrait .hero-right { display: none; }
+html.tablet-portrait .hero-left { padding: 110px 24px 80px; }
+
+html.tablet-portrait .about { grid-template-columns: 1fr; padding: 80px 24px; gap: 60px; }
+html.tablet-portrait .about-badge-circle { right: -12px; }
+html.tablet-portrait .about-float { left: 0; }
+
+html.tablet-portrait .services { padding: 80px 24px; }
+html.tablet-portrait .services-grid { grid-template-columns: 1fr 1fr; }
+html.tablet-portrait .svc-card.svc-featured { grid-column: span 1; }
+html.tablet-portrait .svc-bento { gap: 12px; }
+
+html.tablet-portrait .pricing { padding: 80px 24px; }
+html.tablet-portrait .pricing-grid { grid-template-columns: 1fr; }
+html.tablet-portrait .price-card { padding: 32px 20px; }
+
+html.tablet-portrait .studio { padding: 80px 24px; }
+html.tablet-portrait .studio-inner { grid-template-columns: 1fr; }
+html.tablet-portrait .studio-floats { right: -8px; }
+html.tablet-portrait .studio-equip { padding: 80px 24px; }
+html.tablet-portrait .equip-grid { grid-template-columns: repeat(2,1fr); }
+html.tablet-portrait .studio-reel { aspect-ratio: 16/9; }
+
+html.tablet-portrait .future { padding: 80px 24px; }
+html.tablet-portrait .future-grid { grid-template-columns: 1fr; }
+html.tablet-portrait .timeline-items { flex-wrap: wrap; }
+html.tablet-portrait .ti { flex: 0 0 50%; }
+
+html.tablet-portrait .testimonials { padding: 80px 24px; }
+html.tablet-portrait .testimonials-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 48px; }
+html.tablet-portrait .tcard { flex: 0 0 calc(100% - 0px); }
+
+html.tablet-portrait .portfolio { padding: 80px 24px; }
+html.tablet-portrait .portfolio-masonry { grid-template-columns: repeat(2,1fr); grid-auto-rows: 260px; }
+html.tablet-portrait .port-item.port-wide { grid-column: span 2; }
+html.tablet-portrait .port-item.port-tall { grid-row: span 2; }
+
+html.tablet-portrait .casestudies { padding: 80px 24px; }
+html.tablet-portrait .cs-grid { grid-template-columns: 1fr; }
+html.tablet-portrait .cs-item:first-child { grid-row: auto; }
+html.tablet-portrait .cs-full-grid { grid-template-columns: repeat(2,1fr); }
+html.tablet-portrait .cs-stat-row { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+html.tablet-portrait .journal { padding: 80px 24px; }
+html.tablet-portrait .jnl-grid { grid-template-columns: 1fr; }
+html.tablet-portrait .jnl-grid .jcard:first-child { grid-column: span 1; }
+html.tablet-portrait .jnl-full-grid { grid-template-columns: 1fr 1fr; }
+
+html.tablet-portrait .blogs-newsletter { grid-template-columns: 1fr; }
+html.tablet-portrait .blogs-half { padding: 70px 24px; }
+html.tablet-portrait .newsletter-half { padding: 70px 24px; }
+
+html.tablet-portrait .faq-section { padding: 80px 40px; }
+html.tablet-portrait .faq-inner { grid-template-columns: 1fr; gap: 60px; }
+
+html.tablet-portrait .cta { padding: 100px 24px; }
+html.tablet-portrait .cta-cards { gap: 14px; }
+html.tablet-portrait .cta-card { flex: 0 0 calc(50% - 8px); max-width: none; }
+
+html.tablet-portrait .contact-section { padding: 80px 24px; }
+html.tablet-portrait .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+html.tablet-portrait .contact-form { order: 1; padding: 36px 32px; }
+html.tablet-portrait .contact-info { order: 2; }
+
+html.tablet-portrait .inner-hero { padding: 130px 40px 80px; }
+
+html.tablet-portrait footer { padding: 60px 24px 30px; }
+html.tablet-portrait .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+html.tablet-portrait .footer-bar-item { font-size: 28px; }
+
+html.tablet-portrait .fc-panel { padding: 120px 24px 60px; }
+html.tablet-portrait .fc-panel { grid-template-columns: 1fr; grid-template-rows: auto auto; height: auto; min-height: 100vh; gap: 36px; text-align: center; justify-items: center; }
+html.tablet-portrait .fc-media,
+html.tablet-portrait #fcPanel2 .fc-media { grid-column: 1; justify-self: center; width: 100%; max-width: 420px; min-width: 0; aspect-ratio: 4/5; height: auto; }
+html.tablet-portrait .fc-copy,
+html.tablet-portrait #fcPanel2 .fc-copy,
+html.tablet-portrait .fc-copy-right,
+html.tablet-portrait .fc-copy-left { grid-column: 1; grid-row: 2; justify-self: center; text-align: center; padding: 0; max-width: 520px; }
+html.tablet-portrait .fc-copy-left .fc-bio { margin-left: auto; margin-right: auto; }
+
+html.tablet-portrait .fw-header { padding: 60px 24px 40px; }
+html.tablet-portrait .fw-topbar { padding: 14px 24px; }
+html.tablet-portrait .fw-row { grid-template-columns: 60px 1fr 220px 120px; min-height: 140px; }
+html.tablet-portrait .fw-row-info { padding: 28px 24px; }
+html.tablet-portrait .fw-stat-strip { grid-template-columns: repeat(2,1fr); }
+
+html.tablet-portrait .hcf-list { width: 19rem; height: 25rem; }
+html.tablet-portrait .hcf-card { width: 19rem; height: 25rem; }
+
+/* Mobile-only widgets: show in portrait tablet */
+html.tablet-portrait .mob-svc-carousel-wrap { display: flex; }
+html.tablet-portrait #pageSvcScrollWrapper { display: none !important; }
+html.tablet-portrait #home-fv-mobile { display: grid !important; }
+html.tablet-portrait #page-fv-mobile { display: grid !important; }
+html.tablet-portrait #fvContainer { display: none !important; }
+html.tablet-portrait #fvContainerPage { display: none !important; }
+
+/* Cursor: off in portrait (touch) */
+html.tablet-portrait #cursor,
+html.tablet-portrait #cursor-follower,
+html.tablet-portrait #cursor-trail,
+html.tablet-portrait #mouse-glow { display: none !important; }
+
+/* ──────────────────────────────────────────────────
+   TABLET LANDSCAPE  →  DESKTOP LAYOUT
+   Applied when html.tablet-portrait is NOT present
+   (device is 769-1024px wide AND width > height)
+   Overrides the leftover 769-1100 intermediate values
+   and restores clean desktop behaviour.
+────────────────────────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+
+  /* Nav — full desktop */
   nav { padding: 0 32px; }
+  .nav-links { display: flex !important; }
+  .ham { display: none !important; }
+  .nav-links a, .nav-links button { padding: 8px 10px; font-size: 11px; }
 
-  /* Hero */
-  .hero-left { padding: 120px 40px 80px; }
+  /* Hero — two-column desktop */
+  .hero { grid-template-columns: 1fr 1fr; }
+  .hero-right { display: block; }
+  .hero-left { padding: 130px 48px 80px; }
 
   /* About */
-  .about { padding: 80px 40px; gap: 60px; }
+  .about { grid-template-columns: 1fr 1fr; padding: 80px 40px; gap: 60px; }
   .about-badge-circle { right: -12px; }
   .about-float { left: 0; }
 
-  /* Services bento — already handled by existing 1100 rule, reinforce padding */
+  /* Services */
   .services { padding: 80px 40px; }
   .svc-bento { gap: 12px; }
 
-  /* Pricing */
+  /* Pricing — 3-col */
   .pricing { padding: 80px 40px; }
   .pricing-grid { grid-template-columns: repeat(3,1fr); gap: 16px; }
   .price-card { padding: 32px 20px; }
@@ -2583,9 +2728,11 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 
   /* Studio */
   .studio { padding: 80px 40px; }
+  .studio-inner { grid-template-columns: 1fr 1fr; }
   .studio-floats { right: -8px; }
   .studio-equip { padding: 80px 40px; }
   .equip-grid { grid-template-columns: repeat(2,1fr); }
+  .studio-reel { aspect-ratio: 4/3; }
 
   /* Featured work rows */
   .fw-header { padding: 60px 40px 40px; }
@@ -2629,7 +2776,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 
   /* FAQ */
   .faq-section { padding: 80px 40px; }
-  .faq-inner { gap: 60px; }
+  .faq-inner { grid-template-columns: 1fr 1fr; gap: 60px; }
 
   /* CTA */
   .cta { padding: 100px 40px; }
@@ -2638,34 +2785,37 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 
   /* Contact */
   .contact-section { padding: 80px 40px; }
+  .contact-grid { grid-template-columns: 1fr 1fr; }
   .contact-form { padding: 36px 32px; }
 
-  /* Inner page hero */
+  /* Inner hero */
   .inner-hero { padding: 140px 40px 80px; }
 
   /* Footer */
-  footer { padding: 60px 40px 30px; padding-top: 260px; }
+  footer { padding: 60px 40px 30px; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
   .footer-bar-item { font-size: 28px; }
 
-  /* Home coverflow */
+  /* FC panel — desktop two-column */
+  .fc-panel { grid-template-columns: 1fr 1fr; height: 100vh; padding: 140px 40px 80px; text-align: left; justify-items: start; }
+
+  /* Hcf */
   .hcf-list { width: 19rem; height: 25rem; }
   .hcf-card { width: 19rem; height: 25rem; }
-}
 
-/* ── iPad landscape / small desktop (1024px) — slot between 900 and 1100 ── */
-@media(min-width:901px) and (max-width:1100px){
-  /* Restore nav links (hamburger hidden, desktop links visible) */
-  .nav-links { display: flex; }
-  .ham { display: none !important; }
-  nav { padding: 0 28px; }
-  .nav-links a, .nav-links button { padding: 8px 10px; font-size: 11px; }
+  /* Desktop-only widgets: show */
+  .mob-svc-carousel-wrap { display: none !important; }
+  #pageSvcScrollWrapper { display: block; }
+  #fvContainer { display: block; }
+  #fvContainerPage { display: block; }
+  #home-fv-mobile { display: none !important; }
+  #page-fv-mobile { display: none !important; }
 
-  /* Hero — single column but keep padding comfortable */
-  .hero-left { padding: 130px 48px 80px; }
-
-  /* Studio reel — smaller aspect on tablet */
-  .studio-reel { aspect-ratio: 4/3; }
+  /* Cursor: on in landscape */
+  #cursor { display: block; }
+  #cursor-follower { display: block; }
+  #cursor-trail { display: block; }
+  #mouse-glow { display: block; }
 }
 
 /* ═══════════════════════════════════════════════════
@@ -5037,183 +5187,3 @@ a.social-icon:focus-visible {
    END DEVICE-INDEPENDENT RESPONSIVE FIX
    ───────────────────────────────────────────── */
 
-/* ═══════════════════════════════════════════════════════════════════
-   TABLET / iPAD ORIENTATION SWITCHING
-   ───────────────────────────────────────────────────────────────────
-   Tablet / iPad detection: devices whose shorter side is 768–1024px
-   and whose longer side is 1024–1366px (covers iPad mini → iPad Pro).
-
-   Strategy
-   ─────────
-   • body[data-orientation="portrait"]  → force the ≤768px (mobile)
-     experience regardless of actual pixel width.
-   • body[data-orientation="landscape"] → force the >768px (desktop)
-     experience and suppress any mobile-only overrides.
-
-   The `data-orientation` attribute is set / updated in real-time by
-   the orientation JS module (orientation.js).
-═══════════════════════════════════════════════════════════════════ */
-
-/* ── Detect tablet range ──────────────────────────────────────────
-   Only activate orientation switching on genuine tablet-sized screens
-   (min-width 600px so phones in landscape are excluded, max-width
-   1366px to leave large desktops untouched).                         */
-
-@media (min-width: 600px) and (max-width: 1366px) {
-
-  /* ── PORTRAIT: replicate every ≤768px mobile rule ────────────── */
-  body[data-orientation="portrait"] {
-
-    /* ── Nav ── */
-    nav { padding: 0 20px !important; height: 64px !important; }
-
-    /* ── Hero stats ── */
-    .hero-stats { display: flex !important; flex-wrap: wrap !important; gap: 20px 32px !important; margin-top: 40px !important; }
-    .hero-stat .num { font-size: 36px !important; }
-
-    /* ── Footer ── */
-    .footer-bottom { flex-direction: column !important; align-items: flex-start !important; }
-    .footer-bl { flex-wrap: wrap !important; }
-
-    /* ── Testimonials header ── */
-    .testimonials-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
-
-    /* ── Journal header ── */
-    .journal-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
-
-    /* ── About ── */
-    .about-badge-circle { bottom: -20px !important; right: -10px !important; }
-    .about-float { left: 12px !important; top: 12px !important; }
-
-    /* ── Studio floats ── */
-    .studio-floats { position: static !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 10px !important; margin-top: 16px !important; }
-    .sfloat { min-width: 120px !important; }
-
-    /* ── Future home header ── */
-    #fv-home-header { padding: 12px 20px !important; }
-
-    /* ── Pricing ── */
-    .pricing-grid { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
-    .price-card { padding: 28px 20px !important; }
-    .price-amt { font-size: 48px !important; }
-
-    /* ── Contact form ── */
-    .cf-row { grid-template-columns: 1fr !important; }
-    .contact-form { padding: 32px 24px !important; }
-
-    /* ── Inner hero ── */
-    .inner-hero { padding: 110px 24px 60px !important; }
-    .inner-hero-h { font-size: clamp(48px, 11vw, 80px) !important; }
-
-    /* ── Future vision arch ── */
-    .fv-arch { flex-direction: column !important; gap: 0 !important; }
-    .fv-arch__info { height: auto !important; padding: 20px 0 !important; }
-
-    /* ── Section titles ── */
-    .section-title { font-size: clamp(38px, 8vw, 72px) !important; }
-    .fw-title { font-size: clamp(40px, 8vw, 80px) !important; }
-
-    /* ── Mobile nav drawer: show hamburger, hide desktop links ── */
-    .nav-links { display: none !important; }
-    .mob-nav-toggle { display: flex !important; }
-
-    /* ── Hero: switch to single-column mobile stack ── */
-    .hero { flex-direction: column !important; min-height: auto !important; }
-    .hero-left { padding: 100px 24px 48px !important; width: 100% !important; }
-    .hero-right { display: none !important; }
-    .hero-mobile-bg { display: block !important; }
-
-    /* ── Services bento: single column ── */
-    .svc-bento { grid-template-columns: 1fr !important; }
-
-    /* ── Carousel: show on portrait, hide coverflow ── */
-    #pageMobSvcCarousel { display: flex !important; }
-    #pageSvcScrollWrapper { display: none !important; }
-    #homeMobSvcCarousel { display: flex !important; }
-    #homeSvcScrollWrapper { display: none !important; }
-
-    /* ── Future Vision: mobile cards ── */
-    #home-fv-mobile { display: block !important; }
-    #home-fv-desktop { display: none !important; }
-    #page-fv-mobile { display: block !important; }
-    #page-fv-desktop { display: none !important; }
-
-    /* ── About section: stack ── */
-    .about { flex-direction: column !important; padding: 60px 24px !important; }
-    .about-img { width: 100% !important; max-width: 100% !important; }
-
-    /* ── Float buttons: mobile sizing ── */
-    .wa-float { width: 52px !important; height: 52px !important; bottom: 20px !important; right: 16px !important; }
-    .wa-float svg { width: 26px !important; height: 26px !important; }
-    .email-float { width: 52px !important; height: 52px !important; bottom: 84px !important; right: 16px !important; }
-    .email-float svg { width: 22px !important; height: 22px !important; }
-
-    /* ── Scroll progress bar ── */
-    #sp { height: 3px !important; }
-
-    /* ── Studio cards ── */
-    .studio-card { min-height: 100px !important; }
-    .equip-card  { min-height: 120px !important; }
-    .fv-card     { min-height: 100px !important; }
-    .svc-card    { min-height: 180px !important; }
-  }
-
-  /* ── LANDSCAPE: replicate desktop experience (>768px rules win) ─ */
-  body[data-orientation="landscape"] {
-
-    /* ── Desktop nav ── */
-    nav { padding: 0 40px !important; height: 72px !important; }
-    .nav-links { display: flex !important; }
-    .mob-nav-toggle { display: none !important; }
-
-    /* ── Hero: two-column desktop layout ── */
-    .hero { flex-direction: row !important; }
-    .hero-left { padding: 140px 56px 100px !important; width: auto !important; flex: 1 !important; }
-    .hero-right { display: flex !important; }
-    .hero-mobile-bg { display: none !important; }
-
-    /* ── Hero stats ── */
-    .hero-stats { display: grid !important; }
-    .hero-stat .num { font-size: 48px !important; }
-
-    /* ── Services bento: restore desktop grid ── */
-    .svc-bento { grid-template-columns: repeat(3, 1fr) !important; }
-
-    /* ── Carousel: hide on landscape, show coverflow ── */
-    #pageMobSvcCarousel { display: none !important; }
-    #pageSvcScrollWrapper { display: block !important; }
-    #homeMobSvcCarousel { display: none !important; }
-    #homeSvcScrollWrapper { display: block !important; }
-
-    /* ── Future Vision: desktop panels ── */
-    #home-fv-mobile { display: none !important; }
-    #home-fv-desktop { display: block !important; }
-    #page-fv-mobile { display: none !important; }
-    #page-fv-desktop { display: block !important; }
-
-    /* ── About: restore side-by-side ── */
-    .about { flex-direction: row !important; padding: 100px 56px !important; }
-
-    /* ── Pricing ── */
-    .pricing-grid { grid-template-columns: repeat(3, 1fr) !important; }
-    .price-amt { font-size: 56px !important; }
-
-    /* ── Contact form ── */
-    .cf-row { grid-template-columns: 1fr 1fr !important; }
-
-    /* ── Section titles ── */
-    .section-title { font-size: clamp(48px, 6vw, 96px) !important; }
-    .fw-title { font-size: clamp(52px, 6vw, 100px) !important; }
-
-    /* ── Float buttons: desktop sizing ── */
-    .wa-float { width: 56px !important; height: 56px !important; bottom: 28px !important; right: 24px !important; }
-    .email-float { width: 56px !important; height: 56px !important; bottom: 96px !important; right: 24px !important; }
-
-    /* ── Studio floats: restore absolute positioning ── */
-    .studio-floats { position: absolute !important; flex-direction: column !important; }
-
-    /* ── Footer ── */
-    .footer-bottom { flex-direction: row !important; align-items: center !important; }
-  }
-}
-/* ── END TABLET ORIENTATION SWITCHING ───────────────────────────── */

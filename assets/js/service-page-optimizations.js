@@ -85,7 +85,7 @@
         ctx.imageSmoothingEnabled = false;
         
         // Use lower resolution on mobile
-        if (document.body.getAttribute("data-orientation") === "portrait" || (window.innerWidth < 768 && !document.body.getAttribute("data-orientation"))) {
+        if (window.innerWidth < 768) {
           canvas.style.transform = 'scale(1.2)';
           canvas.style.transformOrigin = 'center';
           canvas.width = canvas.offsetWidth * 0.7;
@@ -271,4 +271,27 @@
 
   init();
 
+})();
+
+/* ── Tablet orientation: treat portrait tablet as mobile for canvas resolution ── */
+(function patchServicePageTabletOrientation() {
+  var orig = window.innerWidth;
+  /* Override the canvas resolution check to respect tablet-portrait mode */
+  document.addEventListener('DOMContentLoaded', function() {
+    var canvases = document.querySelectorAll('canvas');
+    canvases.forEach(function(canvas) {
+      var isTabletPortrait = window._tabletOrientationAdapter
+        ? window._tabletOrientationAdapter.isTabletPortrait()
+        : (window.innerWidth >= 768 && window.innerWidth <= 1024 && window.innerHeight > window.innerWidth);
+      if (isTabletPortrait) {
+        var ctx = canvas.getContext('2d');
+        if (ctx) {
+          canvas.style.transform = 'scale(1.2)';
+          canvas.style.transformOrigin = 'center';
+          canvas.width  = canvas.offsetWidth  * 0.7;
+          canvas.height = canvas.offsetHeight * 0.7;
+        }
+      }
+    });
+  });
 })();

@@ -3949,3 +3949,181 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
     setTimeout(boot, 150);
   }
 })();
+
+
+/* ═══════════════════════════════════════════════════
+   TABLET / iPAD ORIENTATION ADAPTER
+   ─────────────────────────────────────────────────
+   Tablet zone: 769px – 1024px viewport width.
+
+   PORTRAIT  (height > width):
+     → Adds    html.tablet-portrait
+     → CSS portrait block takes effect (mobile layout)
+     → JS mounts mobile widgets (carousel, FV cards)
+     → Closes desktop nav if open
+
+   LANDSCAPE (width >= height):
+     → Removes html.tablet-portrait
+     → CSS landscape @media block takes effect (desktop)
+     → JS tears down mobile widgets, restores desktop ones
+
+   Does NOT alter any ≤768px or ≥1025px logic.
+═══════════════════════════════════════════════════ */
+(function initTabletOrientationAdapter() {
+  'use strict';
+
+  var TABLET_MIN = 769;
+  var TABLET_MAX = 1024;
+
+  /* ── Is the current state a portrait tablet? ── */
+  function isTablet() {
+    var w = window.innerWidth;
+    return w >= TABLET_MIN && w <= TABLET_MAX;
+  }
+  function isTabletPortrait() {
+    return isTablet() && window.innerHeight > window.innerWidth;
+  }
+  function isTabletLandscape() {
+    return isTablet() && window.innerWidth >= window.innerHeight;
+  }
+
+  /* ── Set / clear the html class ── */
+  function applyClass() {
+    if (isTabletPortrait()) {
+      document.documentElement.classList.add('tablet-portrait');
+    } else {
+      document.documentElement.classList.remove('tablet-portrait');
+    }
+  }
+
+  /* ── Close mobile nav drawer when rotating to landscape ── */
+  function closeNavIfOpen() {
+    if (isTabletLandscape()) {
+      var mobNav = document.getElementById('mob-nav');
+      if (mobNav && mobNav.classList.contains('open')) {
+        mobNav.classList.remove('open');
+        var hamBtn = document.getElementById('ham');
+        if (hamBtn) hamBtn.classList.remove('active');
+        document.body.classList.remove('mob-open');
+        document.body.style.overflow = '';
+      }
+    }
+  }
+
+  /* ── Build mobile FV card HTML (same template as initMobFvCards) ── */
+  function buildFvCardHTML(panels) {
+    return panels.map(function(p, i) {
+      return '<div class="fv-mobile-card">' +
+        '<div class="fv-mobile-card-img"><img src="' + p.img + '" alt="' + p.title + '" loading="lazy"></div>' +
+        '<div class="fv-mobile-card-body">' +
+          '<div class="fv-mobile-card-tag">' + (p.tag || 'Vision') + '</div>' +
+          '<div class="fv-mobile-card-title">' + p.title + '</div>' +
+          '<div class="fv-mobile-card-desc">' + (p.desc || '') + '</div>' +
+          '<button class="fv-mobile-card-btn" onclick="openFvDetail(' + i + ')">Learn More &#8594;</button>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  /* ── Mount portrait (mobile) widgets ── */
+  function mountPortraitWidgets() {
+    /* Services: carousel on, coverflow off */
+    var carousel  = document.getElementById('pageMobSvcCarousel');
+    var coverflow = document.getElementById('pageSvcScrollWrapper');
+    var svcPage   = document.getElementById('page-services');
+    if (svcPage && svcPage.classList.contains('active')) {
+      if (carousel)  carousel.style.display = 'flex';
+      if (coverflow) coverflow.style.display = 'none';
+    }
+
+    /* Future Vision: mobile cards on, desktop pinned off */
+    var fvDesktopHome = document.getElementById('fvContainer');
+    var fvDesktopPage = document.getElementById('fvContainerPage');
+    var fvMobHome     = document.getElementById('home-fv-mobile');
+    var fvMobPage     = document.getElementById('page-fv-mobile');
+
+    if (fvDesktopHome) fvDesktopHome.style.display = 'none';
+    if (fvDesktopPage) fvDesktopPage.style.display = 'none';
+
+    if (fvMobHome) {
+      fvMobHome.style.display = 'grid';
+      if (!fvMobHome.dataset.built && typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future) {
+        fvMobHome.dataset.built = '1';
+        fvMobHome.innerHTML = buildFvCardHTML(PAGE_DATA.future.panels.slice(0, 4));
+      }
+    }
+    if (fvMobPage) {
+      fvMobPage.style.display = 'grid';
+      if (!fvMobPage.dataset.built && typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future) {
+        fvMobPage.dataset.built = '1';
+        fvMobPage.innerHTML = buildFvCardHTML(PAGE_DATA.future.panels);
+      }
+    }
+  }
+
+  /* ── Mount landscape (desktop) widgets ── */
+  function mountLandscapeWidgets() {
+    /* Services: coverflow on, carousel off */
+    var carousel  = document.getElementById('pageMobSvcCarousel');
+    var coverflow = document.getElementById('pageSvcScrollWrapper');
+    var svcPage   = document.getElementById('page-services');
+    if (svcPage && svcPage.classList.contains('active')) {
+      if (carousel)  carousel.style.display = 'none';
+      if (coverflow) coverflow.style.display = '';
+    }
+
+    /* Future Vision: desktop on, mobile cards off + cleared */
+    var fvDesktopHome = document.getElementById('fvContainer');
+    var fvDesktopPage = document.getElementById('fvContainerPage');
+    var fvMobHome     = document.getElementById('home-fv-mobile');
+    var fvMobPage     = document.getElementById('page-fv-mobile');
+
+    if (fvDesktopHome) fvDesktopHome.style.display = '';
+    if (fvDesktopPage) fvDesktopPage.style.display = '';
+    if (fvMobHome) { fvMobHome.style.display = 'none'; fvMobHome.dataset.built = ''; fvMobHome.innerHTML = ''; }
+    if (fvMobPage) { fvMobPage.style.display = 'none'; fvMobPage.dataset.built = ''; fvMobPage.innerHTML = ''; }
+  }
+
+  /* ── Master update — runs on every orientation / resize event ── */
+  function update() {
+    applyClass();
+    closeNavIfOpen();
+    if (!isTablet()) return; /* outside tablet zone — leave mobile/desktop alone */
+    if (isTabletPortrait()) {
+      mountPortraitWidgets();
+    } else {
+      mountLandscapeWidgets();
+    }
+    /* Let GSAP/ScrollTrigger remeasure after layout change */
+    if (typeof ScrollTrigger !== 'undefined') {
+      setTimeout(function() { ScrollTrigger.refresh(); }, 250);
+    }
+  }
+
+  /* ── Boot: run immediately + after DOM ready ── */
+  update();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { setTimeout(update, 100); });
+  } else {
+    setTimeout(update, 100);
+  }
+
+  /* ── Event listeners ── */
+  var _timer;
+  /* orientationchange fires BEFORE innerWidth updates — delay 80ms */
+  window.addEventListener('orientationchange', function() { setTimeout(update, 80); });
+  /* resize covers split-screen, desktop browser resize, and catches any missed orientation events */
+  window.addEventListener('resize', function() {
+    clearTimeout(_timer);
+    _timer = setTimeout(update, 150);
+  });
+
+  /* ── Re-run when navigating to a new page within SPA ── */
+  if (typeof window._addNavHook === 'function') {
+    window._addNavHook(function() { setTimeout(update, 80); });
+  }
+
+  /* ── Public API for debugging ── */
+  window._tabletAdapter = { isTablet: isTablet, isTabletPortrait: isTabletPortrait, isTabletLandscape: isTabletLandscape };
+
+})();
+/* ══ END TABLET / iPAD ORIENTATION ADAPTER ══ */
