@@ -808,7 +808,7 @@ section{position:relative;z-index:2;}
 .svc-card.svc-featured .svc-title{font-size:22px;}
 
 /* Responsive bento */
-@media(max-width:1100px){
+@media(max-width:1023px){
   .svc-b.b-w3,.svc-b.b-w4{grid-column:span 6;}
   .svc-b.b-w5,.svc-b.b-w6,.svc-b.b-w7,.svc-b.b-w8{grid-column:span 12;}
   .svc-b.b-h2{grid-row:span 1;}
@@ -1135,7 +1135,7 @@ section{position:relative;z-index:2;}
 }
 
 /* Responsive */
-@media(max-width:1100px){
+@media(max-width:1023px){
   .fw-row{grid-template-columns:60px 1fr 260px 130px;}
   .fw-header{padding:60px 40px 40px;}
   .fw-topbar{padding:14px 40px;}
@@ -1143,7 +1143,7 @@ section{position:relative;z-index:2;}
   .fw-stat-cell:nth-child(2){border-right:none;}
   .fw-stat-cell:nth-child(3){border-top:1px solid rgba(0,0,0,.1);}
 }
-@media(max-width:768px){
+@media(max-width:900px){
   .fw-header{grid-template-columns:1fr;padding:48px 24px 36px;}
   .fw-header-right{align-items:flex-start;}
   .fw-tagline{text-align:left;}
@@ -1395,7 +1395,7 @@ section{position:relative;z-index:2;}
 }
 
 /* Mobile: ensure cards are readable size */
-@media(max-width:768px){
+@media(max-width:900px){
   .testi-marquee-track{gap:14px;animation-duration:36s;}
   .tcard{flex:0 0 300px;}
 }
@@ -1685,7 +1685,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
 /* ═══════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════ */
-@media(max-width:1100px){
+@media(max-width:1023px){
   .hero{grid-template-columns:1fr;}
   .hero-right{display:none;}
   .hero-left{padding:140px 40px 100px;}
@@ -2262,7 +2262,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   will-change: clip-path, object-position;
 }
 @media (max-width: 900px) { .fv-arch { gap: 30px; } }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .fv-arch { flex-direction: column; gap: 20px; }
   .fv-arch__left, .fv-arch__right { display: contents; }
   .fv-img-wrapper { position: static; transform: none; height: 280px; margin-bottom: 16px; backface-visibility: hidden; }
@@ -2470,7 +2470,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 }
 
 /* ── 768px and below (tablets) ── */
-@media(max-width:768px){
+@media(max-width:900px){
   /* Nav */
   nav { padding: 0 20px; height: 64px; }
 
@@ -2768,7 +2768,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 .mob-svc-count span { color: var(--orange); }
 
 /* Show/hide based on screen size */
-@media(max-width:768px){
+@media(max-width:900px){
   /* Hide the scroll-based coverflow on mobile (home page preview) */
   #homeSvcScrollWrapper { display: none !important; }
   #pageSvcScrollWrapper { display: none !important; }
@@ -3111,7 +3111,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 ══════════════════════════════════════════════════ */
 
 /* ── Global mobile token refinements ── */
-@media(max-width:768px){
+@media(max-width:900px){
 
   /* ── NAV: premium glass bar, refined height ── */
   nav {
@@ -4626,7 +4626,7 @@ a.social-icon:focus-visible {
    blocks like .inp on the builder pages) to render at 16px on
    mobile, so tapping to type never triggers the zoom.
    ══════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   input,
   textarea,
   select,
@@ -4750,7 +4750,7 @@ a.social-icon:focus-visible {
       All phones in this range get identical layout.
       No device targeting, no pointer targeting.
    ───────────────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   /* --- Grids that must stay 2-column on 360px–480px --- */
 
@@ -4868,7 +4868,7 @@ a.social-icon:focus-visible {
       These use inline <style> per page, but shared
       grid pattern: repeat(3,1fr) → auto-fit on mobile
    ───────────────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   /* Catch any repeat(N,1fr) grids inside service viewport sections
      that aren't already handled by page-specific media queries */
   [class*="svp-grid"],
@@ -4928,86 +4928,3 @@ a.social-icon:focus-visible {
    ───────────────────────────────────────────── */
 
 
-
-/* ═══════════════════════════════════════════════════
-   TABLET ORIENTATION
-   html.tab-p  = portrait  → mirror mobile (≤768px)
-   html.tab-l  = landscape → mirror desktop (≥1025px)
-   Set by inline <head> script + app.js on rotate.
-   Zero changes to existing desktop or mobile CSS.
-═══════════════════════════════════════════════════ */
-
-/* ── PORTRAIT: everything the ≤768px blocks do ── */
-html.tab-p .fw-header { grid-template-columns: 1fr; padding: 48px 24px 36px; }
-html.tab-p .fw-header-right { align-items: flex-start; }
-html.tab-p .fw-tagline { text-align: left; }
-html.tab-p .fw-topbar { padding: 12px 24px; }
-html.tab-p .fw-row { grid-template-columns: 48px 1fr; grid-template-rows: auto auto; min-height: auto; }
-html.tab-p .fw-row-photo { grid-column: 1/3; height: 200px; border-left: none; border-right: none; }
-html.tab-p .fw-row-photo img { position: absolute; }
-html.tab-p .fw-row-metric { grid-column: 1/3; flex-direction: row; justify-content: flex-start; padding: 16px 24px; border-top: 1px solid rgba(0,0,0,.08); gap: 12px; }
-html.tab-p .fw-row-arrow { margin-top: 0; }
-html.tab-p .fw-stat-strip { grid-template-columns: 1fr 1fr; }
-html.tab-p .fw-stat-cell:nth-child(2) { border-right: 1px solid rgba(0,0,0,.1); }
-html.tab-p .testi-marquee-track { gap: 14px; animation-duration: 36s; }
-html.tab-p .tcard { flex: 0 0 300px; }
-html.tab-p .fv-arch { flex-direction: column; gap: 20px; }
-html.tab-p .fv-arch__left, html.tab-p .fv-arch__right { display: contents; }
-html.tab-p .fv-img-wrapper { position: static; transform: none; height: 280px; margin-bottom: 16px; }
-html.tab-p .fv-arch__info { height: auto; padding: 20px 0; }
-html.tab-p nav { padding: 0 20px !important; height: 64px; }
-html.tab-p .hero-stats { display: flex !important; flex-wrap: wrap; gap: 20px 32px; margin-top: 40px; }
-html.tab-p .hero-stat .num { font-size: 36px; }
-html.tab-p .footer-bottom { flex-direction: column; align-items: flex-start; }
-html.tab-p .footer-bl { flex-wrap: wrap; }
-html.tab-p .testimonials-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
-html.tab-p .journal-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
-html.tab-p .about-badge-circle { bottom: -20px; right: -10px; }
-html.tab-p .about-float { left: 12px; top: 12px; }
-html.tab-p .studio-floats { position: static; flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-html.tab-p .sfloat { min-width: 120px; }
-html.tab-p #fv-home-header { padding: 12px 20px; }
-html.tab-p #homeSvcScrollWrapper { display: none !important; }
-html.tab-p #pageSvcScrollWrapper { display: none !important; }
-html.tab-p .mob-svc-carousel-wrap { display: flex !important; }
-html.tab-p .hero-right { display: none; }
-html.tab-p .mstrip-wrap { display: none; }
-html.tab-p .section-title { font-size: clamp(34px, 9vw, 58px) !important; }
-html.tab-p #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: none !important; }
-html.tab-p #futureSplitSection { padding-bottom: 40px; }
-html.tab-p #fv-home-header { position: relative !important; top: auto !important; padding: 24px 20px !important; border-bottom: 1px solid rgba(255,255,255,0.07); }
-html.tab-p #fv-home-header .section-title { font-size: clamp(24px, 7vw, 38px) !important; }
-html.tab-p nav { height: 60px !important; padding: 0 18px !important; }
-html.tab-p .nav-logo-img { width: 34px; height: 34px; }
-html.tab-p .nav-brand { font-size: 13px; }
-html.tab-p input, html.tab-p textarea, html.tab-p select, html.tab-p .inp, html.tab-p .inp-select { font-size: 16px !important; }
-html.tab-p .future-grid { grid-template-columns: 1fr 1fr !important; }
-html.tab-p .fv-card:nth-child(3n) { border-right: 1px solid rgba(255,92,0,.1) !important; }
-html.tab-p .fv-card:nth-child(2n) { border-right: none !important; }
-html.tab-p .fv-card:nth-last-child(-n+2) { border-bottom: none !important; }
-html.tab-p .studio-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
-html.tab-p .equip-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-html.tab-p .cs-stat-row { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
-html.tab-p [class*="svp-grid"], html.tab-p [class*="svp-cat-grid"], html.tab-p [class*="-caps-grid"], html.tab-p [class*="-tech-grid"], html.tab-p [class*="-info-grid"], html.tab-p [class*="-stat-grid"] { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
-html.tab-p #cursor, html.tab-p #cursor-follower, html.tab-p #cursor-trail, html.tab-p #mouse-glow { display: none !important; }
-html.tab-p #fvContainer, html.tab-p #fvContainerPage { display: none !important; }
-html.tab-p #home-fv-mobile, html.tab-p #page-fv-mobile { display: grid !important; }
-
-/* ── LANDSCAPE: undo any ≤1100px rules that bleed into tablet landscape ── */
-html.tab-l .nav-links { display: flex !important; }
-html.tab-l .ham { display: none !important; }
-html.tab-l nav { padding: 0 40px !important; height: 72px !important; }
-html.tab-l .hero { grid-template-columns: 1fr 1fr !important; }
-html.tab-l .hero-right { display: block !important; }
-html.tab-l .hero-left { padding: 130px 48px 80px !important; }
-html.tab-l .mob-svc-carousel-wrap { display: none !important; }
-html.tab-l #pageSvcScrollWrapper { display: block !important; }
-html.tab-l #homeSvcScrollWrapper { display: block !important; }
-html.tab-l #fvContainer, html.tab-l #fvContainerPage { display: block !important; }
-html.tab-l #home-fv-mobile, html.tab-l #page-fv-mobile { display: none !important; }
-html.tab-l #cursor { display: block !important; }
-html.tab-l #cursor-follower { display: block !important; }
-html.tab-l #cursor-trail { display: block !important; }
-html.tab-l #mouse-glow { display: block !important; }
-
-/* ══ END TABLET ORIENTATION ══ */

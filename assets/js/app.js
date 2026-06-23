@@ -3951,39 +3951,3 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 })();
 
 
-
-/* ── TABLET ORIENTATION ── */
-(function(){
-  var html = document.documentElement;
-
-  function apply() {
-    var w = window.innerWidth, h = window.innerHeight;
-    if (w < 769 || w > 1024) { html.classList.remove('tab-p','tab-l'); return; }
-    var portrait = h > w;
-    html.classList.toggle('tab-p', portrait);
-    html.classList.toggle('tab-l', !portrait);
-    /* Widget swap — carousel vs coverflow */
-    var car = document.getElementById('pageMobSvcCarousel');
-    var cov = document.getElementById('pageSvcScrollWrapper');
-    if (car) car.style.display = portrait ? 'flex' : 'none';
-    if (cov) cov.style.display = portrait ? 'none' : '';
-    /* Close nav on rotate to landscape */
-    if (!portrait) {
-      var nav = document.getElementById('mob-nav');
-      if (nav && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        var ham = document.getElementById('ham');
-        if (ham) ham.classList.remove('active');
-        document.body.classList.remove('mob-open');
-        document.body.style.overflow = '';
-      }
-    }
-    if (typeof ScrollTrigger !== 'undefined') setTimeout(function(){ ScrollTrigger.refresh(); }, 200);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
-  else apply();
-  window.addEventListener('orientationchange', function(){ setTimeout(apply, 80); });
-  var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(apply, 150); });
-})();
-/* ── END TABLET ORIENTATION ── */
