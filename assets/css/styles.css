@@ -4930,87 +4930,100 @@ a.social-icon:focus-visible {
 
 /* ═══════════════════════════════════════════════════
    iPAD / TABLET ORIENTATION
+   Class-based (not CSS orientation queries) so it works
+   on iOS Safari/iPadOS where orientation media queries
+   are unreliable. JS sets html.tab-portrait or
+   html.tab-landscape based on window.innerWidth/Height.
    769px – 1024px only. Desktop & Mobile untouched.
 ═══════════════════════════════════════════════════ */
 
 /* PORTRAIT → mobile layout */
-@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
-  .nav-links { display: none !important; }
-  .ham { display: flex !important; }
-  nav { padding: 0 24px; }
-  .hero { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
-  .hero-left { padding: 110px 24px 80px; }
-  .about { grid-template-columns: 1fr; padding: 80px 24px; }
-  .studio-inner { grid-template-columns: 1fr; }
-  .studio { padding: 80px 24px; }
-  .studio-equip { padding: 80px 24px; }
-  .services { padding: 80px 24px; }
-  .pricing { padding: 80px 24px; }
-  .pricing-grid { grid-template-columns: 1fr; }
-  .future { padding: 80px 24px; }
-  .future-grid { grid-template-columns: 1fr; }
-  .testimonials { padding: 80px 24px; }
-  .tcard { flex: 0 0 100%; }
-  .journal { padding: 80px 24px; }
-  .jnl-grid { grid-template-columns: 1fr; }
-  .jnl-grid .jcard:first-child { grid-column: span 1; }
-  .casestudies { padding: 80px 24px; }
-  .cs-grid { grid-template-columns: 1fr; }
-  .portfolio { padding: 80px 24px; }
-  .portfolio-masonry { grid-template-columns: 1fr; grid-auto-rows: 260px; }
-  .port-item.port-wide { grid-column: span 1; }
-  .port-item.port-tall { grid-row: span 1; }
-  .blogs-half, .newsletter-half { padding: 70px 24px; }
-  .blogs-newsletter { grid-template-columns: 1fr; }
-  .faq-section { padding: 80px 24px; }
-  .faq-inner { grid-template-columns: 1fr; }
-  .contact-section { padding: 80px 24px; }
-  .contact-grid { grid-template-columns: 1fr; gap: 50px; }
-  .contact-form { order: 1; }
-  .contact-info { order: 2; }
-  .cta { padding: 100px 24px; }
-  footer { padding: 60px 24px 30px; }
-  .footer-top { grid-template-columns: 1fr 1fr; }
-  .inner-hero { padding: 120px 24px 60px; }
-  .fc-panel { grid-template-columns: 1fr; height: auto; min-height: 100vh; padding: 120px 24px 60px; text-align: center; justify-items: center; }
-  #cursor, #cursor-follower, #cursor-trail, #mouse-glow { display: none !important; }
-  .mob-svc-carousel-wrap { display: flex !important; }
-  #pageSvcScrollWrapper { display: none !important; }
-  #fvContainer, #fvContainerPage { display: none !important; }
-  #home-fv-mobile, #page-fv-mobile { display: grid !important; }
-}
+html.tab-portrait .nav-links { display: none !important; }
+html.tab-portrait .ham { display: flex !important; }
+html.tab-portrait nav { padding: 0 24px !important; }
+html.tab-portrait .hero { grid-template-columns: 1fr !important; }
+html.tab-portrait .hero-right { display: none !important; }
+html.tab-portrait .hero-left { padding: 110px 24px 80px !important; }
+html.tab-portrait .about { grid-template-columns: 1fr !important; padding: 80px 24px !important; }
+html.tab-portrait .studio-inner { grid-template-columns: 1fr !important; }
+html.tab-portrait .studio { padding: 80px 24px !important; }
+html.tab-portrait .studio-equip { padding: 80px 24px !important; }
+html.tab-portrait .services { padding: 80px 24px !important; }
+html.tab-portrait .pricing { padding: 80px 24px !important; }
+html.tab-portrait .pricing-grid { grid-template-columns: 1fr !important; }
+html.tab-portrait .future { padding: 80px 24px !important; }
+html.tab-portrait .future-grid { grid-template-columns: 1fr !important; }
+html.tab-portrait .testimonials { padding: 80px 24px !important; }
+html.tab-portrait .tcard { flex: 0 0 100% !important; }
+html.tab-portrait .journal { padding: 80px 24px !important; }
+html.tab-portrait .jnl-grid { grid-template-columns: 1fr !important; }
+html.tab-portrait .jnl-grid .jcard:first-child { grid-column: span 1 !important; }
+html.tab-portrait .casestudies { padding: 80px 24px !important; }
+html.tab-portrait .cs-grid { grid-template-columns: 1fr !important; }
+html.tab-portrait .portfolio { padding: 80px 24px !important; }
+html.tab-portrait .portfolio-masonry { grid-template-columns: 1fr !important; grid-auto-rows: 260px !important; }
+html.tab-portrait .port-item.port-wide { grid-column: span 1 !important; }
+html.tab-portrait .port-item.port-tall { grid-row: span 1 !important; }
+html.tab-portrait .blogs-half,
+html.tab-portrait .newsletter-half { padding: 70px 24px !important; }
+html.tab-portrait .blogs-newsletter { grid-template-columns: 1fr !important; }
+html.tab-portrait .faq-section { padding: 80px 24px !important; }
+html.tab-portrait .faq-inner { grid-template-columns: 1fr !important; }
+html.tab-portrait .contact-section { padding: 80px 24px !important; }
+html.tab-portrait .contact-grid { grid-template-columns: 1fr !important; gap: 50px !important; }
+html.tab-portrait .contact-form { order: 1 !important; }
+html.tab-portrait .contact-info { order: 2 !important; }
+html.tab-portrait .cta { padding: 100px 24px !important; }
+html.tab-portrait footer { padding: 60px 24px 30px !important; }
+html.tab-portrait .footer-top { grid-template-columns: 1fr 1fr !important; }
+html.tab-portrait .inner-hero { padding: 120px 24px 60px !important; }
+html.tab-portrait .fc-panel { grid-template-columns: 1fr !important; height: auto !important; min-height: 100vh !important; padding: 120px 24px 60px !important; text-align: center !important; justify-items: center !important; }
+html.tab-portrait #cursor,
+html.tab-portrait #cursor-follower,
+html.tab-portrait #cursor-trail,
+html.tab-portrait #mouse-glow { display: none !important; }
+html.tab-portrait .mob-svc-carousel-wrap { display: flex !important; }
+html.tab-portrait #pageSvcScrollWrapper { display: none !important; }
+html.tab-portrait #fvContainer,
+html.tab-portrait #fvContainerPage { display: none !important; }
+html.tab-portrait #home-fv-mobile,
+html.tab-portrait #page-fv-mobile { display: grid !important; }
 
 /* LANDSCAPE → desktop layout */
-@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
-  .nav-links { display: flex !important; }
-  .ham { display: none !important; }
-  nav { padding: 0 32px; }
-  .hero { grid-template-columns: 1fr 1fr !important; }
-  .hero-right { display: block !important; }
-  .hero-left { padding: 130px 48px 80px !important; }
-  .about { grid-template-columns: 1fr 1fr !important; padding: 80px 40px !important; }
-  .studio-inner { grid-template-columns: 1fr 1fr !important; }
-  .contact-grid { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
-  .fc-panel { grid-template-columns: 1fr 1fr !important; grid-template-rows: 1fr !important; height: 100vh !important; padding: 140px 40px 80px !important; text-align: left !important; justify-items: start !important; }
-  .fc-media, #fcPanel2 .fc-media { grid-column: unset !important; max-width: unset !important; aspect-ratio: unset !important; height: 100% !important; }
-  .fc-copy, #fcPanel2 .fc-copy, .fc-copy-right, .fc-copy-left { grid-column: unset !important; grid-row: unset !important; text-align: left !important; padding: unset !important; }
-  .fc-copy-left .fc-bio { margin-left: 0 !important; margin-right: 0 !important; }
-  .future-grid { grid-template-columns: 1fr 1fr !important; }
-  .pricing-grid { grid-template-columns: repeat(3, 1fr) !important; }
-  .jnl-grid { grid-template-columns: 1fr 1fr !important; }
-  .jnl-grid .jcard:first-child { grid-column: span 2 !important; }
-  .portfolio-masonry { grid-template-columns: repeat(2, 1fr) !important; grid-auto-rows: 260px !important; }
-  .port-item.port-wide { grid-column: span 2 !important; }
-  .port-item.port-tall { grid-row: span 2 !important; }
-  .fw-row { grid-template-columns: 60px 1fr 220px 120px !important; }
-  #cursor { display: block !important; }
-  #cursor-follower { display: block !important; }
-  #cursor-trail { display: block !important; }
-  #mouse-glow { display: block !important; }
-  .mob-svc-carousel-wrap { display: none !important; }
-  #pageSvcScrollWrapper { display: block !important; }
-  #fvContainer, #fvContainerPage { display: block !important; }
-  #home-fv-mobile, #page-fv-mobile { display: none !important; }
-}
+html.tab-landscape .nav-links { display: flex !important; }
+html.tab-landscape .ham { display: none !important; }
+html.tab-landscape nav { padding: 0 32px !important; }
+html.tab-landscape .hero { grid-template-columns: 1fr 1fr !important; }
+html.tab-landscape .hero-right { display: block !important; }
+html.tab-landscape .hero-left { padding: 130px 48px 80px !important; }
+html.tab-landscape .about { grid-template-columns: 1fr 1fr !important; padding: 80px 40px !important; }
+html.tab-landscape .studio-inner { grid-template-columns: 1fr 1fr !important; }
+html.tab-landscape .contact-grid { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+html.tab-landscape .fc-panel { grid-template-columns: 1fr 1fr !important; grid-template-rows: 1fr !important; height: 100vh !important; padding: 140px 40px 80px !important; text-align: left !important; justify-items: start !important; }
+html.tab-landscape .fc-media,
+html.tab-landscape #fcPanel2 .fc-media { grid-column: unset !important; max-width: unset !important; aspect-ratio: unset !important; height: 100% !important; }
+html.tab-landscape .fc-copy,
+html.tab-landscape #fcPanel2 .fc-copy,
+html.tab-landscape .fc-copy-right,
+html.tab-landscape .fc-copy-left { grid-column: unset !important; grid-row: unset !important; text-align: left !important; padding: unset !important; }
+html.tab-landscape .fc-copy-left .fc-bio { margin-left: 0 !important; margin-right: 0 !important; }
+html.tab-landscape .future-grid { grid-template-columns: 1fr 1fr !important; }
+html.tab-landscape .pricing-grid { grid-template-columns: repeat(3, 1fr) !important; }
+html.tab-landscape .jnl-grid { grid-template-columns: 1fr 1fr !important; }
+html.tab-landscape .jnl-grid .jcard:first-child { grid-column: span 2 !important; }
+html.tab-landscape .portfolio-masonry { grid-template-columns: repeat(2, 1fr) !important; grid-auto-rows: 260px !important; }
+html.tab-landscape .port-item.port-wide { grid-column: span 2 !important; }
+html.tab-landscape .port-item.port-tall { grid-row: span 2 !important; }
+html.tab-landscape .fw-row { grid-template-columns: 60px 1fr 220px 120px !important; }
+html.tab-landscape #cursor { display: block !important; }
+html.tab-landscape #cursor-follower { display: block !important; }
+html.tab-landscape #cursor-trail { display: block !important; }
+html.tab-landscape #mouse-glow { display: block !important; }
+html.tab-landscape .mob-svc-carousel-wrap { display: none !important; }
+html.tab-landscape #pageSvcScrollWrapper { display: block !important; }
+html.tab-landscape #fvContainer,
+html.tab-landscape #fvContainerPage { display: block !important; }
+html.tab-landscape #home-fv-mobile,
+html.tab-landscape #page-fv-mobile { display: none !important; }
+
 /* ══ END iPAD / TABLET ORIENTATION ══ */

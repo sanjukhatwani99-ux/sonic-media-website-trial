@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Performance Marketing — The Sonic Media</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="../assets/js/service-page-optimizations.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+<script>
+/* Tablet orientation: runs before first paint — no flash */
+(function(){
+  var w = window.innerWidth, h = window.innerHeight;
+  if(w >= 769 && w <= 1024){
+    document.documentElement.classList.add(h > w ? 'tab-portrait' : 'tab-landscape');
+  }
+})();
+</script>
 </head>
 
 <body>

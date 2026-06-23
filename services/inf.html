@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Influencer Marketing — The Sonic Media</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -392,6 +392,15 @@
   .inf-pf-row { grid-template-columns: 1fr; }
 }
 </style>
+<script>
+/* Tablet orientation: runs before first paint — no flash */
+(function(){
+  var w = window.innerWidth, h = window.innerHeight;
+  if(w >= 769 && w <= 1024){
+    document.documentElement.classList.add(h > w ? 'tab-portrait' : 'tab-landscape');
+  }
+})();
+</script>
 </head>
 
 <body>

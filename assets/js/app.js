@@ -3952,17 +3952,25 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 
 
 /* ═══════════════════════════════════════════════════
-   iPAD / TABLET ORIENTATION — JS widget swap only
-   CSS handles all layout. JS only needs to mount/unmount
-   the services carousel and Future Vision mobile cards
-   (dynamically injected elements CSS cannot control).
-   769px–1024px only. Does not affect mobile or desktop.
+   iPAD / TABLET ORIENTATION
+   Uses JS classes (tab-portrait / tab-landscape) on <html>
+   instead of CSS orientation media queries — required because
+   iOS Safari ignores orientation queries when viewport meta
+   has maximum-scale or user-scalable set.
+   window.innerWidth/Height always reflect actual dimensions.
+   769px–1024px only. Desktop (≥1025px) & Mobile (≤768px) untouched.
 ═══════════════════════════════════════════════════ */
-(function tabletOrientationWidgets() {
+(function tabletOrientation() {
 
-  function isTabletPortrait() {
+  var html = document.documentElement;
+
+  function isTablet() {
     var w = window.innerWidth;
-    return w >= 769 && w <= 1024 && window.innerHeight > w;
+    return w >= 769 && w <= 1024;
+  }
+
+  function isPortrait() {
+    return window.innerHeight > window.innerWidth;
   }
 
   function buildFvHTML(panels) {
@@ -3978,68 +3986,106 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
     }).join('');
   }
 
-  function update() {
-    var w = window.innerWidth;
-    if (w < 769 || w > 1024) return; /* outside tablet zone — leave alone */
-
-    var portrait = isTabletPortrait();
-
-    /* Services carousel vs coverflow */
+  function mountPortraitWidgets() {
+    /* Services: show mobile carousel, hide desktop coverflow */
     var carousel  = document.getElementById('pageMobSvcCarousel');
     var coverflow = document.getElementById('pageSvcScrollWrapper');
-    if (carousel)  carousel.style.display = portrait ? 'flex' : 'none';
-    if (coverflow) coverflow.style.display = portrait ? 'none' : '';
+    if (carousel)  carousel.style.display = 'flex';
+    if (coverflow) coverflow.style.display = 'none';
 
-    /* Future Vision */
+    /* Future Vision: show mobile cards, hide desktop container */
     var fvD1 = document.getElementById('fvContainer');
     var fvD2 = document.getElementById('fvContainerPage');
     var fvM1 = document.getElementById('home-fv-mobile');
     var fvM2 = document.getElementById('page-fv-mobile');
-
-    if (portrait) {
-      if (fvD1) fvD1.style.display = 'none';
-      if (fvD2) fvD2.style.display = 'none';
-      if (fvM1 && !fvM1.dataset.built && typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future) {
+    if (fvD1) fvD1.style.display = 'none';
+    if (fvD2) fvD2.style.display = 'none';
+    if (fvM1 && typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future) {
+      if (!fvM1.dataset.built) {
         fvM1.dataset.built = '1';
-        fvM1.style.display = 'grid';
         fvM1.innerHTML = buildFvHTML(PAGE_DATA.future.panels.slice(0, 4));
-      } else if (fvM1 && fvM1.dataset.built) { fvM1.style.display = 'grid'; }
-      if (fvM2 && !fvM2.dataset.built && typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future) {
+      }
+      fvM1.style.display = 'grid';
+    }
+    if (fvM2 && typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future) {
+      if (!fvM2.dataset.built) {
         fvM2.dataset.built = '1';
-        fvM2.style.display = 'grid';
         fvM2.innerHTML = buildFvHTML(PAGE_DATA.future.panels);
-      } else if (fvM2 && fvM2.dataset.built) { fvM2.style.display = 'grid'; }
-    } else {
-      if (fvD1) fvD1.style.display = '';
-      if (fvD2) fvD2.style.display = '';
-      if (fvM1) { fvM1.style.display = 'none'; fvM1.dataset.built = ''; fvM1.innerHTML = ''; }
-      if (fvM2) { fvM2.style.display = 'none'; fvM2.dataset.built = ''; fvM2.innerHTML = ''; }
+      }
+      fvM2.style.display = 'grid';
+    }
+  }
+
+  function mountLandscapeWidgets() {
+    /* Services: hide mobile carousel, show desktop coverflow */
+    var carousel  = document.getElementById('pageMobSvcCarousel');
+    var coverflow = document.getElementById('pageSvcScrollWrapper');
+    if (carousel)  carousel.style.display = 'none';
+    if (coverflow) coverflow.style.display = '';
+
+    /* Future Vision: hide mobile cards, show desktop container */
+    var fvD1 = document.getElementById('fvContainer');
+    var fvD2 = document.getElementById('fvContainerPage');
+    var fvM1 = document.getElementById('home-fv-mobile');
+    var fvM2 = document.getElementById('page-fv-mobile');
+    if (fvD1) fvD1.style.display = '';
+    if (fvD2) fvD2.style.display = '';
+    if (fvM1) { fvM1.style.display = 'none'; fvM1.dataset.built = ''; fvM1.innerHTML = ''; }
+    if (fvM2) { fvM2.style.display = 'none'; fvM2.dataset.built = ''; fvM2.innerHTML = ''; }
+
+    /* Close mobile nav drawer if open */
+    var mobNav = document.getElementById('mob-nav');
+    if (mobNav && mobNav.classList.contains('open')) {
+      mobNav.classList.remove('open');
+      var ham = document.getElementById('ham');
+      if (ham) ham.classList.remove('active');
+      document.body.classList.remove('mob-open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function update() {
+    if (!isTablet()) {
+      /* Outside tablet zone — remove both classes, don't touch widgets */
+      html.classList.remove('tab-portrait', 'tab-landscape');
+      return;
     }
 
-    /* Close mobile nav if rotating to landscape */
-    if (!portrait) {
-      var mobNav = document.getElementById('mob-nav');
-      if (mobNav && mobNav.classList.contains('open')) {
-        mobNav.classList.remove('open');
-        var ham = document.getElementById('ham');
-        if (ham) ham.classList.remove('active');
-        document.body.classList.remove('mob-open');
-        document.body.style.overflow = '';
-      }
+    var portrait = isPortrait();
+
+    if (portrait) {
+      html.classList.add('tab-portrait');
+      html.classList.remove('tab-landscape');
+      mountPortraitWidgets();
+    } else {
+      html.classList.add('tab-landscape');
+      html.classList.remove('tab-portrait');
+      mountLandscapeWidgets();
     }
 
     if (typeof ScrollTrigger !== 'undefined') {
-      setTimeout(function() { ScrollTrigger.refresh(); }, 200);
+      setTimeout(function() { ScrollTrigger.refresh(); }, 250);
     }
   }
 
-  update();
+  /* Run immediately (DOM may not be ready yet, but class set in inline <head> script) */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { setTimeout(update, 100); });
+    document.addEventListener('DOMContentLoaded', function() { setTimeout(update, 50); });
+  } else {
+    update();
   }
+
+  /* On rotation: wait 80ms for browser to update innerWidth/Height */
   window.addEventListener('orientationchange', function() { setTimeout(update, 80); });
-  var t;
-  window.addEventListener('resize', function() { clearTimeout(t); t = setTimeout(update, 150); });
+
+  /* On resize (covers split-screen, browser chrome resize) */
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(update, 150);
+  });
+
+  /* SPA nav hook */
   if (typeof window._addNavHook === 'function') {
     window._addNavHook(function() { setTimeout(update, 80); });
   }
