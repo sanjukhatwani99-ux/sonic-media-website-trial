@@ -14,25 +14,25 @@ const PAGES = ['home','about','services','studio','casestudies','journal','futur
    (falls back to SPA toggle if the target page div exists in the same file).
 */
 const PAGE_FILE_MAP = {
-  'home':        '../',
-  'about':       '../about',
-  'services':    '../services',
-  'studio':      '../studio',
-  'casestudies': '../casestudies',
-  'journal':     '../journal',
-  'future':      '../future',
-  'faq':         '../faq',
-  'contact':     '../contact',
-  'svc-web':     'web',
-  'svc-app':     'app',
-  'svc-seo':     'seo',
-  'svc-smm':     'smm',
-  'svc-perf':    'perf',
-  'svc-inf':     'inf',
-  'svc-ecom':    'ecom',
-  'svc-content': 'content',
-  'svc-brand':   'brand',
-  'svc-ai':      'ai',
+  'home':        '../index.html',
+  'about':       '../about.html',
+  'services':    '../services.html',
+  'studio':      '../studio.html',
+  'casestudies': '../casestudies.html',
+  'journal':     '../journal.html',
+  'future':      '../future.html',
+  'faq':         '../faq.html',
+  'contact':     '../contact.html',
+  'svc-web':     'web.html',
+  'svc-app':     'app.html',
+  'svc-seo':     'seo.html',
+  'svc-smm':     'smm.html',
+  'svc-perf':    'perf.html',
+  'svc-inf':     'inf.html',
+  'svc-ecom':    'ecom.html',
+  'svc-content': 'content.html',
+  'svc-brand':   'brand.html',
+  'svc-ai':      'ai.html',
 };
 
 /* Detect if we're in the services/ subfolder */
@@ -1254,21 +1254,15 @@ const caseStudies = {
   }
 };
 
-function openCaseStudy(id) {
+/* ── Deep-link renderer for Case Study articles ──
+   Reads the article data and renders it into an in-page fullscreen overlay.
+   The URL is updated to /casestudies#case/<id> so the page can be shared,
+   bookmarked, refreshed, and opened directly. ── */
+function _renderCaseStudyOverlay(id) {
   const cs = caseStudies[id];
   if (!cs) return;
-  const win = window.open('', '_blank');
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${cs.title} — The Sonic Media</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
+  const html = `<div style="font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100%;position:relative;">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{font-size:16px;scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100vh;}
 .cs-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
 .cs-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
 .cs-brand-mark{width:34px;height:34px;border-radius:8px;background:#FF5C00;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;}
@@ -1305,11 +1299,9 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 .cs-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}
 @media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:60px 20px 48px;}.cs-body{padding:40px 20px 80px;}.cs-article{padding:28px;}.cs-cta-band{padding:48px 24px;}}
 </style>
-</head>
-<body>
 <nav class="cs-nav">
   <div class="cs-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
-  <button class="cs-close" onclick="window.close()">✕ Close</button>
+  <button class="cs-close" onclick="closeCaseStudyOverlay()">✕ Close</button>
 </nav>
 <div class="cs-hero">
   <h1 class="cs-h1">${cs.title.split(' ').slice(0,5).join(' ')}<br><span>${cs.title.split(' ').slice(5).join(' ')}</span></h1>
@@ -1326,16 +1318,41 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
   <div class="cs-cta-eyebrow">Ready to Grow?</div>
   <div class="cs-cta-h">Work With <span>The Sonic Media</span></div>
   <p class="cs-cta-p">Let's build your brand's next growth chapter together — strategy, content, performance, and technology under one roof.</p>
-  <a class="cs-cta-btn" href="https://thesonicmedia.com" onclick="window.opener && window.opener.navigate && window.opener.navigate('contact'); this.href='javascript:void(0)'; return false;" target="_self">Get a Strategy Call →</a>
+  <a class="cs-cta-btn" href="#" onclick="closeCaseStudyOverlay();navigate('contact');return false;">Get a Strategy Call →</a>
 </div>
 <div class="cs-footer">
   <div class="cs-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
-  <span class="cs-back" onclick="window.close()">← Back to Website</span>
+  <span class="cs-back" onclick="closeCaseStudyOverlay()">← Back to Case Studies</span>
 </div>
-</body>
-</html>`;
-  win.document.write(html);
-  win.document.close();
+</div>`;
+
+  // Inject overlay into current page
+  let ov = document.getElementById('_tsm_cs_overlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = '_tsm_cs_overlay';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:999990;background:#080808;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+    document.body.appendChild(ov);
+  }
+  ov.innerHTML = html;
+  ov.scrollTop = 0;
+  ov.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+
+  // Update URL so the page can be shared / refreshed / bookmarked
+  const basePath = window.location.pathname.replace(/\/?$/, '');
+  history.pushState({ caseStudy: id }, cs.title + ' — The Sonic Media', basePath + '#case/' + id);
+  document.title = cs.title + ' — The Sonic Media';
+}
+
+function openCaseStudy(id) { _renderCaseStudyOverlay(id); }
+
+function closeCaseStudyOverlay() {
+  const ov = document.getElementById('_tsm_cs_overlay');
+  if (ov) { ov.style.display = 'none'; ov.innerHTML = ''; }
+  document.body.style.overflow = '';
+  history.pushState({}, document.title, window.location.pathname);
+  document.title = 'Case Studies — The Sonic Media';
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1557,81 +1574,89 @@ const blogArticles = {
 function openBlogArticle(id) {
   const art = blogArticles[id];
   if (!art) return;
-  const win = window.open('', '_blank');
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${art.title} — The Sonic Media Journal</title>
-<meta name="description" content="${art.subtitle}">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
+  const html = `<div style="font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100%;position:relative;">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{font-size:16px;scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100vh;}
-.cs-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
-.cs-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
-.cs-brand-mark{width:34px;height:34px;border-radius:8px;background:#FF5C00;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;}
-.cs-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
-.cs-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
-.cs-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
-.cs-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
-.cs-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
-.cs-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;max-width:900px;}
-.cs-h1 span{color:#FF5C00;}
-.cs-subtitle{font-size:18px;line-height:1.7;color:rgba(245,240,235,.6);max-width:700px;font-weight:300;margin-bottom:20px;}
-.cs-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
-.cs-body{max-width:860px;margin:0 auto;padding:72px 72px 100px;}
-.cs-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}
-.cs-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:44px;padding-left:4px;}
-.cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.75);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
-.cs-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
-.cs-article p{margin-bottom:20px;}
-.cs-cta{margin-top:60px;padding:40px;border-radius:16px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);text-align:center;}
-.cs-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
-.cs-cta-p{font-size:14px;color:rgba(245,240,235,.6);margin-bottom:24px;}
-.cs-cta-btn{display:inline-flex;align-items:center;gap:8px;background:#FF5C00;color:#fff;padding:14px 32px;border-radius:50px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .3s;box-shadow:0 0 30px rgba(255,92,0,.35);}
-.cs-cta-btn:hover{box-shadow:0 0 50px rgba(255,92,0,.6);transform:translateY(-2px);}
-.cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.cs-footer-copy{font-size:13px;color:#666;}
-.cs-footer-copy span{color:#FF5C00;}
-.cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;}
-.cs-back:hover{gap:14px;}
-@media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:80px 20px 48px;}.cs-body{padding:32px 20px 80px;}.cs-article{padding:24px;font-size:15px;}.cs-cta{padding:28px 20px;}}
+.ba-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.ba-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
+.ba-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.ba-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
+.ba-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
+.ba-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
+.ba-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
+.ba-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
+.ba-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;max-width:900px;}
+.ba-subtitle{font-size:18px;line-height:1.7;color:rgba(245,240,235,.6);max-width:700px;font-weight:300;margin-bottom:20px;}
+.ba-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
+.ba-body{max-width:860px;margin:0 auto;padding:72px 72px 100px;}
+.ba-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}
+.ba-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.ba-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:44px;padding-left:4px;}
+.ba-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.75);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
+.ba-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
+.ba-article p{margin-bottom:20px;}
+.ba-cta{margin-top:60px;padding:40px;border-radius:16px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);text-align:center;}
+.ba-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
+.ba-cta-p{font-size:14px;color:rgba(245,240,235,.6);margin-bottom:24px;}
+.ba-cta-btn{display:inline-flex;align-items:center;gap:8px;background:#FF5C00;color:#fff;padding:14px 32px;border-radius:50px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .3s;box-shadow:0 0 30px rgba(255,92,0,.35);}
+.ba-cta-btn:hover{box-shadow:0 0 50px rgba(255,92,0,.6);transform:translateY(-2px);}
+.ba-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.ba-footer-copy{font-size:13px;color:#666;}
+.ba-footer-copy span{color:#FF5C00;}
+.ba-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;}
+.ba-back:hover{gap:14px;}
+@media(max-width:768px){.ba-nav,.ba-footer{padding-left:20px;padding-right:20px;}.ba-hero{padding:80px 20px 48px;}.ba-body{padding:32px 20px 80px;}.ba-article{padding:24px;font-size:15px;}.ba-cta{padding:28px 20px;}}
 </style>
-</head>
-<body>
-<nav class="cs-nav">
-  <div class="cs-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
-  <button class="cs-close" onclick="window.close()">✕ Close</button>
+<nav class="ba-nav">
+  <div class="ba-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
+  <button class="ba-close" onclick="closeBlogArticleOverlay()">✕ Close</button>
 </nav>
-<div class="cs-hero">
-  <div class="cs-eyebrow">Journal · ${art.cat}</div>
-  <h1 class="cs-h1">${art.title}</h1>
-  <p class="cs-subtitle">${art.subtitle}</p>
-  <div class="cs-meta">${art.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${art.readTime}</div>
+<div class="ba-hero">
+  <div class="ba-eyebrow">Journal · ${art.cat}</div>
+  <h1 class="ba-h1">${art.title}</h1>
+  <p class="ba-subtitle">${art.subtitle}</p>
+  <div class="ba-meta">${art.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${art.readTime}</div>
 </div>
-<div class="cs-body">
-  <div class="cs-img-wrap"><img src="${art.img}" alt="${art.title}" loading="lazy"></div>
-  <div class="cs-img-cap">${art.imgCap}</div>
-  <div class="cs-article">${art.body}</div>
-  <div class="cs-cta">
-    <div class="cs-cta-title">Ready to Grow Your Brand in India?</div>
-    <p class="cs-cta-p">The Sonic Media has helped 500+ brands across India achieve outsized growth through data-driven strategy, cinematic content, and technology that converts.</p>
-    <a href="#" onclick="window.close();if(window.opener&&window.opener.navigate)window.opener.navigate('contact');" class="cs-cta-btn">Work With The Sonic Media →</a>
+<div class="ba-body">
+  <div class="ba-img-wrap"><img src="${art.img}" alt="${art.title}" loading="lazy"></div>
+  <div class="ba-img-cap">${art.imgCap}</div>
+  <div class="ba-article">${art.body}</div>
+  <div class="ba-cta">
+    <div class="ba-cta-title">Ready to Grow Your Brand in India?</div>
+    <p class="ba-cta-p">The Sonic Media has helped 500+ brands across India achieve outsized growth through data-driven strategy, cinematic content, and technology that converts.</p>
+    <a href="#" onclick="closeBlogArticleOverlay();navigate('contact');return false;" class="ba-cta-btn">Work With The Sonic Media →</a>
   </div>
 </div>
-<div class="cs-footer">
-  <div class="cs-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
-  <span class="cs-back" onclick="window.close()">← Back to Website</span>
+<div class="ba-footer">
+  <div class="ba-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
+  <span class="ba-back" onclick="closeBlogArticleOverlay()">← Back to Journal</span>
 </div>
-</body>
-</html>`;
-  win.document.write(html);
-  win.document.close();
+</div>`;
+
+  // Inject overlay
+  let ov = document.getElementById('_tsm_ba_overlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = '_tsm_ba_overlay';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:999990;background:#080808;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+    document.body.appendChild(ov);
+  }
+  ov.innerHTML = html;
+  ov.scrollTop = 0;
+  ov.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+
+  // Update URL for shareability / deep-linking
+  const basePath = window.location.pathname.replace(/\/?$/, '');
+  history.pushState({ blogArticle: id }, art.title + ' — The Sonic Media Journal', basePath + '#article/' + id);
+  document.title = art.title + ' — The Sonic Media Journal';
+}
+
+function closeBlogArticleOverlay() {
+  const ov = document.getElementById('_tsm_ba_overlay');
+  if (ov) { ov.style.display = 'none'; ov.innerHTML = ''; }
+  document.body.style.overflow = '';
+  history.pushState({}, document.title, window.location.pathname);
+  document.title = 'Journal — The Sonic Media';
 }
 
 function openLegalPage(type) {
@@ -3950,4 +3975,252 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
   }
 })();
 
+/* ═══════════════════════════════════════════════════
+   TABLET ORIENTATION MANAGER
+   Seamlessly switches between mobile (portrait) and
+   desktop (landscape) behavior on iPad/tablets.
+   Tablet range: 600px–1366px device width.
+═══════════════════════════════════════════════════ */
+(function TabletOrientationManager() {
+  'use strict';
 
+  var TABLET_MIN = 600;
+  var TABLET_MAX = 1366;
+  var DESKTOP_THRESHOLD = 900; // width at which landscape = desktop nav
+
+  /* ── Detect if we're on a tablet-range device ── */
+  function isTabletRange() {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var larger = Math.max(w, h);
+    var smaller = Math.min(w, h);
+    return larger >= TABLET_MIN && larger <= TABLET_MAX && smaller >= TABLET_MIN * 0.55;
+  }
+
+  /* ── Current orientation ── */
+  function isLandscape() {
+    if (screen.orientation && screen.orientation.type) {
+      return screen.orientation.type.indexOf('landscape') !== -1;
+    }
+    // Fallback: compare dimensions
+    return window.innerWidth > window.innerHeight;
+  }
+
+  /* ── Apply a data attribute so CSS/JS can read orientation state ── */
+  function applyOrientationClass() {
+    if (!isTabletRange()) {
+      document.documentElement.removeAttribute('data-tablet-orient');
+      return;
+    }
+    var orient = isLandscape() ? 'landscape' : 'portrait';
+    document.documentElement.setAttribute('data-tablet-orient', orient);
+  }
+
+  /* ── Close mobile nav if switching to landscape (desktop) ── */
+  function handleNavOnOrientationChange() {
+    if (!isTabletRange()) return;
+    if (isLandscape()) {
+      // Switching to desktop: close mobile drawer if open
+      var mobNav = document.getElementById('mobNav');
+      var ham    = document.getElementById('ham');
+      if (mobNav && mobNav.classList.contains('open')) {
+        mobNav.classList.remove('open');
+        if (ham) ham.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+  }
+
+  /* ── Refresh services carousel vs coverflow on orientation change ── */
+  function handleServicesLayout() {
+    if (!isTabletRange()) return;
+
+    var carousel  = document.getElementById('pageMobSvcCarousel');
+    var coverflow = document.getElementById('pageSvcScrollWrapper');
+    var homeCf    = document.getElementById('homeSvcScrollWrapper');
+    var homeCar   = document.getElementById('homeMobSvcCarousel');
+
+    if (isLandscape()) {
+      // Landscape = desktop: show coverflow, hide carousel
+      if (carousel)  carousel.style.display = 'none';
+      if (coverflow) coverflow.style.display = '';
+      if (homeCf)    homeCf.style.display    = '';
+      if (homeCar)   homeCar.style.display   = 'none';
+    } else {
+      // Portrait = mobile: show carousel, hide coverflow
+      if (coverflow) coverflow.style.display = 'none';
+      if (homeCf)    homeCf.style.display    = 'none';
+      // Carousel display is handled by CSS portrait rule;
+      // trigger a resize event so existing JS handlers pick it up
+    }
+  }
+
+  /* ── Refresh Future Vision (FV) mobile/desktop widgets ── */
+  function handleFvLayout() {
+    if (!isTabletRange()) return;
+
+    var desktopHome = document.getElementById('fvContainer');
+    var mobHome     = document.getElementById('home-fv-mobile');
+    var desktopPage = document.getElementById('fvContainerPage');
+    var mobPage     = document.getElementById('page-fv-mobile');
+
+    if (isLandscape()) {
+      // Landscape = desktop FV
+      if (desktopHome) desktopHome.style.display = '';
+      if (mobHome)     { mobHome.style.display = 'none'; mobHome.dataset.built = ''; mobHome.innerHTML = ''; }
+      if (desktopPage) desktopPage.style.display = '';
+      if (mobPage)     { mobPage.style.display = 'none'; mobPage.dataset.built = ''; mobPage.innerHTML = ''; }
+    }
+    // Portrait: the existing resize handler at innerWidth <= 768 won't fire
+    // for tablets (768–1100px), so we nudge it via a synthetic resize below.
+  }
+
+  /* ── Refresh GSAP ScrollTrigger if available ── */
+  function refreshScrollTrigger() {
+    setTimeout(function() {
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+    }, 350);
+  }
+
+  /* ── Master handler called on every orientation/resize event ── */
+  function onOrientationChange() {
+    applyOrientationClass();
+    handleNavOnOrientationChange();
+    handleServicesLayout();
+    handleFvLayout();
+    refreshScrollTrigger();
+
+    // Dispatch a synthetic resize so any third-party or inline handlers
+    // that gate on window.innerWidth re-evaluate with the new dimensions.
+    // We delay to let the browser finish updating layout dimensions first.
+    setTimeout(function() {
+      try {
+        window.dispatchEvent(new Event('resize'));
+      } catch(e) {
+        // IE fallback
+        var ev = document.createEvent('Event');
+        ev.initEvent('resize', true, true);
+        window.dispatchEvent(ev);
+      }
+    }, 100);
+  }
+
+  /* ── Debounced resize listener ── */
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(onOrientationChange, 120);
+  }, { passive: true });
+
+  /* ── Native orientation change event (fires on real devices) ── */
+  window.addEventListener('orientationchange', function() {
+    // orientationchange fires before dimensions are final; wait a tick
+    setTimeout(onOrientationChange, 150);
+  }, { passive: true });
+
+  /* ── screen.orientation API (modern browsers) ── */
+  if (screen.orientation && screen.orientation.addEventListener) {
+    screen.orientation.addEventListener('change', function() {
+      setTimeout(onOrientationChange, 150);
+    });
+  }
+
+  /* ── Boot: apply immediately on load ── */
+  applyOrientationClass();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      applyOrientationClass();
+      handleServicesLayout();
+    });
+  } else {
+    handleServicesLayout();
+  }
+
+})();
+
+/* ═══════════════════════════════════════════════════
+   HASH-BASED DEEP LINK ROUTER
+   Handles direct loads, page refreshes, and shared URLs
+   for article deep-links:
+     /casestudies#case/<id>   → opens case study overlay
+     /journal#article/<id>    → opens blog article overlay
+   Also handles browser back/forward (popstate).
+═══════════════════════════════════════════════════ */
+(function() {
+  function dispatchHash(hash) {
+    if (!hash || hash === '#') return false;
+    var csMatch = hash.match(/^#case\/(.+)$/);
+    if (csMatch) {
+      var id = csMatch[1];
+      if (typeof _renderCaseStudyOverlay === 'function') {
+        // Ensure the casestudies page data is loaded first
+        setTimeout(function() { _renderCaseStudyOverlay(id); }, 0);
+        return true;
+      }
+    }
+    var baMatch = hash.match(/^#article\/(.+)$/);
+    if (baMatch) {
+      var id = baMatch[1];
+      if (typeof openBlogArticle === 'function') {
+        setTimeout(function() { openBlogArticle(id); }, 0);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // On initial page load, check the hash.
+  // A 200ms delay ensures renderPageData() has finished injecting
+  // grid content and the caseStudies / blogArticles data objects are ready.
+  function onLoad() {
+    var hash = window.location.hash;
+    if (hash && hash !== '#') {
+      setTimeout(function() { dispatchHash(hash); }, 200);
+    }
+  }
+
+  // On browser back/forward
+  window.addEventListener('popstate', function(e) {
+    var state = e.state || {};
+    // Close any open overlays first
+    if (typeof closeCaseStudyOverlay === 'function') {
+      var csOv = document.getElementById('_tsm_cs_overlay');
+      if (csOv) { csOv.style.display = 'none'; csOv.innerHTML = ''; document.body.style.overflow = ''; }
+    }
+    if (typeof closeBlogArticleOverlay === 'function') {
+      var baOv = document.getElementById('_tsm_ba_overlay');
+      if (baOv) { baOv.style.display = 'none'; baOv.innerHTML = ''; document.body.style.overflow = ''; }
+    }
+    // If the popped state has an article to show, open it
+    if (state.caseStudy && typeof _renderCaseStudyOverlay === 'function') {
+      _renderCaseStudyOverlay(state.caseStudy);
+    } else if (state.blogArticle && typeof openBlogArticle === 'function') {
+      openBlogArticle(state.blogArticle);
+    } else {
+      // No article — check hash in case user navigated via URL
+      dispatchHash(window.location.hash);
+    }
+  });
+
+  // Keyboard: Escape closes any open overlay
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var csOv = document.getElementById('_tsm_cs_overlay');
+      if (csOv && csOv.style.display !== 'none' && typeof closeCaseStudyOverlay === 'function') {
+        closeCaseStudyOverlay(); return;
+      }
+      var baOv = document.getElementById('_tsm_ba_overlay');
+      if (baOv && baOv.style.display !== 'none' && typeof closeBlogArticleOverlay === 'function') {
+        closeBlogArticleOverlay();
+      }
+    }
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onLoad);
+  } else {
+    onLoad();
+  }
+})();
