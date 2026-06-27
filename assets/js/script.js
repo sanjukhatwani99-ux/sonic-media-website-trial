@@ -8,7 +8,7 @@ async function getCaseStudies() {
     }
   `;
 
-  const projectId = "azp8do9e";
+  const projectId = "jva6pfeq";
   const dataset = "production";
 
   const url = `https://${projectId}.apicdn.sanity.io/v2024-01-01/data/query/${dataset}?query=${encodeURIComponent(query)}`;
