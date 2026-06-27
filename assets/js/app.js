@@ -1242,53 +1242,53 @@ window.addEventListener('popstate', function(e) {
 /* ─ Case Study Detail Pages ─ */
 const caseStudies = {
   'legalbuddy-brand-identity': {
-    subtitle: 'A Clean, Modern Logo System Built for Authority, Credibility, and Scalability',
+    title: 'Legalbuddy — Brand Identity & Logo Design',
+    client: 'Legalbuddy',
+    industry: 'Professional Services',
     category: 'Branding',
+    services: ['Branding Identity'],
     date: 'Jun 27, 2026',
-    images: [
-      { url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=80', caption: 'Legalbuddy brand identity system — designed for trust, authority, and clarity in the legal services market.' },
-      { url: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80', caption: 'Scalable logo system applied across digital platforms, legal documents, and brand communication touchpoints.' },
+    shortDesc: 'A strong, professional brand identity that builds trust instantly with users in the legal services space — clean, modern, and built for authority.',
+    featuredImg: { url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=80', alt: 'Legalbuddy brand identity system' },
+    gallery: [
+      { url: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80', alt: 'Legalbuddy logo applied across digital and offline platforms' },
     ],
-    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Challenge</h2>
-<p>Legalbuddy needed a strong, professional brand identity that could build trust instantly with users in the legal services space and stand out in a competitive, credibility-driven industry. In a sector where perception of authority and professionalism is the primary purchase driver, a weak or generic identity can permanently undermine user confidence — regardless of the quality of legal services delivered. The brief required a visual identity system that would feel immediately trustworthy to a first-time visitor, scale seamlessly across digital and offline applications, and communicate clarity in an industry often perceived as complex and inaccessible.</p>
-<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Solution</h2>
-<p>The Sonic Media created a clean, modern logo system focused on simplicity, trust, and authority. The design was built with scalable identity elements suitable for digital platforms, documents, and legal communication. Rather than defaulting to the visual clichés of the legal industry — scales of justice, gavels, heavy serif typefaces — we developed a contemporary identity that retained the gravitas expected of a legal brand while signalling modernity and accessibility. The logo system was engineered across multiple lockup variants to ensure consistent presentation at every size, from browser favicon to full-page document headers. Typography, colour, and spacing were selected to evoke precision and professionalism while maintaining warmth and approachability — critical for a legal services product aiming to remove the intimidation typically associated with legal help.</p>
-<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Results</h2>
-<ul style="list-style:none;padding:0;margin:0;">
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Strong, professional brand presence established — immediately distinguishable in a crowded legal services market</span></li>
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Improved visual credibility in the legal services market — identity conveys authority and trustworthiness at first glance</span></li>
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Consistent identity across digital and offline use — logo system performs equally across app UI, print, and legal documents</span></li>
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Scalable logo system for future brand expansion — architecture designed to accommodate sub-brands and new service lines</span></li>
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Clear and memorable brand recognition — distinctive mark that users can recall and identify with confidence</span></li>
-</ul>
-<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Services Delivered</h2>
-<p>Brand Identity Design &amp; Logo System — including full logo lockup variants, colour palette, typography system, and brand usage guidelines optimised for the legal services sector.</p>
-<p>This project is a demonstration of The Sonic Media's branding philosophy: that trust is not built through decoration, but through precision. A brand that looks like it knows what it is doing — because every element of it was intentional — earns credibility before a single word is read. If you are building a brand in a trust-sensitive industry and need an identity that communicates authority from day one, contact The Sonic Media.</p>`
+    challenge: 'Legalbuddy needed a strong, professional brand identity that could build trust instantly with users in the legal services space and stand out in a competitive, credibility-driven industry.',
+    solution: 'The Sonic Media created a clean, modern logo system focused on simplicity, trust, and authority. The design was built with scalable identity elements suitable for digital platforms, documents, and legal communication.',
+    results: [
+      'Strong, professional brand presence established',
+      'Improved visual credibility in legal services market',
+      'Consistent identity across digital and offline use',
+      'Scalable logo system for future brand expansion',
+      'Clear and memorable brand recognition',
+    ],
+    technologies: [],
+    projectUrl: '',
   },
-  'ledgerlink-website': {
-    title: 'LedgerLink Consultation — Professional Tax & Compliance Website for Ahmedabad CA Firm',
-    subtitle: 'A Conversion-Focused Website That Builds Trust and Generates Leads for a GST, Income Tax & Accounting Advisory Firm',
-    category: 'Website Development',
+    'ledgerlink-website': {
+    title: 'LedgerLink Consultation — Tax & Financial Advisory Website',
+    client: 'LedgerLink Consultation Pvt Ltd',
+    industry: 'Finance',
+    category: 'Technology',
+    services: ['Website Development', 'SEO', 'Local SEO'],
     date: 'Jun 27, 2026',
-    images: [
-      { url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80', caption: 'Clean, professional homepage designed to build immediate trust with businesses and individuals seeking tax and compliance services in Ahmedabad.' },
-      { url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80', caption: 'SEO-optimised service page architecture — structured for local search visibility and lead conversion across GST, Income Tax, Accounting and Compliance.' },
+    shortDesc: 'A conversion-focused website for a GST, Income Tax, Accounting & Compliance advisory firm — built to build trust, generate leads, and dominate local search in Ahmedabad.',
+    featuredImg: { url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80', alt: 'LedgerLink Consultation professional website homepage' },
+    gallery: [
+      { url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80', alt: 'SEO-optimised service pages for GST, Income Tax, Accounting and Compliance' },
+      { url: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&q=80', alt: 'Fully responsive layout across mobile and desktop devices' },
     ],
-    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Challenge</h2>
-<p>The client lacked a strong digital presence and needed a professional, trust-building website to attract businesses and individuals seeking reliable GST, Income Tax, Accounting, and Compliance services in Ahmedabad. In the financial and legal advisory sector, a weak online presence directly costs clients — prospective customers judge credibility within seconds of landing on a website, and an unprofessional or outdated digital presence will push high-value leads to competitors. LedgerLink needed a digital face that matched the quality of their expertise.</p>
-<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Solution</h2>
-<p>The Sonic Media designed and developed a clean, conversion-focused website with structured service pages, SEO-optimised content, responsive UI, and strategic lead generation elements to convert visitors into consultation inquiries. Every design decision was made with the target client in mind — a business owner or individual in Ahmedabad searching for a trusted CA or tax advisory firm. The information architecture was built to answer the three questions every visitor has within the first five seconds: What services do you offer? Are you credible? How do I contact you? Service pages for GST, Income Tax, Accounting, and Compliance were individually structured for both search visibility and conversion — with clear service descriptions, trust signals, and prominent inquiry CTAs on every page. The UI language was deliberately professional and clean, using typography, spacing, and colour to communicate authority without being cold or inaccessible.</p>
-<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Results</h2>
-<ul style="list-style:none;padding:0;margin:0;">
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Improved online credibility and brand trust — website immediately communicates authority and professionalism to prospective clients</span></li>
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Increased inquiry and lead conversion from website traffic — strategic CTAs and contact sections drive consultation requests</span></li>
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Strong local SEO visibility in Ahmedabad search results — structured content and on-page SEO built for local discovery</span></li>
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Fully responsive experience across all devices — seamless performance on mobile, tablet, and desktop</span></li>
-  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Faster user navigation with structured service architecture — visitors find the right service page within one click</span></li>
-</ul>
-<div style="margin-top:36px;">
-  <a href="https://lcpladvisory.com" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;padding:15px 36px;border-radius:50px;background:#FF5C00;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 28px rgba(255,92,0,.4);transition:all .3s;" onmouseover="this.style.boxShadow='0 0 44px rgba(255,92,0,.65)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 28px rgba(255,92,0,.4)';this.style.transform=''">View Live Project →</a>
-</div>`
+    challenge: 'The client lacked a strong digital presence and needed a professional, trust-building website to attract businesses and individuals seeking reliable GST, Income Tax, Accounting, and Compliance services in Ahmedabad.',
+    solution: 'The Sonic Media designed and developed a clean, conversion-focused website with structured service pages, SEO-optimised content, responsive UI, and strategic lead generation elements to convert visitors into consultation inquiries.',
+    results: [
+      'Improved online credibility and brand trust',
+      'Increased inquiry/lead conversion from website traffic',
+      'Strong local SEO visibility in Ahmedabad search results',
+      'Fully responsive experience across all devices',
+      'Faster user navigation with structured service architecture',
+    ],
+    technologies: ['HTML / CSS', 'Responsive Design', 'Local SEO', 'UI/UX'],
+    projectUrl: 'https://lcpladvisory.com',
   },
   'd2c-growth-playbook': {
     title: 'How Indian D2C Brands Can Scale from ₹5L to ₹50L Monthly Revenue in 6 Months',
@@ -1478,44 +1478,165 @@ function openCaseStudy(id) {
   const cs = caseStudies[id];
   if (!cs) return;
 
-  /* ── Inject overlay shell once ── */
   if (!document.getElementById('cs-overlay')) {
     const shell = document.createElement('div');
     shell.id = 'cs-overlay';
-    /* Appended to <html> (documentElement), not <body>.
-       position:absolute so it sits in normal document flow — <html> is the scroller.
-       The browser draws its own native scrollbar for <html>, which is the main page scrollbar. */
     shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
     document.documentElement.appendChild(shell);
   }
   const overlay = document.getElementById('cs-overlay');
 
-  /* ── Build inner HTML ── */
+  /* ── Helper: detect if this is a Sanity-format entry (has challenge field) or legacy (has body field) ── */
+  const isSanity = cs.challenge !== undefined;
+
+  /* ── Build gallery HTML ── */
+  function buildGallery(imgs) {
+    if (!imgs || !imgs.length) return '';
+    return imgs.map(img =>
+      `<div class="cs-img-wrap"><img src="${img.url}" alt="${img.alt || ''}" loading="lazy"></div>`
+    ).join('');
+  }
+
+  /* ── Build results list ── */
+  function buildResults(results) {
+    if (!results || !results.length) return '';
+    return results.map(r =>
+      `<div class="cs-result-item"><span class="cs-result-tick">✓</span><span>${r}</span></div>`
+    ).join('');
+  }
+
+  /* ── Build services/tech tags ── */
+  function buildTags(arr) {
+    if (!arr || !arr.length) return '';
+    return arr.map(t => `<span class="cs-tag">${t}</span>`).join('');
+  }
+
+  /* ── Build meta strip (client, industry, date) ── */
+  function buildMeta(cs) {
+    const parts = [];
+    if (cs.client) parts.push(`<div class="cs-meta-item"><div class="cs-meta-label">Client</div><div class="cs-meta-value">${cs.client}</div></div>`);
+    if (cs.industry) parts.push(`<div class="cs-meta-item"><div class="cs-meta-label">Industry</div><div class="cs-meta-value">${cs.industry}</div></div>`);
+    if (cs.category) parts.push(`<div class="cs-meta-item"><div class="cs-meta-label">Category</div><div class="cs-meta-value">${cs.category}</div></div>`);
+    if (cs.date) parts.push(`<div class="cs-meta-item"><div class="cs-meta-label">Date</div><div class="cs-meta-value">${cs.date}</div></div>`);
+    return parts.join('');
+  }
+
+  /* ── Build body: either Sanity structured or legacy HTML blob ── */
+  function buildBody(cs) {
+    if (!isSanity) {
+      /* Legacy: two images + raw HTML body */
+      return `
+        <div class="cs-img-wrap"><img src="${cs.images[0].url}" alt="${cs.title}" loading="lazy"></div>
+        <div class="cs-img-cap">${cs.images[0].caption}</div>
+        <div class="cs-img-wrap"><img src="${cs.images[1].url}" alt="${cs.subtitle || cs.title}" loading="lazy"></div>
+        <div class="cs-img-cap">${cs.images[1].caption}</div>
+        <div class="cs-article">${cs.body}</div>`;
+    }
+
+    /* Sanity format */
+    const hasTech = cs.technologies && cs.technologies.length > 0;
+    const hasProjectUrl = cs.projectUrl && cs.projectUrl.length > 0;
+
+    return `
+      ${cs.shortDesc ? `<p class="cs-short-desc">${cs.shortDesc}</p>` : ''}
+
+      <div class="cs-featured-img">
+        <img src="${cs.featuredImg.url}" alt="${cs.featuredImg.alt || cs.title}" loading="lazy">
+      </div>
+
+      <div class="cs-meta-strip">${buildMeta(cs)}</div>
+
+      ${cs.services && cs.services.length ? `
+      <div class="cs-section">
+        <div class="cs-section-label">Services Delivered</div>
+        <div class="cs-tags">${buildTags(cs.services)}</div>
+      </div>` : ''}
+
+      <div class="cs-two-col">
+        <div class="cs-section">
+          <div class="cs-section-label">The Challenge</div>
+          <p class="cs-section-text">${cs.challenge}</p>
+        </div>
+        <div class="cs-section">
+          <div class="cs-section-label">The Solution</div>
+          <p class="cs-section-text">${cs.solution}</p>
+        </div>
+      </div>
+
+      <div class="cs-section">
+        <div class="cs-section-label">Results</div>
+        <div class="cs-results">${buildResults(cs.results)}</div>
+      </div>
+
+      ${cs.gallery && cs.gallery.length ? `
+      <div class="cs-section">
+        <div class="cs-section-label">Gallery</div>
+        <div class="cs-gallery">${buildGallery(cs.gallery)}</div>
+      </div>` : ''}
+
+      ${hasTech ? `
+      <div class="cs-section">
+        <div class="cs-section-label">Technologies Used</div>
+        <div class="cs-tags">${buildTags(cs.technologies)}</div>
+      </div>` : ''}
+
+      ${hasProjectUrl ? `
+      <div class="cs-section">
+        <a href="${cs.projectUrl}" target="_blank" rel="noopener noreferrer" class="cs-live-btn">View Live Project →</a>
+      </div>` : ''}`;
+  }
+
   overlay.innerHTML = `<style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 .cs-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
 .cs-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
 .cs-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
 .cs-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
-.cs-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
+.cs-hero{padding:80px 72px 56px;background:#0f0f0f;position:relative;overflow:hidden;}
 .cs-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
 .cs-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
 .cs-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;color:#F5F0EB;}
+.cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,88px);line-height:.95;letter-spacing:.02em;margin-bottom:16px;color:#F5F0EB;}
 .cs-h1 span{color:#FF5C00;}
-.cs-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
-.cs-body{max-width:960px;margin:0 auto;padding:72px 72px 100px;}
-.cs-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}
+.cs-hero-date{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#555;text-transform:uppercase;}
+/* ── Body wrapper ── */
+.cs-body{max-width:960px;margin:0 auto;padding:64px 72px 100px;}
+/* ── Short description ── */
+.cs-short-desc{font-size:18px;line-height:1.75;color:rgba(245,240,235,.6);font-weight:300;margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.06);}
+/* ── Featured image ── */
+.cs-featured-img{border-radius:16px;overflow:hidden;margin-bottom:48px;aspect-ratio:16/9;background:#161616;}
+.cs-featured-img img{width:100%;height:100%;object-fit:cover;display:block;}
+/* ── Meta strip ── */
+.cs-meta-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:rgba(255,255,255,.06);border-radius:14px;overflow:hidden;margin-bottom:48px;}
+.cs-meta-item{background:#0f0f0f;padding:20px 24px;}
+.cs-meta-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#555;margin-bottom:6px;}
+.cs-meta-value{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#F5F0EB;}
+/* ── Sections ── */
+.cs-section{margin-bottom:48px;}
+.cs-section-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:#FF5C00;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.cs-section-label::before{content:'';width:22px;height:1.5px;background:#FF5C00;flex-shrink:0;}
+.cs-section-text{font-size:16px;line-height:1.85;color:rgba(245,240,235,.68);font-weight:300;}
+/* ── Two column layout ── */
+.cs-two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px;}
+/* ── Results ── */
+.cs-results{display:flex;flex-direction:column;gap:10px;}
+.cs-result-item{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:12px;background:rgba(255,92,0,.04);border:1px solid rgba(255,92,0,.14);font-size:14px;line-height:1.6;color:rgba(245,240,235,.75);}
+.cs-result-tick{color:#FF5C00;font-size:16px;flex-shrink:0;margin-top:1px;}
+/* ── Tags (services / tech) ── */
+.cs-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.cs-tag{padding:6px 16px;border-radius:50px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FF5C00;}
+/* ── Gallery ── */
+.cs-gallery{display:flex;flex-direction:column;gap:16px;}
+.cs-img-wrap{border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#161616;}
 .cs-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
+/* ── Live project button ── */
+.cs-live-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 36px;border-radius:50px;background:#FF5C00;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 28px rgba(255,92,0,.4);transition:all .3s;}
+.cs-live-btn:hover{box-shadow:0 0 44px rgba(255,92,0,.65);transform:translateY(-2px);}
+/* ── Legacy article body ── */
 .cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
-
 .cs-article p{margin-bottom:20px;}
-.cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.cs-footer-copy{font-size:13px;color:#666;}
-.cs-footer-copy span{color:#FF5C00;}
-.cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}
-.cs-back:hover{gap:14px;}
+.cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.35);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
+/* ── CTA band ── */
 .cs-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}
 .cs-cta-band::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}
 .cs-cta-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:18px;}
@@ -1523,9 +1644,23 @@ function openCaseStudy(id) {
 .cs-cta-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,68px);line-height:.95;letter-spacing:.02em;color:#F5F0EB;margin-bottom:16px;}
 .cs-cta-h span{color:#FF5C00;}
 .cs-cta-p{font-size:15px;line-height:1.75;color:rgba(245,240,235,.55);font-weight:300;max-width:480px;margin:0 auto 36px;}
-.cs-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}
+.cs-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}
 .cs-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}
-@media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:60px 20px 48px;}.cs-body{padding:40px 20px 80px;}.cs-article{padding:28px;font-size:15px;}.cs-cta-band{padding:48px 24px;}}
+.cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.cs-footer-copy{font-size:13px;color:#666;}
+.cs-footer-copy span{color:#FF5C00;}
+.cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}
+.cs-back:hover{gap:14px;}
+@media(max-width:768px){
+  .cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}
+  .cs-hero{padding:56px 20px 40px;}
+  .cs-body{padding:36px 20px 80px;}
+  .cs-two-col{grid-template-columns:1fr;}
+  .cs-meta-strip{grid-template-columns:1fr 1fr;}
+  .cs-article{padding:24px;font-size:15px;}
+  .cs-cta-band{padding:48px 24px;}
+  .cs-short-desc{font-size:15px;}
+}
 </style>
 <nav class="cs-nav">
   <div class="cs-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
@@ -1534,14 +1669,10 @@ function openCaseStudy(id) {
 <div class="cs-hero">
   <div class="cs-eyebrow">${cs.category}</div>
   <h1 class="cs-h1">${cs.title.split(' ').slice(0,5).join(' ')}<br><span>${cs.title.split(' ').slice(5).join(' ')}</span></h1>
-  <div class="cs-meta">${cs.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${cs.category}</div>
+  <div class="cs-hero-date">${cs.date} &nbsp;·&nbsp; The Sonic Media</div>
 </div>
 <div class="cs-body">
-  <div class="cs-img-wrap"><img src="${cs.images[0].url}" alt="${cs.title}" loading="lazy"></div>
-  <div class="cs-img-cap">${cs.images[0].caption}</div>
-  <div class="cs-img-wrap"><img src="${cs.images[1].url}" alt="${cs.subtitle}" loading="lazy"></div>
-  <div class="cs-img-cap">${cs.images[1].caption}</div>
-  <div class="cs-article">${cs.body}</div>
+  ${buildBody(cs)}
 </div>
 <div class="cs-cta-band">
   <div class="cs-cta-eyebrow">Ready to Grow?</div>
@@ -1554,7 +1685,6 @@ function openCaseStudy(id) {
   <button class="cs-back" id="cs-back-btn">← Back to Case Studies</button>
 </div>`;
 
-  /* ── Remember scroll position if opened from home page ── */
   if (typeof currentPage !== 'undefined' && currentPage === 'home') {
     overlay._returnScrollY = window.scrollY;
     overlay._returnAnchor  = 'home-casestudies-tag';
@@ -1563,39 +1693,31 @@ function openCaseStudy(id) {
     overlay._returnAnchor  = null;
   }
 
-  /* ── Update URL & meta ── */
   const cleanSlug = id;
   const newUrl = '/case-studies/' + cleanSlug;
   history.pushState({ caseStudy: id }, cs.title + ' — The Sonic Media', newUrl);
   document.title = cs.title + ' — The Sonic Media';
 
-  /* Update canonical tag */
   let canonical = document.querySelector('link[rel="canonical"]');
   if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
   canonical.href = 'https://thesonicmedia.com/case-studies/' + cleanSlug;
 
-  /* ── Show overlay ── */
   overlay.style.display = 'block';
   document.documentElement.scrollTop = 0;
   document.body.style.visibility = 'hidden';
-  /* Move cursor elements to <html> so they share the overlay's stacking context
-     and their z-index (up to 9999999) renders above the overlay (99999) */
   ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) document.documentElement.appendChild(el);
   });
   if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
 
-  /* ── Wire close buttons ── */
   function closeHandler() { closeCaseStudy(); }
   document.getElementById('cs-close-btn').addEventListener('click', closeHandler);
   document.getElementById('cs-back-btn').addEventListener('click', closeHandler);
 
-  /* ── Keyboard close ── */
   overlay._keyHandler = function(e) { if (e.key === 'Escape') closeCaseStudy(); };
   document.addEventListener('keydown', overlay._keyHandler);
 }
-
 function closeCaseStudy() {
   const overlay = document.getElementById('cs-overlay');
   if (!overlay || overlay.style.display === 'none') return;
