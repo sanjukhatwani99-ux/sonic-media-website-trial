@@ -2966,7 +2966,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
     letter-spacing: 0 !important;
     margin-bottom: 6px !important;
   }
-  .jcard-excerpt { display: none !important; }
+  .jcard-excerpt { display: block !important; font-size: 12px !important; line-height: 1.6 !important; margin-bottom: 10px !important; -webkit-line-clamp: 3; display: -webkit-box !important; -webkit-box-orient: vertical; overflow: hidden; }
   .jcard-body { order: 1 !important; padding: 14px 12px !important; flex: 1 !important; justify-content: center !important; gap: 2px !important; }
   .jcard-meta { margin-bottom: 8px !important; }
   .jcard-cat { font-size: 10px !important; font-weight: 600 !important; padding: 3px 9px !important; letter-spacing: .04em !important; }

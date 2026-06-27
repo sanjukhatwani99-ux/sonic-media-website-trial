@@ -1242,7 +1242,6 @@ window.addEventListener('popstate', function(e) {
 /* ─ Case Study Detail Pages ─ */
 const caseStudies = {
   'legalbuddy-brand-identity': {
-    title: 'Legalbuddy — Brand Identity & Logo Design: Building Trust in the Legal Services Space',
     subtitle: 'A Clean, Modern Logo System Built for Authority, Credibility, and Scalability',
     category: 'Branding',
     date: 'Jun 27, 2026',
@@ -1265,6 +1264,31 @@ const caseStudies = {
 <h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Services Delivered</h2>
 <p>Brand Identity Design &amp; Logo System — including full logo lockup variants, colour palette, typography system, and brand usage guidelines optimised for the legal services sector.</p>
 <p>This project is a demonstration of The Sonic Media's branding philosophy: that trust is not built through decoration, but through precision. A brand that looks like it knows what it is doing — because every element of it was intentional — earns credibility before a single word is read. If you are building a brand in a trust-sensitive industry and need an identity that communicates authority from day one, contact The Sonic Media.</p>`
+  },
+  'ledgerlink-website': {
+    title: 'LedgerLink Consultation — Professional Tax & Compliance Website for Ahmedabad CA Firm',
+    subtitle: 'A Conversion-Focused Website That Builds Trust and Generates Leads for a GST, Income Tax & Accounting Advisory Firm',
+    category: 'Website Development',
+    date: 'Jun 27, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80', caption: 'Clean, professional homepage designed to build immediate trust with businesses and individuals seeking tax and compliance services in Ahmedabad.' },
+      { url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80', caption: 'SEO-optimised service page architecture — structured for local search visibility and lead conversion across GST, Income Tax, Accounting and Compliance.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Challenge</h2>
+<p>The client lacked a strong digital presence and needed a professional, trust-building website to attract businesses and individuals seeking reliable GST, Income Tax, Accounting, and Compliance services in Ahmedabad. In the financial and legal advisory sector, a weak online presence directly costs clients — prospective customers judge credibility within seconds of landing on a website, and an unprofessional or outdated digital presence will push high-value leads to competitors. LedgerLink needed a digital face that matched the quality of their expertise.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Solution</h2>
+<p>The Sonic Media designed and developed a clean, conversion-focused website with structured service pages, SEO-optimised content, responsive UI, and strategic lead generation elements to convert visitors into consultation inquiries. Every design decision was made with the target client in mind — a business owner or individual in Ahmedabad searching for a trusted CA or tax advisory firm. The information architecture was built to answer the three questions every visitor has within the first five seconds: What services do you offer? Are you credible? How do I contact you? Service pages for GST, Income Tax, Accounting, and Compliance were individually structured for both search visibility and conversion — with clear service descriptions, trust signals, and prominent inquiry CTAs on every page. The UI language was deliberately professional and clean, using typography, spacing, and colour to communicate authority without being cold or inaccessible.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Results</h2>
+<ul style="list-style:none;padding:0;margin:0;">
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Improved online credibility and brand trust — website immediately communicates authority and professionalism to prospective clients</span></li>
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Increased inquiry and lead conversion from website traffic — strategic CTAs and contact sections drive consultation requests</span></li>
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Strong local SEO visibility in Ahmedabad search results — structured content and on-page SEO built for local discovery</span></li>
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Fully responsive experience across all devices — seamless performance on mobile, tablet, and desktop</span></li>
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Faster user navigation with structured service architecture — visitors find the right service page within one click</span></li>
+</ul>
+<div style="margin-top:36px;">
+  <a href="https://lcpladvisory.com" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;padding:15px 36px;border-radius:50px;background:#FF5C00;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 28px rgba(255,92,0,.4);transition:all .3s;" onmouseover="this.style.boxShadow='0 0 44px rgba(255,92,0,.65)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='0 0 28px rgba(255,92,0,.4)';this.style.transform=''">View Live Project →</a>
+</div>`
   },
   'd2c-growth-playbook': {
     title: 'How Indian D2C Brands Can Scale from ₹5L to ₹50L Monthly Revenue in 6 Months',
@@ -2300,6 +2324,7 @@ const PAGE_DATA = {
       { id: 'google-ads-india',      img: 'https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&q=80',  cat: 'seo',          catLabel: 'SEO',          date: 'Mar 28, 2026', title: 'Google Ads for Indian Businesses: The Structure That Delivers 12× ROAS Consistently',  excerpt: 'Google Ads remains the most cost-efficient paid channel for high-intent buyers in India — if you structure campaigns correctly. Most businesses waste 60% of their Google Ads budget on these avoidable mistakes.' },
       { id: 'retention-marketing',   img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80',  cat: 'technology',   catLabel: 'Technology',   date: 'Mar 12, 2026', title: 'Retention Marketing in 2026: How to Turn One-Time Buyers Into Lifelong Brand Advocates', excerpt: 'Acquiring a new customer costs 5–7× more than retaining an existing one. The brands that win in 2026 are those that invest as heavily in keeping customers as in winning them.' },
       { id: 'legalbuddy-brand-identity', img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80', cat: 'branding', catLabel: 'Branding', date: 'Jun 27, 2026', title: 'Legalbuddy — Brand Identity & Logo Design: Building Trust in the Legal Services Space', excerpt: 'A strong, professional brand identity that builds trust instantly with users in the legal services space — clean, modern, and built for authority.' },
+      { id: 'ledgerlink-website', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80', cat: 'technology', catLabel: 'Technology', date: 'Jun 27, 2026', title: 'LedgerLink Consultation — Professional Tax & Compliance Website for Ahmedabad CA Firm', excerpt: 'A conversion-focused website for a GST, Income Tax, Accounting & Compliance advisory firm — built to build trust, generate leads, and dominate local search in Ahmedabad.' },
     ],
   },
 
