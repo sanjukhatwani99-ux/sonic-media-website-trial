@@ -2445,7 +2445,7 @@ const PAGE_DATA = {
       { id: 'brand-launch-india',    img: 'https://images.unsplash.com/photo-1559526324-593bc073d938?w=600&q=80',  cat: 'branding',     catLabel: 'Branding',     date: 'Mar 18, 2026', title: 'How to Launch a Brand in India in 90 Days: The Zero-to-Authority Playbook',           excerpt: 'Launching a new brand in one of the world\'s most competitive markets requires a very specific sequence of moves. This is the exact launch strategy we have refined across 30+ brand launches.' },
       { id: 'google-ads-india',      img: 'https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&q=80',  cat: 'seo',          catLabel: 'SEO',          date: 'Mar 28, 2026', title: 'Google Ads for Indian Businesses: The Structure That Delivers 12× ROAS Consistently',  excerpt: 'Google Ads remains the most cost-efficient paid channel for high-intent buyers in India — if you structure campaigns correctly. Most businesses waste 60% of their Google Ads budget on these avoidable mistakes.' },
       { id: 'retention-marketing',   img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80',  cat: 'technology',   catLabel: 'Technology',   date: 'Mar 12, 2026', title: 'Retention Marketing in 2026: How to Turn One-Time Buyers Into Lifelong Brand Advocates', excerpt: 'Acquiring a new customer costs 5–7× more than retaining an existing one. The brands that win in 2026 are those that invest as heavily in keeping customers as in winning them.' },
-      { id: 'legalbuddy-brand-identity', img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80', cat: 'branding', catLabel: 'Branding', date: 'Jun 27, 2026', title: 'Legalbuddy — Brand Identity & Logo Design: Building Trust in the Legal Services Space', excerpt: 'A strong, professional brand identity that builds trust instantly with users in the legal services space — clean, modern, and built for authority.' },
+      { id: 'legalbuddy-brand-identity', img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80', cat: 'branding', catLabel: 'Branding', date: 'Jun 27, 2026', title: 'Legalbuddy — Brand Identity & Logo Design', excerpt: 'A strong, professional brand identity that builds trust instantly with users in the legal services space — clean, modern, and built for authority.' },
       { id: 'ledgerlink-website', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80', cat: 'technology', catLabel: 'Technology', date: 'Jun 27, 2026', title: 'LedgerLink Consultation — Professional Tax & Compliance Website for Ahmedabad CA Firm', excerpt: 'A conversion-focused website for a GST, Income Tax, Accounting & Compliance advisory firm — built to build trust, generate leads, and dominate local search in Ahmedabad.' },
     ],
   },
@@ -2817,6 +2817,145 @@ function setAttr(id, attr, val) {
 }
 
 // ── Home page: Future & Vision split-screen ──
+// ─── SANITY LIVE FETCH ────────────────────────────────────────────────────────
+// Pulls published case studies from Sanity and merges them into the page.
+// Hardcoded entries above act as fallback / static seed.
+// New Sanity docs appear automatically without editing app.js.
+(function fetchSanityCaseStudies() {
+  const PROJECT_ID = 'jva6pfeq';
+  const DATASET    = 'production';
+  const API_VER    = '2024-01-01';
+
+  // GROQ query — fetch all caseStudy docs, newest first
+  const query = encodeURIComponent(`*[_type == "caseStudy"] | order(publishedDate desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    clientName,
+    industry,
+    category,
+    services,
+    shortDescription,
+    "featuredImg": { "url": featuredImage.asset->url + "?w=1200&auto=format", "alt": featuredImage.alt },
+    "cardImg": featuredImage.asset->url + "?w=800&auto=format",
+    "gallery": galleryImages[]{ "url": asset->url + "?w=1200&auto=format", "alt": alt },
+    "challenge": pt::text(challenge),
+    "solution": pt::text(solution),
+    "results": pt::text(results),
+    technologies,
+    projectUrl,
+    publishedDate,
+    featured
+  }`);
+
+  const url = `https://${PROJECT_ID}.apicdn.sanity.io/v${API_VER}/data/query/${DATASET}?query=${query}`;
+
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      const docs = (data && data.result) ? data.result : [];
+      if (!docs.length) return;
+
+      const CAT_ICON = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
+      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology'};
+
+      // Track card IDs already in the hardcoded PAGE_DATA list
+      const existingCardIds = new Set(PAGE_DATA.casestudies.items.map(function(i){ return i.id; }));
+      const newItems = [];
+
+      // Parse Portable Text results (pt::text joins blocks with \n\n) into a string array
+      function parseResults(raw) {
+        if (!raw || !raw.trim()) return [];
+        return raw.split(/\n+/)
+          .map(function(s) { return s.replace(/^[•·\-\*]\s*/, '').trim(); })
+          .filter(Boolean);
+      }
+
+      docs.forEach(function(doc) {
+        const id = doc.slug || doc._id;
+        if (!id) return;
+
+        const dateStr = doc.publishedDate
+          ? new Date(doc.publishedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+          : '';
+
+        // Always overwrite with live Sanity data so edits in Studio show immediately
+        caseStudies[id] = {
+          title:        doc.title            || 'Untitled',
+          client:       doc.clientName       || '',
+          industry:     doc.industry         || '',
+          category:     CAT_LABEL[doc.category] || doc.category || '',
+          services:     doc.services         || [],
+          date:         dateStr,
+          shortDesc:    doc.shortDescription || '',
+          featuredImg:  (doc.featuredImg && doc.featuredImg.url)
+                          ? doc.featuredImg
+                          : { url: doc.cardImg || '', alt: doc.title || '' },
+          gallery:      doc.gallery          || [],
+          challenge:    doc.challenge        || '',
+          solution:     doc.solution         || '',
+          results:      parseResults(doc.results),
+          technologies: doc.technologies     || [],
+          projectUrl:   doc.projectUrl       || '',
+        };
+
+        const cardItem = {
+          id:       id,
+          img:      doc.cardImg || '',
+          cat:      doc.category || 'strategy',
+          catLabel: CAT_LABEL[doc.category] || doc.category || '',
+          date:     dateStr,
+          title:    doc.title || '',
+          excerpt:  doc.shortDescription || '',
+          featured: !!doc.featured,
+        };
+
+        if (existingCardIds.has(id)) {
+          // Update the existing card in-place so order is preserved
+          for (var ci = 0; ci < PAGE_DATA.casestudies.items.length; ci++) {
+            if (PAGE_DATA.casestudies.items[ci].id === id) {
+              PAGE_DATA.casestudies.items[ci] = cardItem;
+              break;
+            }
+          }
+        } else {
+          newItems.push(cardItem);
+        }
+      });
+
+      // Prepend brand-new Sanity entries (featured first) before the hardcoded list
+      if (newItems.length) {
+        const featured = newItems.filter(function(i){ return i.featured; });
+        const rest     = newItems.filter(function(i){ return !i.featured; });
+        PAGE_DATA.casestudies.items = featured.concat(rest).concat(PAGE_DATA.casestudies.items);
+      }
+
+      // Re-render grids
+      function setEl(id, html) { var el = document.getElementById(id); if (el) el.innerHTML = html; }
+      const CS_CAT_ICON = CAT_ICON;
+      function buildJcard(item, readLabel) {
+        const catIcon = CS_CAT_ICON[item.cat] || '📊';
+        return '<div class="jcard" onclick="openCaseStudy(\'' + item.id + '\')" style="cursor:pointer;" data-cat="' + item.cat + '">' +
+          '<div class="jcard-img" style="position:relative;"><img src="' + item.img + '" alt="' + item.title + '" loading="lazy">' +
+          '<div style="position:absolute;top:10px;left:10px;width:32px;height:32px;border-radius:8px;background:rgba(8,8,8,.75);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:15px;" title="' + item.catLabel + '">' + catIcon + '</div>' +
+          '</div><div class="jcard-body">' +
+          '<div class="jcard-meta"><div class="jcard-cat">' + item.catLabel + '</div><div class="jcard-date">' + item.date + '</div></div>' +
+          '<div class="jcard-title">' + item.title + '</div>' +
+          '<div class="jcard-excerpt">' + item.excerpt + '</div>' +
+          '<div class="jcard-read">' + (readLabel || 'Read Full Case Study →') + '</div>' +
+          '</div></div>';
+      }
+
+      var allItems = PAGE_DATA.casestudies.items;
+      setEl('home-casestudies-grid', allItems.slice(0, 4).map(function(i){ return buildJcard(i, 'Read Full Case Study →'); }).join(''));
+      setEl('page-casestudies-grid', allItems.map(function(i){ return buildJcard(i, 'Read Article →'); }).join(''));
+    })
+    .catch(function(err) {
+      // Silently fail — hardcoded data still shows
+      console.warn('[Sanity] Case study fetch failed:', err);
+    });
+})();
+
 // Must run AFTER renderPageData() has populated the DOM
 document.addEventListener('DOMContentLoaded', function() {
   renderPageData();
