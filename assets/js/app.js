@@ -1241,6 +1241,31 @@ window.addEventListener('popstate', function(e) {
 
 /* ─ Case Study Detail Pages ─ */
 const caseStudies = {
+  'legalbuddy-brand-identity': {
+    title: 'Legalbuddy — Brand Identity & Logo Design: Building Trust in the Legal Services Space',
+    subtitle: 'A Clean, Modern Logo System Built for Authority, Credibility, and Scalability',
+    category: 'Branding',
+    date: 'Jun 27, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=80', caption: 'Legalbuddy brand identity system — designed for trust, authority, and clarity in the legal services market.' },
+      { url: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80', caption: 'Scalable logo system applied across digital platforms, legal documents, and brand communication touchpoints.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Challenge</h2>
+<p>Legalbuddy needed a strong, professional brand identity that could build trust instantly with users in the legal services space and stand out in a competitive, credibility-driven industry. In a sector where perception of authority and professionalism is the primary purchase driver, a weak or generic identity can permanently undermine user confidence — regardless of the quality of legal services delivered. The brief required a visual identity system that would feel immediately trustworthy to a first-time visitor, scale seamlessly across digital and offline applications, and communicate clarity in an industry often perceived as complex and inaccessible.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Solution</h2>
+<p>The Sonic Media created a clean, modern logo system focused on simplicity, trust, and authority. The design was built with scalable identity elements suitable for digital platforms, documents, and legal communication. Rather than defaulting to the visual clichés of the legal industry — scales of justice, gavels, heavy serif typefaces — we developed a contemporary identity that retained the gravitas expected of a legal brand while signalling modernity and accessibility. The logo system was engineered across multiple lockup variants to ensure consistent presentation at every size, from browser favicon to full-page document headers. Typography, colour, and spacing were selected to evoke precision and professionalism while maintaining warmth and approachability — critical for a legal services product aiming to remove the intimidation typically associated with legal help.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Results</h2>
+<ul style="list-style:none;padding:0;margin:0;">
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Strong, professional brand presence established — immediately distinguishable in a crowded legal services market</span></li>
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Improved visual credibility in the legal services market — identity conveys authority and trustworthiness at first glance</span></li>
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Consistent identity across digital and offline use — logo system performs equally across app UI, print, and legal documents</span></li>
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Scalable logo system for future brand expansion — architecture designed to accommodate sub-brands and new service lines</span></li>
+  <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-radius:10px;background:rgba(255,92,0,.05);border:1px solid rgba(255,92,0,.12);margin-bottom:10px;"><span style="color:#FF5C00;font-size:18px;flex-shrink:0;">✓</span><span>Clear and memorable brand recognition — distinctive mark that users can recall and identify with confidence</span></li>
+</ul>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Services Delivered</h2>
+<p>Brand Identity Design &amp; Logo System — including full logo lockup variants, colour palette, typography system, and brand usage guidelines optimised for the legal services sector.</p>
+<p>This project is a demonstration of The Sonic Media's branding philosophy: that trust is not built through decoration, but through precision. A brand that looks like it knows what it is doing — because every element of it was intentional — earns credibility before a single word is read. If you are building a brand in a trust-sensitive industry and need an identity that communicates authority from day one, contact The Sonic Media.</p>`
+  },
   'd2c-growth-playbook': {
     title: 'How Indian D2C Brands Can Scale from ₹5L to ₹50L Monthly Revenue in 6 Months',
     subtitle: 'The Exact Growth Blueprint That Delivered 10× Revenue for Our D2C Clients',
@@ -2274,6 +2299,7 @@ const PAGE_DATA = {
       { id: 'brand-launch-india',    img: 'https://images.unsplash.com/photo-1559526324-593bc073d938?w=600&q=80',  cat: 'branding',     catLabel: 'Branding',     date: 'Mar 18, 2026', title: 'How to Launch a Brand in India in 90 Days: The Zero-to-Authority Playbook',           excerpt: 'Launching a new brand in one of the world\'s most competitive markets requires a very specific sequence of moves. This is the exact launch strategy we have refined across 30+ brand launches.' },
       { id: 'google-ads-india',      img: 'https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&q=80',  cat: 'seo',          catLabel: 'SEO',          date: 'Mar 28, 2026', title: 'Google Ads for Indian Businesses: The Structure That Delivers 12× ROAS Consistently',  excerpt: 'Google Ads remains the most cost-efficient paid channel for high-intent buyers in India — if you structure campaigns correctly. Most businesses waste 60% of their Google Ads budget on these avoidable mistakes.' },
       { id: 'retention-marketing',   img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80',  cat: 'technology',   catLabel: 'Technology',   date: 'Mar 12, 2026', title: 'Retention Marketing in 2026: How to Turn One-Time Buyers Into Lifelong Brand Advocates', excerpt: 'Acquiring a new customer costs 5–7× more than retaining an existing one. The brands that win in 2026 are those that invest as heavily in keeping customers as in winning them.' },
+      { id: 'legalbuddy-brand-identity', img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80', cat: 'branding', catLabel: 'Branding', date: 'Jun 27, 2026', title: 'Legalbuddy — Brand Identity & Logo Design: Building Trust in the Legal Services Space', excerpt: 'A strong, professional brand identity that builds trust instantly with users in the legal services space — clean, modern, and built for authority.' },
     ],
   },
 
