@@ -808,7 +808,7 @@ section{position:relative;z-index:2;}
 .svc-card.svc-featured .svc-title{font-size:22px;}
 
 /* Responsive bento */
-@media(max-width:1100px){
+@media(max-width:1023px){
   .svc-b.b-w3,.svc-b.b-w4{grid-column:span 6;}
   .svc-b.b-w5,.svc-b.b-w6,.svc-b.b-w7,.svc-b.b-w8{grid-column:span 12;}
   .svc-b.b-h2{grid-row:span 1;}
@@ -1135,7 +1135,7 @@ section{position:relative;z-index:2;}
 }
 
 /* Responsive */
-@media(max-width:1100px){
+@media(max-width:1023px){
   .fw-row{grid-template-columns:60px 1fr 260px 130px;}
   .fw-header{padding:60px 40px 40px;}
   .fw-topbar{padding:14px 40px;}
@@ -1143,7 +1143,7 @@ section{position:relative;z-index:2;}
   .fw-stat-cell:nth-child(2){border-right:none;}
   .fw-stat-cell:nth-child(3){border-top:1px solid rgba(0,0,0,.1);}
 }
-@media(max-width:768px){
+@media(max-width:900px){
   .fw-header{grid-template-columns:1fr;padding:48px 24px 36px;}
   .fw-header-right{align-items:flex-start;}
   .fw-tagline{text-align:left;}
@@ -1395,7 +1395,7 @@ section{position:relative;z-index:2;}
 }
 
 /* Mobile: ensure cards are readable size */
-@media(max-width:768px){
+@media(max-width:900px){
   .testi-marquee-track{gap:14px;animation-duration:36s;}
   .tcard{flex:0 0 300px;}
 }
@@ -1685,7 +1685,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
 /* ═══════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════ */
-@media(max-width:1100px){
+@media(max-width:1023px){
   .hero{grid-template-columns:1fr;}
   .hero-right{display:none;}
   .hero-left{padding:140px 40px 100px;}
@@ -2262,7 +2262,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);paddin
   will-change: clip-path, object-position;
 }
 @media (max-width: 900px) { .fv-arch { gap: 30px; } }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .fv-arch { flex-direction: column; gap: 20px; }
   .fv-arch__left, .fv-arch__right { display: contents; }
   .fv-img-wrapper { position: static; transform: none; height: 280px; margin-bottom: 16px; backface-visibility: hidden; }
@@ -2470,7 +2470,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 }
 
 /* ── 768px and below (tablets) ── */
-@media(max-width:768px){
+@media(max-width:900px){
   /* Nav */
   nav { padding: 0 20px; height: 64px; }
 
@@ -2558,116 +2558,6 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
    TABLET / iPAD — fills gaps between 768–1100px
    Only properties not already handled above
 ══════════════════════════════════════════════════ */
-@media(min-width:769px) and (max-width:1100px){
-
-  /* Nav */
-  nav { padding: 0 32px; }
-
-  /* Hero */
-  .hero-left { padding: 120px 40px 80px; }
-
-  /* About */
-  .about { padding: 80px 40px; gap: 60px; }
-  .about-badge-circle { right: -12px; }
-  .about-float { left: 0; }
-
-  /* Services bento — already handled by existing 1100 rule, reinforce padding */
-  .services { padding: 80px 40px; }
-  .svc-bento { gap: 12px; }
-
-  /* Pricing */
-  .pricing { padding: 80px 40px; }
-  .pricing-grid { grid-template-columns: repeat(3,1fr); gap: 16px; }
-  .price-card { padding: 32px 20px; }
-  .price-amt { font-size: 52px; }
-
-  /* Studio */
-  .studio { padding: 80px 40px; }
-  .studio-floats { right: -8px; }
-  .studio-equip { padding: 80px 40px; }
-  .equip-grid { grid-template-columns: repeat(2,1fr); }
-
-  /* Featured work rows */
-  .fw-header { padding: 60px 40px 40px; }
-  .fw-topbar { padding: 14px 40px; }
-  .fw-row { grid-template-columns: 60px 1fr 220px 120px; min-height: 140px; }
-  .fw-row-info { padding: 28px 24px; }
-  .fw-stat-strip { grid-template-columns: repeat(2,1fr); }
-  .fw-stat-cell:nth-child(2) { border-right: none; }
-  .fw-stat-cell:nth-child(3) { border-top: 1px solid rgba(0,0,0,.1); }
-
-  /* Case studies */
-  .cs-full-grid { grid-template-columns: repeat(2,1fr); }
-  .cs-stat-row { grid-template-columns: repeat(2,1fr); gap: 16px; }
-
-  /* Journal */
-  .journal { padding: 80px 40px; }
-  .jnl-grid { grid-template-columns: 1fr 1fr; }
-  .jnl-grid .jcard:first-child { grid-column: span 2; }
-  .jnl-full-grid { grid-template-columns: 1fr 1fr; }
-
-  /* Future Vision */
-  .future { padding: 80px 40px; }
-  .future-grid { grid-template-columns: repeat(2,1fr); }
-  .timeline-items { flex-wrap: wrap; }
-  .ti { flex: 0 0 50%; }
-
-  /* Testimonials */
-  .testimonials { padding: 80px 40px; }
-  .testimonials-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 48px; }
-
-  /* Portfolio */
-  .portfolio { padding: 80px 40px; }
-  .portfolio-masonry { grid-template-columns: repeat(2,1fr); grid-auto-rows: 260px; }
-  .port-item.port-wide { grid-column: span 2; }
-  .port-item.port-tall { grid-row: span 2; }
-
-  /* Blogs & Newsletter */
-  .blogs-newsletter { grid-template-columns: 1fr; }
-  .blogs-half { padding: 80px 40px; }
-  .newsletter-half { padding: 80px 40px; }
-
-  /* FAQ */
-  .faq-section { padding: 80px 40px; }
-  .faq-inner { gap: 60px; }
-
-  /* CTA */
-  .cta { padding: 100px 40px; }
-  .cta-cards { gap: 14px; }
-  .cta-card { flex: 0 0 calc(50% - 8px); max-width: none; }
-
-  /* Contact */
-  .contact-section { padding: 80px 40px; }
-  .contact-form { padding: 36px 32px; }
-
-  /* Inner page hero */
-  .inner-hero { padding: 140px 40px 80px; }
-
-  /* Footer */
-  footer { padding: 60px 40px 30px; padding-top: 260px; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-  .footer-bar-item { font-size: 28px; }
-
-  /* Home coverflow */
-  .hcf-list { width: 19rem; height: 25rem; }
-  .hcf-card { width: 19rem; height: 25rem; }
-}
-
-/* ── iPad landscape / small desktop (1024px) — slot between 900 and 1100 ── */
-@media(min-width:901px) and (max-width:1100px){
-  /* Restore nav links (hamburger hidden, desktop links visible) */
-  .nav-links { display: flex; }
-  .ham { display: none !important; }
-  nav { padding: 0 28px; }
-  .nav-links a, .nav-links button { padding: 8px 10px; font-size: 11px; }
-
-  /* Hero — single column but keep padding comfortable */
-  .hero-left { padding: 130px 48px 80px; }
-
-  /* Studio reel — smaller aspect on tablet */
-  .studio-reel { aspect-ratio: 4/3; }
-}
-
 /* ═══════════════════════════════════════════════════
    MOBILE SWIPE CAROUSEL — SERVICES SECTION
    Premium showcase carousel: native scroll-snap,
@@ -2878,7 +2768,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 .mob-svc-count span { color: var(--orange); }
 
 /* Show/hide based on screen size */
-@media(max-width:768px){
+@media(max-width:900px){
   /* Hide the scroll-based coverflow on mobile (home page preview) */
   #homeSvcScrollWrapper { display: none !important; }
   #pageSvcScrollWrapper { display: none !important; }
@@ -3221,7 +3111,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
 ══════════════════════════════════════════════════ */
 
 /* ── Global mobile token refinements ── */
-@media(max-width:768px){
+@media(max-width:900px){
 
   /* ── NAV: premium glass bar, refined height ── */
   nav {
@@ -4736,7 +4626,7 @@ a.social-icon:focus-visible {
    blocks like .inp on the builder pages) to render at 16px on
    mobile, so tapping to type never triggers the zoom.
    ══════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   input,
   textarea,
   select,
@@ -4860,7 +4750,7 @@ a.social-icon:focus-visible {
       All phones in this range get identical layout.
       No device targeting, no pointer targeting.
    ───────────────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   /* --- Grids that must stay 2-column on 360px–480px --- */
 
@@ -4978,7 +4868,7 @@ a.social-icon:focus-visible {
       These use inline <style> per page, but shared
       grid pattern: repeat(3,1fr) → auto-fit on mobile
    ───────────────────────────────────────────── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   /* Catch any repeat(N,1fr) grids inside service viewport sections
      that aren't already handled by page-specific media queries */
   [class*="svp-grid"],
@@ -5037,225 +4927,4 @@ a.social-icon:focus-visible {
    END DEVICE-INDEPENDENT RESPONSIVE FIX
    ───────────────────────────────────────────── */
 
-/* ═══════════════════════════════════════════════════
-   TABLET ORIENTATION ADAPTATION
-   iPad/tablet portrait  → full mobile layout
-   iPad/tablet landscape → full desktop layout
-   Tablet range: device width 768px–1366px
-═══════════════════════════════════════════════════ */
 
-/* ── TABLET PORTRAIT: force mobile behavior ──────
-   Targets tablets in portrait orientation where width
-   is typically 768–1024px. We override any tablet-
-   specific rules so they match mobile exactly.        */
-@media (min-width: 600px) and (max-width: 1100px) and (orientation: portrait) {
-
-  /* Nav: hide desktop links, show hamburger */
-  .nav-links { display: none !important; }
-  .ham { display: flex !important; }
-  nav { padding: 0 24px !important; }
-
-  /* Hero: single-column, mobile padding */
-  .hero-left { padding: 110px 24px 80px !important; }
-
-  /* Section paddings: match mobile */
-  .about       { padding: 80px 24px !important; }
-  .services    { padding: 80px 24px !important; }
-  .studio      { padding: 80px 24px !important; }
-  .future      { padding: 80px 24px !important; }
-  .testimonials{ padding: 80px 24px !important; }
-  .casestudies { padding: 80px 24px !important; }
-  .journal     { padding: 80px 24px !important; }
-  .blogs-half,
-  .newsletter-half { padding: 70px 24px !important; }
-  .cta         { padding: 100px 24px !important; }
-  footer       { padding: 60px 24px 30px !important; }
-  .pricing     { padding: 80px 24px !important; }
-  .faq-section { padding: 80px 24px !important; }
-  .contact-section { padding: 80px 24px !important; }
-  .inner-hero  { padding: 140px 24px 80px !important; }
-  .studio-equip{ padding: 80px 24px !important; }
-
-  /* Layouts: collapse to mobile single-column */
-  .future-grid          { grid-template-columns: 1fr !important; }
-  .tcard                { flex: 0 0 calc(100% - 0px) !important; }
-  .jnl-grid             { grid-template-columns: 1fr !important; }
-  .jnl-grid .jcard:first-child { grid-column: span 1 !important; }
-  .jnl-full-grid        { grid-template-columns: 1fr !important; }
-  .cs-full-grid         { grid-template-columns: 1fr !important; }
-  .cs-stat-row          { grid-template-columns: repeat(2,1fr) !important; }
-  .pricing-grid         { grid-template-columns: 1fr !important; }
-  .footer-top           { grid-template-columns: 1fr !important; }
-  .blogs-newsletter     { grid-template-columns: 1fr !important; }
-  .contact-grid         { grid-template-columns: 1fr !important; gap: 50px !important; }
-  .equip-grid           { grid-template-columns: repeat(2,1fr) !important; }
-  .portfolio-masonry    { grid-template-columns: repeat(2,1fr) !important; grid-auto-rows: 200px !important; }
-  .studio-inner         { grid-template-columns: 1fr !important; gap: 40px !important; }
-  .studio-grid          { grid-template-columns: 1fr 1fr !important; }
-
-  /* Featured work rows: stack on portrait tablet */
-  .fw-row {
-    grid-template-columns: 48px 1fr !important;
-    grid-template-rows: auto auto !important;
-    min-height: auto !important;
-  }
-  .fw-row-photo {
-    grid-column: 1/3 !important;
-    height: 200px !important;
-    border-left: none !important;
-    border-right: none !important;
-  }
-  .fw-row-metric {
-    grid-column: 1/3 !important;
-    flex-direction: row !important;
-    justify-content: flex-start !important;
-    padding: 16px 24px !important;
-    border-top: 1px solid rgba(0,0,0,.08) !important;
-    gap: 12px !important;
-  }
-  .fw-row-arrow { margin-top: 0 !important; }
-  .fw-header { padding: 48px 24px 36px !important; }
-  .fw-topbar { padding: 12px 24px !important; }
-  .fw-stat-strip { grid-template-columns: 1fr 1fr !important; }
-
-  /* Service bento: all full-width */
-  .svc-b.b-w3,.svc-b.b-w4,
-  .svc-b.b-w5,.svc-b.b-w6,
-  .svc-b.b-w7,.svc-b.b-w8 { grid-column: span 12 !important; }
-  .svc-b-desc { max-height: 80px !important; opacity: 1 !important; }
-  .svc-b-arrow { opacity: 1 !important; transform: translateY(0) !important; }
-
-  /* Timeline: stack vertically */
-  .timeline-items { flex-wrap: wrap !important; }
-  .ti { flex: 0 0 50% !important; }
-
-  /* About: collapse to single column */
-  .about-inner { grid-template-columns: 1fr !important; }
-  .about-badge-circle { right: 10px !important; }
-  .about-float { left: 0 !important; }
-
-  /* Testimonials header */
-  .testimonials-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 16px !important;
-    margin-bottom: 48px !important;
-  }
-
-  /* CTA cards: two-per-row */
-  .cta-cards { gap: 14px !important; }
-  .cta-card  { flex: 0 0 calc(50% - 8px) !important; max-width: none !important; }
-
-  /* Studio reel */
-  .studio-reel { aspect-ratio: 16/9 !important; }
-
-  /* Home coverflow */
-  .hcf-list { width: 85vw !important; height: auto !important; }
-  .hcf-card { width: 85vw !important; height: auto !important; }
-
-  /* Future Vision home header */
-  #fv-home-header { top: 64px !important; }
-
-  /* Mobile services carousel: show; desktop coverflow: hide */
-  .mob-svc-carousel-wrap { display: flex !important; }
-  #pageSvcScrollWrapper,
-  #homeSvcScrollWrapper { display: none !important; }
-}
-
-/* ── TABLET LANDSCAPE: force desktop behavior ────
-   Targets tablets in landscape orientation where width
-   is typically 1024–1366px. Restore all desktop rules. */
-@media (min-width: 900px) and (max-width: 1366px) and (orientation: landscape) {
-
-  /* Nav: show desktop links, hide hamburger */
-  .nav-links { display: flex !important; }
-  .ham { display: none !important; }
-  nav { padding: 0 28px !important; }
-  .nav-links a, .nav-links button { padding: 8px 10px !important; font-size: 11px !important; }
-
-  /* Hero: desktop layout restored */
-  .hero-left { padding: 130px 48px 80px !important; }
-
-  /* Section paddings: desktop values */
-  .about        { padding: 80px 40px !important; }
-  .services     { padding: 80px 40px !important; }
-  .studio       { padding: 80px 40px !important; }
-  .future       { padding: 80px 40px !important; }
-  .testimonials { padding: 80px 40px !important; }
-  .casestudies  { padding: 80px 40px !important; }
-  .journal      { padding: 80px 40px !important; }
-  .blogs-half,
-  .newsletter-half { padding: 80px 40px !important; }
-  .cta          { padding: 100px 40px !important; }
-  footer        { padding: 60px 40px 30px !important; padding-top: 260px !important; }
-  .pricing      { padding: 80px 40px !important; }
-  .faq-section  { padding: 80px 40px !important; }
-  .contact-section { padding: 80px 40px !important; }
-  .inner-hero   { padding: 140px 40px 80px !important; }
-  .studio-equip { padding: 80px 40px !important; }
-
-  /* Grid layouts: desktop multi-column */
-  .future-grid        { grid-template-columns: repeat(2,1fr) !important; }
-  .jnl-grid           { grid-template-columns: 1fr 1fr !important; }
-  .jnl-grid .jcard:first-child { grid-column: span 2 !important; }
-  .jnl-full-grid      { grid-template-columns: 1fr 1fr !important; }
-  .cs-full-grid       { grid-template-columns: repeat(2,1fr) !important; }
-  .cs-stat-row        { grid-template-columns: repeat(2,1fr) !important; gap: 16px !important; }
-  .pricing-grid       { grid-template-columns: repeat(3,1fr) !important; gap: 16px !important; }
-  .footer-top         { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
-  .blogs-newsletter   { grid-template-columns: 1fr !important; }
-  .contact-grid       { grid-template-columns: 1fr !important; gap: 50px !important; }
-  .equip-grid         { grid-template-columns: repeat(2,1fr) !important; }
-  .portfolio-masonry  {
-    grid-template-columns: repeat(2,1fr) !important;
-    grid-auto-rows: 260px !important;
-  }
-  .port-item.port-wide { grid-column: span 2 !important; }
-  .port-item.port-tall { grid-row: span 2 !important; }
-  .studio-inner       { grid-template-columns: 1fr 1fr !important; gap: 80px !important; }
-
-  /* Featured work rows: desktop layout */
-  .fw-row {
-    grid-template-columns: 60px 1fr 220px 120px !important;
-    min-height: 140px !important;
-  }
-  .fw-row-photo {
-    grid-column: auto !important;
-    height: auto !important;
-  }
-  .fw-row-metric {
-    grid-column: auto !important;
-    flex-direction: column !important;
-    padding: 28px 24px !important;
-    border-top: none !important;
-  }
-  .fw-header { padding: 60px 40px 40px !important; }
-  .fw-topbar { padding: 14px 40px !important; }
-  .fw-stat-strip { grid-template-columns: repeat(2,1fr) !important; }
-
-  /* Service bento: desktop widths */
-  .svc-b.b-w3,.svc-b.b-w4 { grid-column: span 6 !important; }
-  .svc-b.b-w5,.svc-b.b-w6,
-  .svc-b.b-w7,.svc-b.b-w8 { grid-column: span 12 !important; }
-
-  /* Studio reel: tablet aspect */
-  .studio-reel { aspect-ratio: 4/3 !important; }
-
-  /* Desktop services coverflow: show; mobile carousel: hide */
-  .mob-svc-carousel-wrap { display: none !important; }
-  #pageSvcScrollWrapper,
-  #homeSvcScrollWrapper { display: block !important; }
-
-  /* Desktop contact form padding */
-  .contact-form { padding: 36px 32px !important; }
-
-  /* FAQ inner gap */
-  .faq-inner { gap: 60px !important; }
-
-  /* CTA cards: two-per-row */
-  .cta-cards { gap: 14px !important; }
-  .cta-card  { flex: 0 0 calc(50% - 8px) !important; max-width: none !important; }
-
-  /* Footer bar */
-  .footer-bar-item { font-size: 28px !important; }
-}

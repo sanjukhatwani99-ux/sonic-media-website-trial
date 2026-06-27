@@ -14,25 +14,25 @@ const PAGES = ['home','about','services','studio','casestudies','journal','futur
    (falls back to SPA toggle if the target page div exists in the same file).
 */
 const PAGE_FILE_MAP = {
-  'home':        '../index.html',
-  'about':       '../about.html',
-  'services':    '../services.html',
-  'studio':      '../studio.html',
-  'casestudies': '../casestudies.html',
-  'journal':     '../journal.html',
-  'future':      '../future.html',
-  'faq':         '../faq.html',
-  'contact':     '../contact.html',
-  'svc-web':     'web.html',
-  'svc-app':     'app.html',
-  'svc-seo':     'seo.html',
-  'svc-smm':     'smm.html',
-  'svc-perf':    'perf.html',
-  'svc-inf':     'inf.html',
-  'svc-ecom':    'ecom.html',
-  'svc-content': 'content.html',
-  'svc-brand':   'brand.html',
-  'svc-ai':      'ai.html',
+  'home':        '/',
+  'about':       '../about',
+  'services':    '../services',
+  'studio':      '../studio',
+  'casestudies': '../casestudies',
+  'journal':     '../journal',
+  'future':      '../future',
+  'faq':         '../faq',
+  'contact':     '../contact',
+  'svc-web':     'web',
+  'svc-app':     'app',
+  'svc-seo':     'seo',
+  'svc-smm':     'smm',
+  'svc-perf':    'perf',
+  'svc-inf':     'inf',
+  'svc-ecom':    'ecom',
+  'svc-content': 'content',
+  'svc-brand':   'brand',
+  'svc-ai':      'ai',
 };
 
 /* Detect if we're in the services/ subfolder */
@@ -646,7 +646,7 @@ const legalContent = {
 
 /* ─ Work Detail Pages ─ */
 const workDetails = {
-  luxefashion: {
+  ledgerlink: {
     title: 'LedgerLink Consultation Pvt Ltd',
     subtitle: 'Tax & Financial Advisory Website',
     category: 'Web Design & Development',
@@ -829,7 +829,24 @@ const workDetails = {
 function openWorkDetail(id) {
   const w = workDetails[id];
   if (!w) return;
-  const win = window.open('', '_blank');
+
+  /* ── Inject overlay shell once ── */
+  if (!document.getElementById('wd-overlay')) {
+    const shell = document.createElement('div');
+    shell.id = 'wd-overlay';
+    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
+    document.documentElement.appendChild(shell);
+  }
+  const wdOverlay = document.getElementById('wd-overlay');
+
+  /* ── Remember scroll position if opened from home page ── */
+  if (typeof currentPage !== 'undefined' && currentPage === 'home') {
+    wdOverlay._returnScrollY = window.scrollY;
+    wdOverlay._returnAnchor  = 'home-portfolio-eyebrow';
+  } else {
+    wdOverlay._returnScrollY = null;
+    wdOverlay._returnAnchor  = null;
+  }
 
   /* ── Tags pill row ── */
   const tagsHtml = w.tags.map(t =>
@@ -895,7 +912,55 @@ function openWorkDetail(id) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${w.title} — The Sonic Media</title>
+<title>${w.title} — Portfolio — The Sonic Media</title>
+<meta name="description" content="${w.about || w.subtitle} — A portfolio project by The Sonic Media, a premium digital marketing agency in India.">
+<link rel="icon" type="image/jpeg" href="${w.images[0].url.split('?')[0]}?w=32&h=32&fit=crop">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The Sonic Media">
+<meta property="og:title" content="${w.title} — The Sonic Media Portfolio">
+<meta property="og:description" content="${w.about || w.subtitle}">
+<meta property="og:image" content="${w.images[0].url.replace(/w=\d+/,'w=1200')}&h=630&fit=crop">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${w.title}">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@thesonicmedia">
+<meta name="twitter:title" content="${w.title} — The Sonic Media Portfolio">
+<meta name="twitter:description" content="${w.about || w.subtitle}">
+<meta name="twitter:image" content="${w.images[0].url.replace(/w=\d+/,'w=1200')}&h=630&fit=crop">
+<meta name="robots" content="index, follow">
+<meta name="author" content="The Sonic Media">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "https://thesonicmedia.com/portfolio/${id}",
+      "name": "${w.title.replace(/"/g,'\\"')}",
+      "description": "${(w.about || w.subtitle).replace(/"/g,'\\"')}",
+      "image": "${w.images[0].url}",
+      "creator": {
+        "@type": "Organization",
+        "name": "The Sonic Media",
+        "url": "https://thesonicmedia.com"
+      },
+      "dateCreated": "${w.year || '2026'}",
+      "genre": "${w.category}",
+      "locationCreated": "${w.location || 'India'}"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://thesonicmedia.com/"},
+        {"@type":"ListItem","position":2,"name":"Portfolio","item":"https://thesonicmedia.com/portfolio"},
+        {"@type":"ListItem","position":3,"name":"${w.title.replace(/"/g,'\\"')}"}
+      ]
+    }
+  ]
+}
+<\/script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -915,7 +980,7 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 .wd-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,92,0,.2),transparent);}
 .wd-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:22px;animation:fadeUp .6s .1s both;}
 .wd-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;display:inline-block;}
-.wd-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,7.5vw,108px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;animation:fadeUp .7s .2s both;}
+.wd-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,7.5vw,108px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;animation:fadeUp .7s .2s both;color:#ffffff;}
 .wd-h1 em{color:#FF5C00;font-style:normal;}
 .wd-sub{font-size:17px;color:rgba(245,240,235,.55);font-weight:300;max-width:580px;margin-bottom:36px;line-height:1.8;animation:fadeUp .7s .3s both;}
 .wd-tags-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px;animation:fadeUp .7s .4s both;}
@@ -974,7 +1039,7 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
     <img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />
     THE SONIC MEDIA
   </div>
-  <button class="wd-close" onclick="window.close()">✕ Close</button>
+  <button class="wd-close" id="wd-close-btn">✕ Close</button>
 </nav>
 
 <!-- HERO -->
@@ -1041,7 +1106,7 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
   <div class="wd-cta-h">Work With <em>The Sonic Media</em></div>
   <p class="wd-cta-p">Let's craft your brand's next digital chapter — strategy, design, development, and growth under one roof.</p>
   <div class="wd-cta-btns">
-    <a href="javascript:void(0)" onclick="window.close()"
+    <a href="javascript:void(0)" id="wd-cta-close-btn" onclick="closeWorkDetail()"
       style="display:inline-flex;align-items:center;gap:10px;padding:15px 36px;border-radius:50px;background:#FF5C00;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 28px rgba(255,92,0,.4);transition:all .3s;"
       onmouseover="this.style.boxShadow='0 0 48px rgba(255,92,0,.65)';this.style.transform='translateY(-2px)'"
       onmouseout="this.style.boxShadow='0 0 28px rgba(255,92,0,.4)';this.style.transform=''">
@@ -1059,14 +1124,120 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 <!-- FOOTER -->
 <div class="wd-footer">
   <div class="wd-footer-copy">© 2026 <em>The Sonic Media</em>. All rights reserved.</div>
-  <span class="wd-back" onclick="window.close()">← Back to Website</span>
+  <span class="wd-back" id="wd-back-btn">← Back to Portfolio</span>
 </div>
 
 </body>
 </html>`;
-  win.document.write(html);
-  win.document.close();
+
+  /* Strip the <html>/<head>/<body> wrapper since we're injecting into a div, not a new document */
+  const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+  const styleMatch = html.match(/<style[\s\S]*?<\/style>/g) || [];
+  const wdInner = styleMatch.join('') + (bodyMatch ? bodyMatch[1] : html);
+  wdOverlay.innerHTML = wdInner;
+
+  /* ── Update URL, title, canonical ── */
+  const wdSlug = id;
+  const wdNewUrl = '/portfolio/' + wdSlug;
+  history.pushState({ portfolioWork: id }, w.title + ' — Portfolio — The Sonic Media', wdNewUrl);
+  document.title = w.title + ' — Portfolio — The Sonic Media';
+  let wdCanonical = document.querySelector('link[rel="canonical"]');
+  if (!wdCanonical) { wdCanonical = document.createElement('link'); wdCanonical.rel = 'canonical'; document.head.appendChild(wdCanonical); }
+  wdCanonical.href = 'https://thesonicmedia.com/portfolio/' + wdSlug;
+
+  /* ── Show overlay ── */
+  wdOverlay.style.display = 'block';
+  document.documentElement.scrollTop = 0;
+  document.body.style.visibility = 'hidden';
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(eid) {
+    var el = document.getElementById(eid);
+    if (el) document.documentElement.appendChild(el);
+  });
+  if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
+
+  /* ── Wire close buttons ── */
+  function wdCloseHandler() { closeWorkDetail(); }
+  var wdCloseBtn = document.getElementById('wd-close-btn');
+  var wdBackBtn  = document.getElementById('wd-back-btn');
+  var wdCtaBtn   = document.getElementById('wd-cta-close-btn');
+  if (wdCloseBtn) wdCloseBtn.addEventListener('click', wdCloseHandler);
+  if (wdBackBtn)  wdBackBtn.addEventListener('click', wdCloseHandler);
+  if (wdCtaBtn)   wdCtaBtn.addEventListener('click', wdCloseHandler);
+
+  /* ── Keyboard close ── */
+  wdOverlay._keyHandler = function(e) { if (e.key === 'Escape') closeWorkDetail(); };
+  document.addEventListener('keydown', wdOverlay._keyHandler);
 }
+
+function closeWorkDetail() {
+  var wdOv = document.getElementById('wd-overlay');
+  if (!wdOv || wdOv.style.display === 'none') return;
+  wdOv.style.display = 'none';
+  document.body.style.visibility = '';
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(eid) {
+    var el = document.getElementById(eid);
+    if (el) document.body.appendChild(el);
+  });
+  if (window._initLenis) { window._initLenis(); }
+  if (wdOv._keyHandler) { document.removeEventListener('keydown', wdOv._keyHandler); wdOv._keyHandler = null; }
+  /* ── Restore home page scroll position if opened from home ── */
+  var _wdReturnY      = wdOv._returnScrollY;
+  var _wdReturnAnchor = wdOv._returnAnchor;
+  if (_wdReturnY !== null && _wdReturnAnchor) {
+    setTimeout(function() {
+      var el = document.getElementById(_wdReturnAnchor);
+      if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+      else    { window.scrollTo(0, _wdReturnY); }
+    }, 0);
+  }
+  history.pushState({ portfolioWork: null }, 'Portfolio — The Sonic Media', '/portfolio');
+  document.title = 'Portfolio — The Sonic Media';
+  var wdCan = document.querySelector('link[rel="canonical"]');
+  if (wdCan) wdCan.href = 'https://thesonicmedia.com/portfolio';
+}
+
+/* ── Handle browser back/forward through portfolio URLs ── */
+window.addEventListener('popstate', function(e) {
+  var wdOv = document.getElementById('wd-overlay');
+  if (!wdOv) return;
+  if (e.state && e.state.portfolioWork) {
+    openWorkDetail(e.state.portfolioWork);
+  } else {
+    if (wdOv.style.display !== 'none') {
+      wdOv.style.display = 'none';
+      document.body.style.visibility = '';
+      ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(eid) {
+        var el = document.getElementById(eid);
+        if (el) document.body.appendChild(el);
+      });
+      if (window._initLenis) { window._initLenis(); }
+      if (wdOv._keyHandler) { document.removeEventListener('keydown', wdOv._keyHandler); wdOv._keyHandler = null; }
+      document.title = 'Portfolio — The Sonic Media';
+    }
+  }
+});
+
+/* ── On direct URL load: /portfolio/<slug> → auto-open project ── */
+(function detectPortfolioSlugOnLoad() {
+  var path = window.location.pathname;
+  var match = path.match(/\/portfolio\/([^/]+)\/?$/);
+  if (!match) return;
+  var slug = match[1];
+  function tryOpenWork() {
+    if (typeof workDetails !== 'undefined' && workDetails[slug]) {
+      openWorkDetail(slug);
+    } else if (typeof workDetails !== 'undefined') {
+      history.replaceState({}, 'Portfolio — The Sonic Media', '/portfolio');
+    } else {
+      setTimeout(tryOpenWork, 50);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryOpenWork);
+  } else {
+    tryOpenWork();
+  }
+})();
 
 /* ─ Case Study Detail Pages ─ */
 const caseStudies = {
@@ -1254,25 +1425,34 @@ const caseStudies = {
   }
 };
 
-/* ── Deep-link renderer for Case Study articles ──
-   Reads the article data and renders it into an in-page fullscreen overlay.
-   The URL is updated to /casestudies#case/<id> so the page can be shared,
-   bookmarked, refreshed, and opened directly. ── */
-function _renderCaseStudyOverlay(id) {
+function openCaseStudy(id) {
   const cs = caseStudies[id];
   if (!cs) return;
-  const html = `<div style="font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100%;position:relative;">
-<style>
+
+  /* ── Inject overlay shell once ── */
+  if (!document.getElementById('cs-overlay')) {
+    const shell = document.createElement('div');
+    shell.id = 'cs-overlay';
+    /* Appended to <html> (documentElement), not <body>.
+       position:absolute so it sits in normal document flow — <html> is the scroller.
+       The browser draws its own native scrollbar for <html>, which is the main page scrollbar. */
+    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
+    document.documentElement.appendChild(shell);
+  }
+  const overlay = document.getElementById('cs-overlay');
+
+  /* ── Build inner HTML ── */
+  overlay.innerHTML = `<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 .cs-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
 .cs-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
-.cs-brand-mark{width:34px;height:34px;border-radius:8px;background:#FF5C00;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;}
 .cs-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
 .cs-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
 .cs-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
 .cs-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
 .cs-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
 .cs-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;}
+.cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;color:#F5F0EB;}
 .cs-h1 span{color:#FF5C00;}
 .cs-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
 .cs-body{max-width:960px;margin:0 auto;padding:72px 72px 100px;}
@@ -1280,11 +1460,12 @@ function _renderCaseStudyOverlay(id) {
 .cs-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
 .cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
 .cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
-.cs-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
+
+.cs-article p{margin-bottom:20px;}
 .cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .cs-footer-copy{font-size:13px;color:#666;}
 .cs-footer-copy span{color:#FF5C00;}
-.cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;}
+.cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}
 .cs-back:hover{gap:14px;}
 .cs-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}
 .cs-cta-band::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}
@@ -1294,23 +1475,22 @@ function _renderCaseStudyOverlay(id) {
 .cs-cta-h span{color:#FF5C00;}
 .cs-cta-p{font-size:15px;line-height:1.75;color:rgba(245,240,235,.55);font-weight:300;max-width:480px;margin:0 auto 36px;}
 .cs-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}
-.cs-cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s;}
-.cs-cta-btn:hover::before{transform:translateX(100%);}
 .cs-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}
-@media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:60px 20px 48px;}.cs-body{padding:40px 20px 80px;}.cs-article{padding:28px;}.cs-cta-band{padding:48px 24px;}}
+@media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:60px 20px 48px;}.cs-body{padding:40px 20px 80px;}.cs-article{padding:28px;font-size:15px;}.cs-cta-band{padding:48px 24px;}}
 </style>
 <nav class="cs-nav">
   <div class="cs-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
-  <button class="cs-close" onclick="closeCaseStudyOverlay()">✕ Close</button>
+  <button class="cs-close" id="cs-close-btn">✕ Close</button>
 </nav>
 <div class="cs-hero">
+  <div class="cs-eyebrow">${cs.category}</div>
   <h1 class="cs-h1">${cs.title.split(' ').slice(0,5).join(' ')}<br><span>${cs.title.split(' ').slice(5).join(' ')}</span></h1>
   <div class="cs-meta">${cs.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${cs.category}</div>
 </div>
 <div class="cs-body">
-  <div class="cs-img-wrap"><img src="${cs.images[0].url}" alt="${cs.title}"></div>
+  <div class="cs-img-wrap"><img src="${cs.images[0].url}" alt="${cs.title}" loading="lazy"></div>
   <div class="cs-img-cap">${cs.images[0].caption}</div>
-  <div class="cs-img-wrap"><img src="${cs.images[1].url}" alt="${cs.subtitle}"></div>
+  <div class="cs-img-wrap"><img src="${cs.images[1].url}" alt="${cs.subtitle}" loading="lazy"></div>
   <div class="cs-img-cap">${cs.images[1].caption}</div>
   <div class="cs-article">${cs.body}</div>
 </div>
@@ -1318,42 +1498,137 @@ function _renderCaseStudyOverlay(id) {
   <div class="cs-cta-eyebrow">Ready to Grow?</div>
   <div class="cs-cta-h">Work With <span>The Sonic Media</span></div>
   <p class="cs-cta-p">Let's build your brand's next growth chapter together — strategy, content, performance, and technology under one roof.</p>
-  <a class="cs-cta-btn" href="#" onclick="closeCaseStudyOverlay();navigate('contact');return false;">Get a Strategy Call →</a>
+  <a class="cs-cta-btn" href="#" onclick="closeCaseStudy();window.navigate&&window.navigate('contact');return false;">Get a Strategy Call →</a>
 </div>
 <div class="cs-footer">
   <div class="cs-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
-  <span class="cs-back" onclick="closeCaseStudyOverlay()">← Back to Case Studies</span>
-</div>
+  <button class="cs-back" id="cs-back-btn">← Back to Case Studies</button>
 </div>`;
 
-  // Inject overlay into current page
-  let ov = document.getElementById('_tsm_cs_overlay');
-  if (!ov) {
-    ov = document.createElement('div');
-    ov.id = '_tsm_cs_overlay';
-    ov.style.cssText = 'position:fixed;inset:0;z-index:999990;background:#080808;overflow-y:auto;-webkit-overflow-scrolling:touch;';
-    document.body.appendChild(ov);
+  /* ── Remember scroll position if opened from home page ── */
+  if (typeof currentPage !== 'undefined' && currentPage === 'home') {
+    overlay._returnScrollY = window.scrollY;
+    overlay._returnAnchor  = 'home-casestudies-tag';
+  } else {
+    overlay._returnScrollY = null;
+    overlay._returnAnchor  = null;
   }
-  ov.innerHTML = html;
-  ov.scrollTop = 0;
-  ov.style.display = 'block';
-  document.body.style.overflow = 'hidden';
 
-  // Update URL so the page can be shared / refreshed / bookmarked
-  const basePath = window.location.pathname.replace(/\/?$/, '');
-  history.pushState({ caseStudy: id }, cs.title + ' — The Sonic Media', basePath + '#case/' + id);
+  /* ── Update URL & meta ── */
+  const cleanSlug = id;
+  const newUrl = '/case-studies/' + cleanSlug;
+  history.pushState({ caseStudy: id }, cs.title + ' — The Sonic Media', newUrl);
   document.title = cs.title + ' — The Sonic Media';
+
+  /* Update canonical tag */
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+  canonical.href = 'https://thesonicmedia.com/case-studies/' + cleanSlug;
+
+  /* ── Show overlay ── */
+  overlay.style.display = 'block';
+  document.documentElement.scrollTop = 0;
+  document.body.style.visibility = 'hidden';
+  /* Move cursor elements to <html> so they share the overlay's stacking context
+     and their z-index (up to 9999999) renders above the overlay (99999) */
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) document.documentElement.appendChild(el);
+  });
+  if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
+
+  /* ── Wire close buttons ── */
+  function closeHandler() { closeCaseStudy(); }
+  document.getElementById('cs-close-btn').addEventListener('click', closeHandler);
+  document.getElementById('cs-back-btn').addEventListener('click', closeHandler);
+
+  /* ── Keyboard close ── */
+  overlay._keyHandler = function(e) { if (e.key === 'Escape') closeCaseStudy(); };
+  document.addEventListener('keydown', overlay._keyHandler);
 }
 
-function openCaseStudy(id) { _renderCaseStudyOverlay(id); }
+function closeCaseStudy() {
+  const overlay = document.getElementById('cs-overlay');
+  if (!overlay || overlay.style.display === 'none') return;
+  overlay.style.display = 'none';
+  document.body.style.visibility = '';
+  /* Move cursor elements back to <body> */
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) document.body.appendChild(el);
+  });
+  if (window._initLenis) { window._initLenis(); }
+  if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+  /* ── Restore home page scroll position if opened from home ── */
+  var _csReturnY      = overlay._returnScrollY;
+  var _csReturnAnchor = overlay._returnAnchor;
+  if (_csReturnY !== null && _csReturnAnchor) {
+    setTimeout(function() {
+      var el = document.getElementById(_csReturnAnchor);
+      if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+      else    { window.scrollTo(0, _csReturnY); }
+    }, 0);
+  }
 
-function closeCaseStudyOverlay() {
-  const ov = document.getElementById('_tsm_cs_overlay');
-  if (ov) { ov.style.display = 'none'; ov.innerHTML = ''; }
-  document.body.style.overflow = '';
-  history.pushState({}, document.title, window.location.pathname);
+  /* Restore URL to /casestudies (or /case-studies if that was the entry point) */
+  const backUrl = '/case-studies';
+  history.pushState({ caseStudy: null }, 'Case Studies — The Sonic Media', backUrl);
   document.title = 'Case Studies — The Sonic Media';
+
+  /* Restore canonical */
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = 'https://thesonicmedia.com/casestudies';
 }
+
+/* ── Handle browser back/forward through case study URLs ── */
+window.addEventListener('popstate', function(e) {
+  const overlay = document.getElementById('cs-overlay');
+  if (!overlay) return;
+  if (e.state && e.state.caseStudy) {
+    /* Forward into an article */
+    openCaseStudy(e.state.caseStudy);
+  } else {
+    /* Back to listing */
+    if (overlay.style.display !== 'none') {
+      overlay.style.display = 'none';
+      document.body.style.visibility = '';
+      ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) document.body.appendChild(el);
+      });
+      if (window._initLenis) { window._initLenis(); }
+      if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+      document.title = 'Case Studies — The Sonic Media';
+    }
+  }
+});
+
+/* ── On direct URL load: /case-studies/<slug> → auto-open article ── */
+(function detectCaseStudySlugOnLoad() {
+  /* Works whether the page is served at /casestudies or /case-studies/:slug */
+  const path = window.location.pathname;
+  const match = path.match(/\/case-studies\/([^/]+)\/?$/);
+  if (match) {
+    const slug = match[1];
+    /* Wait for DOM + data to be ready */
+    function tryOpen() {
+      if (typeof caseStudies !== 'undefined' && caseStudies[slug]) {
+        openCaseStudy(slug);
+      } else if (typeof caseStudies !== 'undefined') {
+        /* slug not found — fall back to listing */
+        history.replaceState({}, 'Case Studies — The Sonic Media', '/case-studies');
+      } else {
+        setTimeout(tryOpen, 50);
+      }
+    }
+    /* If DOM is already ready, open immediately; otherwise wait */
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryOpen);
+    } else {
+      tryOpen();
+    }
+  }
+})();
 
 /* ═══════════════════════════════════════════════════
    BLOG ARTICLES — FULL CONTENT (SEO/AEO/GEO OPTIMISED)
@@ -1574,90 +1849,253 @@ const blogArticles = {
 function openBlogArticle(id) {
   const art = blogArticles[id];
   if (!art) return;
-  const html = `<div style="font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100%;position:relative;">
-<style>
-.ba-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
-.ba-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
-.ba-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
-.ba-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
-.ba-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
-.ba-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
-.ba-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
-.ba-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.ba-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;max-width:900px;}
-.ba-subtitle{font-size:18px;line-height:1.7;color:rgba(245,240,235,.6);max-width:700px;font-weight:300;margin-bottom:20px;}
-.ba-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
-.ba-body{max-width:860px;margin:0 auto;padding:72px 72px 100px;}
-.ba-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}
-.ba-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.ba-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:44px;padding-left:4px;}
-.ba-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.75);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
-.ba-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
-.ba-article p{margin-bottom:20px;}
-.ba-cta{margin-top:60px;padding:40px;border-radius:16px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);text-align:center;}
-.ba-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
-.ba-cta-p{font-size:14px;color:rgba(245,240,235,.6);margin-bottom:24px;}
-.ba-cta-btn{display:inline-flex;align-items:center;gap:8px;background:#FF5C00;color:#fff;padding:14px 32px;border-radius:50px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .3s;box-shadow:0 0 30px rgba(255,92,0,.35);}
-.ba-cta-btn:hover{box-shadow:0 0 50px rgba(255,92,0,.6);transform:translateY(-2px);}
-.ba-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.ba-footer-copy{font-size:13px;color:#666;}
-.ba-footer-copy span{color:#FF5C00;}
-.ba-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;}
-.ba-back:hover{gap:14px;}
-@media(max-width:768px){.ba-nav,.ba-footer{padding-left:20px;padding-right:20px;}.ba-hero{padding:80px 20px 48px;}.ba-body{padding:32px 20px 80px;}.ba-article{padding:24px;font-size:15px;}.ba-cta{padding:28px 20px;}}
+
+  /* ── Inject overlay shell once ── */
+  if (!document.getElementById('jnl-overlay')) {
+    const shell = document.createElement('div');
+    shell.id = 'jnl-overlay';
+    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
+    document.documentElement.appendChild(shell);
+  }
+  const overlay = document.getElementById('jnl-overlay');
+
+  /* ── Build inner HTML ── */
+  overlay.innerHTML = `<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+.jnl-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.jnl-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
+.jnl-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.jnl-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
+.jnl-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
+.jnl-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
+.jnl-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
+.jnl-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
+.jnl-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;max-width:900px;color:#F5F0EB;}
+.jnl-h1 span{color:#FF5C00;}
+.jnl-subtitle{font-size:18px;line-height:1.7;color:rgba(245,240,235,.6);max-width:700px;font-weight:300;margin-bottom:20px;}
+.jnl-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
+.jnl-body{max-width:860px;margin:0 auto;padding:72px 72px 100px;}
+.jnl-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}
+.jnl-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.jnl-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:44px;padding-left:4px;}
+.jnl-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.75);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
+
+.jnl-article p{margin-bottom:20px;}
+.jnl-cta{margin-top:60px;padding:40px;border-radius:16px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);text-align:center;}
+.jnl-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;color:#F5F0EB;}
+.jnl-cta-p{font-size:14px;color:rgba(245,240,235,.6);margin-bottom:24px;}
+.jnl-cta-btn{display:inline-flex;align-items:center;gap:8px;background:#FF5C00;color:#fff;padding:14px 32px;border-radius:50px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .3s;box-shadow:0 0 30px rgba(255,92,0,.35);}
+.jnl-cta-btn:hover{box-shadow:0 0 50px rgba(255,92,0,.6);transform:translateY(-2px);}
+.jnl-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.jnl-footer-copy{font-size:13px;color:#666;}
+.jnl-footer-copy span{color:#FF5C00;}
+.jnl-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}
+.jnl-back:hover{gap:14px;}
+@media(max-width:768px){.jnl-nav,.jnl-footer{padding-left:20px;padding-right:20px;}.jnl-hero{padding:80px 20px 48px;}.jnl-body{padding:32px 20px 80px;}.jnl-article{padding:24px;font-size:15px;}.jnl-cta{padding:28px 20px;}}
 </style>
-<nav class="ba-nav">
-  <div class="ba-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
-  <button class="ba-close" onclick="closeBlogArticleOverlay()">✕ Close</button>
+<nav class="jnl-nav">
+  <div class="jnl-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
+  <button class="jnl-close" id="jnl-close-btn">✕ Close</button>
 </nav>
-<div class="ba-hero">
-  <div class="ba-eyebrow">Journal · ${art.cat}</div>
-  <h1 class="ba-h1">${art.title}</h1>
-  <p class="ba-subtitle">${art.subtitle}</p>
-  <div class="ba-meta">${art.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${art.readTime}</div>
+<div class="jnl-hero">
+  <div class="jnl-eyebrow">Journal · ${art.cat}</div>
+  <h1 class="jnl-h1">${art.title}</h1>
+  <p class="jnl-subtitle">${art.subtitle}</p>
+  <div class="jnl-meta">${art.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${art.readTime}</div>
 </div>
-<div class="ba-body">
-  <div class="ba-img-wrap"><img src="${art.img}" alt="${art.title}" loading="lazy"></div>
-  <div class="ba-img-cap">${art.imgCap}</div>
-  <div class="ba-article">${art.body}</div>
-  <div class="ba-cta">
-    <div class="ba-cta-title">Ready to Grow Your Brand in India?</div>
-    <p class="ba-cta-p">The Sonic Media has helped 500+ brands across India achieve outsized growth through data-driven strategy, cinematic content, and technology that converts.</p>
-    <a href="#" onclick="closeBlogArticleOverlay();navigate('contact');return false;" class="ba-cta-btn">Work With The Sonic Media →</a>
+<div class="jnl-body">
+  <div class="jnl-img-wrap"><img src="${art.img}" alt="${art.title}" loading="lazy"></div>
+  <div class="jnl-img-cap">${art.imgCap}</div>
+  <div class="jnl-article">${art.body}</div>
+  <div class="jnl-cta">
+    <div class="jnl-cta-title">Ready to Grow Your Brand in India?</div>
+    <p class="jnl-cta-p">The Sonic Media has helped 500+ brands across India achieve outsized growth through data-driven strategy, cinematic content, and technology that converts.</p>
+    <a href="#" id="jnl-cta-contact-btn" class="jnl-cta-btn">Work With The Sonic Media →</a>
   </div>
 </div>
-<div class="ba-footer">
-  <div class="ba-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
-  <span class="ba-back" onclick="closeBlogArticleOverlay()">← Back to Journal</span>
-</div>
+<div class="jnl-footer">
+  <div class="jnl-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
+  <button class="jnl-back" id="jnl-back-btn">← Back to Journal</button>
 </div>`;
 
-  // Inject overlay
-  let ov = document.getElementById('_tsm_ba_overlay');
-  if (!ov) {
-    ov = document.createElement('div');
-    ov.id = '_tsm_ba_overlay';
-    ov.style.cssText = 'position:fixed;inset:0;z-index:999990;background:#080808;overflow-y:auto;-webkit-overflow-scrolling:touch;';
-    document.body.appendChild(ov);
+  /* ── Update URL, title, canonical, and OG/Twitter meta ── */
+  const articleUrl = '/journal/' + id;
+  /* ── Remember scroll position if opened from home page ── */
+  var _jnlOvEl = document.getElementById('jnl-overlay');
+  if (_jnlOvEl && typeof currentPage !== 'undefined' && currentPage === 'home') {
+    _jnlOvEl._returnScrollY = window.scrollY;
+    _jnlOvEl._returnAnchor  = 'home-journal-tag';
+  } else if (_jnlOvEl) {
+    _jnlOvEl._returnScrollY = null;
+    _jnlOvEl._returnAnchor  = null;
   }
-  ov.innerHTML = html;
-  ov.scrollTop = 0;
-  ov.style.display = 'block';
-  document.body.style.overflow = 'hidden';
 
-  // Update URL for shareability / deep-linking
-  const basePath = window.location.pathname.replace(/\/?$/, '');
-  history.pushState({ blogArticle: id }, art.title + ' — The Sonic Media Journal', basePath + '#article/' + id);
+  history.pushState({ journalArticle: id }, art.title + ' — The Sonic Media Journal', articleUrl);
   document.title = art.title + ' — The Sonic Media Journal';
+
+  /* Canonical */
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+  canonical.href = 'https://thesonicmedia.com/journal/' + id;
+
+  /* OG meta */
+  function setMeta(prop, val, attr) {
+    attr = attr || 'property';
+    let el = document.querySelector('meta[' + attr + '="' + prop + '"]');
+    if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el); }
+    el.setAttribute('content', val);
+  }
+  setMeta('og:type', 'article');
+  setMeta('og:title', art.title);
+  setMeta('og:description', art.subtitle);
+  setMeta('og:url', 'https://thesonicmedia.com/journal/' + id);
+  setMeta('og:image', art.img + '&h=630&fit=crop');
+  setMeta('twitter:card', 'summary_large_image', 'name');
+  setMeta('twitter:title', art.title, 'name');
+  setMeta('twitter:description', art.subtitle, 'name');
+  setMeta('description', art.subtitle, 'name');
+
+  /* JSON-LD for this article */
+  let ld = document.getElementById('jnl-article-ld');
+  if (!ld) { ld = document.createElement('script'); ld.id = 'jnl-article-ld'; ld.type = 'application/ld+json'; document.head.appendChild(ld); }
+  ld.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://thesonicmedia.com/journal/" + id,
+        "headline": art.title,
+        "description": art.subtitle,
+        "image": { "@type": "ImageObject", "url": art.img, "width": 1200, "height": 630 },
+        "author": { "@type": "Organization", "name": "The Sonic Media", "url": "https://thesonicmedia.com" },
+        "publisher": { "@type": "Organization", "name": "The Sonic Media", "logo": { "@type": "ImageObject", "url": "https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" } },
+        "datePublished": art.date,
+        "dateModified": art.date,
+        "mainEntityOfPage": "https://thesonicmedia.com/journal/" + id,
+        "articleSection": art.cat,
+        "keywords": art.cat + ", digital marketing India, The Sonic Media"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thesonicmedia.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Journal", "item": "https://thesonicmedia.com/journal" },
+          { "@type": "ListItem", "position": 3, "name": art.title, "item": "https://thesonicmedia.com/journal/" + id }
+        ]
+      }
+    ]
+  });
+
+  /* ── Show overlay ── */
+  overlay.style.display = 'block';
+  document.documentElement.scrollTop = 0;
+  document.body.style.visibility = 'hidden';
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+    var el = document.getElementById(elId);
+    if (el) document.documentElement.appendChild(el);
+  });
+  if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
+
+  /* ── Wire close buttons ── */
+  function closeHandler() { closeJournalArticle(); }
+  document.getElementById('jnl-close-btn').addEventListener('click', closeHandler);
+  document.getElementById('jnl-back-btn').addEventListener('click', closeHandler);
+  document.getElementById('jnl-cta-contact-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    closeJournalArticle();
+    if (window.navigate) window.navigate('contact');
+  });
+
+  /* ── Keyboard close ── */
+  overlay._keyHandler = function(e) { if (e.key === 'Escape') closeJournalArticle(); };
+  document.addEventListener('keydown', overlay._keyHandler);
 }
 
-function closeBlogArticleOverlay() {
-  const ov = document.getElementById('_tsm_ba_overlay');
-  if (ov) { ov.style.display = 'none'; ov.innerHTML = ''; }
-  document.body.style.overflow = '';
-  history.pushState({}, document.title, window.location.pathname);
+function closeJournalArticle() {
+  const overlay = document.getElementById('jnl-overlay');
+  if (!overlay || overlay.style.display === 'none') return;
+  overlay.style.display = 'none';
+  document.body.style.visibility = '';
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+    var el = document.getElementById(elId);
+    if (el) document.body.appendChild(el);
+  });
+  if (window._initLenis) { window._initLenis(); }
+  if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+  /* ── Restore home page scroll position if opened from home ── */
+  var _jnlReturnY      = overlay._returnScrollY;
+  var _jnlReturnAnchor = overlay._returnAnchor;
+  if (_jnlReturnY !== null && _jnlReturnAnchor) {
+    setTimeout(function() {
+      var el = document.getElementById(_jnlReturnAnchor);
+      if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+      else    { window.scrollTo(0, _jnlReturnY); }
+    }, 0);
+  }
+
+  /* Restore URL to /journal */
+  history.pushState({ journalArticle: null }, 'Journal — The Sonic Media', '/journal');
   document.title = 'Journal — The Sonic Media';
+
+  /* Restore canonical */
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = 'https://thesonicmedia.com/journal';
+
+  /* Remove article JSON-LD */
+  const ld = document.getElementById('jnl-article-ld');
+  if (ld) ld.remove();
 }
+
+/* ── Handle browser back/forward through journal article URLs ── */
+(function() {
+  var _origPopstate = null;
+  /* Extend any existing popstate listener by wrapping at module scope */
+  window.addEventListener('popstate', function(e) {
+    const overlay = document.getElementById('jnl-overlay');
+    if (!overlay) return;
+    if (e.state && e.state.journalArticle) {
+      openBlogArticle(e.state.journalArticle);
+    } else {
+      if (overlay.style.display !== 'none') {
+        overlay.style.display = 'none';
+        document.body.style.visibility = '';
+        ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+          var el = document.getElementById(elId);
+          if (el) document.body.appendChild(el);
+        });
+        if (window._initLenis) { window._initLenis(); }
+        if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+        document.title = 'Journal — The Sonic Media';
+        const ld = document.getElementById('jnl-article-ld');
+        if (ld) ld.remove();
+      }
+    }
+  });
+})();
+
+/* ── On direct URL load: /journal/<slug> → auto-open article ── */
+(function detectJournalSlugOnLoad() {
+  const path = window.location.pathname;
+  /* Match /journal/<slug> — works whether served at /journal or /journal/:slug */
+  const match = path.match(/\/journal\/([^/]+)\/?$/);
+  if (!match) return;
+  const slug = match[1];
+  function tryOpen() {
+    if (typeof blogArticles !== 'undefined' && blogArticles[slug]) {
+      openBlogArticle(slug);
+    } else if (typeof blogArticles !== 'undefined') {
+      /* Slug not found — fall back gracefully to journal listing */
+      history.replaceState({}, 'Journal — The Sonic Media', '/journal');
+    } else {
+      setTimeout(tryOpen, 50);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryOpen);
+  } else {
+    tryOpen();
+  }
+})();
 
 function openLegalPage(type) {
   const data = legalContent[type];
@@ -1758,7 +2196,7 @@ const PAGE_DATA = {
     /* ── EDIT WORKS HERE — changes reflect on BOTH homepage & Portfolio page ── */
     works: [
       {
-        id: 'luxefashion',
+        id: 'ledgerlink',
         num: '01',
         cat: 'Web Design & Development',
         name: 'LedgerLink Consultation — Tax & Financial Advisory Website',
@@ -1850,6 +2288,7 @@ const PAGE_DATA = {
       {
         tag: 'In Development', btnColor: 'var(--orange)', btnTextColor: '#fff',
         img: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80', alt: 'Autonomous Brand Intelligence Systems',
+        slug: 'autonomous-brand-intelligence',
         title: 'Autonomous Brand Intelligence Systems',
         desc: "Brands that operate like living organisms — AI-driven ecosystems that continuously monitor global consumer behavior, cultural movements, and digital conversations in real time, so campaigns evolve automatically.",
         detail: {
@@ -1861,6 +2300,7 @@ const PAGE_DATA = {
       {
         tag: 'Coming Soon', btnColor: '#7DD6FF', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=800&q=80', alt: 'Immersive AR/VR Brand Universes',
+        slug: 'immersive-ar-vr-brand-universes',
         title: 'Immersive AR/VR Brand Universes',
         desc: "From marketing campaigns to entire digital worlds — consumers will walk through brands, not just watch them, as AR, VR, and spatial computing become mainstream.",
         detail: {
@@ -1872,6 +2312,7 @@ const PAGE_DATA = {
       {
         tag: 'In Research', btnColor: '#FFA0B0', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80', alt: 'Emotionally Intelligent Marketing',
+        slug: 'emotionally-intelligent-marketing',
         title: 'Emotionally Intelligent Marketing',
         desc: "Marketing that understands human psychology in real time — using AI to analyze voice patterns, facial micro-expressions, and biometric signals to dynamically evolve campaigns based on emotion.",
         detail: {
@@ -1883,6 +2324,7 @@ const PAGE_DATA = {
       {
         tag: 'Coming Soon', btnColor: '#FFA17B', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=800&q=80', alt: 'Spatial Computing & Holographic Advertising',
+        slug: 'spatial-computing-holographic-advertising',
         title: 'Spatial Computing & Holographic Advertising',
         desc: "The end of flat screens — cities become interactive storytelling environments where holographic campaigns respond to human movement, weather, mood, and live events in public spaces.",
         detail: {
@@ -1894,6 +2336,7 @@ const PAGE_DATA = {
       {
         tag: 'In Development', btnColor: '#C4B5FD', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80', alt: 'AI Cinematic Production Ecosystems',
+        slug: 'ai-cinematic-production-ecosystems',
         title: 'AI Cinematic Production Ecosystems',
         desc: "Infinite creative production at global scale — AI systems generating hyper-realistic cinematic videos, multilingual campaigns, virtual actors, and millions of personalized experiences within minutes.",
         detail: {
@@ -1905,6 +2348,7 @@ const PAGE_DATA = {
       {
         tag: 'In Development', btnColor: '#6EE7B7', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80', alt: 'Human + Machine Creative Civilization',
+        slug: 'human-machine-creative-civilization',
         title: 'Human + Machine Creative Civilization',
         desc: "AI will not replace creativity — it will expand the limits of human imagination. The future belongs to hybrid intelligence where machine speed amplifies human emotion, philosophy, and artistic instinct.",
         detail: {
@@ -1916,6 +2360,7 @@ const PAGE_DATA = {
       {
         tag: 'In Research', btnColor: '#FDE68A', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80', alt: 'Neural Interface Marketing',
+        slug: 'neural-interface-marketing',
         title: 'Neural Interface Marketing',
         desc: "The future beyond screens and devices — brand experiences that adapt to attention levels, emotional engagement, and subconscious interest through brain-computer interfaces and neural feedback.",
         detail: {
@@ -1927,6 +2372,7 @@ const PAGE_DATA = {
       {
         tag: 'Coming Soon', btnColor: '#F9A8D4', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80', alt: 'Synthetic Influencers & Digital Humans',
+        slug: 'synthetic-influencers-digital-humans',
         title: 'Synthetic Influencers & Digital Humans',
         desc: "The rise of AI-powered personalities — hyper-realistic digital humans capable of hosting launches, building emotional relationships, and generating personalized conversations at global scale, 24/7.",
         detail: {
@@ -1938,6 +2384,7 @@ const PAGE_DATA = {
       {
         tag: '2026 & Beyond', btnColor: '#A3E635', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80', alt: 'Predictive Culture Engineering',
+        slug: 'predictive-culture-engineering',
         title: 'Predictive Culture Engineering',
         desc: "Predicting culture before it exists — advanced ML systems analyzing billions of behavioral signals to forecast cultural movements years in advance, engineering attention rather than following it.",
         detail: {
@@ -1949,6 +2396,7 @@ const PAGE_DATA = {
       {
         tag: 'In Development', btnColor: '#93C5FD', btnTextColor: '#121212',
         img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80', alt: 'Intelligent Global Media Ecosystems',
+        slug: 'intelligent-global-media-ecosystems',
         title: 'Intelligent Global Media Ecosystems',
         desc: "A fully connected advertising intelligence network — every digital surface, wearable, vehicle, and environment working as one synchronized infrastructure that understands context, location, and intent in real time.",
         detail: {
@@ -2017,10 +2465,21 @@ function renderPageData() {
   setEl('home-portfolio-title', `${pt.titleMain}<br>${pt.titleSub} <em id="home-portfolio-title-em">${pt.titleEm}</em>`);
   setEl('home-portfolio-tagline', pt.tagline);
 
+  const PORT_CAT_ICON = {
+    'Web Design & Development':'🌐',
+    'Creative Design':'🎨',
+    'Presentation Design':'📊',
+    'Branding & Advertising Solutions':'✨',
+    'Content Production & Creative Direction':'🎬',
+    'Event Branding & Promotional Design':'🎪',
+  };
   function buildWorkRow(w) {
     const tagsHTML = w.tags.map(t => `<span class="fw-row-tag">${t}</span>`).join('');
+    const portIcon = PORT_CAT_ICON[w.cat] || '🏆';
     return `<div class="fw-row" onclick="openWorkDetail('${w.id}')">
-      <div class="fw-row-num">${w.num}</div>
+      <div class="fw-row-num" style="position:relative;">${w.num}
+        <div style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:26px;height:26px;border-radius:6px;background:rgba(255,92,0,.12);border:1px solid rgba(255,92,0,.2);display:flex;align-items:center;justify-content:center;font-size:13px;" title="${w.cat}">${portIcon}</div>
+      </div>
       <div class="fw-row-info">
         <div>
           <div class="fw-row-cat">${w.cat}</div>
@@ -2048,9 +2507,13 @@ function renderPageData() {
   setEl('home-casestudies-tag', cs.tag);
   setEl('home-casestudies-title', `${cs.titleMain}<span id="home-casestudies-title-span">${cs.titleSpan}</span>`);
 
+  const CS_CAT_ICON = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
   function buildJcard(item, readLabel) {
+    const catIcon = CS_CAT_ICON[item.cat] || '📊';
     return `<div class="jcard" onclick="openCaseStudy('${item.id}')" style="cursor:pointer;" data-cat="${item.cat}">
-      <div class="jcard-img"><img src="${item.img}" alt="" loading="lazy"></div>
+      <div class="jcard-img" style="position:relative;"><img src="${item.img}" alt="${item.title}" loading="lazy">` +
+      `<div style="position:absolute;top:10px;left:10px;width:32px;height:32px;border-radius:8px;background:rgba(8,8,8,.75);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:15px;" title="${item.catLabel}">${catIcon}</div>` +
+      `</div>
       <div class="jcard-body">
         <div class="jcard-meta"><div class="jcard-cat">${item.catLabel}</div><div class="jcard-date">${item.date}</div></div>
         <div class="jcard-title">${item.title}</div>
@@ -2070,15 +2533,20 @@ function renderPageData() {
 
   const svgDot = (fill) => `<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" fill="none"><path fill="${fill}" d="M5 2c0 1.105-1.895 2-3 2a2 2 0 1 1 0-4c1.105 0 3 .895 3 2ZM11 3.5c0 1.105-.895 3-2 3s-2-1.895-2-3a2 2 0 1 1 4 0ZM6 9a2 2 0 1 1-4 0c0-1.105.895-3 2-3s2 1.895 2 3Z"/></svg>`;
 
+  const FV_ICONS = ['🤖','🥽','💗','🏙️','🎬','🧠','🧬','👤','🔮','🌐'];
   function buildFvPanel(p, index, linkTarget) {
+    const fvIcon = FV_ICONS[index] || '✨';
     return `
       <div class="fv-arch__info" id="fv-panel-${index}">
         <div class="fv-content">
-          <div class="section-tag" style="margin-bottom:12px;">${p.tag}</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,92,0,.12);border:1px solid rgba(255,92,0,.25);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">${fvIcon}</div>
+            <div class="section-tag" style="margin-bottom:0;">${p.tag}</div>
+          </div>
           <h2 class="fv-header">${p.title}</h2>
           <p class="fv-desc">${p.desc}</p>
           <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;">
-            <button class="fv-detail-btn" onclick="openFvDetail(${index})">Full Details ↗</button>
+            <a href="/future-vision/${p.slug || index}" class="fv-detail-btn" onclick="openFvDetail(${index});return false;">Full Details ↗</a>
           </div>
         </div>
       </div>`;
@@ -2091,14 +2559,18 @@ function renderPageData() {
   }
 
   function buildFvPagePanel(p, index) {
+    const fvIcon = FV_ICONS[index] || '✨';
     return `
       <div class="fv-arch__info" id="fv-page-panel-${index}">
         <div class="fv-content">
-          <div class="section-tag" style="margin-bottom:12px;">${p.tag}</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,92,0,.12);border:1px solid rgba(255,92,0,.25);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">${fvIcon}</div>
+            <div class="section-tag" style="margin-bottom:0;">${p.tag}</div>
+          </div>
           <h2 class="fv-header">${p.title}</h2>
           <p class="fv-desc">${p.desc}</p>
           <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;">
-            <button class="fv-detail-btn" onclick="openFvDetail(${index})">Full Details ↗</button>
+            <a href="/future-vision/${p.slug || index}" class="fv-detail-btn" onclick="openFvDetail(${index});return false;">Full Details ↗</a>
           </div>
         </div>
       </div>`;
@@ -2122,7 +2594,34 @@ function renderPageData() {
 
   /* ── JOURNAL ── */
   const jnl = D.journal;
-  const buildBlogItem = p => `<div class="blog-item"><div class="blog-num">${p.num}</div><div class="blog-info"><div class="bt">${p.title}</div><div class="bm"><span>${p.cat}</span>· ${p.time} · ${p.date}</div><div style="margin-top:8px;"><a href="#" onclick="openBlogArticle('${p.id}');return false;" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font-heading);font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:gap .25s;" onmouseover="this.style.gap='12px'" onmouseout="this.style.gap='6px'">Read Full Article →</a></div></div></div>`;
+  const BLOG_THUMB = {
+    'blog-google-ai-seo':      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=80&q=80',
+    'blog-meta-roas':          'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=80&q=80',
+    'blog-brand-trust':        'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=80&q=80',
+    'blog-reels-algorithm':    'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=80&q=80',
+    'blog-website-conversion': 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=80&q=80',
+    'blog-ai-content':         'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=80&q=80',
+    'blog-local-seo':          'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=80&q=80',
+    'blog-ecom-launch':        'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=80&q=80',
+    'blog-influencer-roi':     'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=80&q=80',
+    'blog-whatsapp-marketing': 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=80&q=80',
+  };
+  const CAT_ICON = {'SEO':'🔍','Performance':'🚀','Branding':'🎨','Social Media':'📣','Web Dev':'🌐','Content':'🎬','E-Commerce':'🛒','Influencer':'🤝','Strategy':'💡'};
+  const buildBlogItem = p => {
+    const thumb = BLOG_THUMB[p.id] || '';
+    const icon  = CAT_ICON[p.cat] || '📝';
+    const thumbHtml = thumb
+      ? `<div style="flex-shrink:0;width:64px;height:64px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);position:relative;">` +
+        `<img src="${thumb}" alt="${p.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">` +
+        `<div style="position:absolute;bottom:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(8,8,8,.75);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:10px;">${icon}</div>` +
+        `</div>`
+      : `<div style="flex-shrink:0;width:64px;height:64px;border-radius:10px;background:rgba(255,92,0,.1);border:1px solid rgba(255,92,0,.2);display:flex;align-items:center;justify-content:center;font-size:26px;">${icon}</div>`;
+    return `<div class="blog-item" style="display:flex;gap:16px;align-items:flex-start;">` +
+      thumbHtml +
+      `<div class="blog-info" style="flex:1;min-width:0;"><div class="bt">${p.title}</div><div class="bm"><span>${p.cat}</span>· ${p.time} · ${p.date}</div>` +
+      `<div style="margin-top:8px;"><a href="/journal/${p.id}" onclick="openBlogArticle('${p.id}');return false;" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font-heading);font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:gap .25s;" onmouseover="this.style.gap='12px'" onmouseout="this.style.gap='6px'">Read Full Article →</a></div>` +
+      `</div></div>`;
+  };
   const homePostsHTML = jnl.posts.slice(0, 5).map(buildBlogItem).join('');
   const allPostsHTML  = jnl.posts.map(buildBlogItem).join('');
 
@@ -3035,7 +3534,7 @@ function buildMobSvcCarousel(ids) {
           '<div class="fv-mobile-card-tag">' + (p.tag || 'Vision') + '</div>' +
           '<div class="fv-mobile-card-title">' + p.title + '</div>' +
           '<div class="fv-mobile-card-desc">' + (p.desc || '') + '</div>' +
-          '<button class="fv-mobile-card-btn" onclick="openFvDetail(' + i + ')">Learn More &#8594;</button>' +
+          '<a href="/future-vision/' + (panels[i].slug || i) + '" class="fv-mobile-card-btn" onclick="openFvDetail(' + i + ');return false;">Learn More &#8594;</a>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -3149,6 +3648,7 @@ function buildMobSvcCarousel(ids) {
     requestAnimationFrame(raf);
   }
   initLenis();
+  window._initLenis = initLenis; // expose so closeCaseStudy can reinitialise
 
   /* ── 2. IntersectionObserver Reveal System ── */
   const IO_OPTIONS = { threshold: 0.08, rootMargin: '0px 0px -32px 0px' };
@@ -3621,119 +4121,326 @@ window.tsmNewsletterSubmit = function(e) {
 };
 
 /* ═══════════════════════════════════════════════════
-   FUTURE VISION DETAIL MODAL
+   FUTURE VISION DETAIL — CLEAN URL OVERLAY
 ═══════════════════════════════════════════════════ */
 (function(){
-  window.openFvDetail = function(index) {
-    const panels = (typeof PAGE_DATA !== 'undefined') ? PAGE_DATA.future.panels : [];
-    const p = panels[index];
-    if (!p || !p.detail) return;
-    const d = p.detail;
 
-    const bulletsHtml = (d.bullets || []).map(b => `
-      <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:12px;background:rgba(255,92,0,.06);border:1px solid rgba(255,92,0,.15);margin-bottom:12px;">
-        <span style="width:8px;height:8px;border-radius:50%;background:#FF5C00;flex-shrink:0;margin-top:6px;box-shadow:0 0 8px rgba(255,92,0,.5);"></span>
-        <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:#F5F0EB;line-height:1.6;">${b}</span>
-      </div>`).join('');
-
-    const bodyParas = (d.body || '').split('\n\n').filter(Boolean).map((para, i) =>
-      `<p style="margin-bottom:24px;${i === 0 ? 'font-size:18px;color:rgba(245,240,235,.8);' : ''}">${para}</p>`
-    ).join('');
-
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${p.title} — The Sonic Media</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{font-size:16px;scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100vh;}
-.fv-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
-.fv-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
-.fv-brand-mark{width:34px;height:34px;border-radius:8px;background:#FF5C00;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;flex-shrink:0;}
-.fv-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
-.fv-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
-.fv-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
-.fv-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
-.fv-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
-.fv-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.fv-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;}
-.fv-h1 span{color:#FF5C00;}
-.fv-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
-.fv-body{max-width:960px;margin:0 auto;padding:72px 72px 100px;}
-.fv-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}
-.fv-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.fv-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
-.fv-subtitle{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#FF5C00;margin-bottom:24px;letter-spacing:.02em;}
-.fv-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);margin-bottom:40px;}
-.fv-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
-.fv-bullets-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
-.fv-bullets-title::before{content:'';width:28px;height:1.5px;background:#FF5C00;}
-.fv-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.fv-footer-copy{font-size:13px;color:#666;}
-.fv-footer-copy span{color:#FF5C00;}
-.fv-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;}
-.fv-back:hover{gap:14px;}
-.fv-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}
-.fv-cta-band::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}
-.fv-cta-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:18px;}
-.fv-cta-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.fv-cta-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,68px);line-height:.95;letter-spacing:.02em;color:#F5F0EB;margin-bottom:16px;}
-.fv-cta-h span{color:#FF5C00;}
-.fv-cta-p{font-size:15px;line-height:1.75;color:rgba(245,240,235,.55);font-weight:300;max-width:480px;margin:0 auto 36px;}
-.fv-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}
-.fv-cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s;}
-.fv-cta-btn:hover::before{transform:translateX(100%);}
-.fv-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}
-@media(max-width:768px){.fv-nav,.fv-footer{padding-left:20px;padding-right:20px;}.fv-hero{padding:60px 20px 48px;}.fv-body{padding:40px 20px 80px;}.fv-article{padding:28px;}.fv-cta-band{padding:48px 24px;}}
-</style>
-</head>
-<body>
-<nav class="fv-nav">
-  <div class="fv-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
-  <button class="fv-close" onclick="window.close()">✕ Close</button>
-</nav>
-<div class="fv-hero">
-  <div class="fv-eyebrow">Future Vision · ${p.tag}</div>
-  <h1 class="fv-h1">${p.title.split(' ').slice(0,4).join(' ')}<br><span>${p.title.split(' ').slice(4).join(' ')}</span></h1>
-  <div class="fv-meta">The Sonic Media &nbsp;·&nbsp; ${d.subtitle || p.tag}</div>
-</div>
-<div class="fv-body">
-  <div class="fv-img-wrap"><img src="${p.img}" alt="${p.title}"></div>
-  <div class="fv-img-cap">${d.subtitle || p.title}</div>
-  <div class="fv-subtitle">${d.subtitle || ''}</div>
-  <div class="fv-article">${bodyParas}</div>
-  ${bulletsHtml ? `<div class="fv-bullets-title">Key Highlights</div>${bulletsHtml}` : ''}
-</div>
-<div class="fv-cta-band">
-  <div class="fv-cta-eyebrow">Ready to Build the Future?</div>
-  <div class="fv-cta-h">Work With <span>The Sonic Media</span></div>
-  <p class="fv-cta-p">Let's build your brand's next growth chapter together — strategy, content, performance, and technology under one roof.</p>
-  <a class="fv-cta-btn" href="https://thesonicmedia.com" onclick="window.opener && window.opener.navigate && window.opener.navigate('contact'); this.href='javascript:void(0)'; return false;" target="_self">Start Your Project →</a>
-</div>
-<div class="fv-footer">
-  <div class="fv-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
-  <span class="fv-back" onclick="window.close()">← Back to Website</span>
-</div>
-</body>
-</html>`;
-    // Use a Blob URL so the page has a real URL that survives browser refresh
-    const blob = new Blob([html], { type: 'text/html' });
-    const blobUrl = URL.createObjectURL(blob);
-    const newTab = window.open(blobUrl, '_blank');
-    // Revoke the blob URL after the tab has loaded to free memory
-    if (newTab) {
-      newTab.addEventListener('load', function() {
-        URL.revokeObjectURL(blobUrl);
-      }, { once: true });
+  /* ── Helper: find panel by slug or numeric index ── */
+  function getPanelBySlug(slug) {
+    var panels = (typeof PAGE_DATA !== 'undefined') ? PAGE_DATA.future.panels : [];
+    // Try slug first
+    for (var i = 0; i < panels.length; i++) {
+      if (panels[i].slug === slug) return { panel: panels[i], index: i };
     }
+    // Fall back to numeric index for legacy calls
+    var n = parseInt(slug, 10);
+    if (!isNaN(n) && panels[n]) return { panel: panels[n], index: n };
+    return null;
+  }
+
+  function getPanelByIndex(index) {
+    var panels = (typeof PAGE_DATA !== 'undefined') ? PAGE_DATA.future.panels : [];
+    var p = panels[index];
+    return p ? { panel: p, index: index } : null;
+  }
+
+  /* ── Main open function — accepts numeric index (legacy) ── */
+  window.openFvDetail = function(index) {
+    var result = getPanelByIndex(index);
+    if (!result) return;
+    openFvOverlay(result.panel, result.index);
   };
 
-  // Keep closeFvDetail as no-op for any residual references
-  window.closeFvDetail = function() {};
+  /* ── Open by slug (for URL-based access) ── */
+  window.openFvDetailBySlug = function(slug) {
+    var result = getPanelBySlug(slug);
+    if (!result) return false;
+    openFvOverlay(result.panel, result.index);
+    return true;
+  };
+
+  /* ── Core overlay renderer ── */
+  function openFvOverlay(p, index) {
+    if (!p || !p.detail) return;
+    var d = p.detail;
+    var slug = p.slug || String(index);
+
+    /* Inject overlay shell once */
+    if (!document.getElementById('fv-overlay')) {
+      var shell = document.createElement('div');
+      shell.id = 'fv-overlay';
+      shell.style.cssText = 'display:none;position:fixed;inset:0;z-index:99999;background:#080808;overflow-y:auto;';
+      document.documentElement.appendChild(shell);
+    }
+    var overlay = document.getElementById('fv-overlay');
+
+    var bulletsHtml = (d.bullets || []).map(function(b) {
+      return '<div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:12px;background:rgba(255,92,0,.06);border:1px solid rgba(255,92,0,.15);margin-bottom:12px;">' +
+        '<span style="width:8px;height:8px;border-radius:50%;background:#FF5C00;flex-shrink:0;margin-top:6px;box-shadow:0 0 8px rgba(255,92,0,.5);"></span>' +
+        '<span style="font-family:Syne,sans-serif;font-size:14px;font-weight:600;color:#F5F0EB;line-height:1.6;">' + b + '</span>' +
+        '</div>';
+    }).join('');
+
+    var bodyParas = (d.body || '').split('\n\n').filter(Boolean).map(function(para, i) {
+      return '<p style="margin-bottom:24px;' + (i === 0 ? 'font-size:18px;color:rgba(245,240,235,.8);' : '') + '">' + para + '</p>';
+    }).join('');
+
+    var titleWords = p.title.split(' ');
+    var titleHalf = Math.ceil(titleWords.length / 2);
+    var titleLine1 = titleWords.slice(0, titleHalf).join(' ');
+    var titleLine2 = titleWords.slice(titleHalf).join(' ');
+
+    overlay.innerHTML = '<style>' +
+      '*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}' +
+      '.fv-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}' +
+      '.fv-brand{display:flex;align-items:center;gap:10px;font-family:"Syne",sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}' +
+      '.fv-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:"Syne",sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}' +
+      '.fv-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}' +
+      '.fv-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}' +
+      '.fv-hero::before{content:"";position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}' +
+      '.fv-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"Syne",sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}' +
+      '.fv-eyebrow::before{content:"";width:22px;height:1.5px;background:#FF5C00;}' +
+      '.fv-h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;color:#F5F0EB;}' +
+      '.fv-h1 span{color:#FF5C00;}' +
+      '.fv-meta{font-family:"Syne",sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}' +
+      '.fv-body{max-width:960px;margin:0 auto;padding:72px 72px 0;}' +
+      '.fv-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}' +
+      '.fv-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}' +
+      '.fv-img-cap{font-family:"Syne",sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}' +
+      '.fv-subtitle{font-family:"Syne",sans-serif;font-size:22px;font-weight:800;color:#FF5C00;margin-bottom:24px;letter-spacing:.02em;}' +
+      '.fv-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);margin-bottom:40px;}' +
+
+      '.fv-bullets-title{font-family:"Syne",sans-serif;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;display:flex;align-items:center;gap:12px;}' +
+      '.fv-bullets-title::before{content:"";width:28px;height:1.5px;background:#FF5C00;}' +
+      '.fv-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}' +
+      '.fv-footer-copy{font-size:13px;color:#666;}' +
+      '.fv-footer-copy span{color:#FF5C00;}' +
+      '.fv-back{display:inline-flex;align-items:center;gap:8px;font-family:"Syne",sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}' +
+      '.fv-back:hover{gap:14px;}' +
+      '.fv-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}' +
+      '.fv-cta-band::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}' +
+      '.fv-cta-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"Syne",sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:18px;}' +
+      '.fv-cta-eyebrow::before{content:"";width:22px;height:1.5px;background:#FF5C00;}' +
+      '.fv-cta-h{font-family:"Bebas Neue",sans-serif;font-size:clamp(36px,5vw,68px);line-height:.95;letter-spacing:.02em;color:#F5F0EB;margin-bottom:16px;}' +
+      '.fv-cta-h span{color:#FF5C00;}' +
+      '.fv-cta-p{font-size:15px;line-height:1.75;color:rgba(245,240,235,.55);font-weight:300;max-width:480px;margin:0 auto 36px;}' +
+      '.fv-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:"Syne",sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}' +
+      '.fv-cta-btn::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s;}' +
+      '.fv-cta-btn:hover::before{transform:translateX(100%);}' +
+      '.fv-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}' +
+      '@media(max-width:768px){.fv-nav,.fv-footer{padding-left:20px;padding-right:20px;}.fv-hero{padding:60px 20px 48px;}.fv-body{padding:40px 20px 0;}.fv-article{padding:28px;}.fv-cta-band{padding:48px 24px;}}' +
+      '</style>' +
+      '<nav class="fv-nav">' +
+        '<div class="fv-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>' +
+        '<button class="fv-close" id="fv-close-btn">✕ Close</button>' +
+      '</nav>' +
+      '<div class="fv-hero">' +
+        '<div class="fv-eyebrow">Future Vision · ' + p.tag + '</div>' +
+        '<h1 class="fv-h1">' + titleLine1 + (titleLine2 ? '<br><span>' + titleLine2 + '</span>' : '') + '</h1>' +
+        '<div class="fv-meta">The Sonic Media &nbsp;·&nbsp; ' + (d.subtitle || p.tag) + '</div>' +
+      '</div>' +
+      '<div class="fv-body">' +
+        '<div class="fv-img-wrap"><img src="' + p.img + '" alt="' + p.title + '" loading="lazy"></div>' +
+        '<div class="fv-img-cap">' + (d.subtitle || p.title) + '</div>' +
+        '<div class="fv-subtitle">' + (d.subtitle || '') + '</div>' +
+        '<div class="fv-article">' + bodyParas + '</div>' +
+        (bulletsHtml ? '<div class="fv-bullets-title">Key Highlights</div>' + bulletsHtml : '') +
+      '</div>' +
+      '<div class="fv-cta-band">' +
+        '<div class="fv-cta-eyebrow">Ready to Build the Future?</div>' +
+        '<div class="fv-cta-h">Work With <span>The Sonic Media</span></div>' +
+        '<p class="fv-cta-p">Let\'s build your brand\'s next growth chapter together — strategy, content, performance, and technology under one roof.</p>' +
+        '<a class="fv-cta-btn" href="#" id="fv-cta-contact-btn">Start Your Project →</a>' +
+      '</div>' +
+      '<div class="fv-footer">' +
+        '<div class="fv-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>' +
+        '<button class="fv-back" id="fv-back-btn">← Back to Future Vision</button>' +
+      '</div>';
+
+    /* ── Update URL, title, canonical, OG/Twitter meta, JSON-LD ── */
+    var articleUrl = '/future-vision/' + slug;
+    /* ── Remember scroll position if opened from home page ── */
+    var _fvOvEl = document.getElementById('fv-overlay');
+    if (_fvOvEl && typeof currentPage !== 'undefined' && currentPage === 'home') {
+      _fvOvEl._returnScrollY = window.scrollY;
+      _fvOvEl._returnAnchor  = 'futureSplitSection';
+    } else if (_fvOvEl) {
+      _fvOvEl._returnScrollY = null;
+      _fvOvEl._returnAnchor  = null;
+    }
+
+    history.pushState({ fvArticle: slug }, p.title + ' — Future Vision — The Sonic Media', articleUrl);
+    document.title = p.title + ' — Future Vision — The Sonic Media';
+
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+    canonical.href = 'https://thesonicmedia.com/future-vision/' + slug;
+
+    function setMeta(prop, val, attr) {
+      attr = attr || 'property';
+      var el = document.querySelector('meta[' + attr + '="' + prop + '"]');
+      if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el); }
+      el.setAttribute('content', val);
+    }
+    setMeta('og:type', 'article');
+    setMeta('og:title', p.title + ' — The Sonic Media Future Vision');
+    setMeta('og:description', p.desc);
+    setMeta('og:url', 'https://thesonicmedia.com/future-vision/' + slug);
+    setMeta('og:image', p.img.replace(/w=\d+/, 'w=1200') + '&h=630&fit=crop');
+    setMeta('twitter:card', 'summary_large_image', 'name');
+    setMeta('twitter:title', p.title + ' — The Sonic Media Future Vision', 'name');
+    setMeta('twitter:description', p.desc, 'name');
+    setMeta('description', p.desc, 'name');
+
+    var ld = document.getElementById('fv-article-ld');
+    if (!ld) { ld = document.createElement('script'); ld.id = 'fv-article-ld'; ld.type = 'application/ld+json'; document.head.appendChild(ld); }
+    ld.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          "@id": "https://thesonicmedia.com/future-vision/" + slug,
+          "headline": p.title,
+          "description": p.desc,
+          "image": { "@type": "ImageObject", "url": p.img, "width": 1200, "height": 630 },
+          "author": { "@type": "Organization", "name": "The Sonic Media", "url": "https://thesonicmedia.com" },
+          "publisher": { "@type": "Organization", "name": "The Sonic Media", "logo": { "@type": "ImageObject", "url": "https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" } },
+          "mainEntityOfPage": "https://thesonicmedia.com/future-vision/" + slug,
+          "articleSection": "Future Vision",
+          "keywords": p.tag + ", future of marketing, AI marketing, The Sonic Media"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thesonicmedia.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Future Vision", "item": "https://thesonicmedia.com/future" },
+            { "@type": "ListItem", "position": 3, "name": p.title, "item": "https://thesonicmedia.com/future-vision/" + slug }
+          ]
+        }
+      ]
+    });
+
+    /* ── Show overlay ── */
+    overlay.style.display = 'block';
+    document.documentElement.scrollTop = 0;
+    document.body.style.visibility = 'hidden';
+    ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+      var el = document.getElementById(elId);
+      if (el) document.documentElement.appendChild(el);
+    });
+    if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
+
+    /* ── Wire buttons ── */
+    document.getElementById('fv-close-btn').addEventListener('click', closeFvOverlay);
+    document.getElementById('fv-back-btn').addEventListener('click', closeFvOverlay);
+    document.getElementById('fv-cta-contact-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      closeFvOverlay();
+      if (window.navigate) window.navigate('contact');
+    });
+    overlay._keyHandler = function(e) { if (e.key === 'Escape') closeFvOverlay(); };
+    document.addEventListener('keydown', overlay._keyHandler);
+  }
+
+  /* ── Close overlay ── */
+  function closeFvOverlay() {
+    var overlay = document.getElementById('fv-overlay');
+    if (!overlay || overlay.style.display === 'none') return;
+    overlay.style.display = 'none';
+    document.body.style.visibility = '';
+    ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+      var el = document.getElementById(elId);
+      if (el) document.body.appendChild(el);
+    });
+    if (window._initLenis) { window._initLenis(); }
+    if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+    /* ── Restore home page scroll position if opened from home ── */
+    var _fvReturnY      = overlay._returnScrollY;
+    var _fvReturnAnchor = overlay._returnAnchor;
+    if (_fvReturnY !== null && _fvReturnAnchor) {
+      setTimeout(function() {
+        var el = document.getElementById(_fvReturnAnchor);
+        if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+        else    { window.scrollTo(0, _fvReturnY); }
+      }, 0);
+    }
+    history.pushState({ fvArticle: null }, 'Future Vision — The Sonic Media', '/future');
+    document.title = 'Future Vision — The Sonic Media';
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = 'https://thesonicmedia.com/future';
+    var ld = document.getElementById('fv-article-ld');
+    if (ld) ld.remove();
+  }
+
+  /* ── Expose close globally for any residual references ── */
+  window.closeFvDetail = closeFvOverlay;
+
+  /* ── popstate: browser back/forward through future-vision URLs ── */
+  window.addEventListener('popstate', function(e) {
+    var overlay = document.getElementById('fv-overlay');
+    if (!overlay) return;
+    if (e.state && e.state.fvArticle) {
+      var result = (typeof getPanelBySlug !== 'undefined')
+        ? { panel: null, index: -1 }  // won't happen — same scope
+        : null;
+      // Re-open via slug
+      var panels = (typeof PAGE_DATA !== 'undefined') ? PAGE_DATA.future.panels : [];
+      var found = false;
+      for (var i = 0; i < panels.length; i++) {
+        if (panels[i].slug === e.state.fvArticle || String(i) === e.state.fvArticle) {
+          openFvOverlay(panels[i], i);
+          found = true;
+          break;
+        }
+      }
+    } else {
+      if (overlay.style.display !== 'none') {
+        overlay.style.display = 'none';
+        document.body.style.visibility = '';
+        ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+          var el = document.getElementById(elId);
+          if (el) document.body.appendChild(el);
+        });
+        if (window._initLenis) { window._initLenis(); }
+        if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+        document.title = 'Future Vision — The Sonic Media';
+        var ld2 = document.getElementById('fv-article-ld');
+        if (ld2) ld2.remove();
+      }
+    }
+  });
+
+  /* ── On direct URL load: /future-vision/<slug> → auto-open panel ── */
+  (function detectFvSlugOnLoad() {
+    var path = window.location.pathname;
+    var match = path.match(/\/future-vision\/([^/]+)\/?$/);
+    if (!match) return;
+    var slug = match[1];
+    function tryOpen() {
+      if (typeof PAGE_DATA !== 'undefined' && PAGE_DATA.future && PAGE_DATA.future.panels) {
+        var panels = PAGE_DATA.future.panels;
+        var found = false;
+        for (var i = 0; i < panels.length; i++) {
+          if (panels[i].slug === slug) {
+            openFvOverlay(panels[i], i);
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          history.replaceState({}, 'Future Vision — The Sonic Media', '/future');
+        }
+      } else {
+        setTimeout(tryOpen, 50);
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryOpen);
+    } else {
+      tryOpen();
+    }
+  })();
+
 })();
 
 
@@ -3975,252 +4682,4 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
   }
 })();
 
-/* ═══════════════════════════════════════════════════
-   TABLET ORIENTATION MANAGER
-   Seamlessly switches between mobile (portrait) and
-   desktop (landscape) behavior on iPad/tablets.
-   Tablet range: 600px–1366px device width.
-═══════════════════════════════════════════════════ */
-(function TabletOrientationManager() {
-  'use strict';
 
-  var TABLET_MIN = 600;
-  var TABLET_MAX = 1366;
-  var DESKTOP_THRESHOLD = 900; // width at which landscape = desktop nav
-
-  /* ── Detect if we're on a tablet-range device ── */
-  function isTabletRange() {
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    var larger = Math.max(w, h);
-    var smaller = Math.min(w, h);
-    return larger >= TABLET_MIN && larger <= TABLET_MAX && smaller >= TABLET_MIN * 0.55;
-  }
-
-  /* ── Current orientation ── */
-  function isLandscape() {
-    if (screen.orientation && screen.orientation.type) {
-      return screen.orientation.type.indexOf('landscape') !== -1;
-    }
-    // Fallback: compare dimensions
-    return window.innerWidth > window.innerHeight;
-  }
-
-  /* ── Apply a data attribute so CSS/JS can read orientation state ── */
-  function applyOrientationClass() {
-    if (!isTabletRange()) {
-      document.documentElement.removeAttribute('data-tablet-orient');
-      return;
-    }
-    var orient = isLandscape() ? 'landscape' : 'portrait';
-    document.documentElement.setAttribute('data-tablet-orient', orient);
-  }
-
-  /* ── Close mobile nav if switching to landscape (desktop) ── */
-  function handleNavOnOrientationChange() {
-    if (!isTabletRange()) return;
-    if (isLandscape()) {
-      // Switching to desktop: close mobile drawer if open
-      var mobNav = document.getElementById('mobNav');
-      var ham    = document.getElementById('ham');
-      if (mobNav && mobNav.classList.contains('open')) {
-        mobNav.classList.remove('open');
-        if (ham) ham.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    }
-  }
-
-  /* ── Refresh services carousel vs coverflow on orientation change ── */
-  function handleServicesLayout() {
-    if (!isTabletRange()) return;
-
-    var carousel  = document.getElementById('pageMobSvcCarousel');
-    var coverflow = document.getElementById('pageSvcScrollWrapper');
-    var homeCf    = document.getElementById('homeSvcScrollWrapper');
-    var homeCar   = document.getElementById('homeMobSvcCarousel');
-
-    if (isLandscape()) {
-      // Landscape = desktop: show coverflow, hide carousel
-      if (carousel)  carousel.style.display = 'none';
-      if (coverflow) coverflow.style.display = '';
-      if (homeCf)    homeCf.style.display    = '';
-      if (homeCar)   homeCar.style.display   = 'none';
-    } else {
-      // Portrait = mobile: show carousel, hide coverflow
-      if (coverflow) coverflow.style.display = 'none';
-      if (homeCf)    homeCf.style.display    = 'none';
-      // Carousel display is handled by CSS portrait rule;
-      // trigger a resize event so existing JS handlers pick it up
-    }
-  }
-
-  /* ── Refresh Future Vision (FV) mobile/desktop widgets ── */
-  function handleFvLayout() {
-    if (!isTabletRange()) return;
-
-    var desktopHome = document.getElementById('fvContainer');
-    var mobHome     = document.getElementById('home-fv-mobile');
-    var desktopPage = document.getElementById('fvContainerPage');
-    var mobPage     = document.getElementById('page-fv-mobile');
-
-    if (isLandscape()) {
-      // Landscape = desktop FV
-      if (desktopHome) desktopHome.style.display = '';
-      if (mobHome)     { mobHome.style.display = 'none'; mobHome.dataset.built = ''; mobHome.innerHTML = ''; }
-      if (desktopPage) desktopPage.style.display = '';
-      if (mobPage)     { mobPage.style.display = 'none'; mobPage.dataset.built = ''; mobPage.innerHTML = ''; }
-    }
-    // Portrait: the existing resize handler at innerWidth <= 768 won't fire
-    // for tablets (768–1100px), so we nudge it via a synthetic resize below.
-  }
-
-  /* ── Refresh GSAP ScrollTrigger if available ── */
-  function refreshScrollTrigger() {
-    setTimeout(function() {
-      if (typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.refresh();
-      }
-    }, 350);
-  }
-
-  /* ── Master handler called on every orientation/resize event ── */
-  function onOrientationChange() {
-    applyOrientationClass();
-    handleNavOnOrientationChange();
-    handleServicesLayout();
-    handleFvLayout();
-    refreshScrollTrigger();
-
-    // Dispatch a synthetic resize so any third-party or inline handlers
-    // that gate on window.innerWidth re-evaluate with the new dimensions.
-    // We delay to let the browser finish updating layout dimensions first.
-    setTimeout(function() {
-      try {
-        window.dispatchEvent(new Event('resize'));
-      } catch(e) {
-        // IE fallback
-        var ev = document.createEvent('Event');
-        ev.initEvent('resize', true, true);
-        window.dispatchEvent(ev);
-      }
-    }, 100);
-  }
-
-  /* ── Debounced resize listener ── */
-  var resizeTimer;
-  window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(onOrientationChange, 120);
-  }, { passive: true });
-
-  /* ── Native orientation change event (fires on real devices) ── */
-  window.addEventListener('orientationchange', function() {
-    // orientationchange fires before dimensions are final; wait a tick
-    setTimeout(onOrientationChange, 150);
-  }, { passive: true });
-
-  /* ── screen.orientation API (modern browsers) ── */
-  if (screen.orientation && screen.orientation.addEventListener) {
-    screen.orientation.addEventListener('change', function() {
-      setTimeout(onOrientationChange, 150);
-    });
-  }
-
-  /* ── Boot: apply immediately on load ── */
-  applyOrientationClass();
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      applyOrientationClass();
-      handleServicesLayout();
-    });
-  } else {
-    handleServicesLayout();
-  }
-
-})();
-
-/* ═══════════════════════════════════════════════════
-   HASH-BASED DEEP LINK ROUTER
-   Handles direct loads, page refreshes, and shared URLs
-   for article deep-links:
-     /casestudies#case/<id>   → opens case study overlay
-     /journal#article/<id>    → opens blog article overlay
-   Also handles browser back/forward (popstate).
-═══════════════════════════════════════════════════ */
-(function() {
-  function dispatchHash(hash) {
-    if (!hash || hash === '#') return false;
-    var csMatch = hash.match(/^#case\/(.+)$/);
-    if (csMatch) {
-      var id = csMatch[1];
-      if (typeof _renderCaseStudyOverlay === 'function') {
-        // Ensure the casestudies page data is loaded first
-        setTimeout(function() { _renderCaseStudyOverlay(id); }, 0);
-        return true;
-      }
-    }
-    var baMatch = hash.match(/^#article\/(.+)$/);
-    if (baMatch) {
-      var id = baMatch[1];
-      if (typeof openBlogArticle === 'function') {
-        setTimeout(function() { openBlogArticle(id); }, 0);
-        return true;
-      }
-    }
-    return false;
-  }
-
-  // On initial page load, check the hash.
-  // A 200ms delay ensures renderPageData() has finished injecting
-  // grid content and the caseStudies / blogArticles data objects are ready.
-  function onLoad() {
-    var hash = window.location.hash;
-    if (hash && hash !== '#') {
-      setTimeout(function() { dispatchHash(hash); }, 200);
-    }
-  }
-
-  // On browser back/forward
-  window.addEventListener('popstate', function(e) {
-    var state = e.state || {};
-    // Close any open overlays first
-    if (typeof closeCaseStudyOverlay === 'function') {
-      var csOv = document.getElementById('_tsm_cs_overlay');
-      if (csOv) { csOv.style.display = 'none'; csOv.innerHTML = ''; document.body.style.overflow = ''; }
-    }
-    if (typeof closeBlogArticleOverlay === 'function') {
-      var baOv = document.getElementById('_tsm_ba_overlay');
-      if (baOv) { baOv.style.display = 'none'; baOv.innerHTML = ''; document.body.style.overflow = ''; }
-    }
-    // If the popped state has an article to show, open it
-    if (state.caseStudy && typeof _renderCaseStudyOverlay === 'function') {
-      _renderCaseStudyOverlay(state.caseStudy);
-    } else if (state.blogArticle && typeof openBlogArticle === 'function') {
-      openBlogArticle(state.blogArticle);
-    } else {
-      // No article — check hash in case user navigated via URL
-      dispatchHash(window.location.hash);
-    }
-  });
-
-  // Keyboard: Escape closes any open overlay
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      var csOv = document.getElementById('_tsm_cs_overlay');
-      if (csOv && csOv.style.display !== 'none' && typeof closeCaseStudyOverlay === 'function') {
-        closeCaseStudyOverlay(); return;
-      }
-      var baOv = document.getElementById('_tsm_ba_overlay');
-      if (baOv && baOv.style.display !== 'none' && typeof closeBlogArticleOverlay === 'function') {
-        closeBlogArticleOverlay();
-      }
-    }
-  });
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', onLoad);
-  } else {
-    onLoad();
-  }
-})();

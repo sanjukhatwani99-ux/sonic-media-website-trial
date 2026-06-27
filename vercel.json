@@ -1,36 +1,32 @@
 {
-  "rewrites": [
-    { "source": "/services/web",     "destination": "/services/web.html" },
-    { "source": "/services/app",     "destination": "/services/app.html" },
-    { "source": "/services/seo",     "destination": "/services/seo.html" },
-    { "source": "/services/smm",     "destination": "/services/smm.html" },
-    { "source": "/services/perf",    "destination": "/services/perf.html" },
-    { "source": "/services/inf",     "destination": "/services/inf.html" },
-    { "source": "/services/ecom",    "destination": "/services/ecom.html" },
-    { "source": "/services/content", "destination": "/services/content.html" },
-    { "source": "/services/brand",   "destination": "/services/brand.html" },
-    { "source": "/services/ai",      "destination": "/services/ai.html" },
-    { "source": "/about",            "destination": "/about.html" },
-    { "source": "/services",         "destination": "/services.html" },
-    { "source": "/studio",           "destination": "/studio.html" },
-    { "source": "/casestudies",      "destination": "/casestudies.html" },
-    { "source": "/journal",          "destination": "/journal.html" },
-    { "source": "/future",           "destination": "/future.html" },
-    { "source": "/faq",              "destination": "/faq.html" },
-    { "source": "/contact",          "destination": "/contact.html" }
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/about.html",             "destination": "/about",             "permanent": true },
+    { "source": "/services.html",          "destination": "/services",          "permanent": true },
+    { "source": "/studio.html",            "destination": "/studio",            "permanent": true },
+    { "source": "/casestudies.html",       "destination": "/casestudies",       "permanent": true },
+    { "source": "/journal.html",           "destination": "/journal",           "permanent": true },
+    { "source": "/future.html",            "destination": "/future",            "permanent": true },
+    { "source": "/faq.html",              "destination": "/faq",               "permanent": true },
+    { "source": "/contact.html",           "destination": "/contact",           "permanent": true },
+    { "source": "/services/web.html",      "destination": "/services/web",      "permanent": true },
+    { "source": "/services/app.html",      "destination": "/services/app",      "permanent": true },
+    { "source": "/services/seo.html",      "destination": "/services/seo",      "permanent": true },
+    { "source": "/services/smm.html",      "destination": "/services/smm",      "permanent": true },
+    { "source": "/services/perf.html",     "destination": "/services/perf",     "permanent": true },
+    { "source": "/services/inf.html",      "destination": "/services/inf",      "permanent": true },
+    { "source": "/services/ecom.html",     "destination": "/services/ecom",     "permanent": true },
+    { "source": "/services/content.html",  "destination": "/services/content",  "permanent": true },
+    { "source": "/services/brand.html",    "destination": "/services/brand",    "permanent": true },
+    { "source": "/services/ai.html",       "destination": "/services/ai",       "permanent": true }
   ],
-  "headers": [
-    {
-      "source": "/assets/js/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/assets/css/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    }
+  "rewrites": [
+    { "source": "/portfolio/:slug", "destination": "/studio" },
+    { "source": "/portfolio",       "destination": "/studio" },
+    { "source": "/case-studies/:slug", "destination": "/casestudies" },
+    { "source": "/case-studies",       "destination": "/casestudies" },
+    { "source": "/journal/:slug",       "destination": "/journal" },
+    { "source": "/future-vision/:slug", "destination": "/future" }
   ]
 }
