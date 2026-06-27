@@ -7,6 +7,22 @@ const CS_CAT_ICON = {
   'technology':'⚙️'
 };
 
+// Convert Sanity _ref like "image-abc123-1537x1023-jpg" to a CDN URL
+function sanityImageUrl(ref, projectId, dataset, width, height) {
+  if (!ref) return null;
+  // ref format: image-{id}-{dimensions}-{format}
+  const parts = ref.replace('image-', '').split('-');
+  const format = parts.pop();          // "jpg"
+  const dims   = parts.pop();          // "1537x1023"
+  const id     = parts.join('-');      // the actual asset id
+  const filename = `${id}-${dims}.${format}`;
+  let url = `https://cdn.sanity.io/images/${projectId}/${dataset}/${filename}`;
+  if (width)  url += `?w=${width}`;
+  if (height) url += `${width ? '&' : '?'}h=${height}`;
+  if (width || height) url += '&fit=crop&auto=format';
+  return url;
+}
+
 async function getCaseStudies() {
   const query = `
     *[_type == "caseStudy"] | order(publishedDate desc){
@@ -20,7 +36,7 @@ async function getCaseStudies() {
       slug,
       completionDate,
       featuredImage{
-        asset->{url},
+        asset,
         alt,
         caption
       },
@@ -40,9 +56,10 @@ async function getCaseStudies() {
   return data.result || [];
 }
 
-function buildSanityJcard(item) {
-  const imgUrl = item.featuredImage?.asset?.url
-    ? `${item.featuredImage.asset.url}?w=800&h=500&fit=crop&auto=format`
+function buildSanityJcard(item, projectId, dataset) {
+  const ref = item.featuredImage?.asset?._ref;
+  const imgUrl = ref
+    ? sanityImageUrl(ref, projectId, dataset, 800, 500)
     : 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop';
 
   const cat = (item.category || 'strategy').toLowerCase();
@@ -75,12 +92,16 @@ function buildSanityJcard(item) {
   `;
 }
 
-// Store sanity data globally so openSanityCase can access it
 window._sanityCaseStudies = {};
+window._sanityProjectId = "jva6pfeq";
+window._sanityDataset = "production";
 
 function openSanityCase(id) {
   const cs = window._sanityCaseStudies[id];
   if (!cs) return;
+
+  const projectId = window._sanityProjectId;
+  const dataset = window._sanityDataset;
 
   if (!document.getElementById('cs-overlay')) {
     const shell = document.createElement('div');
@@ -90,21 +111,21 @@ function openSanityCase(id) {
   }
   const overlay = document.getElementById('cs-overlay');
 
-  const imgUrl = cs.featuredImage?.asset?.url
-    ? `${cs.featuredImage.asset.url}?w=1200&h=675&fit=crop&auto=format`
+  const ref = cs.featuredImage?.asset?._ref;
+  const imgUrl = ref
+    ? sanityImageUrl(ref, projectId, dataset, 1200, 675)
     : 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80';
 
   const date = cs.completionDate
     ? new Date(cs.completionDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'long' })
     : '';
-
   const services = cs.services?.join(', ') || cs.category || '';
 
   const bodyHtml = `
     ${cs.challengeText ? `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Challenge</h2><p>${cs.challengeText}</p>` : ''}
-    ${cs.solutionText ? `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Solution</h2><p>${cs.solutionText}</p>` : ''}
-    ${cs.resultsText ? `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Results</h2><p style="white-space:pre-line;">${cs.resultsText}</p>` : ''}
-    ${cs.projectUrl ? `<p style="margin-top:32px;"><a href="${cs.projectUrl}" target="_blank" rel="noopener" style="color:#FF5C00;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;">View Live Project →</a></p>` : ''}
+    ${cs.solutionText  ? `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Solution</h2><p>${cs.solutionText}</p>` : ''}
+    ${cs.resultsText   ? `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Results</h2><p style="white-space:pre-line;">${cs.resultsText}</p>` : ''}
+    ${cs.projectUrl    ? `<p style="margin-top:32px;"><a href="${cs.projectUrl}" target="_blank" rel="noopener" style="color:#FF5C00;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;">View Live Project →</a></p>` : ''}
   `;
 
   const titleWords = cs.title.split(' ');
@@ -130,8 +151,7 @@ function openSanityCase(id) {
 .cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
 .cs-article p{margin-bottom:20px;}
 .cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.cs-footer-copy{font-size:13px;color:#666;}
-.cs-footer-copy span{color:#FF5C00;}
+.cs-footer-copy{font-size:13px;color:#666;} .cs-footer-copy span{color:#FF5C00;}
 .cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}
 .cs-back:hover{gap:14px;}
 .cs-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}
@@ -141,7 +161,7 @@ function openSanityCase(id) {
 .cs-cta-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,68px);line-height:.95;letter-spacing:.02em;color:#F5F0EB;margin-bottom:16px;}
 .cs-cta-h span{color:#FF5C00;}
 .cs-cta-p{font-size:15px;line-height:1.75;color:rgba(245,240,235,.55);font-weight:300;max-width:480px;margin:0 auto 36px;}
-.cs-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}
+.cs-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}
 .cs-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}
 @media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:60px 20px 48px;}.cs-body{padding:40px 20px 80px;}.cs-article{padding:28px;font-size:15px;}.cs-cta-band{padding:48px 24px;}}
 </style>
@@ -151,7 +171,7 @@ function openSanityCase(id) {
 </nav>
 <div class="cs-hero">
   <div class="cs-eyebrow">${cs.clientName || cs.category || 'Case Study'}</div>
-  <h1 class="cs-h1">${titleWords.slice(0, half).join(' ')}<br><span>${titleWords.slice(half).join(' ')}</span></h1>
+  <h1 class="cs-h1">${titleWords.slice(0,half).join(' ')}<br><span>${titleWords.slice(half).join(' ')}</span></h1>
   <div class="cs-meta">${date}${date && services ? ' &nbsp;·&nbsp; ' : ''}${services}${services ? ' &nbsp;·&nbsp; ' : ''}The Sonic Media</div>
 </div>
 <div class="cs-body">
@@ -169,9 +189,6 @@ function openSanityCase(id) {
   <div class="cs-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
   <button class="cs-back" id="cs-back-btn">← Back to Case Studies</button>
 </div>`;
-
-  overlay._returnScrollY = null;
-  overlay._returnAnchor = null;
 
   const slug = cs.slug?.current || id;
   history.pushState({ sanityCaseStudy: id }, cs.title + ' — The Sonic Media', '/case-studies/' + slug);
@@ -191,10 +208,8 @@ function openSanityCase(id) {
   });
   if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
 
-  function closeHandler() { closeSanityCase(); }
-  document.getElementById('cs-close-btn').addEventListener('click', closeHandler);
-  document.getElementById('cs-back-btn').addEventListener('click', closeHandler);
-
+  document.getElementById('cs-close-btn').addEventListener('click', closeSanityCase);
+  document.getElementById('cs-back-btn').addEventListener('click', closeSanityCase);
   overlay._keyHandler = function(e) { if (e.key === 'Escape') closeSanityCase(); };
   document.addEventListener('keydown', overlay._keyHandler);
 }
@@ -217,28 +232,22 @@ function closeSanityCase() {
 }
 
 async function init() {
+  const projectId = window._sanityProjectId;
+  const dataset   = window._sanityDataset;
   const items = await getCaseStudies();
   console.log("SANITY DATA:", items);
-
   if (!items || items.length === 0) return;
 
-  // Store in global lookup for openSanityCase
   items.forEach(item => {
     const key = item.slug?.current || item._id;
     window._sanityCaseStudies[key] = item;
   });
 
-  // Inject cards into the existing grid used by app.js
   const grid = document.getElementById('page-casestudies-grid');
-  if (grid) {
-    grid.innerHTML = items.map(item => buildSanityJcard(item)).join('');
-  }
+  if (grid) grid.innerHTML = items.map(i => buildSanityJcard(i, projectId, dataset)).join('');
 
-  // Also inject first 4 into home grid if present
   const homeGrid = document.getElementById('home-casestudies-grid');
-  if (homeGrid) {
-    homeGrid.innerHTML = items.slice(0, 4).map(item => buildSanityJcard(item)).join('');
-  }
+  if (homeGrid) homeGrid.innerHTML = items.slice(0, 4).map(i => buildSanityJcard(i, projectId, dataset)).join('');
 }
 
 init();
