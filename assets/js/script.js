@@ -11,7 +11,7 @@ async function getCaseStudies() {
   const projectId = "azp8do9e";
   const dataset = "production";
 
-  const url = `https://${projectId}.api.sanity.io/v2024-01-01/data/query/${dataset}?query=${encodeURIComponent(query)}`;
+  const url = `https://${projectId}.apicdn.sanity.io/v2024-01-01/data/query/${dataset}?query=${encodeURIComponent(query)}`;
 
   const res = await fetch(url);
   const data = await res.json();
