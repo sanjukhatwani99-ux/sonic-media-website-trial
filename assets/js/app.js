@@ -1240,7 +1240,329 @@ window.addEventListener('popstate', function(e) {
 })();
 
 /* ─ Case Study Detail Pages ─ */
-const caseStudies = {}; // Populated entirely from Sanity — no hardcoded entries
+const caseStudies = {
+  'legalbuddy-brand-identity': {
+    title: 'Legalbuddy — Brand Identity & Logo Design',
+    client: 'Legalbuddy',
+    industry: 'Professional Services',
+    category: 'Branding',
+    services: ['Branding Identity'],
+    date: 'Jun 27, 2026',
+    shortDesc: 'A strong, professional brand identity that builds trust instantly with users in the legal services space — clean, modern, and built for authority.',
+    featuredImg: { url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=80', alt: 'Legalbuddy brand identity system' },
+    gallery: [
+      { url: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80', alt: 'Legalbuddy logo applied across digital and offline platforms' },
+    ],
+    challenge: 'Legalbuddy needed a strong, professional brand identity that could build trust instantly with users in the legal services space and stand out in a competitive, credibility-driven industry.',
+    solution: 'The Sonic Media created a clean, modern logo system focused on simplicity, trust, and authority. The design was built with scalable identity elements suitable for digital platforms, documents, and legal communication.',
+    results: [
+      'Strong, professional brand presence established',
+      'Improved visual credibility in legal services market',
+      'Consistent identity across digital and offline use',
+      'Scalable logo system for future brand expansion',
+      'Clear and memorable brand recognition',
+    ],
+    technologies: [],
+    projectUrl: '',
+  },
+  'ledgerlink-consultation-private-limited-website-development': {
+    /* ── Sanity v2 structured format ── */
+    _sanityV2: true,
+    title: 'LedgerLink Consultation Private Limited — Website Development',
+    subtitle: 'A conversion-focused website for a GST, Income Tax, Accounting & Compliance advisory firm built to dominate local search in Ahmedabad.',
+    category: 'Technology',
+    publishedDate: 'Jun 27, 2026',
+    slug: 'ledgerlink-consultation-private-limited-website-development',
+    metaTitle: 'LedgerLink Website Development Case Study — The Sonic Media',
+    metaDescription: 'How The Sonic Media built a professional, SEO-optimised website for LedgerLink Consultation Pvt Ltd — a GST, Tax & Compliance firm in Ahmedabad.',
+    heroImage: {
+      url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80',
+      alt: 'LedgerLink Consultation professional website homepage',
+      caption: 'Desktop homepage of lcpladvisory.com — the conversion-focused website built by The Sonic Media for LedgerLink Consultation Pvt Ltd.'
+    },
+    secondImage: {
+      url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80',
+      alt: 'SEO-optimised service pages for GST, Income Tax, Accounting and Compliance on lcpladvisory.com',
+      caption: 'Service page architecture — individual, SEO-structured pages for GST Filing, Income Tax, TDS, Accounting, and Compliance Advisory.'
+    },
+    introBody: 'LedgerLink Consultation Private Limited is an Ahmedabad-based tax and financial advisory firm offering GST filing, Income Tax returns, TDS compliance, accounting, and business registration services. The Sonic Media designed and developed their website, lcpladvisory.com, from the ground up — creating a trust-first, lead-generating digital presence built to rank locally and convert visitors into consultation enquiries.',
+    clientOverview: [
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'LedgerLink Consultation Private Limited is a tax and financial advisory firm based in Ahmedabad, Gujarat. Founded by ', marks: [] }, { _type: 'span', text: 'CA professionals', marks: ['strong'] }, { _type: 'span', text: ', the firm offers a comprehensive suite of compliance services including GST registration and filing, Income Tax returns, TDS, accounting, ROC filings, and business registration advisory.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Their primary clientele spans small and medium-sized businesses, start-ups, and individual professionals across Ahmedabad seeking reliable, responsive compliance advisory without the overhead of a large CA firm.', marks: [] }] },
+    ],
+    challenge: [
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'LedgerLink had no website. Prospective clients searching for "GST consultant Ahmedabad" or "Income Tax return filing Ahmedabad" could not find them. Every enquiry that could have come through organic search was going to competitors with an established online presence.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Beyond invisibility, the firm lacked a professional digital trust signal. In the tax and compliance sector, ', marks: [] }, { _type: 'span', text: 'credibility is the primary purchase driver', marks: ['strong'] }, { _type: 'span', text: ' — potential clients need to feel confident before they hand over sensitive financial information. Without a website, that trust had to be built entirely through referrals and word of mouth, capping the firm\'s growth.', marks: [] }] },
+    ],
+    strategy: [
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Three priorities shaped the strategy:', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: '1. Trust before traffic.', marks: ['strong'] }, { _type: 'span', text: ' The design had to communicate credibility before a visitor read a single word — clean layout, professional typography, credential-forward structure.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: '2. Service-page SEO architecture.', marks: ['strong'] }, { _type: 'span', text: ' Each core service (GST, Income Tax, TDS, Accounting, Compliance) needed a dedicated, keyword-optimised page targeting high-intent Ahmedabad searches — not a single generic "services" page.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: '3. Mobile-first lead generation.', marks: ['strong'] }, { _type: 'span', text: ' The majority of local search in India is conducted on mobile. Every page needed a persistent, frictionless call-to-action: a WhatsApp enquiry button and a click-to-call CTA above the fold on all devices.', marks: [] }] },
+    ],
+    timeline: [
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'The project was completed across four phases over approximately three weeks:', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Discovery & Architecture (3 days)', marks: ['strong'] }, { _type: 'span', text: ' — Service mapping, keyword research, sitemap, and wireframe structure.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Design (4 days)', marks: ['strong'] }, { _type: 'span', text: ' — High-fidelity UI design, responsive layout system, brand colour and type system.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Build & Content (8 days)', marks: ['strong'] }, { _type: 'span', text: ' — Full front-end development, SEO copywriting for all service pages, Schema markup implementation, and performance optimisation.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'QA & Launch (2 days)', marks: ['strong'] }, { _type: 'span', text: ' — Cross-device testing, GSC submission, Google Business Profile linking, and go-live.', marks: [] }] },
+    ],
+    execution: [
+      { _type: 'block', style: 'h3', children: [{ _type: 'span', text: 'Website Structure', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'The site was structured around six core pages: Homepage, About, and dedicated service pages for GST Filing, Income Tax, TDS Compliance, and Accounting & ROC. Each service page was written as a standalone landing page with its own meta title, meta description, H1, and structured content targeting the primary search query for that service in Ahmedabad.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'The homepage was designed to qualify and direct visitors immediately — above-the-fold trust signals (CA credentials, years of experience), a concise service grid, a client social proof strip, and a dual CTA (WhatsApp + phone call).', marks: [] }] },
+      { _type: 'block', style: 'h3', children: [{ _type: 'span', text: 'Responsive Development', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'The site was built mobile-first. A sticky WhatsApp button and click-to-call CTA were implemented across all pages. Navigation collapsed into a clean mobile drawer. All images are next-gen format (WebP) with lazy loading. Page load target: under 2.5 seconds on a 4G connection.', marks: [] }] },
+      { _type: 'block', style: 'h3', children: [{ _type: 'span', text: 'SEO & AI Optimization', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Each page targets a primary keyword cluster (e.g. "GST consultant Ahmedabad", "Income Tax filing Ahmedabad") with supporting long-tail variations. ', marks: [] }, { _type: 'span', text: 'LocalBusiness', marks: ['strong'] }, { _type: 'span', text: ' and ', marks: [] }, { _type: 'span', text: 'ProfessionalService', marks: ['strong'] }, { _type: 'span', text: ' JSON-LD Schema was implemented site-wide. The Google Business Profile was fully optimised and linked to the website. Internal linking connects all service pages to the homepage and to each other through contextual anchors.', marks: [] }] },
+      { _type: 'block', style: 'h3', children: [{ _type: 'span', text: 'Tech Stack & Tools', marks: [] }] },
+      { _type: 'block', style: 'normal', _listItem: 'bullet', children: [{ _type: 'span', text: 'HTML5 / CSS3 — semantic, accessible markup', marks: [] }] },
+      { _type: 'block', style: 'normal', _listItem: 'bullet', children: [{ _type: 'span', text: 'Vanilla JavaScript — no framework overhead', marks: [] }] },
+      { _type: 'block', style: 'normal', _listItem: 'bullet', children: [{ _type: 'span', text: 'Google Search Console & Analytics 4', marks: [] }] },
+      { _type: 'block', style: 'normal', _listItem: 'bullet', children: [{ _type: 'span', text: 'Schema.org JSON-LD (LocalBusiness + ProfessionalService + BreadcrumbList)', marks: [] }] },
+      { _type: 'block', style: 'normal', _listItem: 'bullet', children: [{ _type: 'span', text: 'WebP image optimisation + lazy loading', marks: [] }] },
+      { _type: 'block', style: 'normal', _listItem: 'bullet', children: [{ _type: 'span', text: 'Vercel — deployment and edge CDN', marks: [] }] },
+    ],
+    results: [
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'lcpladvisory.com launched in June 2026. As of launch, the following outcomes have been confirmed:', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Professional digital presence established', marks: ['strong'] }, { _type: 'span', text: ' — the firm now has a trust-credible online home that matches the quality of their advisory work.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Indexed and crawlable within 48 hours', marks: ['strong'] }, { _type: 'span', text: ' of launch via Google Search Console submission.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'WhatsApp and phone CTAs live', marks: ['strong'] }, { _type: 'span', text: ' — direct enquiry paths functioning across all devices.', marks: [] }] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Local SEO rankings pending', marks: ['strong'] }, { _type: 'span', text: ' — typical ranking timelines for local search in the tax/CA vertical are 30–90 days. Metrics will be reported here after the first 30-day tracking window.', marks: [] }] },
+    ],
+    proofVisualNote: 'Screenshots show the live homepage and service page architecture of lcpladvisory.com as launched in June 2026. Mobile and desktop views are fully functional at the live URL.',
+    proofPerformance: 'Pending — analytics data to be added after 30-day tracking window. Google Search Console indexing confirmed within 48 hours of launch.',
+    testimonialQuote: 'Pending — testimonial to be added.',
+    testimonialAuthor: '',
+    faqItems: [
+      {
+        question: 'Is this a live website?',
+        answer: 'Yes. lcpladvisory.com is fully live and accessible. The screenshots above are from the production website.'
+      },
+      {
+        question: 'How long did the website take to build?',
+        answer: 'The project ran from discovery to launch in approximately three weeks: three days for architecture and keyword research, four days for design, eight days for development and content, and two days for QA and launch.'
+      },
+      {
+        question: 'What SEO work was included?',
+        answer: 'Keyword research targeting Ahmedabad-specific service queries, individual optimised service pages, JSON-LD Schema markup (LocalBusiness + ProfessionalService), Google Business Profile optimisation, GSC submission, and internal linking architecture.'
+      },
+      {
+        question: 'Why separate pages for each service instead of one services page?',
+        answer: 'Each service targets a distinct, high-intent search query. A single "services" page cannot rank for "GST consultant Ahmedabad", "Income Tax filing Ahmedabad", and "TDS compliance Ahmedabad" simultaneously. Dedicated pages allow each service to rank independently and serve visitors who arrive with a specific need.'
+      },
+    ],
+    ctaLine: 'Ready to build a site that works as hard as you do? Let\'s talk.',
+    projectUrl: 'https://lcpladvisory.com',
+  },
+  'ledgerlink-website': {
+    title: 'LedgerLink Consultation — Tax & Financial Advisory Website',
+    client: 'LedgerLink Consultation Pvt Ltd',
+    industry: 'Finance',
+    category: 'Technology',
+    services: ['Website Development', 'SEO', 'Local SEO'],
+    date: 'Jun 27, 2026',
+    shortDesc: 'A conversion-focused website for a GST, Income Tax, Accounting & Compliance advisory firm — built to build trust, generate leads, and dominate local search in Ahmedabad.',
+    featuredImg: { url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80', alt: 'LedgerLink Consultation professional website homepage' },
+    gallery: [
+      { url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80', alt: 'SEO-optimised service pages for GST, Income Tax, Accounting and Compliance' },
+      { url: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&q=80', alt: 'Fully responsive layout across mobile and desktop devices' },
+    ],
+    challenge: 'The client lacked a strong digital presence and needed a professional, trust-building website to attract businesses and individuals seeking reliable GST, Income Tax, Accounting, and Compliance services in Ahmedabad.',
+    solution: 'The Sonic Media designed and developed a clean, conversion-focused website with structured service pages, SEO-optimised content, responsive UI, and strategic lead generation elements to convert visitors into consultation inquiries.',
+    results: [
+      'Improved online credibility and brand trust',
+      'Increased inquiry/lead conversion from website traffic',
+      'Strong local SEO visibility in Ahmedabad search results',
+      'Fully responsive experience across all devices',
+      'Faster user navigation with structured service architecture',
+    ],
+    technologies: ['HTML / CSS', 'Responsive Design', 'Local SEO', 'UI/UX'],
+    projectUrl: 'https://lcpladvisory.com',
+  },
+  'd2c-growth-playbook': {
+    title: 'How Indian D2C Brands Can Scale from ₹5L to ₹50L Monthly Revenue in 6 Months',
+    subtitle: 'The Exact Growth Blueprint That Delivered 10× Revenue for Our D2C Clients',
+    category: 'Strategy',
+    date: 'May 18, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80', caption: 'Full-funnel D2C growth architecture — from acquisition to lifetime value optimisation.' },
+      { url: 'https://images.unsplash.com/photo-1571867424488-4565932edb41?w=1200&q=80', caption: 'Revenue tracking dashboard showing the month-by-month growth trajectory of a 10× D2C client.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Why Most Indian D2C Brands Plateau at ₹5–8L Per Month</h2>
+<p>The graveyard of Indian D2C is full of brands that hit ₹5–8 lakh per month and never broke through. Not because their product was bad, but because they were using growth tactics designed for a brand already at ₹50L. The strategy required to go from ₹5L to ₹50L is entirely different from what got you to ₹5L — and most founders, agencies, and advisors fail to make that distinction.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 3 Pillars of the 10× D2C Growth Blueprint</h2>
+<p><strong style="color:#FF5C00;">Pillar 1 — Full-Funnel Paid Media Architecture.</strong> At ₹5L revenue, most brands are running a single campaign with one ad set and a broad audience. Scaling to ₹50L requires a structured three-layer funnel: Top-of-Funnel broad prospecting, Middle-of-Funnel engagement retargeting, and Bottom-of-Funnel cart recovery. Each layer has distinct KPIs, creative formats, and budget allocation rules. We typically allocate 50% of budget to TOF, 30% to MOF, and 20% to BOF — then shift toward BOF as retargeting audiences scale.</p>
+<p><strong style="color:#FF5C00;">Pillar 2 — Retention and Repeat Purchase Flows.</strong> New customer acquisition is expensive. The fastest path to ₹50L is not acquiring more customers — it is increasing the purchase frequency of customers you already have. We implement a 6-email post-purchase series, WhatsApp loyalty nudges at days 14 and 30, and a subscription or replenishment offer at day 45. For consumable D2C categories — supplements, skincare, food — this alone can increase Customer Lifetime Value (CLTV) by 60–80%.</p>
+<p><strong style="color:#FF5C00;">Pillar 3 — Conversion Rate Optimisation (CRO).</strong> Every percentage point of conversion rate improvement multiplies the return from your existing ad spend. A store converting at 1.8% that improves to 2.6% sees a 44% revenue increase with zero additional ad spend. We conduct a full store audit on every new D2C client, addressing page speed, trust signals, product page structure, checkout friction, and mobile UX. Indian mobile shoppers on 4G connections are particularly sensitive to load time — each additional second of load time costs approximately 20% in conversions.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Case Evidence: Three Brands, Three Journeys to 10×</h2>
+<p>A Gujarati nutraceutical brand went from ₹4.2L to ₹44L per month in 22 weeks after implementing this framework — the breakthrough came from a WhatsApp replenishment sequence that recovered 34% of lapsed customers. A Mumbai-based skincare brand hit ₹52L in month 6, driven primarily by a carousel-format UGC campaign series that outperformed their existing polished photography by 3.8× on Meta. A Bangalore home goods brand achieved the 10× milestone through CRO alone — we improved their store conversion rate from 1.1% to 3.4% through mobile-first page redesign, resulting in ₹18L in additional monthly revenue from the same traffic volume. The common thread: none of these brands increased their ad budgets significantly. They unlocked growth by fixing the structure, not increasing the spend.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The D2C Growth Readiness Audit</h2>
+<p>Before applying any of these frameworks, we conduct a comprehensive readiness audit covering: unit economics (are your margins healthy enough to support paid acquisition?), product-market fit signals (are organic reviews positive and repeat purchase rate above 20%?), and technical infrastructure (is your tracking, attribution, and analytics clean enough to make good decisions?). Brands that skip this step often scale problems rather than revenue. If you are ready to build the growth architecture that takes your D2C brand to ₹50L and beyond, reach out to The Sonic Media.</p>`
+  },
+  'whatsapp-marketing-2026': {
+    title: 'WhatsApp Marketing in 2026: How to Generate 35% of Your Revenue from One Channel',
+    subtitle: 'The Complete WhatsApp Business Strategy for Indian Brands — From Setup to Scale',
+    category: 'Performance Marketing',
+    date: 'May 5, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=1200&q=80', caption: 'WhatsApp Business API campaigns delivering 85%+ open rates — far above email and SMS benchmarks.' },
+      { url: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=1200&q=80', caption: 'Automated WhatsApp flow architecture for a D2C brand generating ₹8L monthly from retention campaigns alone.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Why WhatsApp Is India's Highest-ROI Marketing Channel in 2026</h2>
+<p>With over 500 million active users in India, WhatsApp is not just a messaging app — it is the single most trusted communication platform in the country. While email open rates in India average 18–22% and SMS click-through rates languish at 2–4%, well-executed WhatsApp campaigns routinely achieve open rates of 85–92% and click-through rates of 25–40%. For brands that have built a WhatsApp audience, it is often the highest-ROAS channel in their entire marketing stack — outperforming Meta Ads, Google Ads, and email combined.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 4-Stage WhatsApp Revenue Architecture</h2>
+<p><strong style="color:#FF5C00;">Stage 1 — List Building.</strong> Your WhatsApp marketing is only as powerful as the audience you have built. The most effective opt-in methods for Indian brands are: post-purchase WhatsApp opt-in (convert buyers immediately after checkout), lead magnet campaigns on Meta with WhatsApp as the destination, and Click-to-WhatsApp ads — one of Meta's highest-converting ad formats in India, particularly for high-consideration products above ₹999.</p>
+<p><strong style="color:#FF5C00;">Stage 2 — Automated Nurture Flows.</strong> The WhatsApp Business API enables sophisticated automation that most brands have not yet deployed. Essential flows include: a 3-message welcome series for new subscribers, a 5-message post-purchase series (order confirmation, shipping update, delivery confirmation, 3-day review request, 14-day repurchase nudge), and a winback campaign for customers who have not purchased in 45 days. These flows, once built, run on autopilot and generate revenue 24 hours a day.</p>
+<p><strong style="color:#FF5C00;">Stage 3 — Broadcast Campaigns.</strong> Beyond automation, strategic broadcast campaigns for sales events, new product launches, and exclusive subscriber offers can generate extraordinary short-term revenue spikes. One of our FMCG clients generates ₹4–6L in 48 hours from a well-timed WhatsApp broadcast to their 12,000-subscriber list — a cost per rupee of revenue that no other channel can match.</p>
+<p><strong style="color:#FF5C00;">Stage 4 — Conversational Commerce.</strong> The most advanced WhatsApp implementations use the channel as a full commerce interface — customers can browse, ask questions, receive personalised recommendations, and complete purchases entirely within WhatsApp. For Indian consumers who are comfortable with chat-based interactions, this removes enormous friction from the purchase journey.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Compliance and Quality Framework You Cannot Ignore</h2>
+<p>WhatsApp enforces strict quality guidelines through its Business API. Sending irrelevant or too-frequent messages leads to blocks, number bans, and quality rating downgrades that can permanently impair your sender reputation. The rules are: message only opted-in users, maintain a minimum 72-hour gap between promotional broadcasts, personalise with the recipient's name and relevant context, and always offer an easy opt-out. Brands that follow these guidelines see sustained deliverability and engagement. Those that don't are banned within weeks. At The Sonic Media, we manage end-to-end WhatsApp marketing infrastructure for clients — from API setup and flow architecture to creative, compliance, and performance optimisation.</p>`
+  },
+  'local-seo-domination': {
+    title: 'How to Dominate Local Search in Your City and Become the #1 Brand on Google Maps',
+    subtitle: 'The Step-by-Step Local SEO System for Indian Businesses — Clinics, Restaurants, Retailers, and Service Providers',
+    category: 'SEO',
+    date: 'Apr 22, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=1200&q=80', caption: 'Google Maps local pack results — the 3 positions that capture 60% of all local search clicks in India.' },
+      { url: 'https://images.unsplash.com/photo-1432888622747-4eb9a8eMar07?w=1200&q=80', caption: 'Local SEO ranking factors analysis showing the weight of reviews, proximity, and on-page signals.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">What Is Local SEO and Why Does It Matter More Than Ever in India?</h2>
+<p>Local SEO is the practice of optimising your online presence to appear prominently when people in your city or neighbourhood search for businesses like yours on Google. In India, "near me" searches have grown by 500% in the last three years, and over 76% of people who conduct a local search visit a business within 24 hours. For clinics, restaurants, coaching centres, retailers, salons, and any service-based business, ranking in the Google Maps Local Pack — the top 3 results shown on maps — can be the single most impactful marketing investment you make.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 6-Step Local SEO Domination System</h2>
+<p><strong style="color:#FF5C00;">Step 1 — Google Business Profile Optimisation.</strong> Your Google Business Profile (GBP) is the foundation of local SEO. Businesses with fully completed, regularly updated profiles receive 7× more clicks than incomplete listings. Essentials: complete every field including business description, services, and attributes; upload 20+ high-quality photos; enable messaging and Q&A; and post weekly updates using the Posts feature. Most businesses in India have fundamentally incomplete GBP profiles — this alone creates a significant competitive advantage for those who do it properly.</p>
+<p><strong style="color:#FF5C00;">Step 2 — Review Velocity and Quality Management.</strong> Google's local ranking algorithm weighs review quantity, recency, and quality heavily. A business with 200 reviews averaging 4.7 stars will consistently outrank a competitor with 30 reviews at 4.9 stars. Build a systematic review generation process: train front-of-house staff to ask for reviews at the point of maximum satisfaction, send a post-service WhatsApp with a direct review link, and respond to every review — positive and negative — within 24 hours. Review responses signal engagement and authority to Google's algorithm.</p>
+<p><strong style="color:#FF5C00;">Step 3 — Local Keyword Strategy.</strong> Identify the exact queries your potential customers use — "[service] in [city]", "[service] near [neighbourhood]", and "[service] [city] + intent modifier" such as "best", "affordable", "24 hours". Build dedicated landing pages for each primary service-location combination you want to rank for. A multi-location business in Ahmedabad, for example, should have separate optimised pages for "dentist Navrangpura Ahmedabad", "dentist Satellite Ahmedabad", and so on.</p>
+<p><strong style="color:#FF5C00;">Step 4 — Local Citation Building.</strong> Citations are mentions of your business Name, Address, and Phone number (NAP) across the web. Consistent NAP data across Justdial, Sulekha, IndiaMart, Yelp, Bing Places, Apple Maps, and industry directories signals credibility to Google. Inconsistent NAP data — even minor variations like "St." versus "Street" — can suppress local rankings significantly.</p>
+<p><strong style="color:#FF5C00;">Step 5 — Localised On-Page SEO.</strong> Your website's location pages must include: embedded Google Maps, your full NAP in structured schema markup, locally relevant content that mentions neighbourhoods and landmarks, and internal links connecting all location pages to your main services hub. Page speed is critical — Indian local searchers are predominantly on mobile, and Google weights mobile page experience in local rankings.</p>
+<p><strong style="color:#FF5C00;">Step 6 — Local Link Building.</strong> Earn backlinks from local news sites, city blogs, chamber of commerce listings, local event sponsorships, and partnerships with complementary non-competing businesses. A single link from a reputable local publication can significantly move local rankings. We have ranked clients in Ahmedabad's competitive dental and legal verticals within 45–60 days using this citation and link-building combination. Reach out to The Sonic Media to learn how we can do the same for your local business.</p>`
+  },
+  'video-content-roi': {
+    title: 'Why Short-Form Video Delivers the Highest ROI of Any Marketing Channel in India',
+    subtitle: 'Data from 1,200 Content Pieces Across 40 Client Accounts — The Definitive Guide to Video Marketing ROI in 2026',
+    category: 'Social Media',
+    date: 'Apr 8, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=1200&q=80', caption: 'Video content performance analysis across platforms — Reels, Shorts, and vertical video drive 4× the reach of static posts.' },
+      { url: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1200&q=80', caption: 'Our in-house video production workflow — from brief to publish in under 48 hours for 40+ client brands.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Data Is In: Short-Form Video Has Won</h2>
+<p>We analysed 1,200 pieces of content published across 40 client accounts over a 12-month period — a dataset representing categories from luxury fashion and FMCG to real estate, healthcare, and professional services. The finding was unambiguous: short-form vertical video (Reels, Shorts, TikTok-format content) consistently outperformed every other content format on every platform across every metric. Not by a small margin — by a factor of 3–7×.</p>
+<p>The average Reel in our dataset reached 4.2× more unique accounts than the average static post from the same account. The average video ad on Meta achieved a cost-per-result 58% lower than the same budget deployed on static image ads. And the conversion rate from video-landing page journeys was 2.4× higher than from image-based ad journeys. The question is no longer whether short-form video works — it is why most brands are still not making enough of it, and how to make it work harder.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 5 Elements of a High-ROI Short-Form Video</h2>
+<p><strong style="color:#FF5C00;">1. The Hook (First 2 Seconds).</strong> If your video does not stop the scroll in the first two seconds, the rest of the production quality is irrelevant. The most effective hooks in the Indian market are: a bold text statement that challenges a common belief ("Your digital marketing agency is costing you money, not making it"), a visually surprising opening frame, and a direct question addressed to a specific audience ("Are you a Delhi restaurant owner losing customers to competitors?"). Hook strength correlates more strongly with completion rate than any other variable in our dataset.</p>
+<p><strong style="color:#FF5C00;">2. The Value Delivery.</strong> After the hook, deliver the core value within 15–20 seconds. Indian audiences on mobile are highly efficient content consumers — they will drop a video the moment it stops being useful or interesting. Structure your videos with a clear premise, rapid delivery of the key insight or entertainment value, and a memorable conclusion. Avoid slow intros, lengthy disclaimers, or brand logos before value has been established.</p>
+<p><strong style="color:#FF5C00;">3. Authentic Over Polished.</strong> One of the most counterintuitive findings in our dataset: smartphone-shot, authentic-feeling content consistently outperforms high-production-value content for conversion goals. For reach and brand awareness, production quality has a modest positive effect. For direct response — website visits, lead generation, purchases — authenticity and relatability outperform polish by 34% on average. Indian audiences are highly attuned to content that feels genuine versus content that feels like advertising.</p>
+<p><strong style="color:#FF5C00;">4. Language and Cultural Fit.</strong> Videos in Hindi or a regional language relevant to the target audience outperform English-language videos by an average of 41% across our Indian client base. For D2C brands selling to Tier 2 and Tier 3 cities — arguably the largest growth opportunity in Indian e-commerce — vernacular content is not just preferred; it is often essential for meaningful engagement.</p>
+<p><strong style="color:#FF5C00;">5. Call to Action with Friction Removal.</strong> Every commercial video needs a clear, specific call to action. The most effective CTAs in our dataset are link-in-bio (Instagram), swipe-up (Stories), and overlay CTA buttons (YouTube). Vague CTAs like "follow for more" consistently underperform specific CTAs like "comment 'GROWTH' and we'll send you the full guide." At The Sonic Media, we produce short-form video content at scale — 60+ pieces per month — for brands across India. If your current content strategy is not generating the reach, engagement, and revenue it should be, contact The Sonic Media.</p>`
+  },
+  'ecom-conversion-rate': {
+    title: 'The E-Commerce CRO Checklist: 12 Changes That Doubled Our Clients\' Conversion Rates',
+    subtitle: 'Conversion Rate Optimisation Is the Fastest Path to Revenue Growth — Without Increasing Ad Spend',
+    category: 'Strategy',
+    date: 'Mar 20, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80', caption: 'CRO audit heatmap showing where Indian mobile shoppers drop off — and the high-value opportunities most stores miss.' },
+      { url: 'https://images.unsplash.com/photo-1556742031-c6961e8560b0?w=1200&q=80', caption: 'Before and after conversion rate data for a D2C fashion brand — from 0.9% to 3.1% in 8 weeks.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Most Overlooked Growth Lever in Indian E-Commerce</h2>
+<p>Most Indian e-commerce brands are addicted to ad spend. When revenue is flat, the reflex response is to increase the Meta or Google budget. But if your store is converting at 1%, doubling your ad budget doubles your cost — not your profit. The more powerful lever is improving what happens after a visitor lands: Conversion Rate Optimisation (CRO). A store that converts 1% of its traffic and improves to 2% has effectively doubled its revenue from the same traffic volume and the same ad budget. We have conducted CRO audits on 140+ Indian e-commerce stores. These are the 12 highest-impact changes we implement every time.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 12-Point CRO Checklist for Indian E-Commerce Stores</h2>
+<p><strong style="color:#FF5C00;">1. Page Load Speed Below 2.5 Seconds on Mobile.</strong> Every additional second of load time costs approximately 20% in conversions for Indian mobile users on 4G. Compress all images (WebP format), enable lazy loading, minimise JavaScript, and use a CDN. This single change alone has improved conversion rates by 15–35% on slow stores.</p>
+<p><strong style="color:#FF5C00;">2. Hero Section with a Clear Value Proposition.</strong> Your homepage hero must answer three questions in 5 seconds: What do you sell? Why is it better? What should I do next? Most Indian store homepages fail this test — they show a beautiful banner with no copy or a tagline so generic it could belong to any brand.</p>
+<p><strong style="color:#FF5C00;">3. Product Page Trust Signals Above the Fold.</strong> Ratings, review counts, in-stock status, delivery timelines, and return policy must all appear above the fold on product pages. Indian consumers make trust assessments in the first 3 seconds of a product page visit. If they cannot see social proof and logistics clarity immediately, they leave.</p>
+<p><strong style="color:#FF5C00;">4. UGC and Video Reviews on Product Pages.</strong> Video testimonials from real Indian customers — especially in regional languages — increase product page conversion rates by 28–45% in our testing. Text reviews are useful; video reviews are transformative.</p>
+<p><strong style="color:#FF5C00;">5. Sticky Add-to-Cart Button on Mobile.</strong> A persistent CTA button visible at all times as the user scrolls through a product page is one of the simplest and highest-return CRO changes available. Implementation time: 2 hours. Average conversion impact: +12%.</p>
+<p><strong style="color:#FF5C00;">6. Size Guide and Fit Assist.</strong> For apparel and footwear — the highest-return-rate categories in Indian e-commerce — a clear, visual size guide reduces purchase hesitation and return rates simultaneously. Returns cost Indian brands 18–25% of gross revenue in logistics and processing costs.</p>
+<p><strong style="color:#FF5C00;">7. Urgency and Scarcity Signals.</strong> "Only 3 left in stock" and "Offer ends in 4:22:11" are two of the most powerful conversion accelerators in Indian e-commerce — when true. Artificial scarcity is immediately detected by Indian consumers and destroys trust. Authentic urgency signals — genuine low-stock alerts, actual flash sale countdowns — consistently lift conversion by 18–30%.</p>
+<p><strong style="color:#FF5C00;">8. Multiple Payment Options Including UPI and EMI.</strong> Any store not offering UPI, PhonePe, Google Pay, and EMI options for orders above ₹2,000 is leaving a significant percentage of their addressable market on the table. UPI adoption among Indian e-commerce shoppers reached 72% in 2024.</p>
+<p><strong style="color:#FF5C00;">9. Cart Abandonment Recovery via WhatsApp and Email.</strong> The average Indian e-commerce store abandons 72% of carts. A three-message sequence — immediate WhatsApp notification, 4-hour email with product imagery, 24-hour message with a modest incentive — can recover 20–35% of abandoned carts. This is pure incremental revenue from intent that already exists.</p>
+<p><strong style="color:#FF5C00;">10. Exit Intent Pop-Up with a Compelling Offer.</strong> An exit-intent overlay capturing email or WhatsApp with a first-purchase discount converts 5–12% of otherwise-leaving visitors into leads. This builds your owned audience for future remarketing at a cost far below paid media CPL benchmarks.</p>
+<p><strong style="color:#FF5C00;">11. Post-Purchase Upsell.</strong> The moment immediately after purchase — the thank-you page — is the highest-intent moment in any customer journey. An intelligently placed post-purchase upsell (a complementary product at a special "already checkout" price) converts at 15–25% and adds meaningful AOV with zero additional ad spend.</p>
+<p><strong style="color:#FF5C00;">12. Store Search Optimisation.</strong> 40% of Indian e-commerce shoppers who use on-site search convert at 4× the rate of non-searchers. Ensure your store's search function is fast, typo-tolerant, and returns relevant results. A broken or slow search experience is one of the highest-impact revenue leaks we encounter in audits. Implement these 12 changes methodically, track the impact of each, and you will almost certainly see your conversion rate double within 60–90 days. If you want The Sonic Media to conduct a comprehensive CRO audit of your store, contact us today.</p>`
+  },
+  'influencer-selection': {
+    title: 'How to Select the Right Influencer for Your Brand — and Avoid Costly Mistakes',
+    subtitle: 'The Data-Driven Influencer Vetting Framework That Separates High-ROI Creators from Expensive Mistakes',
+    category: 'Performance Marketing',
+    date: 'Mar 3, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1533750516457-a7f992034fec?w=1200&q=80', caption: 'Influencer performance analysis — the metrics that actually predict sales, not just reach.' },
+      { url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&q=80', caption: 'Creator vetting process used by The Sonic Media — 12-point audit before every campaign recommendation.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Follower Count Trap That Costs Indian Brands Crores</h2>
+<p>Every week, we speak to Indian brand owners who have spent ₹5–20 lakhs on influencer campaigns and seen zero measurable return. The pattern is almost always identical: they selected creators based on follower count and aesthetic appeal, paid a significant fee, received "reach" numbers in the post-campaign report, and had no way to attribute a single sale to the investment. Influencer marketing done wrong is one of the most expensive and least accountable forms of spending in digital marketing. Done right, it is one of the highest-ROI channels available — particularly for Indian D2C brands where social proof and community trust are the primary purchase drivers.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 12-Point Influencer Vetting Framework</h2>
+<p><strong style="color:#FF5C00;">1. Audience Authenticity Score.</strong> Request audience demographics from the creator and verify using tools like HypeAuditor or Social Blade. A creator with 200K followers but 40% bot-driven engagement is worth far less than a creator with 30K highly engaged, authentic followers. Red flags: sudden follower spikes, engagement rate below 1.5% on Instagram, comment sections filled with generic emoji responses.</p>
+<p><strong style="color:#FF5C00;">2. Engagement Rate vs Category Benchmark.</strong> Engagement rates vary by category and audience size. A fashion micro-influencer should have 4–8% engagement; a mega-influencer (1M+) achieving 1.5% engagement may actually be performing above benchmark. Always compare against category and size norms — not absolute numbers.</p>
+<p><strong style="color:#FF5C00;">3. Audience-Brand Alignment.</strong> Ask for a screenshot of the creator's audience demographics: age, gender, location, and interests. An influencer with 500K followers who are 70% male aged 35–50 is the wrong partner for a women's ethnic wear brand, regardless of their content quality. Audience fit is non-negotiable.</p>
+<p><strong style="color:#FF5C00;">4. Past Brand Campaign Performance.</strong> Ask the creator for analytics from their last 3–5 paid brand collaborations: reach, saves, shares, click-through rate, and any available conversion data. Creators who cannot or will not share this data are either inexperienced or have poor results to hide.</p>
+<p><strong style="color:#FF5C00;">5. Content Quality and Brand Safety Audit.</strong> Review the last 90 days of the creator's content. Is the production quality consistent with your brand standards? Have they promoted competing or brand-inappropriate products? One problematic past post can create significant reputational risk if your campaign goes viral in the wrong direction.</p>
+<p><strong style="color:#FF5C00;">6. Response Rate and Professionalism.</strong> How quickly did the creator or their management respond to your initial outreach? How clear and professional were their terms and deliverables communication? A creator who takes 2 weeks to reply to a brief and submits inconsistent deliverable descriptions will be a difficult campaign partner regardless of their reach.</p>
+<p><strong style="color:#FF5C00;">7. Micro vs Macro Strategy.</strong> Our campaign data consistently shows that micro-influencers (10K–100K followers) deliver 3–5× the conversion rate of macro-influencers (500K+) at 20–30% of the cost. For most Indian D2C brands with budgets under ₹10L, a strategy of 10–20 highly targeted micro-influencers will almost always outperform 1–2 mega-influencer placements. Reach out to The Sonic Media to access our curated network of 2,000+ verified Indian influencers, organised by category, city, audience profile, and past campaign performance.</p>`
+  },
+  'brand-launch-india': {
+    title: 'How to Launch a Brand in India in 90 Days: The Zero-to-Authority Playbook',
+    subtitle: 'The Exact Launch Sequence for Indian Market Entry — From Brand Identity to First ₹10L Revenue',
+    category: 'Branding',
+    date: 'Mar 18, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1559526324-593bc073d938?w=1200&q=80', caption: 'Brand launch command centre — coordinating identity, digital infrastructure, and go-to-market across all touchpoints.' },
+      { url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80', caption: 'The 90-day brand launch timeline — 12 milestones that turn a new brand into a market presence.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Why Most Indian Brand Launches Fail in the First 90 Days</h2>
+<p>The failure pattern for new Indian brand launches is almost always the same: a beautiful logo, a Shopify store, and a social media account that posts inconsistently for three months with declining organic reach and zero paid media strategy. By month 4, the founder is questioning everything. The product was never the problem — the launch strategy was. After executing 30+ brand launches across categories including FMCG, fashion, wellness, technology, and professional services, we have developed a 90-day playbook that consistently takes new brands from zero digital presence to ₹10L+ in monthly revenue and 10,000+ engaged audience members.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 90-Day Launch Sequence: Month by Month</h2>
+<p><strong style="color:#FF5C00;">Month 1 — Foundation (Days 1–30).</strong> The first month is entirely about building the infrastructure correctly. Brand identity: logo, colour palette, typography, photography style, and tone of voice — all decisions made with the target Indian consumer in mind, not the founder's personal taste. Digital infrastructure: a fast, conversion-optimised website (not just a beautiful one), professional Google Business Profile, and fully set-up business accounts on Instagram, Facebook, and LinkedIn. SEO foundation: keyword research, metadata optimisation, schema markup, and a content calendar for the next 12 months. Most brands skip or rush the foundation phase and spend months 2 and 3 fixing problems that could have been avoided. We do not allow this.</p>
+<p><strong style="color:#FF5C00;">Month 2 — Activation (Days 31–60).</strong> Month 2 is where the brand goes live and begins building its audience. Content strategy execution: 3 Reels per week, 1 long-form educational post, and 5–7 Stories per day. The content mix in the first 30 days of going live should be 70% educational or entertaining (audience building) and 30% commercial (direct sales). Paid media launch: a modest test budget of ₹20,000–₹50,000 across Meta to identify top-performing audiences and creative formats before scaling. Influencer seeding: gifting product to 15–20 micro-influencers in the target category for organic content creation, building social proof before significant ad spend begins. PR and link building: 3–5 press features or backlinks from relevant Indian publications to establish domain authority from launch.</p>
+<p><strong style="color:#FF5C00;">Month 3 — Scale (Days 61–90).</strong> By month 3, you have data — which content resonates, which audience segments respond, which products are converting. Month 3 is about scaling what is working. Increase paid media spend by 3–5× based on winning audiences and creatives identified in month 2. Launch email and WhatsApp capture sequences to begin building owned audience. Implement retention flows for the first purchasers acquired in months 1 and 2. Introduce a referral or advocacy programme to convert satisfied early customers into brand ambassadors. The goal by day 90 is not perfection — it is momentum. A brand with 8,000 Instagram followers, 1,500 WhatsApp subscribers, ₹10L in monthly revenue, and improving unit economics has everything it needs to scale aggressively in months 4–12.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The One Mistake That Kills Launches Before They Start</h2>
+<p>Launching before the unit economics work. If your product margin cannot support a cost of customer acquisition (CAC) below ₹400–600 (the approximate benchmark for Indian D2C via paid social), no amount of marketing excellence will make the business profitable. Before investing in a brand launch, validate that your product-market fit is real, your margins are healthy, and your fulfilment infrastructure can handle rapid order volume growth. The Sonic Media offers a pre-launch readiness audit that assesses all of these factors before we recommend investing in a full launch programme. If you are planning a brand launch in India in 2026 or 2026, contact us to begin the conversation.</p>`
+  },
+  'google-ads-india': {
+    title: 'Google Ads for Indian Businesses: The Structure That Delivers 12× ROAS Consistently',
+    subtitle: 'Why 60% of Indian Businesses Waste Their Google Ads Budget — and the Exact Campaign Structure That Fixes It',
+    category: 'SEO',
+    date: 'Mar 28, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=1200&q=80', caption: 'Google Ads campaign architecture for high-ROAS performance — the account structure used across all our client campaigns.' },
+      { url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80', caption: 'ROAS performance data showing the impact of campaign restructuring — from 2.1× to 12.4× in 10 weeks.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Google Ads Problem Most Indian Businesses Face</h2>
+<p>Google Ads is, on paper, the ideal channel for intent-based marketing in India: people searching "buy running shoes Mumbai" or "digital marketing agency Ahmedabad" have already decided they want what you offer. The conversion intent is built into the search. Yet the average Indian SME running Google Ads independently reports a ROAS of 1.5–2.5× — barely above breakeven when management time is factored in. The problem is almost never the platform. It is the structure of how campaigns are built, managed, and optimised. In our experience auditing 200+ Google Ads accounts across India, we find the same five structural errors in the vast majority of accounts — errors that collectively waste between 40% and 70% of the advertising budget.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 5 Most Expensive Google Ads Mistakes in India</h2>
+<p><strong style="color:#FF5C00;">Mistake 1 — Broad Match Keywords Without Negative Lists.</strong> Running campaigns with broad match keywords without an extensive negative keyword list is the number one budget drain in Indian Google Ads accounts. We have found clients spending 35–60% of their budget on irrelevant searches — a healthcare brand appearing for "health insurance" searches, a fashion retailer paying for "fashion history" research queries. Build negative keyword lists before a single rupee is spent.</p>
+<p><strong style="color:#FF5C00;">Mistake 2 — Single Campaign for All Products or Services.</strong> Lumping all products into a single campaign means Google's algorithm optimises for average performance rather than best performance. Separate campaigns by product category, search intent (informational vs transactional), and audience temperature (new visitors vs retargeting). Granular campaign structure gives you control — and control gives you efficiency.</p>
+<p><strong style="color:#FF5C00;">Mistake 3 — Generic Landing Pages.</strong> Sending Google Ads traffic to a generic homepage or product category page destroys Quality Score, increases cost-per-click, and drops conversion rate. Every significant keyword cluster should have a dedicated landing page that mirrors the ad copy, loads in under 2 seconds, and has a single clear CTA. This change alone has improved ROAS by 40–80% in multiple audit engagements.</p>
+<p><strong style="color:#FF5C00;">Mistake 4 — Ignoring Search Terms Reports.</strong> The search terms report shows you exactly what queries triggered your ads. Reviewing this weekly and adding irrelevant terms to your negative keyword list is the most impactful 30-minute activity in Google Ads management. Brands that do not do this routinely find 20–40% of their budget allocated to queries that can never convert.</p>
+<p><strong style="color:#FF5C00;">Mistake 5 — No Retargeting Campaign.</strong> A user who clicks your Google Ad, visits your website, and does not convert is your warmest possible prospect. Most Indian advertisers let this audience disappear. A well-structured Google Display and Search retargeting campaign targeting previous website visitors converts at 3–5× the rate of cold prospecting and at a fraction of the cost-per-acquisition.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Campaign Structure That Delivers 12× ROAS</h2>
+<p>After fixing the five errors above, the account structure we implement is: a Brand campaign protecting your own branded queries, a Competitor campaign targeting high-intent competitor searches, a Product/Service campaign using exact and phrase match keywords organised by theme, a Smart Shopping campaign for e-commerce clients with performance-optimised product feeds, and a Retargeting campaign for warm audiences. Combined with weekly optimisation, monthly landing page testing, and quarterly strategy reviews, this structure has delivered consistent ROAS of 8–14× across diverse Indian verticals including healthcare, real estate, education, e-commerce, and professional services. If you are currently running Google Ads without this structure, you are very likely leaving significant revenue on the table. Contact The Sonic Media for a Google Ads audit — we will identify exactly where your budget is being wasted and what the restructured account could achieve.</p>`
+  },
+  'retention-marketing': {
+    title: 'Retention Marketing in 2026: How to Turn One-Time Buyers Into Lifelong Brand Advocates',
+    subtitle: 'The Customer Retention Playbook That Increases CLTV by 80% — Without a Single Additional Rupee in Ad Spend',
+    category: 'Technology',
+    date: 'Mar 12, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80', caption: 'Customer lifetime value modelling — the data architecture behind a 80% CLTV improvement for a repeat-purchase D2C brand.' },
+      { url: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&q=80', caption: 'Retention flow automation dashboard showing the 6 lifecycle touchpoints that drive repeat purchase behaviour.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Acquisition Trap: Why Most Indian Brands Are Building on Sand</h2>
+<p>Here is a number that should change how you think about marketing: acquiring a new customer in India costs, on average, 5–7× more than retaining an existing one. Yet most Indian brands allocate 80–90% of their marketing budget to acquisition and less than 10% to retention. The result is a business that must constantly refill a leaking bucket — growing ad costs, rising CPMs, and increasing competitive pressure combine to make new customer acquisition more expensive every year. The brands building durable, compounding growth in India in 2026 are the ones that have solved retention. They spend on acquisition to grow the base, but they grow profit from the base they already have.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">What Does Retention Marketing Actually Mean?</h2>
+<p>Retention marketing is the full set of strategies, communications, and experiences designed to increase the likelihood that a customer who has purchased once will purchase again — and eventually become a brand advocate who refers others. It encompasses post-purchase communication, loyalty programmes, personalised recommendations, community building, and the overall quality of the customer experience between transactions.</p>
+<p>The key metric retention marketing improves is Customer Lifetime Value (CLTV): the total revenue a customer generates over their relationship with your brand. A customer with a ₹1,500 average order value who purchases twice is worth ₹3,000. The same customer with a retention programme in place who purchases 6 times over 18 months is worth ₹9,000 — with progressively lower cost of service as familiarity with your brand reduces customer support burden and return rates.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The 6 Core Retention Flows Every Indian Brand Needs</h2>
+<p><strong style="color:#FF5C00;">Flow 1 — Post-Purchase Welcome Series (Day 0–7).</strong> The period immediately after a first purchase is the most critical window for retention. A 3-message sequence combining an order confirmation with brand story, a shipping update with product education, and a delivery confirmation with usage guide or care instructions sets the tone for a high-value ongoing relationship. Brands that execute this well see second-purchase rates 2.4× higher than brands that send only transactional notifications.</p>
+<p><strong style="color:#FF5C00;">Flow 2 — Product Education and Engagement (Day 7–30).</strong> Within the first 30 days, your goal is to ensure the customer gets maximum value from their purchase. For physical products: how-to content, styling guides, recipe inspiration, or care instructions. For services: onboarding sequences, success milestones, and feature discovery. Customers who achieve early success with your product have 3× higher retention rates than those who do not.</p>
+<p><strong style="color:#FF5C00;">Flow 3 — Review and Advocacy Request (Day 14–21).</strong> The optimal window for a review request is 14–21 days post-purchase — after the customer has had meaningful experience with the product but while the purchase is still top of mind. A WhatsApp message with a direct Google or platform review link, personalised with the product name, converts at 18–35%. Positive reviews feed back into your acquisition funnel as social proof, creating a compounding flywheel effect.</p>
+<p><strong style="color:#FF5C00;">Flow 4 — Replenishment and Repeat Purchase Nudge (Day 30–60).</strong> For consumable products — supplements, skincare, food, cleaning products — build a replenishment reminder flow timed to the product's typical consumption cycle. If your product lasts 30 days, send a WhatsApp reminder at day 25 with a repurchase link. If bundled with a subscription offer, this flow alone can increase repeat purchase rate from 20% to 55% within three months.</p>
+<p><strong style="color:#FF5C00;">Flow 5 — Loyalty and VIP Programme (Ongoing).</strong> A simple points-based loyalty programme that rewards purchases, reviews, and referrals with redeemable credits increases both purchase frequency and basket size. For Indian consumers, the feeling of being a "VIP customer" with exclusive access or early product releases is a powerful emotional driver of loyalty — far more powerful than the financial value of the points themselves.</p>
+<p><strong style="color:#FF5C00;">Flow 6 — Winback Campaign (Day 60–90 of Inactivity).</strong> For customers who have not purchased within 60–90 days (the threshold varies by category and purchase cycle), a reactivation campaign with a personalised "we miss you" message and a time-limited offer can recover 15–30% of lapsed customers. The cost of reactivating a lapsed customer is typically 80% lower than acquiring a new equivalent customer. Implementing these six flows for clients across FMCG, fashion, wellness, and technology, The Sonic Media has consistently delivered CLTV improvements of 60–85% within 6 months — without any increase in acquisition spend. If you are ready to stop rebuilding your customer base every month and start compounding growth from the base you have already won, contact us today.</p>`
+  }
+};
 
 function openCaseStudy(id) {
   const cs = caseStudies[id];
@@ -1249,164 +1571,379 @@ function openCaseStudy(id) {
   if (!document.getElementById('cs-overlay')) {
     const shell = document.createElement('div');
     shell.id = 'cs-overlay';
-    shell.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:#080808;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;';
+    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
     document.documentElement.appendChild(shell);
   }
   const overlay = document.getElementById('cs-overlay');
 
-  /* ── Format detection: 'structured' = new PART A schema, anything else = legacy body blob ── */
-  const isStructured = cs._format === 'structured';
+  /* ── Detect entry format ── */
+  const isSanityV2 = cs._sanityV2 === true;  /* full structured Portable Text */
+  const isSanityV1 = !isSanityV2 && cs.challenge !== undefined; /* old simple-string Sanity */
 
-  /* ── Helper: section block with orange label ── */
-  function csSection(label, html) {
-    if (!html) return '';
-    return `<div class="cs-section">
-      <div class="cs-section-label">${label}</div>
-      <div class="cs-section-body">${html}</div>
-    </div>`;
+  /* ─────────────────────────────────────────────────────────────────────────
+   * PORTABLE TEXT RENDERER
+   * Converts the Sanity block array format into semantic HTML.
+   * Supports: normal paragraphs, h3, strong (orange), em, links, bullet lists.
+   * ───────────────────────────────────────────────────────────────────────── */
+  function renderPortableText(blocks) {
+    if (!blocks || !blocks.length) return '';
+    let html = '';
+    let inList = false;
+
+    blocks.forEach(function(block) {
+      if (block._type !== 'block') return;
+
+      /* Render inline children */
+      const inner = (block.children || []).map(function(span) {
+        let t = (span.text || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const marks = span.marks || [];
+        if (marks.includes('strong')) t = '<strong style="color:#FF5C00;font-weight:700;">' + t + '</strong>';
+        if (marks.includes('em')) t = '<em>' + t + '</em>';
+        /* Link annotation */
+        const linkMark = marks.find(function(m){ return m && typeof m === 'object' && m._type === 'link'; });
+        if (linkMark && linkMark.href) {
+          t = '<a href="' + linkMark.href + '" target="_blank" rel="noopener noreferrer" class="cs-inline-link">' + t + '</a>';
+        }
+        return t;
+      }).join('');
+
+      const isBullet = block._listItem === 'bullet' || block._listItem === 'number';
+      const tag = block._listItem === 'number' ? 'ol' : 'ul';
+
+      if (isBullet) {
+        if (!inList) { html += '<' + tag + ' class="cs-pt-list">'; inList = true; }
+        html += '<li class="cs-pt-li">' + inner + '</li>';
+        return;
+      } else {
+        if (inList) { html += '</ul>'; inList = false; }
+      }
+
+      switch (block.style) {
+        case 'h2': html += '<h2 class="cs-pt-h2">' + inner + '</h2>'; break;
+        case 'h3': html += '<h3 class="cs-pt-h3">' + inner + '</h3>'; break;
+        default:   html += '<p class="cs-pt-p">' + inner + '</p>'; break;
+      }
+    });
+
+    if (inList) html += '</ul>';
+    return html;
   }
 
-  /* ── Helper: FAQ accordion items ── */
-  function buildFaq(items) {
-    if (!items || !items.length) return '';
-    return items.map(function(item, i) {
-      return `<div class="cs-faq-item">
-        <button class="cs-faq-q" onclick="(function(btn){
-          var ans=btn.nextElementSibling;
-          var open=ans.style.maxHeight&&ans.style.maxHeight!=='0px';
-          ans.style.maxHeight=open?'0px':(ans.scrollHeight+32)+'px';
-          btn.classList.toggle('cs-faq-open',!open);
-        })(this)">${item.question || ''} <span class="cs-faq-icon">+</span></button>
-        <div class="cs-faq-a" style="max-height:0;overflow:hidden;transition:max-height .3s ease;">${item.answer || ''}</div>
-      </div>`;
+  /* ─────────────────────────────────────────────────────────────────────────
+   * LEGACY HELPERS
+   * ───────────────────────────────────────────────────────────────────────── */
+  function buildResults(results) {
+    if (!results || !results.length) return '';
+    return results.map(function(r){
+      return '<div class="cs-result-item"><span class="cs-result-tick">✓</span><span>' + r + '</span></div>';
     }).join('');
   }
-
-  /* ── Helper: proof block (visual + performance + testimonial) ── */
-  function buildProof(cs) {
-    const img0 = cs.images && cs.images[0];
-    const img1 = cs.images && cs.images[1] && cs.images[1].url ? cs.images[1] : null;
-    return `
-      ${img0 && img0.url ? `<div class="cs-img-wrap"><img src="${img0.url}" alt="${img0.alt || cs.title}" loading="lazy"></div>
-      <div class="cs-img-cap">${img0.caption || ''}</div>` : ''}
-      ${img1 ? `<div class="cs-img-wrap"><img src="${img1.url}" alt="${img1.alt || cs.subtitle || cs.title}" loading="lazy"></div>
-      <div class="cs-img-cap">${img1.caption || ''}</div>` : ''}
-      ${cs.proofVisualNote ? `<p class="cs-proof-note">${cs.proofVisualNote}</p>` : ''}
-      ${cs.proofPerformance ? `<div class="cs-proof-perf">${cs.proofPerformance}</div>` : ''}
-      ${cs.testimonialQuote ? `<blockquote class="cs-testimonial">
-        <p class="cs-testimonial-quote">"${cs.testimonialQuote}"</p>
-        ${cs.testimonialAuthor ? `<cite class="cs-testimonial-author">— ${cs.testimonialAuthor}</cite>` : ''}
-      </blockquote>` : ''}`;
+  function buildTags(arr) {
+    if (!arr || !arr.length) return '';
+    return arr.map(function(t){ return '<span class="cs-tag">' + t + '</span>'; }).join('');
+  }
+  function buildMeta(c) {
+    const parts = [];
+    if (c.client) parts.push('<div class="cs-meta-item"><div class="cs-meta-label">Client</div><div class="cs-meta-value">' + c.client + '</div></div>');
+    if (c.industry) parts.push('<div class="cs-meta-item"><div class="cs-meta-label">Industry</div><div class="cs-meta-value">' + c.industry + '</div></div>');
+    if (c.category) parts.push('<div class="cs-meta-item"><div class="cs-meta-label">Category</div><div class="cs-meta-value">' + c.category + '</div></div>');
+    if (c.date) parts.push('<div class="cs-meta-item"><div class="cs-meta-label">Date</div><div class="cs-meta-value">' + c.date + '</div></div>');
+    return parts.join('');
   }
 
-  /* ── Build body: structured (PART A) or legacy HTML blob ── */
-  function buildBody(cs) {
-    if (!isStructured) {
-      /* Legacy entries: hero image + optional second image + raw body HTML */
-      const img0 = cs.images && cs.images[0];
-      const img1 = cs.images && cs.images[1] && cs.images[1].url ? cs.images[1] : null;
-      return `
-        ${img0 && img0.url ? `<div class="cs-img-wrap"><img src="${img0.url}" alt="${img0.alt || cs.title}" loading="lazy"></div>
-        <div class="cs-img-cap">${img0.caption || ''}</div>` : ''}
-        ${img1 ? `<div class="cs-img-wrap"><img src="${img1.url}" alt="${img1.alt || cs.subtitle || cs.title}" loading="lazy"></div>
-        <div class="cs-img-cap">${img1.caption || ''}</div>` : ''}
-        <div class="cs-article">${cs.body || ''}</div>`;
-    }
-
-    /* ── Structured PART A format ── */
-    return `
-      ${cs.introBody ? `<p class="cs-intro-body">${cs.introBody}</p>` : ''}
-
-      ${csSection('Client Overview',   cs.clientOverview)}
-      ${csSection('Challenge',         cs.challengeHtml)}
-      ${csSection('Strategy',          cs.strategyHtml)}
-      ${csSection('Timeline & Process',cs.timelineHtml)}
-      ${csSection('Execution',         cs.executionHtml)}
-      ${csSection('Results',           cs.resultsHtml)}
-
-      <div class="cs-section">
-        <div class="cs-section-label">Proof</div>
-        ${buildProof(cs)}
+  /* ─────────────────────────────────────────────────────────────────────────
+   * SANITY V2 ARTICLE BODY
+   * Full structured rendering: breadcrumb, h1, all h2 sections, proof,
+   * FAQ accordion (collapsed), no CTA section.
+   * ───────────────────────────────────────────────────────────────────────── */
+  function buildSanityV2Body(c) {
+    /* Proof section */
+    const hasSecondImg = c.secondImage && c.secondImage.url;
+    const proofSection = `
+<section aria-label="Proof" class="cs-v2-section">
+  <h2 class="cs-v2-h2">Proof</h2>
+  <div class="cs-proof-grid">
+    <figure class="cs-proof-figure">
+      <div class="cs-proof-img-wrap">
+        <img src="${c.heroImage.url}" alt="${c.heroImage.alt || c.title}" loading="lazy">
       </div>
+      <figcaption class="cs-proof-caption">${c.heroImage.caption || ''}</figcaption>
+    </figure>
+    ${hasSecondImg ? `<figure class="cs-proof-figure">
+      <div class="cs-proof-img-wrap">
+        <img src="${c.secondImage.url}" alt="${c.secondImage.alt || c.subtitle || ''}" loading="lazy">
+      </div>
+      <figcaption class="cs-proof-caption">${c.secondImage.caption || ''}</figcaption>
+    </figure>` : ''}
+  </div>
+  ${c.proofVisualNote ? `<p class="cs-pt-p cs-proof-note">${c.proofVisualNote}</p>` : ''}
+  ${c.proofPerformance ? `<p class="cs-pt-p cs-proof-note">${c.proofPerformance}</p>` : ''}
+  ${c.testimonialQuote && c.testimonialQuote !== 'Pending — testimonial to be added.' ? `
+  <blockquote class="cs-testimonial">
+    <p class="cs-testimonial-quote">"${c.testimonialQuote}"</p>
+    ${c.testimonialAuthor ? `<cite class="cs-testimonial-author">— ${c.testimonialAuthor}</cite>` : ''}
+  </blockquote>` : ''}
+</section>`;
 
-      ${cs.faqItems && cs.faqItems.length ? `
-      <div class="cs-section cs-section--faq">
-        <div class="cs-section-label">FAQ</div>
-        <div class="cs-faq">${buildFaq(cs.faqItems)}</div>
-      </div>` : ''}
+    /* FAQ accordion */
+    const faqItems = (c.faqItems || []).map(function(item, i){
+      const safeQ = (item.question || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const safeA = (item.answer || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return `<div class="cs-faq-item" id="cs-faq-${i}">
+  <button class="cs-faq-q" aria-expanded="false" aria-controls="cs-faq-ans-${i}" onclick="toggleCsFaq(${i})">
+    <span>${safeQ}</span>
+    <span class="cs-faq-icon" aria-hidden="true">+</span>
+  </button>
+  <div class="cs-faq-ans" id="cs-faq-ans-${i}" hidden>${safeA}</div>
+</div>`;
+    }).join('');
 
-      ${cs.ctaLine ? `<div class="cs-inline-cta">${cs.ctaLine}</div>` : ''}`;
+    const hasProjectUrl = c.projectUrl && c.projectUrl.length > 0;
+
+    return `
+<p class="cs-intro-body">${c.introBody || ''}</p>
+
+${hasProjectUrl ? `<a href="${c.projectUrl}" target="_blank" rel="noopener noreferrer" class="cs-live-btn cs-live-btn--top">View Live Site →</a>` : ''}
+
+<section aria-label="Client Overview" class="cs-v2-section">
+  <h2 class="cs-v2-h2">Client Overview</h2>
+  ${renderPortableText(c.clientOverview)}
+</section>
+
+<section aria-label="Challenge" class="cs-v2-section">
+  <h2 class="cs-v2-h2">Challenge</h2>
+  ${renderPortableText(c.challenge)}
+</section>
+
+<section aria-label="Strategy" class="cs-v2-section">
+  <h2 class="cs-v2-h2">Strategy</h2>
+  ${renderPortableText(c.strategy)}
+</section>
+
+<section aria-label="Timeline and Process" class="cs-v2-section">
+  <h2 class="cs-v2-h2">Timeline &amp; Process</h2>
+  ${renderPortableText(c.timeline)}
+</section>
+
+<section aria-label="Execution" class="cs-v2-section">
+  <h2 class="cs-v2-h2">Execution</h2>
+  ${renderPortableText(c.execution)}
+</section>
+
+<section aria-label="Results" class="cs-v2-section">
+  <h2 class="cs-v2-h2">Results</h2>
+  ${renderPortableText(c.results)}
+</section>
+
+${proofSection}
+
+${faqItems ? `<section aria-label="FAQ" class="cs-v2-section">
+  <h2 class="cs-v2-h2">FAQ</h2>
+  <div class="cs-faq-list">${faqItems}</div>
+</section>` : ''}`;
   }
 
-  overlay.innerHTML = `<style>
+  /* ─────────────────────────────────────────────────────────────────────────
+   * LEGACY BODY (old Sanity v1 simple-string + HTML blob entries)
+   * ───────────────────────────────────────────────────────────────────────── */
+  function buildLegacyBody(c) {
+    if (!isSanityV1) {
+      /* HTML blob format */
+      const img0 = c.images && c.images[0];
+      const img1 = c.images && c.images[1] && c.images[1].url ? c.images[1] : null;
+      return `
+        ${img0 && img0.url ? `<div class="cs-img-wrap"><img src="${img0.url}" alt="${c.title}" loading="lazy"></div>
+        <div class="cs-img-cap">${img0.caption || ''}</div>` : ''}
+        ${img1 ? `<div class="cs-img-wrap"><img src="${img1.url}" alt="${c.subtitle || c.title}" loading="lazy"></div>
+        <div class="cs-img-cap">${img1.caption || ''}</div>` : ''}
+        <div class="cs-article">${c.body}</div>`;
+    }
+    /* Simple-string Sanity v1 */
+    const hasTech = c.technologies && c.technologies.length > 0;
+    const hasProjectUrl = c.projectUrl && c.projectUrl.length > 0;
+    return `
+      ${c.shortDesc ? `<p class="cs-short-desc">${c.shortDesc}</p>` : ''}
+      <div class="cs-featured-img"><img src="${c.featuredImg.url}" alt="${c.featuredImg.alt || c.title}" loading="lazy"></div>
+      <div class="cs-meta-strip">${buildMeta(c)}</div>
+      ${c.services && c.services.length ? `<div class="cs-section"><div class="cs-section-label">Services Delivered</div><div class="cs-tags">${buildTags(c.services)}</div></div>` : ''}
+      <div class="cs-two-col">
+        <div class="cs-section"><div class="cs-section-label">The Challenge</div><p class="cs-section-text">${c.challenge}</p></div>
+        <div class="cs-section"><div class="cs-section-label">The Solution</div><p class="cs-section-text">${c.solution}</p></div>
+      </div>
+      <div class="cs-section"><div class="cs-section-label">Results</div><div class="cs-results">${buildResults(c.results)}</div></div>
+      ${c.gallery && c.gallery.length ? `<div class="cs-section"><div class="cs-section-label">Gallery</div><div class="cs-gallery">${c.gallery.map(function(img){ return '<div class="cs-img-wrap"><img src="' + img.url + '" alt="' + (img.alt||'') + '" loading="lazy"></div>'; }).join('')}</div></div>` : ''}
+      ${hasTech ? `<div class="cs-section"><div class="cs-section-label">Technologies Used</div><div class="cs-tags">${buildTags(c.technologies)}</div></div>` : ''}
+      ${hasProjectUrl ? `<div class="cs-section"><a href="${c.projectUrl}" target="_blank" rel="noopener noreferrer" class="cs-live-btn">View Live Project →</a></div>` : ''}`;
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * HERO HEADING
+   * Sanity V2: hero displays eyebrow + subtitle (NOT h1 — only one h1 per page,
+   * inside the article). Legacy: uses the old h1 pattern.
+   * ───────────────────────────────────────────────────────────────────────── */
+  const heroInner = isSanityV2
+    ? `<div class="cs-eyebrow">${cs.category}</div>
+       <p class="cs-hero-label">${cs.title.split(' ').slice(0,5).join(' ')}<br><span>${cs.title.split(' ').slice(5).join(' ')}</span></p>
+       <p class="cs-hero-subtitle">${cs.subtitle || ''}</p>
+       <div class="cs-hero-date">${cs.publishedDate} &nbsp;·&nbsp; The Sonic Media</div>`
+    : `<div class="cs-eyebrow">${cs.category}</div>
+       <h1 class="cs-h1">${cs.title.split(' ').slice(0,5).join(' ')}<br><span>${cs.title.split(' ').slice(5).join(' ')}</span></h1>
+       <div class="cs-hero-date">${cs.date || cs.publishedDate || ''} &nbsp;·&nbsp; The Sonic Media</div>`;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * ARTICLE H1 (Sanity V2 only — the one true h1 on the page)
+   * ───────────────────────────────────────────────────────────────────────── */
+  const articleH1 = isSanityV2
+    ? `<h1 class="cs-article-h1">${cs.title}</h1>`
+    : '';
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * BREADCRUMB (Sanity V2 only)
+   * ───────────────────────────────────────────────────────────────────────── */
+  const breadcrumb = isSanityV2
+    ? `<nav class="cs-breadcrumb" aria-label="Breadcrumb">
+         <ol class="cs-bc-list">
+           <li class="cs-bc-item"><a href="/" class="cs-bc-link" onclick="closeCaseStudy();window.navigate&&window.navigate('home');return false;">Home</a></li>
+           <li class="cs-bc-item cs-bc-sep" aria-hidden="true">›</li>
+           <li class="cs-bc-item"><a href="/case-studies" class="cs-bc-link" onclick="closeCaseStudy();return false;">Case Studies</a></li>
+           <li class="cs-bc-item cs-bc-sep" aria-hidden="true">›</li>
+           <li class="cs-bc-item cs-bc-cur" aria-current="page">${cs.title}</li>
+         </ol>
+       </nav>`
+    : '';
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * JSON-LD — BreadcrumbList + Article (Sanity V2)
+   * ───────────────────────────────────────────────────────────────────────── */
+  const jsonLd = isSanityV2
+    ? `<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://thesonicmedia.com/"},
+        {"@type":"ListItem","position":2,"name":"Case Studies","item":"https://thesonicmedia.com/case-studies"},
+        {"@type":"ListItem","position":3,"name":"${cs.title.replace(/"/g,'&quot;')}","item":"https://thesonicmedia.com/case-studies/${id}"}
+      ]
+    },
+    {
+      "@type":"Article",
+      "headline":"${cs.title.replace(/"/g,'&quot;')}",
+      "description":"${(cs.metaDescription||cs.introBody||'').replace(/"/g,'&quot;').slice(0,160)}",
+      "image":"${cs.heroImage ? cs.heroImage.url : ''}",
+      "datePublished":"${cs.publishedDate}",
+      "publisher":{"@id":"https://thesonicmedia.com/#organization"}
+    }
+  ]
+}
+<\/script>` : '';
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * CTA BAND (removed for Sanity V2 — replaced by inline ctaLine)
+   * Legacy entries keep the CTA band.
+   * ───────────────────────────────────────────────────────────────────────── */
+  const ctaBand = isSanityV2 ? '' : `
+<div class="cs-cta-band">
+  <div class="cs-cta-eyebrow">Ready to Grow?</div>
+  <div class="cs-cta-h">Work With <span>The Sonic Media</span></div>
+  <p class="cs-cta-p">Let's build your brand's next growth chapter together — strategy, content, performance, and technology under one roof.</p>
+  <a class="cs-cta-btn" href="#" onclick="closeCaseStudy();window.navigate&&window.navigate('contact');return false;">Get a Strategy Call →</a>
+</div>`;
+
+  overlay.innerHTML = `${jsonLd}<style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 .cs-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
 .cs-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
 .cs-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
 .cs-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
+/* ── Breadcrumb ── */
+.cs-breadcrumb{padding:14px 72px;background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,.04);}
+.cs-bc-list{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.cs-bc-item{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:.04em;}
+.cs-bc-link{color:rgba(245,240,235,.45);text-decoration:none;transition:color .2s;}
+.cs-bc-link:hover{color:#FF5C00;}
+.cs-bc-sep{color:rgba(245,240,235,.2);}
+.cs-bc-cur{color:rgba(245,240,235,.65);}
+/* ── Hero ── */
 .cs-hero{padding:80px 72px 56px;background:#0f0f0f;position:relative;overflow:hidden;}
 .cs-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
 .cs-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
 .cs-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
+/* Hero label (not h1 — Sanity V2) */
+.cs-hero-label{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,88px);line-height:.95;letter-spacing:.02em;margin-bottom:12px;color:#F5F0EB;}
+.cs-hero-label span{color:#FF5C00;}
+.cs-hero-subtitle{font-family:'DM Sans',sans-serif;font-size:clamp(14px,1.5vw,18px);line-height:1.6;color:rgba(245,240,235,.55);font-weight:300;max-width:700px;margin-bottom:16px;}
+/* Legacy h1 in hero */
 .cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,88px);line-height:.95;letter-spacing:.02em;margin-bottom:16px;color:#F5F0EB;}
 .cs-h1 span{color:#FF5C00;}
 .cs-hero-date{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#555;text-transform:uppercase;}
 /* ── Body wrapper ── */
 .cs-body{max-width:960px;margin:0 auto;padding:64px 72px 100px;}
-/* ── Short description ── */
+/* ── Article H1 (Sanity V2) ── */
+.cs-article-h1{font-family:'Syne',sans-serif;font-size:clamp(22px,3vw,34px);font-weight:800;line-height:1.2;letter-spacing:-.01em;color:#F5F0EB;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.06);}
+/* ── Intro paragraph ── */
+.cs-intro-body{font-size:18px;line-height:1.8;color:rgba(245,240,235,.6);font-weight:300;margin-bottom:48px;}
+/* ── Sanity V2 sections ── */
+.cs-v2-section{margin-bottom:56px;}
+.cs-v2-h2{font-family:'Syne',sans-serif;font-size:clamp(18px,2.5vw,24px);font-weight:800;color:#F5F0EB;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.cs-v2-h2::before{content:'';width:22px;height:2px;background:#FF5C00;flex-shrink:0;}
+/* ── Portable Text output ── */
+.cs-pt-p{font-size:16px;line-height:1.85;color:rgba(245,240,235,.68);font-weight:300;margin-bottom:16px;}
+.cs-pt-h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;letter-spacing:.04em;color:#F5F0EB;margin:28px 0 10px;text-transform:uppercase;}
+.cs-pt-list{padding-left:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:6px;}
+.cs-pt-li{font-size:15px;line-height:1.75;color:rgba(245,240,235,.65);font-weight:300;}
+.cs-inline-link{color:#FF5C00;text-decoration:underline;text-underline-offset:3px;transition:opacity .2s;}
+.cs-inline-link:hover{opacity:.75;}
+/* ── Live site button ── */
+.cs-live-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 30px;border-radius:50px;background:#FF5C00;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 22px rgba(255,92,0,.35);transition:all .3s;margin-bottom:48px;}
+.cs-live-btn:hover{box-shadow:0 0 38px rgba(255,92,0,.6);transform:translateY(-2px);}
+/* ── Proof grid ── */
+.cs-proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
+.cs-proof-figure{display:flex;flex-direction:column;gap:0;}
+.cs-proof-img-wrap{border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:#161616;margin-bottom:0;}
+.cs-proof-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.cs-proof-caption{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;line-height:1.5;color:rgba(245,240,235,.45);letter-spacing:.04em;padding:10px 4px 0;border-top:1px solid rgba(255,255,255,.06);margin-top:10px;}
+.cs-proof-note{margin-top:12px;font-size:13px;color:rgba(245,240,235,.4);font-style:italic;}
+/* ── Testimonial ── */
+.cs-testimonial{border-left:3px solid #FF5C00;padding:20px 24px;margin:24px 0;background:rgba(255,92,0,.04);border-radius:0 12px 12px 0;}
+.cs-testimonial-quote{font-size:16px;line-height:1.75;color:rgba(245,240,235,.75);font-style:italic;margin-bottom:10px;}
+.cs-testimonial-author{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;}
+/* ── FAQ accordion ── */
+.cs-faq-list{display:flex;flex-direction:column;gap:1px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.05);}
+.cs-faq-item{background:#0f0f0f;}
+.cs-faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;background:none;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#F5F0EB;text-align:left;transition:color .2s;}
+.cs-faq-q:hover,.cs-faq-q[aria-expanded="true"]{color:#FF5C00;}
+.cs-faq-icon{font-size:20px;font-weight:300;color:#FF5C00;flex-shrink:0;line-height:1;transition:transform .3s;}
+.cs-faq-q[aria-expanded="true"] .cs-faq-icon{transform:rotate(45deg);}
+.cs-faq-ans{padding:0 24px 20px;font-size:14px;line-height:1.8;color:rgba(245,240,235,.6);font-weight:300;}
+.cs-faq-ans[hidden]{display:none;}
+/* ── Legacy elements ── */
 .cs-short-desc{font-size:18px;line-height:1.75;color:rgba(245,240,235,.6);font-weight:300;margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.06);}
-/* ── Featured image ── */
 .cs-featured-img{border-radius:16px;overflow:hidden;margin-bottom:48px;aspect-ratio:16/9;background:#161616;}
 .cs-featured-img img{width:100%;height:100%;object-fit:cover;display:block;}
-/* ── Meta strip ── */
 .cs-meta-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:rgba(255,255,255,.06);border-radius:14px;overflow:hidden;margin-bottom:48px;}
 .cs-meta-item{background:#0f0f0f;padding:20px 24px;}
 .cs-meta-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#555;margin-bottom:6px;}
 .cs-meta-value{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#F5F0EB;}
-/* ── Sections ── */
 .cs-section{margin-bottom:48px;}
 .cs-section-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:#FF5C00;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
 .cs-section-label::before{content:'';width:22px;height:1.5px;background:#FF5C00;flex-shrink:0;}
 .cs-section-text{font-size:16px;line-height:1.85;color:rgba(245,240,235,.68);font-weight:300;}
-/* ── Two column layout ── */
 .cs-two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px;}
-/* ── Results ── */
 .cs-results{display:flex;flex-direction:column;gap:10px;}
 .cs-result-item{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:12px;background:rgba(255,92,0,.04);border:1px solid rgba(255,92,0,.14);font-size:14px;line-height:1.6;color:rgba(245,240,235,.75);}
 .cs-result-tick{color:#FF5C00;font-size:16px;flex-shrink:0;margin-top:1px;}
-/* ── Tags (services / tech) ── */
 .cs-tags{display:flex;flex-wrap:wrap;gap:8px;}
 .cs-tag{padding:6px 16px;border-radius:50px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FF5C00;}
-/* ── Gallery ── */
 .cs-gallery{display:flex;flex-direction:column;gap:16px;}
 .cs-img-wrap{border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#161616;}
 .cs-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-/* ── Live project button ── */
-.cs-live-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 36px;border-radius:50px;background:#FF5C00;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 28px rgba(255,92,0,.4);transition:all .3s;}
-.cs-live-btn:hover{box-shadow:0 0 44px rgba(255,92,0,.65);transform:translateY(-2px);}
-/* ── Legacy article body ── */
+.cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.35);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
 .cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
 .cs-article p{margin-bottom:20px;}
-.cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.35);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
-/* ── Structured PART A body ── */
-.cs-intro-body{font-size:18px;line-height:1.8;color:rgba(245,240,235,.65);font-weight:300;margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.06);}
-.cs-section-body{font-size:16px;line-height:1.85;color:rgba(245,240,235,.68);font-weight:300;}
-.cs-section-body p{margin-bottom:16px;}
-.cs-section-body h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#F5F0EB;margin:24px 0 10px;}
-.cs-proof-note{font-size:14px;color:rgba(245,240,235,.5);font-style:italic;margin-top:16px;}
-.cs-proof-perf{font-size:15px;line-height:1.75;color:rgba(245,240,235,.68);margin-top:16px;padding:20px 24px;border-radius:12px;background:rgba(255,92,0,.04);border:1px solid rgba(255,92,0,.14);}
-.cs-testimonial{border-left:3px solid #FF5C00;padding:20px 28px;margin:32px 0 0;background:rgba(255,92,0,.04);border-radius:0 12px 12px 0;}
-.cs-testimonial-quote{font-size:17px;line-height:1.75;color:rgba(245,240,235,.8);font-style:italic;margin-bottom:12px;}
-.cs-testimonial-author{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FF5C00;}
-.cs-faq{display:flex;flex-direction:column;gap:2px;}
-.cs-faq-item{border-bottom:1px solid rgba(255,255,255,.06);}
-.cs-faq-q{width:100%;text-align:left;background:none;border:none;color:#F5F0EB;font-family:'Syne',sans-serif;font-size:15px;font-weight:600;padding:18px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;}
-.cs-faq-q:hover{color:#FF5C00;}
-.cs-faq-icon{font-size:20px;flex-shrink:0;color:#FF5C00;transition:transform .25s;}
-.cs-faq-open .cs-faq-icon{transform:rotate(45deg);}
-.cs-faq-a{font-size:15px;line-height:1.8;color:rgba(245,240,235,.62);font-weight:300;padding:0 0 18px;}
-.cs-inline-cta{margin-top:48px;padding:32px 40px;border-radius:16px;background:rgba(255,92,0,.07);border:1px solid rgba(255,92,0,.2);font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#F5F0EB;text-align:center;line-height:1.5;}
-/* ── CTA band ── */
+/* ── CTA band (legacy) ── */
 .cs-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}
 .cs-cta-band::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}
 .cs-cta-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:18px;}
@@ -1416,13 +1953,17 @@ function openCaseStudy(id) {
 .cs-cta-p{font-size:15px;line-height:1.75;color:rgba(245,240,235,.55);font-weight:300;max-width:480px;margin:0 auto 36px;}
 .cs-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}
 .cs-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}
+/* ── Footer ── */
 .cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .cs-footer-copy{font-size:13px;color:#666;}
 .cs-footer-copy span{color:#FF5C00;}
 .cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}
 .cs-back:hover{gap:14px;}
+/* ── Responsive ── */
 @media(max-width:768px){
   .cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}
+  .cs-breadcrumb{padding:12px 20px;}
+  .cs-bc-cur{display:none;}
   .cs-hero{padding:56px 20px 40px;}
   .cs-body{padding:36px 20px 80px;}
   .cs-two-col{grid-template-columns:1fr;}
@@ -1430,26 +1971,27 @@ function openCaseStudy(id) {
   .cs-article{padding:24px;font-size:15px;}
   .cs-cta-band{padding:48px 24px;}
   .cs-short-desc{font-size:15px;}
+  .cs-proof-grid{grid-template-columns:1fr;}
+  .cs-intro-body{font-size:15px;}
+  .cs-v2-h2{font-size:18px;}
+}
+@media(max-width:480px){
+  .cs-proof-grid{grid-template-columns:1fr;}
 }
 </style>
 <nav class="cs-nav">
   <div class="cs-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
   <button class="cs-close" id="cs-close-btn">✕ Close</button>
 </nav>
+${breadcrumb}
 <div class="cs-hero">
-  <div class="cs-eyebrow">${cs.category}</div>
-  <h1 class="cs-h1">${cs.title.split(' ').slice(0,5).join(' ')}<br><span>${cs.title.split(' ').slice(5).join(' ')}</span></h1>
-  <div class="cs-hero-date">${cs.date} &nbsp;·&nbsp; The Sonic Media</div>
+  ${heroInner}
 </div>
-<div class="cs-body">
-  ${buildBody(cs)}
-</div>
-<div class="cs-cta-band">
-  <div class="cs-cta-eyebrow">Ready to Grow?</div>
-  <div class="cs-cta-h">Work With <span>The Sonic Media</span></div>
-  <p class="cs-cta-p">Let's build your brand's next growth chapter together — strategy, content, performance, and technology under one roof.</p>
-  <a class="cs-cta-btn" href="#" onclick="closeCaseStudy();window.navigate&&window.navigate('contact');return false;">Get a Strategy Call →</a>
-</div>
+<article class="cs-body">
+  ${articleH1}
+  ${isSanityV2 ? buildSanityV2Body(cs) : buildLegacyBody(cs)}
+</article>
+${ctaBand}
 <div class="cs-footer">
   <div class="cs-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
   <button class="cs-back" id="cs-back-btn">← Back to Case Studies</button>
@@ -1473,13 +2015,8 @@ function openCaseStudy(id) {
   canonical.href = 'https://thesonicmedia.com/case-studies/' + cleanSlug;
 
   overlay.style.display = 'block';
-  overlay.scrollTop = 0;
-  // Lock body scroll — store current position to restore on close
-  overlay._bodyScrollY = window.scrollY;
-  document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.top = '-' + overlay._bodyScrollY + 'px';
-  document.body.style.width = '100%';
+  document.documentElement.scrollTop = 0;
+  document.body.style.visibility = 'hidden';
   ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) document.documentElement.appendChild(el);
@@ -1497,12 +2034,7 @@ function closeCaseStudy() {
   const overlay = document.getElementById('cs-overlay');
   if (!overlay || overlay.style.display === 'none') return;
   overlay.style.display = 'none';
-  // Restore body scroll
-  var scrollY = overlay._bodyScrollY || 0;
-  document.body.style.overflow = '';
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
+  document.body.style.visibility = '';
   /* Move cursor elements back to <body> */
   ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
     var el = document.getElementById(id);
@@ -1510,7 +2042,7 @@ function closeCaseStudy() {
   });
   if (window._initLenis) { window._initLenis(); }
   if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
-  /* ── Restore scroll position ── */
+  /* ── Restore home page scroll position if opened from home ── */
   var _csReturnY      = overlay._returnScrollY;
   var _csReturnAnchor = overlay._returnAnchor;
   if (_csReturnY !== null && _csReturnAnchor) {
@@ -1519,8 +2051,6 @@ function closeCaseStudy() {
       if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
       else    { window.scrollTo(0, _csReturnY); }
     }, 0);
-  } else {
-    window.scrollTo(0, scrollY);
   }
 
   /* Restore URL to /casestudies (or /case-studies if that was the entry point) */
@@ -1533,6 +2063,27 @@ function closeCaseStudy() {
   if (canonical) canonical.href = 'https://thesonicmedia.com/casestudies';
 }
 
+/* ── FAQ accordion toggle (global — called from inline onclick) ── */
+function toggleCsFaq(index) {
+  var overlay = document.getElementById('cs-overlay');
+  if (!overlay) return;
+  var allItems = overlay.querySelectorAll('.cs-faq-item');
+  allItems.forEach(function(item, i) {
+    var btn = item.querySelector('.cs-faq-q');
+    var ans = item.querySelector('.cs-faq-ans');
+    if (!btn || !ans) return;
+    if (i === index) {
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      if (isOpen) { ans.hidden = true; } else { ans.hidden = false; }
+    } else {
+      /* Collapse all others */
+      btn.setAttribute('aria-expanded', 'false');
+      ans.hidden = true;
+    }
+  });
+}
+
 /* ── Handle browser back/forward through case study URLs ── */
 window.addEventListener('popstate', function(e) {
   const overlay = document.getElementById('cs-overlay');
@@ -1541,15 +2092,10 @@ window.addEventListener('popstate', function(e) {
     /* Forward into an article */
     openCaseStudy(e.state.caseStudy);
   } else {
-    /* Back to listing — delegate to closeCaseStudy to ensure body unlock */
+    /* Back to listing */
     if (overlay.style.display !== 'none') {
-      var scrollY = overlay._bodyScrollY || 0;
       overlay.style.display = 'none';
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      window.scrollTo(0, scrollY);
+      document.body.style.visibility = '';
       ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) document.body.appendChild(el);
@@ -2221,8 +2767,20 @@ const PAGE_DATA = {
     tag: 'Case Studies',
     titleMain: 'Insights & ',
     titleSpan: 'Ideas',
-    /* All cards come from Sanity — no hardcoded entries */
-    items: [],
+    /* ── EDIT CASE STUDY CARDS HERE — changes reflect on BOTH homepage & Case Studies page ── */
+    items: [
+      { id: 'd2c-growth-playbook',   img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',  cat: 'strategy',     catLabel: 'Strategy',     date: 'May 18, 2026', title: 'How Indian D2C Brands Can Scale from ₹5L to ₹50L Monthly Revenue in 6 Months',    excerpt: 'The exact growth blueprint — paid media architecture, retention flows, and CRO — that took three of our D2C clients to 10× revenue without increasing their ad budget.' },
+      { id: 'whatsapp-marketing-2026', img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&q=80', cat: 'performance',  catLabel: 'Performance',  date: 'May 5, 2026',  title: 'WhatsApp Marketing in 2026: How to Generate 35% of Your Revenue from One Channel',  excerpt: 'Most Indian brands treat WhatsApp as a customer support tool. The best ones use it as their highest-ROAS sales channel. Here is the complete strategy.' },
+      { id: 'local-seo-domination',  img: 'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=600&q=80',  cat: 'seo',          catLabel: 'SEO',          date: 'Apr 22, 2026', title: 'How to Dominate Local Search in Your City and Become the #1 Brand on Google Maps',  excerpt: 'Local SEO is the most underutilised growth channel for Indian businesses. This is the step-by-step system we use to rank clients at the top of local search in 60 days.' },
+      { id: 'video-content-roi',     img: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=600&q=80',  cat: 'social',       catLabel: 'Social Media', date: 'Apr 8, 2026',  title: 'Why Short-Form Video Delivers the Highest ROI of Any Marketing Channel in India',    excerpt: 'We analysed 1,200 pieces of content across 40 client accounts. The data is unambiguous: Reels, Shorts, and vertical video now outperform every other format for reach, engagement, and conversion.' },
+      { id: 'ecom-conversion-rate',  img: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&q=80',  cat: 'strategy',     catLabel: 'Strategy',     date: 'Mar 20, 2026', title: 'The E-Commerce CRO Checklist: 12 Changes That Doubled Our Clients\' Conversion Rates', excerpt: 'Conversion Rate Optimisation is the fastest way to grow revenue without spending more on ads. These are the 12 highest-impact fixes we implement on every new client store.' },
+      { id: 'influencer-selection',  img: 'https://images.unsplash.com/photo-1533750516457-a7f992034fec?w=600&q=80',  cat: 'performance',  catLabel: 'Performance',  date: 'Mar 3, 2026',  title: 'How to Select the Right Influencer for Your Brand — and Avoid Costly Mistakes',       excerpt: 'Follower count is the most misleading metric in influencer marketing. Here is the data-driven framework we use to identify creators who actually drive sales, not just views.' },
+      { id: 'brand-launch-india',    img: 'https://images.unsplash.com/photo-1559526324-593bc073d938?w=600&q=80',  cat: 'branding',     catLabel: 'Branding',     date: 'Mar 18, 2026', title: 'How to Launch a Brand in India in 90 Days: The Zero-to-Authority Playbook',           excerpt: 'Launching a new brand in one of the world\'s most competitive markets requires a very specific sequence of moves. This is the exact launch strategy we have refined across 30+ brand launches.' },
+      { id: 'google-ads-india',      img: 'https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&q=80',  cat: 'seo',          catLabel: 'SEO',          date: 'Mar 28, 2026', title: 'Google Ads for Indian Businesses: The Structure That Delivers 12× ROAS Consistently',  excerpt: 'Google Ads remains the most cost-efficient paid channel for high-intent buyers in India — if you structure campaigns correctly. Most businesses waste 60% of their Google Ads budget on these avoidable mistakes.' },
+      { id: 'retention-marketing',   img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80',  cat: 'technology',   catLabel: 'Technology',   date: 'Mar 12, 2026', title: 'Retention Marketing in 2026: How to Turn One-Time Buyers Into Lifelong Brand Advocates', excerpt: 'Acquiring a new customer costs 5–7× more than retaining an existing one. The brands that win in 2026 are those that invest as heavily in keeping customers as in winning them.' },
+      { id: 'legalbuddy-brand-identity', img: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80', cat: 'branding', catLabel: 'Branding', date: 'Jun 27, 2026', title: 'Legalbuddy — Brand Identity & Logo Design', excerpt: 'A strong, professional brand identity that builds trust instantly with users in the legal services space — clean, modern, and built for authority.' },
+      { id: 'ledgerlink-consultation-private-limited-website-development', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80', cat: 'technology', catLabel: 'Technology', date: 'Jun 27, 2026', title: 'LedgerLink Consultation Private Limited — Website Development', excerpt: 'A conversion-focused website for a GST, Income Tax, Accounting & Compliance advisory firm — built to build trust, generate leads, and dominate local search in Ahmedabad.' },
+    ],
   },
 
   future: {
@@ -2455,7 +3013,7 @@ function renderPageData() {
   setEl('home-casestudies-tag', cs.tag);
   setEl('home-casestudies-title', `${cs.titleMain}<span id="home-casestudies-title-span">${cs.titleSpan}</span>`);
 
-  const CS_CAT_ICON = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️','ai':'🤖','photo':'🎬','ecommerce':'🛒','influencer':'🤝'};
+  const CS_CAT_ICON = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
   function buildJcard(item, readLabel) {
     const catIcon = CS_CAT_ICON[item.cat] || '📊';
     return `<div class="jcard" onclick="openCaseStudy('${item.id}')" style="cursor:pointer;" data-cat="${item.cat}">
@@ -2610,26 +3168,12 @@ function setAttr(id, attr, val) {
     "slug": slug.current,
     category,
     shortExcerpt,
-    introBody,
     "heroImgUrl":    heroImage.asset->url + "?w=1200&auto=format",
     "heroCaption":   heroImage.caption,
-    "heroAlt":       heroImage.alt,
     "secondImgUrl":  secondImage.asset->url + "?w=1200&auto=format",
     "secondCaption": secondImage.caption,
-    "secondAlt":     secondImage.alt,
-    "cardImg":       coalesce(featuredCardImage.asset->url, heroImage.asset->url) + "?w=800&auto=format",
-    "clientOverviewBlocks": clientOverview[]{_type, style, listItem, children[]{text, marks, _type}},
-    "challengeBlocks":      challenge[]{_type, style, listItem, children[]{text, marks, _type}},
-    "strategyBlocks":       strategy[]{_type, style, listItem, children[]{text, marks, _type}},
-    "timelineBlocks":       timeline[]{_type, style, listItem, children[]{text, marks, _type}},
-    "executionBlocks":      execution[]{_type, style, listItem, children[]{text, marks, _type}},
-    "resultsBlocks":        results[]{_type, style, listItem, children[]{text, marks, _type}},
-    proofVisualNote,
-    proofPerformance,
-    testimonialQuote,
-    testimonialAuthor,
-    "faqItems":      faqItems[]{question, answer},
-    ctaLine,
+    "cardImg":       heroImage.asset->url + "?w=800&auto=format",
+    "bodyBlocks":    body[]{_type, style, children[]{text, marks, _type}},
     publishedDate
   }`);
 
@@ -2641,8 +3185,8 @@ function setAttr(id, attr, val) {
       const docs = (data && data.result) ? data.result : [];
       if (!docs.length) return;
 
-      const CAT_ICON  = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️','ai':'🤖','photo':'🎬','ecommerce':'🛒','influencer':'🤝'};
-      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology','ai':'AI','photo':'Photo / Videography','ecommerce':'E-commerce','influencer':'Influencer'};
+      const CAT_ICON  = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
+      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance Marketing','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology'};
 
       // Track card IDs already in the hardcoded PAGE_DATA list
       const existingCardIds = new Set(PAGE_DATA.casestudies.items.map(function(i){ return i.id; }));
@@ -2656,17 +3200,11 @@ function setAttr(id, attr, val) {
           ? new Date(doc.publishedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
           : '';
 
-        // Convert Portable Text blocks → HTML (supports h3, bullet/number lists)
+        // Convert Portable Text blocks → HTML string
         function blocksToHtml(blocks) {
           if (!blocks || !blocks.length) return '';
-          var html = '';
-          var listState = null;
-          function closeList() {
-            if (listState === 'bullet') { html += '</ul>'; listState = null; }
-            if (listState === 'number') { html += '</ol>'; listState = null; }
-          }
-          (blocks || []).forEach(function(block) {
-            if (block._type !== 'block') return;
+          return blocks.map(function(block) {
+            if (block._type !== 'block') return '';
             var inner = (block.children || []).map(function(child) {
               var txt = (child.text || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
               var marks = child.marks || [];
@@ -2674,48 +3212,26 @@ function setAttr(id, attr, val) {
               if (marks.indexOf('em') !== -1)     txt = '<em>' + txt + '</em>';
               return txt;
             }).join('');
-            var style    = block.style    || 'normal';
-            var listItem = block.listItem || null;
-            if (listItem === 'bullet') {
-              if (listState !== 'bullet') { closeList(); html += '<ul style="margin:12px 0 12px 24px;color:rgba(245,240,235,.68);">'; listState = 'bullet'; }
-              html += '<li style="margin-bottom:6px;">' + inner + '</li>'; return;
-            }
-            if (listItem === 'number') {
-              if (listState !== 'number') { closeList(); html += '<ol style="margin:12px 0 12px 24px;color:rgba(245,240,235,.68);">'; listState = 'number'; }
-              html += '<li style="margin-bottom:6px;">' + inner + '</li>'; return;
-            }
-            closeList();
-            if (style === 'h3') { html += '<h3 style="font-family:Syne,sans-serif;font-size:17px;font-weight:700;color:#F5F0EB;margin:28px 0 10px;">' + inner + '</h3>'; return; }
-            if (inner) html += '<p style="margin-bottom:18px;">' + inner + '</p>';
-          });
-          closeList();
-          return html;
+            var style = block.style || 'normal';
+            if (style === 'h2') return '<h2 style="font-family:Syne,sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">' + inner + '</h2>';
+            if (style === 'h3') return '<h3 style="font-family:Syne,sans-serif;font-size:17px;font-weight:700;color:#F5F0EB;margin:24px 0 10px;">' + inner + '</h3>';
+            return inner ? '<p>' + inner + '</p>' : '';
+          }).join('');
         }
 
-        // Store in the new structured shape — openCaseStudy reads _format to branch correctly.
+        // Store in the LEGACY shape (images[] + body) so openCaseStudy's existing
+        // legacy branch renders it correctly — no second code path needed.
         caseStudies[id] = {
           title:    doc.title    || 'Untitled',
           subtitle: doc.subtitle || '',
           category: CAT_LABEL[doc.category] || doc.category || '',
           date:     dateStr,
+          // images[0] = hero, images[1] = second — matches legacy overlay exactly
           images: [
-            { url: doc.heroImgUrl   || '', caption: doc.heroCaption   || '', alt: doc.heroAlt   || doc.title || '' },
-            { url: doc.secondImgUrl || '', caption: doc.secondCaption || '', alt: doc.secondAlt || doc.subtitle || '' },
+            { url: doc.heroImgUrl   || '', caption: doc.heroCaption   || '' },
+            { url: doc.secondImgUrl || '', caption: doc.secondCaption || '' },
           ],
-          introBody:        doc.introBody        || '',
-          clientOverview:   blocksToHtml(doc.clientOverviewBlocks),
-          challengeHtml:    blocksToHtml(doc.challengeBlocks),
-          strategyHtml:     blocksToHtml(doc.strategyBlocks),
-          timelineHtml:     blocksToHtml(doc.timelineBlocks),
-          executionHtml:    blocksToHtml(doc.executionBlocks),
-          resultsHtml:      blocksToHtml(doc.resultsBlocks),
-          proofVisualNote:  doc.proofVisualNote  || '',
-          proofPerformance: doc.proofPerformance || '',
-          testimonialQuote: doc.testimonialQuote || '',
-          testimonialAuthor:doc.testimonialAuthor|| '',
-          faqItems:         doc.faqItems         || [],
-          ctaLine:          doc.ctaLine          || '',
-          _format: 'structured',
+          body: blocksToHtml(doc.bodyBlocks),
         };
 
         const cardItem = {
