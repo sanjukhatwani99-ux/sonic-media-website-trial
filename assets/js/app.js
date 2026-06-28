@@ -1249,7 +1249,7 @@ function openCaseStudy(id) {
   if (!document.getElementById('cs-overlay')) {
     const shell = document.createElement('div');
     shell.id = 'cs-overlay';
-    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
+    shell.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:#080808;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;';
     document.documentElement.appendChild(shell);
   }
   const overlay = document.getElementById('cs-overlay');
@@ -1473,8 +1473,13 @@ function openCaseStudy(id) {
   canonical.href = 'https://thesonicmedia.com/case-studies/' + cleanSlug;
 
   overlay.style.display = 'block';
-  document.documentElement.scrollTop = 0;
-  document.body.style.visibility = 'hidden';
+  overlay.scrollTop = 0;
+  // Lock body scroll — store current position to restore on close
+  overlay._bodyScrollY = window.scrollY;
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + overlay._bodyScrollY + 'px';
+  document.body.style.width = '100%';
   ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) document.documentElement.appendChild(el);
@@ -1492,7 +1497,12 @@ function closeCaseStudy() {
   const overlay = document.getElementById('cs-overlay');
   if (!overlay || overlay.style.display === 'none') return;
   overlay.style.display = 'none';
-  document.body.style.visibility = '';
+  // Restore body scroll
+  var scrollY = overlay._bodyScrollY || 0;
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
   /* Move cursor elements back to <body> */
   ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
     var el = document.getElementById(id);
@@ -1500,7 +1510,7 @@ function closeCaseStudy() {
   });
   if (window._initLenis) { window._initLenis(); }
   if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
-  /* ── Restore home page scroll position if opened from home ── */
+  /* ── Restore scroll position ── */
   var _csReturnY      = overlay._returnScrollY;
   var _csReturnAnchor = overlay._returnAnchor;
   if (_csReturnY !== null && _csReturnAnchor) {
@@ -1509,6 +1519,8 @@ function closeCaseStudy() {
       if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
       else    { window.scrollTo(0, _csReturnY); }
     }, 0);
+  } else {
+    window.scrollTo(0, scrollY);
   }
 
   /* Restore URL to /casestudies (or /case-studies if that was the entry point) */
@@ -1529,10 +1541,15 @@ window.addEventListener('popstate', function(e) {
     /* Forward into an article */
     openCaseStudy(e.state.caseStudy);
   } else {
-    /* Back to listing */
+    /* Back to listing — delegate to closeCaseStudy to ensure body unlock */
     if (overlay.style.display !== 'none') {
+      var scrollY = overlay._bodyScrollY || 0;
       overlay.style.display = 'none';
-      document.body.style.visibility = '';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
       ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) document.body.appendChild(el);
@@ -2438,7 +2455,7 @@ function renderPageData() {
   setEl('home-casestudies-tag', cs.tag);
   setEl('home-casestudies-title', `${cs.titleMain}<span id="home-casestudies-title-span">${cs.titleSpan}</span>`);
 
-  const CS_CAT_ICON = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
+  const CS_CAT_ICON = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️','ai':'🤖','photo':'🎬','ecommerce':'🛒','influencer':'🤝'};
   function buildJcard(item, readLabel) {
     const catIcon = CS_CAT_ICON[item.cat] || '📊';
     return `<div class="jcard" onclick="openCaseStudy('${item.id}')" style="cursor:pointer;" data-cat="${item.cat}">
@@ -2610,8 +2627,8 @@ function setAttr(id, attr, val) {
       const docs = (data && data.result) ? data.result : [];
       if (!docs.length) return;
 
-      const CAT_ICON  = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
-      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance Marketing','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology'};
+      const CAT_ICON  = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️','ai':'🤖','photo':'🎬','ecommerce':'🛒','influencer':'🤝'};
+      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology','ai':'AI','photo':'Photo / Videography','ecommerce':'E-commerce','influencer':'Influencer'};
 
       // Track card IDs already in the hardcoded PAGE_DATA list
       const existingCardIds = new Set(PAGE_DATA.casestudies.items.map(function(i){ return i.id; }));

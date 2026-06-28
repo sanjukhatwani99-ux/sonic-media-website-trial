@@ -39,8 +39,8 @@
 
   if (!docs.length) return;
 
-  const CAT_ICON  = { strategy:'💡', performance:'🚀', seo:'🔍', social:'📣', branding:'🎨', technology:'⚙️' };
-  const CAT_LABEL = { strategy:'Strategy', performance:'Performance Marketing', seo:'SEO', social:'Social Media', branding:'Branding', technology:'Technology' };
+  const CAT_ICON  = { strategy:'💡', performance:'🚀', seo:'🔍', social:'📣', branding:'🎨', technology:'⚙️', ai:'🤖', photo:'🎬', ecommerce:'🛒', influencer:'🤝' };
+  const CAT_LABEL = { strategy:'Strategy', performance:'Performance', seo:'SEO', social:'Social Media', branding:'Branding', technology:'Technology', ai:'AI', photo:'Photo / Videography', ecommerce:'E-commerce', influencer:'Influencer' };
 
   // Convert Portable Text blocks → HTML (same logic as app.js blocksToHtml)
   function blocksToHtml(blocks) {
