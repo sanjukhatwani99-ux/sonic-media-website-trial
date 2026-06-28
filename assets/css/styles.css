@@ -2939,7 +2939,7 @@ footer { position: relative; overflow: visible; padding-top: 280px; }
   .journal-header { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 28px; }
   /* Single column stacked cards on mobile — image on top, full content below */
   .jnl-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-  #home-casestudies-grid .jcard:nth-child(4) { display: flex !important; }
+
   .jnl-grid .jcard:first-child { grid-column: span 1 !important; }
   /* Vertical card: image top, body below — gives room for excerpt */
   .jcard { flex-direction: column !important; align-items: stretch !important; min-height: unset !important; }
