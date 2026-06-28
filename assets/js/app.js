@@ -2826,7 +2826,8 @@ function setAttr(id, attr, val) {
   const DATASET    = 'production';
   const API_VER    = '2024-01-01';
 
-  // GROQ query — matches the updated caseStudy schema field names
+  // GROQ query — matches the updated caseStudy schema field names.
+  // body[] is fetched as raw Portable Text blocks so we can render them as HTML.
   const query = encodeURIComponent(`*[_type == "caseStudy"] | order(publishedDate desc) {
     _id,
     title,
@@ -2834,12 +2835,12 @@ function setAttr(id, attr, val) {
     "slug": slug.current,
     category,
     shortExcerpt,
-    "heroImgUrl":   heroImage.asset->url + "?w=1200&auto=format",
-    "heroCaption":  heroImage.caption,
-    "secondImgUrl": secondImage.asset->url + "?w=1200&auto=format",
+    "heroImgUrl":    heroImage.asset->url + "?w=1200&auto=format",
+    "heroCaption":   heroImage.caption,
+    "secondImgUrl":  secondImage.asset->url + "?w=1200&auto=format",
     "secondCaption": secondImage.caption,
-    "cardImg":      heroImage.asset->url + "?w=800&auto=format",
-    "body":         pt::text(body),
+    "cardImg":       heroImage.asset->url + "?w=800&auto=format",
+    "bodyBlocks":    body[]{_type, style, children[]{text, marks, _type}},
     publishedDate
   }`);
 
@@ -2866,8 +2867,27 @@ function setAttr(id, attr, val) {
           ? new Date(doc.publishedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
           : '';
 
+        // Convert Portable Text blocks → HTML string
+        function blocksToHtml(blocks) {
+          if (!blocks || !blocks.length) return '';
+          return blocks.map(function(block) {
+            if (block._type !== 'block') return '';
+            var inner = (block.children || []).map(function(child) {
+              var txt = (child.text || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+              var marks = child.marks || [];
+              if (marks.indexOf('strong') !== -1) txt = '<strong style="color:#FF5C00;">' + txt + '</strong>';
+              if (marks.indexOf('em') !== -1)     txt = '<em>' + txt + '</em>';
+              return txt;
+            }).join('');
+            var style = block.style || 'normal';
+            if (style === 'h2') return '<h2 style="font-family:Syne,sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">' + inner + '</h2>';
+            if (style === 'h3') return '<h3 style="font-family:Syne,sans-serif;font-size:17px;font-weight:700;color:#F5F0EB;margin:24px 0 10px;">' + inner + '</h3>';
+            return inner ? '<p>' + inner + '</p>' : '';
+          }).join('');
+        }
+
         // Store in the LEGACY shape (images[] + body) so openCaseStudy's existing
-        // legacy branch renders it — no second code path needed.
+        // legacy branch renders it correctly — no second code path needed.
         caseStudies[id] = {
           title:    doc.title    || 'Untitled',
           subtitle: doc.subtitle || '',
@@ -2878,9 +2898,7 @@ function setAttr(id, attr, val) {
             { url: doc.heroImgUrl   || '', caption: doc.heroCaption   || '' },
             { url: doc.secondImgUrl || '', caption: doc.secondCaption || '' },
           ],
-          // pt::text() gives plain text; wrap each paragraph in <p> for the article div
-          body: (doc.body || '').split(/\n+/).filter(Boolean)
-                  .map(function(p) { return '<p>' + p + '</p>'; }).join(''),
+          body: blocksToHtml(doc.bodyBlocks),
         };
 
         const cardItem = {
