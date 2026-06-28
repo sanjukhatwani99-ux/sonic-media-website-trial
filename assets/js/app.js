@@ -1254,106 +1254,88 @@ function openCaseStudy(id) {
   }
   const overlay = document.getElementById('cs-overlay');
 
-  /* ── Helper: detect if this is a Sanity-format entry (has challenge field) or legacy (has body field) ── */
-  const isSanity = cs.challenge !== undefined;
+  /* ── Format detection: 'structured' = new PART A schema, anything else = legacy body blob ── */
+  const isStructured = cs._format === 'structured';
 
-  /* ── Build gallery HTML ── */
-  function buildGallery(imgs) {
-    if (!imgs || !imgs.length) return '';
-    return imgs.map(img =>
-      `<div class="cs-img-wrap"><img src="${img.url}" alt="${img.alt || ''}" loading="lazy"></div>`
-    ).join('');
+  /* ── Helper: section block with orange label ── */
+  function csSection(label, html) {
+    if (!html) return '';
+    return `<div class="cs-section">
+      <div class="cs-section-label">${label}</div>
+      <div class="cs-section-body">${html}</div>
+    </div>`;
   }
 
-  /* ── Build results list ── */
-  function buildResults(results) {
-    if (!results || !results.length) return '';
-    return results.map(r =>
-      `<div class="cs-result-item"><span class="cs-result-tick">✓</span><span>${r}</span></div>`
-    ).join('');
+  /* ── Helper: FAQ accordion items ── */
+  function buildFaq(items) {
+    if (!items || !items.length) return '';
+    return items.map(function(item, i) {
+      return `<div class="cs-faq-item">
+        <button class="cs-faq-q" onclick="(function(btn){
+          var ans=btn.nextElementSibling;
+          var open=ans.style.maxHeight&&ans.style.maxHeight!=='0px';
+          ans.style.maxHeight=open?'0px':(ans.scrollHeight+32)+'px';
+          btn.classList.toggle('cs-faq-open',!open);
+        })(this)">${item.question || ''} <span class="cs-faq-icon">+</span></button>
+        <div class="cs-faq-a" style="max-height:0;overflow:hidden;transition:max-height .3s ease;">${item.answer || ''}</div>
+      </div>`;
+    }).join('');
   }
 
-  /* ── Build services/tech tags ── */
-  function buildTags(arr) {
-    if (!arr || !arr.length) return '';
-    return arr.map(t => `<span class="cs-tag">${t}</span>`).join('');
+  /* ── Helper: proof block (visual + performance + testimonial) ── */
+  function buildProof(cs) {
+    const img0 = cs.images && cs.images[0];
+    const img1 = cs.images && cs.images[1] && cs.images[1].url ? cs.images[1] : null;
+    return `
+      ${img0 && img0.url ? `<div class="cs-img-wrap"><img src="${img0.url}" alt="${img0.alt || cs.title}" loading="lazy"></div>
+      <div class="cs-img-cap">${img0.caption || ''}</div>` : ''}
+      ${img1 ? `<div class="cs-img-wrap"><img src="${img1.url}" alt="${img1.alt || cs.subtitle || cs.title}" loading="lazy"></div>
+      <div class="cs-img-cap">${img1.caption || ''}</div>` : ''}
+      ${cs.proofVisualNote ? `<p class="cs-proof-note">${cs.proofVisualNote}</p>` : ''}
+      ${cs.proofPerformance ? `<div class="cs-proof-perf">${cs.proofPerformance}</div>` : ''}
+      ${cs.testimonialQuote ? `<blockquote class="cs-testimonial">
+        <p class="cs-testimonial-quote">"${cs.testimonialQuote}"</p>
+        ${cs.testimonialAuthor ? `<cite class="cs-testimonial-author">— ${cs.testimonialAuthor}</cite>` : ''}
+      </blockquote>` : ''}`;
   }
 
-  /* ── Build meta strip (client, industry, date) ── */
-  function buildMeta(cs) {
-    const parts = [];
-    if (cs.client) parts.push(`<div class="cs-meta-item"><div class="cs-meta-label">Client</div><div class="cs-meta-value">${cs.client}</div></div>`);
-    if (cs.industry) parts.push(`<div class="cs-meta-item"><div class="cs-meta-label">Industry</div><div class="cs-meta-value">${cs.industry}</div></div>`);
-    if (cs.category) parts.push(`<div class="cs-meta-item"><div class="cs-meta-label">Category</div><div class="cs-meta-value">${cs.category}</div></div>`);
-    if (cs.date) parts.push(`<div class="cs-meta-item"><div class="cs-meta-label">Date</div><div class="cs-meta-value">${cs.date}</div></div>`);
-    return parts.join('');
-  }
-
-  /* ── Build body: either Sanity structured or legacy HTML blob ── */
+  /* ── Build body: structured (PART A) or legacy HTML blob ── */
   function buildBody(cs) {
-    if (!isSanity) {
-      /* Legacy / new Sanity entries: hero image + optional second image + body */
+    if (!isStructured) {
+      /* Legacy entries: hero image + optional second image + raw body HTML */
       const img0 = cs.images && cs.images[0];
       const img1 = cs.images && cs.images[1] && cs.images[1].url ? cs.images[1] : null;
       return `
-        ${img0 && img0.url ? `<div class="cs-img-wrap"><img src="${img0.url}" alt="${cs.title}" loading="lazy"></div>
+        ${img0 && img0.url ? `<div class="cs-img-wrap"><img src="${img0.url}" alt="${img0.alt || cs.title}" loading="lazy"></div>
         <div class="cs-img-cap">${img0.caption || ''}</div>` : ''}
-        ${img1 ? `<div class="cs-img-wrap"><img src="${img1.url}" alt="${cs.subtitle || cs.title}" loading="lazy"></div>
+        ${img1 ? `<div class="cs-img-wrap"><img src="${img1.url}" alt="${img1.alt || cs.subtitle || cs.title}" loading="lazy"></div>
         <div class="cs-img-cap">${img1.caption || ''}</div>` : ''}
-        <div class="cs-article">${cs.body}</div>`;
+        <div class="cs-article">${cs.body || ''}</div>`;
     }
 
-    /* Sanity format */
-    const hasTech = cs.technologies && cs.technologies.length > 0;
-    const hasProjectUrl = cs.projectUrl && cs.projectUrl.length > 0;
-
+    /* ── Structured PART A format ── */
     return `
-      ${cs.shortDesc ? `<p class="cs-short-desc">${cs.shortDesc}</p>` : ''}
+      ${cs.introBody ? `<p class="cs-intro-body">${cs.introBody}</p>` : ''}
 
-      <div class="cs-featured-img">
-        <img src="${cs.featuredImg.url}" alt="${cs.featuredImg.alt || cs.title}" loading="lazy">
+      ${csSection('Client Overview',   cs.clientOverview)}
+      ${csSection('Challenge',         cs.challengeHtml)}
+      ${csSection('Strategy',          cs.strategyHtml)}
+      ${csSection('Timeline & Process',cs.timelineHtml)}
+      ${csSection('Execution',         cs.executionHtml)}
+      ${csSection('Results',           cs.resultsHtml)}
+
+      <div class="cs-section">
+        <div class="cs-section-label">Proof</div>
+        ${buildProof(cs)}
       </div>
 
-      <div class="cs-meta-strip">${buildMeta(cs)}</div>
-
-      ${cs.services && cs.services.length ? `
-      <div class="cs-section">
-        <div class="cs-section-label">Services Delivered</div>
-        <div class="cs-tags">${buildTags(cs.services)}</div>
+      ${cs.faqItems && cs.faqItems.length ? `
+      <div class="cs-section cs-section--faq">
+        <div class="cs-section-label">FAQ</div>
+        <div class="cs-faq">${buildFaq(cs.faqItems)}</div>
       </div>` : ''}
 
-      <div class="cs-two-col">
-        <div class="cs-section">
-          <div class="cs-section-label">The Challenge</div>
-          <p class="cs-section-text">${cs.challenge}</p>
-        </div>
-        <div class="cs-section">
-          <div class="cs-section-label">The Solution</div>
-          <p class="cs-section-text">${cs.solution}</p>
-        </div>
-      </div>
-
-      <div class="cs-section">
-        <div class="cs-section-label">Results</div>
-        <div class="cs-results">${buildResults(cs.results)}</div>
-      </div>
-
-      ${cs.gallery && cs.gallery.length ? `
-      <div class="cs-section">
-        <div class="cs-section-label">Gallery</div>
-        <div class="cs-gallery">${buildGallery(cs.gallery)}</div>
-      </div>` : ''}
-
-      ${hasTech ? `
-      <div class="cs-section">
-        <div class="cs-section-label">Technologies Used</div>
-        <div class="cs-tags">${buildTags(cs.technologies)}</div>
-      </div>` : ''}
-
-      ${hasProjectUrl ? `
-      <div class="cs-section">
-        <a href="${cs.projectUrl}" target="_blank" rel="noopener noreferrer" class="cs-live-btn">View Live Project →</a>
-      </div>` : ''}`;
+      ${cs.ctaLine ? `<div class="cs-inline-cta">${cs.ctaLine}</div>` : ''}`;
   }
 
   overlay.innerHTML = `<style>
@@ -1406,6 +1388,24 @@ function openCaseStudy(id) {
 .cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
 .cs-article p{margin-bottom:20px;}
 .cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.35);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
+/* ── Structured PART A body ── */
+.cs-intro-body{font-size:18px;line-height:1.8;color:rgba(245,240,235,.65);font-weight:300;margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.06);}
+.cs-section-body{font-size:16px;line-height:1.85;color:rgba(245,240,235,.68);font-weight:300;}
+.cs-section-body p{margin-bottom:16px;}
+.cs-section-body h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#F5F0EB;margin:24px 0 10px;}
+.cs-proof-note{font-size:14px;color:rgba(245,240,235,.5);font-style:italic;margin-top:16px;}
+.cs-proof-perf{font-size:15px;line-height:1.75;color:rgba(245,240,235,.68);margin-top:16px;padding:20px 24px;border-radius:12px;background:rgba(255,92,0,.04);border:1px solid rgba(255,92,0,.14);}
+.cs-testimonial{border-left:3px solid #FF5C00;padding:20px 28px;margin:32px 0 0;background:rgba(255,92,0,.04);border-radius:0 12px 12px 0;}
+.cs-testimonial-quote{font-size:17px;line-height:1.75;color:rgba(245,240,235,.8);font-style:italic;margin-bottom:12px;}
+.cs-testimonial-author{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FF5C00;}
+.cs-faq{display:flex;flex-direction:column;gap:2px;}
+.cs-faq-item{border-bottom:1px solid rgba(255,255,255,.06);}
+.cs-faq-q{width:100%;text-align:left;background:none;border:none;color:#F5F0EB;font-family:'Syne',sans-serif;font-size:15px;font-weight:600;padding:18px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.cs-faq-q:hover{color:#FF5C00;}
+.cs-faq-icon{font-size:20px;flex-shrink:0;color:#FF5C00;transition:transform .25s;}
+.cs-faq-open .cs-faq-icon{transform:rotate(45deg);}
+.cs-faq-a{font-size:15px;line-height:1.8;color:rgba(245,240,235,.62);font-weight:300;padding:0 0 18px;}
+.cs-inline-cta{margin-top:48px;padding:32px 40px;border-radius:16px;background:rgba(255,92,0,.07);border:1px solid rgba(255,92,0,.2);font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#F5F0EB;text-align:center;line-height:1.5;}
 /* ── CTA band ── */
 .cs-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}
 .cs-cta-band::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}
@@ -2610,12 +2610,26 @@ function setAttr(id, attr, val) {
     "slug": slug.current,
     category,
     shortExcerpt,
+    introBody,
     "heroImgUrl":    heroImage.asset->url + "?w=1200&auto=format",
     "heroCaption":   heroImage.caption,
+    "heroAlt":       heroImage.alt,
     "secondImgUrl":  secondImage.asset->url + "?w=1200&auto=format",
     "secondCaption": secondImage.caption,
-    "cardImg":       heroImage.asset->url + "?w=800&auto=format",
-    "bodyBlocks":    body[]{_type, style, children[]{text, marks, _type}},
+    "secondAlt":     secondImage.alt,
+    "cardImg":       coalesce(featuredCardImage.asset->url, heroImage.asset->url) + "?w=800&auto=format",
+    "clientOverviewBlocks": clientOverview[]{_type, style, listItem, children[]{text, marks, _type}},
+    "challengeBlocks":      challenge[]{_type, style, listItem, children[]{text, marks, _type}},
+    "strategyBlocks":       strategy[]{_type, style, listItem, children[]{text, marks, _type}},
+    "timelineBlocks":       timeline[]{_type, style, listItem, children[]{text, marks, _type}},
+    "executionBlocks":      execution[]{_type, style, listItem, children[]{text, marks, _type}},
+    "resultsBlocks":        results[]{_type, style, listItem, children[]{text, marks, _type}},
+    proofVisualNote,
+    proofPerformance,
+    testimonialQuote,
+    testimonialAuthor,
+    "faqItems":      faqItems[]{question, answer},
+    ctaLine,
     publishedDate
   }`);
 
@@ -2642,11 +2656,17 @@ function setAttr(id, attr, val) {
           ? new Date(doc.publishedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
           : '';
 
-        // Convert Portable Text blocks → HTML string
+        // Convert Portable Text blocks → HTML (supports h3, bullet/number lists)
         function blocksToHtml(blocks) {
           if (!blocks || !blocks.length) return '';
-          return blocks.map(function(block) {
-            if (block._type !== 'block') return '';
+          var html = '';
+          var listState = null;
+          function closeList() {
+            if (listState === 'bullet') { html += '</ul>'; listState = null; }
+            if (listState === 'number') { html += '</ol>'; listState = null; }
+          }
+          (blocks || []).forEach(function(block) {
+            if (block._type !== 'block') return;
             var inner = (block.children || []).map(function(child) {
               var txt = (child.text || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
               var marks = child.marks || [];
@@ -2654,26 +2674,48 @@ function setAttr(id, attr, val) {
               if (marks.indexOf('em') !== -1)     txt = '<em>' + txt + '</em>';
               return txt;
             }).join('');
-            var style = block.style || 'normal';
-            if (style === 'h2') return '<h2 style="font-family:Syne,sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">' + inner + '</h2>';
-            if (style === 'h3') return '<h3 style="font-family:Syne,sans-serif;font-size:17px;font-weight:700;color:#F5F0EB;margin:24px 0 10px;">' + inner + '</h3>';
-            return inner ? '<p>' + inner + '</p>' : '';
-          }).join('');
+            var style    = block.style    || 'normal';
+            var listItem = block.listItem || null;
+            if (listItem === 'bullet') {
+              if (listState !== 'bullet') { closeList(); html += '<ul style="margin:12px 0 12px 24px;color:rgba(245,240,235,.68);">'; listState = 'bullet'; }
+              html += '<li style="margin-bottom:6px;">' + inner + '</li>'; return;
+            }
+            if (listItem === 'number') {
+              if (listState !== 'number') { closeList(); html += '<ol style="margin:12px 0 12px 24px;color:rgba(245,240,235,.68);">'; listState = 'number'; }
+              html += '<li style="margin-bottom:6px;">' + inner + '</li>'; return;
+            }
+            closeList();
+            if (style === 'h3') { html += '<h3 style="font-family:Syne,sans-serif;font-size:17px;font-weight:700;color:#F5F0EB;margin:28px 0 10px;">' + inner + '</h3>'; return; }
+            if (inner) html += '<p style="margin-bottom:18px;">' + inner + '</p>';
+          });
+          closeList();
+          return html;
         }
 
-        // Store in the LEGACY shape (images[] + body) so openCaseStudy's existing
-        // legacy branch renders it correctly — no second code path needed.
+        // Store in the new structured shape — openCaseStudy reads _format to branch correctly.
         caseStudies[id] = {
           title:    doc.title    || 'Untitled',
           subtitle: doc.subtitle || '',
           category: CAT_LABEL[doc.category] || doc.category || '',
           date:     dateStr,
-          // images[0] = hero, images[1] = second — matches legacy overlay exactly
           images: [
-            { url: doc.heroImgUrl   || '', caption: doc.heroCaption   || '' },
-            { url: doc.secondImgUrl || '', caption: doc.secondCaption || '' },
+            { url: doc.heroImgUrl   || '', caption: doc.heroCaption   || '', alt: doc.heroAlt   || doc.title || '' },
+            { url: doc.secondImgUrl || '', caption: doc.secondCaption || '', alt: doc.secondAlt || doc.subtitle || '' },
           ],
-          body: blocksToHtml(doc.bodyBlocks),
+          introBody:        doc.introBody        || '',
+          clientOverview:   blocksToHtml(doc.clientOverviewBlocks),
+          challengeHtml:    blocksToHtml(doc.challengeBlocks),
+          strategyHtml:     blocksToHtml(doc.strategyBlocks),
+          timelineHtml:     blocksToHtml(doc.timelineBlocks),
+          executionHtml:    blocksToHtml(doc.executionBlocks),
+          resultsHtml:      blocksToHtml(doc.resultsBlocks),
+          proofVisualNote:  doc.proofVisualNote  || '',
+          proofPerformance: doc.proofPerformance || '',
+          testimonialQuote: doc.testimonialQuote || '',
+          testimonialAuthor:doc.testimonialAuthor|| '',
+          faqItems:         doc.faqItems         || [],
+          ctaLine:          doc.ctaLine          || '',
+          _format: 'structured',
         };
 
         const cardItem = {
