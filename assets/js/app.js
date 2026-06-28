@@ -1599,6 +1599,10 @@ function openCaseStudy(id) {
       (block.markDefs || []).forEach(function(def) {
         if (def && def._key) markDefsMap[def._key] = def;
       });
+      /* Debug: uncomment to verify link data in browser console
+      if (block.markDefs && block.markDefs.length) {
+        console.log('[TSM Links] markDefs on block:', JSON.stringify(block.markDefs));
+      } */
 
       /* Render inline children */
       const inner = (block.children || []).map(function(span) {
@@ -1909,7 +1913,7 @@ ${faqItems ? `<section aria-label="FAQ" class="cs-v2-section">
 .cs-pt-h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;letter-spacing:.04em;color:#F5F0EB;margin:28px 0 10px;text-transform:uppercase;}
 .cs-pt-list{padding-left:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:6px;}
 .cs-pt-li{font-size:15px;line-height:1.75;color:rgba(245,240,235,.65);font-weight:300;}
-.cs-inline-link{color:#FF5C00;text-decoration:underline;text-underline-offset:3px;transition:opacity .2s;}
+.cs-inline-link{color:#FF5C00;text-decoration:underline;text-underline-offset:3px;transition:opacity .2s;cursor:pointer;pointer-events:auto;position:relative;z-index:1;}
 .cs-inline-link:hover{opacity:.75;}
 /* ── Live site button ── */
 .cs-live-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 30px;border-radius:50px;background:#FF5C00;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 22px rgba(255,92,0,.35);transition:all .3s;margin-bottom:48px;}
