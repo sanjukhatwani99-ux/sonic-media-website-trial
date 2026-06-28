@@ -3185,12 +3185,14 @@ function setAttr(id, attr, val) {
       const docs = (data && data.result) ? data.result : [];
       if (!docs.length) return;
 
-      const CAT_ICON  = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
-      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance Marketing','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology'};
+      // Full category maps — covers every value defined in the Sanity schema
+      const CAT_ICON  = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️','ai':'🤖','photo':'🎬','ecommerce':'🛒','influencer':'🤝'};
+      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance Marketing','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology','ai':'AI','photo':'Photo / Videography','ecommerce':'E-commerce','influencer':'Influencer'};
 
-      // Track card IDs already in the hardcoded PAGE_DATA list
-      const existingCardIds = new Set(PAGE_DATA.casestudies.items.map(function(i){ return i.id; }));
-      const newItems = [];
+      // Build fresh card list and detail data exclusively from Sanity docs.
+      // Hardcoded fallback cards are intentionally replaced so the grid only
+      // shows entries that are registered in the CMS.
+      const sanityItems = [];
 
       docs.forEach(function(doc) {
         const id = doc.slug || doc._id;
@@ -3219,8 +3221,9 @@ function setAttr(id, attr, val) {
           }).join('');
         }
 
-        // Store in the LEGACY shape (images[] + body) so openCaseStudy's existing
-        // legacy branch renders it correctly — no second code path needed.
+        // Write detail data — always overwrite any hardcoded entry so the
+        // Sanity content (images, body) is what opens when a card is clicked.
+        // Uses the legacy shape (images[] + body) which buildLegacyBody renders.
         caseStudies[id] = {
           title:    doc.title    || 'Untitled',
           subtitle: doc.subtitle || '',
@@ -3234,7 +3237,7 @@ function setAttr(id, attr, val) {
           body: blocksToHtml(doc.bodyBlocks),
         };
 
-        const cardItem = {
+        sanityItems.push({
           id:       id,
           img:      doc.cardImg || '',
           cat:      doc.category || 'strategy',
@@ -3243,24 +3246,13 @@ function setAttr(id, attr, val) {
           title:    doc.title || '',
           excerpt:  doc.shortExcerpt || '',
           featured: false,
-        };
-
-        if (existingCardIds.has(id)) {
-          // Update the existing card in-place so order is preserved
-          for (var ci = 0; ci < PAGE_DATA.casestudies.items.length; ci++) {
-            if (PAGE_DATA.casestudies.items[ci].id === id) {
-              PAGE_DATA.casestudies.items[ci] = cardItem;
-              break;
-            }
-          }
-        } else {
-          newItems.push(cardItem);
-        }
+        });
       });
 
-      // Prepend brand-new Sanity entries before the hardcoded list
-      if (newItems.length) {
-        PAGE_DATA.casestudies.items = newItems.concat(PAGE_DATA.casestudies.items);
+      // Replace the entire card list with Sanity-registered entries only.
+      // This ensures no hardcoded placeholder cards appear on the grid.
+      if (sanityItems.length) {
+        PAGE_DATA.casestudies.items = sanityItems;
       }
 
       // Re-render grids
