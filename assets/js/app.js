@@ -2826,26 +2826,21 @@ function setAttr(id, attr, val) {
   const DATASET    = 'production';
   const API_VER    = '2024-01-01';
 
-  // GROQ query — fetch all caseStudy docs, newest first
+  // GROQ query — matches the updated caseStudy schema field names
   const query = encodeURIComponent(`*[_type == "caseStudy"] | order(publishedDate desc) {
     _id,
     title,
+    subtitle,
     "slug": slug.current,
-    clientName,
-    industry,
     category,
-    services,
-    shortDescription,
-    "featuredImg": { "url": featuredImage.asset->url + "?w=1200&auto=format", "alt": featuredImage.alt },
-    "cardImg": featuredImage.asset->url + "?w=800&auto=format",
-    "gallery": galleryImages[]{ "url": asset->url + "?w=1200&auto=format", "alt": alt },
-    "challenge": pt::text(challenge),
-    "solution": pt::text(solution),
-    "results": pt::text(results),
-    technologies,
-    projectUrl,
-    publishedDate,
-    featured
+    shortExcerpt,
+    "heroImgUrl":   heroImage.asset->url + "?w=1200&auto=format",
+    "heroCaption":  heroImage.caption,
+    "secondImgUrl": secondImage.asset->url + "?w=1200&auto=format",
+    "secondCaption": secondImage.caption,
+    "cardImg":      heroImage.asset->url + "?w=800&auto=format",
+    "body":         pt::text(body),
+    publishedDate
   }`);
 
   const url = `https://${PROJECT_ID}.apicdn.sanity.io/v${API_VER}/data/query/${DATASET}?query=${query}`;
@@ -2856,20 +2851,12 @@ function setAttr(id, attr, val) {
       const docs = (data && data.result) ? data.result : [];
       if (!docs.length) return;
 
-      const CAT_ICON = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
-      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology'};
+      const CAT_ICON  = {'strategy':'💡','performance':'🚀','seo':'🔍','social':'📣','branding':'🎨','technology':'⚙️'};
+      const CAT_LABEL = {'strategy':'Strategy','performance':'Performance Marketing','seo':'SEO','social':'Social Media','branding':'Branding','technology':'Technology'};
 
       // Track card IDs already in the hardcoded PAGE_DATA list
       const existingCardIds = new Set(PAGE_DATA.casestudies.items.map(function(i){ return i.id; }));
       const newItems = [];
-
-      // Parse Portable Text results (pt::text joins blocks with \n\n) into a string array
-      function parseResults(raw) {
-        if (!raw || !raw.trim()) return [];
-        return raw.split(/\n+/)
-          .map(function(s) { return s.replace(/^[•·\-\*]\s*/, '').trim(); })
-          .filter(Boolean);
-      }
 
       docs.forEach(function(doc) {
         const id = doc.slug || doc._id;
@@ -2879,24 +2866,21 @@ function setAttr(id, attr, val) {
           ? new Date(doc.publishedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
           : '';
 
-        // Always overwrite with live Sanity data so edits in Studio show immediately
+        // Store in the LEGACY shape (images[] + body) so openCaseStudy's existing
+        // legacy branch renders it — no second code path needed.
         caseStudies[id] = {
-          title:        doc.title            || 'Untitled',
-          client:       doc.clientName       || '',
-          industry:     doc.industry         || '',
-          category:     CAT_LABEL[doc.category] || doc.category || '',
-          services:     doc.services         || [],
-          date:         dateStr,
-          shortDesc:    doc.shortDescription || '',
-          featuredImg:  (doc.featuredImg && doc.featuredImg.url)
-                          ? doc.featuredImg
-                          : { url: doc.cardImg || '', alt: doc.title || '' },
-          gallery:      doc.gallery          || [],
-          challenge:    doc.challenge        || '',
-          solution:     doc.solution         || '',
-          results:      parseResults(doc.results),
-          technologies: doc.technologies     || [],
-          projectUrl:   doc.projectUrl       || '',
+          title:    doc.title    || 'Untitled',
+          subtitle: doc.subtitle || '',
+          category: CAT_LABEL[doc.category] || doc.category || '',
+          date:     dateStr,
+          // images[0] = hero, images[1] = second — matches legacy overlay exactly
+          images: [
+            { url: doc.heroImgUrl   || '', caption: doc.heroCaption   || '' },
+            { url: doc.secondImgUrl || '', caption: doc.secondCaption || '' },
+          ],
+          // pt::text() gives plain text; wrap each paragraph in <p> for the article div
+          body: (doc.body || '').split(/\n+/).filter(Boolean)
+                  .map(function(p) { return '<p>' + p + '</p>'; }).join(''),
         };
 
         const cardItem = {
@@ -2906,8 +2890,8 @@ function setAttr(id, attr, val) {
           catLabel: CAT_LABEL[doc.category] || doc.category || '',
           date:     dateStr,
           title:    doc.title || '',
-          excerpt:  doc.shortDescription || '',
-          featured: !!doc.featured,
+          excerpt:  doc.shortExcerpt || '',
+          featured: false,
         };
 
         if (existingCardIds.has(id)) {
@@ -2923,11 +2907,9 @@ function setAttr(id, attr, val) {
         }
       });
 
-      // Prepend brand-new Sanity entries (featured first) before the hardcoded list
+      // Prepend brand-new Sanity entries before the hardcoded list
       if (newItems.length) {
-        const featured = newItems.filter(function(i){ return i.featured; });
-        const rest     = newItems.filter(function(i){ return !i.featured; });
-        PAGE_DATA.casestudies.items = featured.concat(rest).concat(PAGE_DATA.casestudies.items);
+        PAGE_DATA.casestudies.items = newItems.concat(PAGE_DATA.casestudies.items);
       }
 
       // Re-render grids
