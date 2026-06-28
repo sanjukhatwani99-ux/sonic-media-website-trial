@@ -3159,22 +3159,43 @@ function setAttr(id, attr, val) {
   const DATASET    = 'production';
   const API_VER    = '2024-01-01';
 
-  // GROQ query — matches the updated caseStudy schema field names.
-  // body[] is fetched as raw Portable Text blocks so we can render them as HTML.
-  const query = encodeURIComponent(`*[_type == "caseStudy"] | order(publishedDate desc) {
+  // GROQ query — fetches all fields defined in caseStudy.ts.
+  // Only published docs are returned (publishingStatus == "published").
+  // All rich-text section fields are fetched as Portable Text blocks.
+  const query = encodeURIComponent(`*[_type == "caseStudy" && publishingStatus == "published"] | order(publishedDate desc) {
     _id,
     title,
     subtitle,
     "slug": slug.current,
     category,
     shortExcerpt,
-    "heroImgUrl":    heroImage.asset->url + "?w=1200&auto=format",
-    "heroCaption":   heroImage.caption,
-    "secondImgUrl":  secondImage.asset->url + "?w=1200&auto=format",
-    "secondCaption": secondImage.caption,
-    "cardImg":       heroImage.asset->url + "?w=800&auto=format",
-    "bodyBlocks":    body[]{_type, style, children[]{text, marks, _type}},
-    publishedDate
+    publishedDate,
+    introBody,
+    clientOverview[]{_type, style, _listItem, children[]{text, marks, _type}},
+    challenge[]{_type, style, _listItem, children[]{text, marks, _type}},
+    strategy[]{_type, style, _listItem, children[]{text, marks, _type}},
+    timeline[]{_type, style, _listItem, children[]{text, marks, _type}},
+    execution[]{_type, style, _listItem, children[]{text, marks, _type}},
+    results[]{_type, style, _listItem, children[]{text, marks, _type}},
+    proofVisualNote,
+    proofPerformance,
+    testimonialQuote,
+    testimonialAuthor,
+    faqItems[]{question, answer},
+    ctaLine,
+    projectUrl,
+    metaDescription,
+    "heroImage": {
+      "url":     heroImage.asset->url + "?w=1200&auto=format",
+      "caption": heroImage.caption,
+      "alt":     heroImage.alt
+    },
+    "secondImage": {
+      "url":     secondImage.asset->url + "?w=1200&auto=format",
+      "caption": secondImage.caption,
+      "alt":     secondImage.alt
+    },
+    "cardImg": coalesce(featuredCardImage.asset->url, heroImage.asset->url) + "?w=800&auto=format"
   }`);
 
   const url = `https://${PROJECT_ID}.apicdn.sanity.io/v${API_VER}/data/query/${DATASET}?query=${query}`;
@@ -3202,39 +3223,34 @@ function setAttr(id, attr, val) {
           ? new Date(doc.publishedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
           : '';
 
-        // Convert Portable Text blocks → HTML string
-        function blocksToHtml(blocks) {
-          if (!blocks || !blocks.length) return '';
-          return blocks.map(function(block) {
-            if (block._type !== 'block') return '';
-            var inner = (block.children || []).map(function(child) {
-              var txt = (child.text || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-              var marks = child.marks || [];
-              if (marks.indexOf('strong') !== -1) txt = '<strong style="color:#FF5C00;">' + txt + '</strong>';
-              if (marks.indexOf('em') !== -1)     txt = '<em>' + txt + '</em>';
-              return txt;
-            }).join('');
-            var style = block.style || 'normal';
-            if (style === 'h2') return '<h2 style="font-family:Syne,sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">' + inner + '</h2>';
-            if (style === 'h3') return '<h3 style="font-family:Syne,sans-serif;font-size:17px;font-weight:700;color:#F5F0EB;margin:24px 0 10px;">' + inner + '</h3>';
-            return inner ? '<p>' + inner + '</p>' : '';
-          }).join('');
-        }
-
-        // Write detail data — always overwrite any hardcoded entry so the
-        // Sanity content (images, body) is what opens when a card is clicked.
-        // Uses the legacy shape (images[] + body) which buildLegacyBody renders.
+        // Write detail data in _sanityV2 shape so openCaseStudy uses
+        // buildSanityV2Body — which renders all the structured sections
+        // (clientOverview, challenge, strategy, timeline, execution,
+        //  results, proof, FAQ, CTA) that the schema actually defines.
         caseStudies[id] = {
-          title:    doc.title    || 'Untitled',
-          subtitle: doc.subtitle || '',
-          category: CAT_LABEL[doc.category] || doc.category || '',
-          date:     dateStr,
-          // images[0] = hero, images[1] = second — matches legacy overlay exactly
-          images: [
-            { url: doc.heroImgUrl   || '', caption: doc.heroCaption   || '' },
-            { url: doc.secondImgUrl || '', caption: doc.secondCaption || '' },
-          ],
-          body: blocksToHtml(doc.bodyBlocks),
+          _sanityV2:         true,
+          title:             doc.title        || 'Untitled',
+          subtitle:          doc.subtitle      || '',
+          category:          CAT_LABEL[doc.category] || doc.category || '',
+          publishedDate:     dateStr,
+          introBody:         doc.introBody     || '',
+          clientOverview:    doc.clientOverview || [],
+          challenge:         doc.challenge      || [],
+          strategy:          doc.strategy       || [],
+          timeline:          doc.timeline       || [],
+          execution:         doc.execution      || [],
+          results:           doc.results        || [],
+          proofVisualNote:   doc.proofVisualNote   || '',
+          proofPerformance:  doc.proofPerformance  || '',
+          testimonialQuote:  doc.testimonialQuote  || '',
+          testimonialAuthor: doc.testimonialAuthor || '',
+          faqItems:          doc.faqItems       || [],
+          ctaLine:           doc.ctaLine        || '',
+          projectUrl:        doc.projectUrl     || '',
+          metaDescription:   doc.metaDescription || '',
+          // heroImage and secondImage shapes expected by buildSanityV2Body
+          heroImage:   doc.heroImage   || { url: '', caption: '', alt: '' },
+          secondImage: doc.secondImage || { url: '', caption: '', alt: '' },
         };
 
         sanityItems.push({
