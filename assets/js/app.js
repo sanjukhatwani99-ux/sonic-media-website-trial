@@ -1589,9 +1589,16 @@ function openCaseStudy(id) {
     if (!blocks || !blocks.length) return '';
     let html = '';
     let inList = false;
+    let currentListTag = 'ul';
 
     blocks.forEach(function(block) {
       if (block._type !== 'block') return;
+
+      /* Build a markDefs lookup by _key so links can be resolved */
+      const markDefsMap = {};
+      (block.markDefs || []).forEach(function(def) {
+        if (def && def._key) markDefsMap[def._key] = def;
+      });
 
       /* Render inline children */
       const inner = (block.children || []).map(function(span) {
@@ -1599,10 +1606,18 @@ function openCaseStudy(id) {
         const marks = span.marks || [];
         if (marks.includes('strong')) t = '<strong style="color:#FF5C00;font-weight:700;">' + t + '</strong>';
         if (marks.includes('em')) t = '<em>' + t + '</em>';
-        /* Link annotation */
-        const linkMark = marks.find(function(m){ return m && typeof m === 'object' && m._type === 'link'; });
-        if (linkMark && linkMark.href) {
-          t = '<a href="' + linkMark.href + '" target="_blank" rel="noopener noreferrer" class="cs-inline-link">' + t + '</a>';
+        /* Link annotation — marks may be string _keys that reference markDefs */
+        const linkDef = marks.reduce(function(found, m) {
+          if (found) return found;
+          /* Sanity stores link marks as string keys into markDefs */
+          if (typeof m === 'string' && markDefsMap[m] && markDefsMap[m]._type === 'link') return markDefsMap[m];
+          /* Fallback: old inline-object format */
+          if (m && typeof m === 'object' && m._type === 'link') return m;
+          return null;
+        }, null);
+        if (linkDef && linkDef.href) {
+          const target = linkDef.blank !== false ? ' target="_blank" rel="noopener noreferrer"' : '';
+          t = '<a href="' + linkDef.href + '"' + target + ' class="cs-inline-link">' + t + '</a>';
         }
         return t;
       }).join('');
@@ -1611,11 +1626,11 @@ function openCaseStudy(id) {
       const tag = block._listItem === 'number' ? 'ol' : 'ul';
 
       if (isBullet) {
-        if (!inList) { html += '<' + tag + ' class="cs-pt-list">'; inList = true; }
+        if (!inList) { html += '<' + tag + ' class="cs-pt-list">'; inList = true; currentListTag = tag; }
         html += '<li class="cs-pt-li">' + inner + '</li>';
         return;
       } else {
-        if (inList) { html += '</ul>'; inList = false; }
+        if (inList) { html += '</' + currentListTag + '>'; inList = false; }
       }
 
       switch (block.style) {
@@ -1625,7 +1640,7 @@ function openCaseStudy(id) {
       }
     });
 
-    if (inList) html += '</ul>';
+    if (inList) html += '</' + currentListTag + '>';
     return html;
   }
 
@@ -1904,7 +1919,8 @@ ${faqItems ? `<section aria-label="FAQ" class="cs-v2-section">
 .cs-proof-figure{display:flex;flex-direction:column;gap:0;}
 .cs-proof-img-wrap{border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:#161616;margin-bottom:0;}
 .cs-proof-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.cs-proof-caption{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;line-height:1.5;color:rgba(245,240,235,.45);letter-spacing:.04em;padding:10px 4px 0;border-top:1px solid rgba(255,255,255,.06);margin-top:10px;}
+.cs-proof-caption{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;line-height:1.6;color:rgba(245,240,235,.72);letter-spacing:.03em;padding:12px 8px 4px;border-top:2px solid rgba(255,92,0,.25);margin-top:10px;display:flex;align-items:flex-start;gap:6px;}
+.cs-proof-caption::before{content:'↳';color:#FF5C00;font-size:13px;flex-shrink:0;line-height:1.5;}
 .cs-proof-note{margin-top:12px;font-size:13px;color:rgba(245,240,235,.4);font-style:italic;}
 /* ── Testimonial ── */
 .cs-testimonial{border-left:3px solid #FF5C00;padding:20px 24px;margin:24px 0;background:rgba(255,92,0,.04);border-radius:0 12px 12px 0;}
@@ -1918,7 +1934,7 @@ ${faqItems ? `<section aria-label="FAQ" class="cs-v2-section">
 .cs-faq-icon{font-size:20px;font-weight:300;color:#FF5C00;flex-shrink:0;line-height:1;transition:transform .3s;}
 .cs-faq-q[aria-expanded="true"] .cs-faq-icon{transform:rotate(45deg);}
 .cs-faq-ans{padding:0 24px 20px;font-size:14px;line-height:1.8;color:rgba(245,240,235,.6);font-weight:300;}
-.cs-faq-ans[hidden]{display:none;}
+.cs-faq-ans[hidden]{display:none!important;}
 /* ── Legacy elements ── */
 .cs-short-desc{font-size:18px;line-height:1.75;color:rgba(245,240,235,.6);font-weight:300;margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.06);}
 .cs-featured-img{border-radius:16px;overflow:hidden;margin-bottom:48px;aspect-ratio:16/9;background:#161616;}
@@ -3171,12 +3187,12 @@ function setAttr(id, attr, val) {
     shortExcerpt,
     publishedDate,
     introBody,
-    clientOverview[]{_type, style, _listItem, children[]{text, marks, _type}},
-    challenge[]{_type, style, _listItem, children[]{text, marks, _type}},
-    strategy[]{_type, style, _listItem, children[]{text, marks, _type}},
-    timeline[]{_type, style, _listItem, children[]{text, marks, _type}},
-    execution[]{_type, style, _listItem, children[]{text, marks, _type}},
-    results[]{_type, style, _listItem, children[]{text, marks, _type}},
+    clientOverview[]{_type, style, _listItem, markDefs[]{_key, _type, href, blank}, children[]{_key, text, marks, _type}},
+    challenge[]{_type, style, _listItem, markDefs[]{_key, _type, href, blank}, children[]{_key, text, marks, _type}},
+    strategy[]{_type, style, _listItem, markDefs[]{_key, _type, href, blank}, children[]{_key, text, marks, _type}},
+    timeline[]{_type, style, _listItem, markDefs[]{_key, _type, href, blank}, children[]{_key, text, marks, _type}},
+    execution[]{_type, style, _listItem, markDefs[]{_key, _type, href, blank}, children[]{_key, text, marks, _type}},
+    results[]{_type, style, _listItem, markDefs[]{_key, _type, href, blank}, children[]{_key, text, marks, _type}},
     proofVisualNote,
     proofPerformance,
     testimonialQuote,
